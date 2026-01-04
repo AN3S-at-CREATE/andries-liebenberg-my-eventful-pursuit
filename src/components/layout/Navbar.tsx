@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Building2, Github, Linkedin, MessageCircle } from "lucide-react";
+import { Building2, Github, Linkedin, MessageCircle, Mail } from "lucide-react";
 
 export const Navbar = () => {
   return (
@@ -26,6 +26,10 @@ export const Navbar = () => {
           >
             Portfolio
           </a>
+          <Link to="/contact" className="text-sm text-muted-foreground hover:text-foreground transition-colors flex items-center gap-1">
+            <Mail className="h-4 w-4" />
+            Contact
+          </Link>
         </nav>
 
         <div className="flex items-center gap-3">
