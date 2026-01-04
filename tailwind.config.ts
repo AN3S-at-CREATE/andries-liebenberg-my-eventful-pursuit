@@ -123,6 +123,14 @@ export default {
           from: { transform: "translateY(0)" },
           to: { transform: "translateY(-4px)" },
         },
+        "glow-breathe": {
+          "0%, 100%": { opacity: "0.5" },
+          "50%": { opacity: "1" },
+        },
+        "neon-flicker": {
+          "0%, 19%, 21%, 23%, 25%, 54%, 56%, 100%": { opacity: "1" },
+          "20%, 24%, 55%": { opacity: "0.4" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -134,6 +142,8 @@ export default {
         "border-glow-pink": "border-glow-pink 2s ease-in-out infinite",
         "border-glow-dual": "border-glow-dual 3s ease-in-out infinite",
         "lift": "lift 0.2s ease-out forwards",
+        "glow-breathe": "glow-breathe 3s ease-in-out infinite",
+        "neon-flicker": "neon-flicker 2s linear infinite",
       },
     },
   },
