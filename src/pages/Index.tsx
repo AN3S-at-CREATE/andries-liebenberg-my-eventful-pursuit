@@ -48,30 +48,30 @@ const Index = () => {
       <section className="py-16 px-4 border-y border-border/50 bg-muted/20">
         <div className="container max-w-4xl mx-auto">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            <div className="text-center animate-fade-in [animation-delay:100ms] opacity-0 [animation-fill-mode:forwards] p-4 rounded-lg transition-all duration-300 hover:scale-105 hover:bg-primary/5 cursor-default">
+            <div className="group text-center animate-fade-in [animation-delay:100ms] opacity-0 [animation-fill-mode:forwards] p-4 rounded-lg transition-all duration-300 hover:scale-105 hover:bg-primary/5 cursor-default">
               <div className="flex items-center justify-center gap-2 text-primary mb-2">
-                <Building2 className="h-6 w-6" />
+                <Building2 className="h-6 w-6 transition-all duration-300 group-hover:drop-shadow-[0_0_8px_hsl(var(--primary))]" />
                 <span className="font-heading text-3xl font-bold">10</span>
               </div>
               <p className="text-sm text-muted-foreground">Companies Built</p>
             </div>
-            <div className="text-center animate-fade-in [animation-delay:200ms] opacity-0 [animation-fill-mode:forwards] p-4 rounded-lg transition-all duration-300 hover:scale-105 hover:bg-primary/5 cursor-default">
+            <div className="group text-center animate-fade-in [animation-delay:200ms] opacity-0 [animation-fill-mode:forwards] p-4 rounded-lg transition-all duration-300 hover:scale-105 hover:bg-primary/5 cursor-default">
               <div className="flex items-center justify-center gap-2 text-foreground mb-2">
-                <Users className="h-6 w-6" />
+                <Users className="h-6 w-6 transition-all duration-300 group-hover:drop-shadow-[0_0_8px_hsl(var(--foreground))]" />
                 <span className="font-heading text-3xl font-bold">1,020+</span>
               </div>
               <p className="text-sm text-muted-foreground">Clients Acquired</p>
             </div>
-            <div className="text-center animate-fade-in [animation-delay:300ms] opacity-0 [animation-fill-mode:forwards] p-4 rounded-lg transition-all duration-300 hover:scale-105 hover:bg-primary/5 cursor-default">
+            <div className="group text-center animate-fade-in [animation-delay:300ms] opacity-0 [animation-fill-mode:forwards] p-4 rounded-lg transition-all duration-300 hover:scale-105 hover:bg-primary/5 cursor-default">
               <div className="flex items-center justify-center gap-2 text-secondary mb-2">
-                <TrendingUp className="h-6 w-6" />
+                <TrendingUp className="h-6 w-6 transition-all duration-300 group-hover:drop-shadow-[0_0_8px_hsl(var(--secondary))]" />
                 <span className="font-heading text-3xl font-bold">47%</span>
               </div>
               <p className="text-sm text-muted-foreground">Avg. Growth</p>
             </div>
-            <div className="text-center animate-fade-in [animation-delay:400ms] opacity-0 [animation-fill-mode:forwards] p-4 rounded-lg transition-all duration-300 hover:scale-105 hover:bg-primary/5 cursor-default">
+            <div className="group text-center animate-fade-in [animation-delay:400ms] opacity-0 [animation-fill-mode:forwards] p-4 rounded-lg transition-all duration-300 hover:scale-105 hover:bg-primary/5 cursor-default">
               <div className="flex items-center justify-center gap-2 text-primary mb-2">
-                <Star className="h-6 w-6" />
+                <Star className="h-6 w-6 transition-all duration-300 group-hover:drop-shadow-[0_0_8px_hsl(var(--primary))]" />
                 <span className="font-heading text-3xl font-bold">96%</span>
               </div>
               <p className="text-sm text-muted-foreground">Avg. Satisfaction</p>
