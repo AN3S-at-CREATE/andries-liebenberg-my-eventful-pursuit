@@ -128,4 +128,49 @@
       transparent
     );
   }
+
+  /* Glass card utilities */
+  .glass {
+    background: hsl(var(--card) / 0.4);
+    backdrop-filter: blur(16px);
+    border: 1px solid hsl(var(--foreground) / 0.1);
+    box-shadow: 0 8px 32px 0 rgba(0,0,0,0.3), 
+                inset 0 1px 0 0 hsl(var(--foreground) / 0.05);
+  }
+  
+  .glass-cyan {
+    background: hsl(var(--primary) / 0.05);
+    backdrop-filter: blur(16px);
+    border: 1px solid hsl(var(--primary) / 0.2);
+    box-shadow: 0 8px 32px 0 hsl(var(--primary) / 0.1),
+                inset 0 1px 0 0 hsl(var(--primary) / 0.1);
+  }
+  
+  .glass-pink {
+    background: hsl(var(--secondary) / 0.05);
+    backdrop-filter: blur(16px);
+    border: 1px solid hsl(var(--secondary) / 0.2);
+    box-shadow: 0 8px 32px 0 hsl(var(--secondary) / 0.1),
+                inset 0 1px 0 0 hsl(var(--secondary) / 0.1);
+  }
+  
+  /* Badge glow variants */
+  .badge-glow-cyan {
+    box-shadow: 0 0 8px hsl(var(--primary) / 0.4);
+  }
+  
+  .badge-glow-pink {
+    box-shadow: 0 0 8px hsl(var(--secondary) / 0.4);
+  }
+  
+  /* Button glow on hover */
+  .btn-glow-cyan:hover {
+    box-shadow: 0 0 25px hsl(var(--primary) / 0.5),
+                0 4px 20px -4px hsl(var(--primary) / 0.4);
+  }
+  
+  .btn-glow-pink:hover {
+    box-shadow: 0 0 25px hsl(var(--secondary) / 0.5),
+                0 4px 20px -4px hsl(var(--secondary) / 0.4);
+  }
 }

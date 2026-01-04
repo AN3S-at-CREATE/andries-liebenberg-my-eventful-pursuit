@@ -131,6 +131,10 @@ export default {
           "0%, 19%, 21%, 23%, 25%, 54%, 56%, 100%": { opacity: "1" },
           "20%, 24%, 55%": { opacity: "0.4" },
         },
+        "pulse-slow": {
+          "0%, 100%": { opacity: "0.15" },
+          "50%": { opacity: "0.25" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -144,6 +148,7 @@ export default {
         "lift": "lift 0.2s ease-out forwards",
         "glow-breathe": "glow-breathe 3s ease-in-out infinite",
         "neon-flicker": "neon-flicker 2s linear infinite",
+        "pulse-slow": "pulse-slow 8s ease-in-out infinite",
       },
     },
   },

@@ -26,12 +26,12 @@ export function AIToolCard({
   return (
     <div
       className={cn(
-        "group relative rounded-xl border bg-card/50 backdrop-blur-sm p-6 transition-all duration-300",
-        "border-border/50 hover:border-primary/30",
+        "group relative rounded-xl p-6 transition-all duration-300",
         "hover:-translate-y-1",
+        accentColor === "primary" ? "glass-cyan" : "glass-pink",
         accentColor === "primary"
-          ? "hover:shadow-[0_8px_30px_-10px_hsl(var(--primary)/0.4)]"
-          : "hover:shadow-[0_8px_30px_-10px_hsl(var(--secondary)/0.4)]",
+          ? "hover:shadow-[0_8px_30px_-10px_hsl(var(--primary)/0.5)]"
+          : "hover:shadow-[0_8px_30px_-10px_hsl(var(--secondary)/0.5)]",
         isClickable && "cursor-pointer"
       )}
       onClick={isClickable ? onClick : undefined}
