@@ -25,7 +25,7 @@ const Index = () => {
             10 companies built with real metrics and proven execution across events, consulting, retail, and industrial sectors in South Africa.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in [animation-delay:300ms] opacity-0 [animation-fill-mode:forwards]">
-            <Button asChild size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground animate-glow-pulse">
+            <Button asChild size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground animate-border-glow">
               <Link to="/companies" className="inline-flex items-center gap-2">
                 <Building2 className="h-5 w-5" />
                 View Companies

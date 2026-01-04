@@ -95,6 +95,30 @@ export default {
           "0%, 100%": { boxShadow: "0 0 20px hsl(var(--secondary) / 0.3)" },
           "50%": { boxShadow: "0 0 40px hsl(var(--secondary) / 0.5)" },
         },
+        "border-glow": {
+          "0%, 100%": { 
+            boxShadow: "0 0 5px hsl(var(--primary) / 0.4), 0 0 20px hsl(var(--primary) / 0.2), 0 0 35px hsl(var(--primary) / 0.1), inset 0 0 10px hsl(var(--primary) / 0.1)" 
+          },
+          "50%": { 
+            boxShadow: "0 0 10px hsl(var(--primary) / 0.6), 0 0 30px hsl(var(--primary) / 0.4), 0 0 50px hsl(var(--primary) / 0.2), inset 0 0 15px hsl(var(--primary) / 0.15)" 
+          },
+        },
+        "border-glow-pink": {
+          "0%, 100%": { 
+            boxShadow: "0 0 5px hsl(var(--secondary) / 0.4), 0 0 20px hsl(var(--secondary) / 0.2), 0 0 35px hsl(var(--secondary) / 0.1), inset 0 0 10px hsl(var(--secondary) / 0.1)" 
+          },
+          "50%": { 
+            boxShadow: "0 0 10px hsl(var(--secondary) / 0.6), 0 0 30px hsl(var(--secondary) / 0.4), 0 0 50px hsl(var(--secondary) / 0.2), inset 0 0 15px hsl(var(--secondary) / 0.15)" 
+          },
+        },
+        "border-glow-dual": {
+          "0%, 100%": { 
+            boxShadow: "0 0 5px hsl(var(--primary) / 0.4), 0 0 20px hsl(var(--primary) / 0.2), 0 0 35px hsl(var(--secondary) / 0.1)" 
+          },
+          "50%": { 
+            boxShadow: "0 0 10px hsl(var(--secondary) / 0.5), 0 0 30px hsl(var(--secondary) / 0.3), 0 0 50px hsl(var(--primary) / 0.2)" 
+          },
+        },
         "lift": {
           from: { transform: "translateY(0)" },
           to: { transform: "translateY(-4px)" },
@@ -106,6 +130,9 @@ export default {
         "fade-in": "fade-in 0.5s ease-out forwards",
         "glow-pulse": "glow-pulse 2s ease-in-out infinite",
         "glow-pulse-pink": "glow-pulse-pink 2s ease-in-out infinite",
+        "border-glow": "border-glow 2s ease-in-out infinite",
+        "border-glow-pink": "border-glow-pink 2s ease-in-out infinite",
+        "border-glow-dual": "border-glow-dual 3s ease-in-out infinite",
         "lift": "lift 0.2s ease-out forwards",
       },
     },
