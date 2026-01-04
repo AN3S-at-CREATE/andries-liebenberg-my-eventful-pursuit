@@ -1,3 +1,4 @@
+import { useRef } from "react";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { ScrollToTop } from "@/components/layout/ScrollToTop";
@@ -7,8 +8,10 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Link } from "react-router-dom";
 import { ArrowRight, Award, Briefcase, GraduationCap, Heart, Building2, Calendar, Users, Lightbulb, Target, TrendingUp, Star, CheckCircle, Quote } from "lucide-react";
+import { CursorGlow } from "@/components/effects/CursorGlow";
 
 const About = () => {
+  const mainRef = useRef<HTMLElement>(null);
   const careerHighlights = [
     { icon: Calendar, label: "Events Delivered", value: "2,246+", color: "primary" },
     { icon: TrendingUp, label: "Budget Managed", value: "R423M+", color: "secondary" },
@@ -36,8 +39,9 @@ const About = () => {
       <Navbar />
       
       {/* Hero Section */}
-      <section className="relative py-24 px-4 overflow-hidden">
-        <div className="container max-w-6xl mx-auto">
+      <section ref={mainRef} className="relative py-24 px-4 overflow-hidden">
+        <CursorGlow containerRef={mainRef} color="mixed" size={350} intensity={0.2} />
+        <div className="container max-w-6xl mx-auto relative z-10">
           <MotionReveal>
             <div className="text-center mb-16">
               <Badge variant="glow-cyan" className="mb-4">Architect of Experiences, Driver of Growth</Badge>

@@ -14,6 +14,7 @@ import { CursorGlow } from "@/components/effects/CursorGlow";
 
 const Index = () => {
   const heroRef = useRef<HTMLElement>(null);
+  const contactRef = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({
     target: heroRef,
     offset: ["start start", "end start"],
@@ -147,8 +148,9 @@ const Index = () => {
       <CompaniesPreview />
 
       {/* Contact Section */}
-      <section id="contact" className="py-20 px-4 bg-gradient-to-b from-transparent to-muted/30">
-        <div className="container max-w-2xl mx-auto">
+      <section ref={contactRef} id="contact" className="py-20 px-4 bg-gradient-to-b from-transparent to-muted/30 relative overflow-hidden">
+        <CursorGlow containerRef={contactRef} color="mixed" size={300} intensity={0.15} />
+        <div className="container max-w-2xl mx-auto relative z-10">
           <MotionReveal>
             <div className="text-center mb-10">
               <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-4">
