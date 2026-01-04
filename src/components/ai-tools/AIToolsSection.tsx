@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import { ClipboardList, MessageSquareText, Calculator } from "lucide-react";
 import { AIToolCard } from "./AIToolCard";
 import { ConciergeModal } from "./concierge/ConciergeModal";
@@ -5,6 +7,37 @@ import { ROICalculatorModal } from "./calculator/ROICalculatorModal";
 import { Button } from "@/components/ui/button";
 
 export function AIToolsSection() {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [roiInitialValues, setRoiInitialValues] = useState<{
+    revenue?: number;
+    investment?: number;
+    growth?: number;
+    timeframe?: number;
+  } | undefined>();
+  const [autoOpenROI, setAutoOpenROI] = useState(false);
+
+  // Check for ROI calculator params in URL
+  useEffect(() => {
+    const hasROI = searchParams.get("roi") === "1";
+    if (hasROI) {
+      const revenue = Number(searchParams.get("r")) || undefined;
+      const investment = Number(searchParams.get("i")) || undefined;
+      const growth = Number(searchParams.get("g")) || undefined;
+      const timeframe = Number(searchParams.get("t")) || undefined;
+
+      setRoiInitialValues({ revenue, investment, growth, timeframe });
+      setAutoOpenROI(true);
+
+      // Clean up URL params after reading
+      searchParams.delete("roi");
+      searchParams.delete("r");
+      searchParams.delete("i");
+      searchParams.delete("g");
+      searchParams.delete("t");
+      setSearchParams(searchParams, { replace: true });
+    }
+  }, [searchParams, setSearchParams]);
+
   return (
     <section className="py-20 px-4">
       <div className="container max-w-5xl mx-auto">
@@ -61,6 +94,9 @@ export function AIToolsSection() {
             accentColor="primary"
           >
             <ROICalculatorModal
+              initialValues={roiInitialValues}
+              autoOpen={autoOpenROI}
+              onAutoOpenComplete={() => setAutoOpenROI(false)}
               trigger={
                 <Button
                   variant="outline"
