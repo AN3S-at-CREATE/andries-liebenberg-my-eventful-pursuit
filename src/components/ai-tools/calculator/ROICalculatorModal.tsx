@@ -242,7 +242,7 @@ export function ROICalculatorModal({ trigger, initialValues, autoOpen, onAutoOpe
                 className="h-8 w-8 text-muted-foreground hover:text-primary"
                 title="Export as PDF"
               >
-                <Download className={`w-4 h-4 ${isExporting ? "animate-pulse" : ""}`} />
+                <Download className={`w-4 h-4 ${isExporting ? "animate-spin" : ""}`} />
               </Button>
             </div>
           </DialogTitle>

@@ -66,7 +66,7 @@ const Index = () => {
           </MotionReveal>
           <MotionReveal delay={0.3}>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button asChild size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground animate-border-glow">
+              <Button asChild size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground transition-shadow duration-300 hover:shadow-[0_0_20px_hsl(var(--primary)/0.5)]">
                 <Link to="/companies" className="inline-flex items-center gap-2">
                   <Building2 className="h-5 w-5" />
                   View Companies
