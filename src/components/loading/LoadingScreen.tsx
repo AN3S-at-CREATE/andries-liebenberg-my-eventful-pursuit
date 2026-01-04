@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import loadingGif from "@/assets/loading-screen.gif";
 
 interface LoadingScreenProps {
   isLoading: boolean;
@@ -44,41 +45,17 @@ export function LoadingScreen({ isLoading }: LoadingScreenProps) {
 
       {/* Center content */}
       <div className="relative flex flex-col items-center gap-8">
-        {/* Logo/Brand mark with glow */}
+        {/* GIF Animation */}
         <motion.div
-          className="relative"
           initial={{ scale: 0.8, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={{ duration: 0.5, ease: "easeOut" }}
         >
-          {/* Outer glow ring */}
-          <motion.div
-            className="absolute inset-0 rounded-full"
-            style={{
-              background: "conic-gradient(from 0deg, hsl(var(--primary)), hsl(var(--secondary)), hsl(var(--primary)))",
-              filter: "blur(20px)",
-              opacity: 0.6,
-            }}
-            animate={{ rotate: 360 }}
-            transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+          <img 
+            src={loadingGif} 
+            alt="Loading..." 
+            className="w-40 h-40 object-contain"
           />
-          
-          {/* Brand text */}
-          <div className="relative z-10 w-32 h-32 rounded-full bg-background flex items-center justify-center border border-foreground/10">
-            <motion.span
-              className="font-heading text-4xl font-bold text-primary glow-text-cyan"
-              animate={{
-                textShadow: [
-                  "0 0 10px hsl(var(--primary) / 0.5), 0 0 20px hsl(var(--primary) / 0.3)",
-                  "0 0 20px hsl(var(--primary) / 0.8), 0 0 40px hsl(var(--primary) / 0.5)",
-                  "0 0 10px hsl(var(--primary) / 0.5), 0 0 20px hsl(var(--primary) / 0.3)",
-                ],
-              }}
-              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-            >
-              AN3S
-            </motion.span>
-          </div>
         </motion.div>
 
         {/* Loading bar */}
