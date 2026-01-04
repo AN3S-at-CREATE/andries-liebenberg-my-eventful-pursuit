@@ -10,12 +10,14 @@ import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
 import { FloatingConciergeButton } from "./components/ai-tools/FloatingConciergeButton";
 import { PageTransition } from "./components/layout/PageTransition";
+import { AnimatedBackground } from "./components/background/AnimatedBackground";
 
 const queryClient = new QueryClient();
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
+      <AnimatedBackground />
       <Toaster />
       <Sonner />
       <BrowserRouter>
