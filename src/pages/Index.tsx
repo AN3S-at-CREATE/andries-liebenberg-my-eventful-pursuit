@@ -20,10 +20,10 @@ const Index = () => {
             I don't just talk growth —{" "}
             <span className="text-primary">I've shipped it.</span>
           </h1>
-          <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
+          <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-2xl mx-auto animate-fade-in [animation-delay:150ms] opacity-0 [animation-fill-mode:forwards]">
             10 companies built with real metrics and proven execution across events, consulting, retail, and industrial sectors in South Africa.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in [animation-delay:300ms] opacity-0 [animation-fill-mode:forwards]">
             <Button asChild size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground animate-glow-pulse">
               <Link to="/companies" className="inline-flex items-center gap-2">
                 <Building2 className="h-5 w-5" />
