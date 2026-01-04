@@ -1,5 +1,6 @@
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
+import { ScrollToTop } from "@/components/layout/ScrollToTop";
 import { CompaniesPreview } from "@/components/companies/CompaniesPreview";
 import { AIToolsSection } from "@/components/ai-tools/AIToolsSection";
 import { ContactForm } from "@/components/contact/ContactForm";
@@ -102,6 +103,7 @@ const Index = () => {
       </section>
 
       <Footer />
+      <ScrollToTop />
     </div>
   );
 };
