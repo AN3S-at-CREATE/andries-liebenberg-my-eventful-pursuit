@@ -1,4 +1,3 @@
-import { useRef } from "react";
 import { Link } from "react-router-dom";
 import { companies } from "@/data/companies";
 import { getMetricsByCompanyId } from "@/data/companyMetrics";
@@ -6,16 +5,13 @@ import { CompanyCard } from "./CompanyCard";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { MotionReveal, MotionStagger, MotionItem } from "@/components/motion/MotionReveal";
-import { CursorGlow } from "@/components/effects/CursorGlow";
 
 export const CompaniesPreview = () => {
-  const sectionRef = useRef<HTMLElement>(null);
   const topCompanies = companies.slice(0, 4);
 
   return (
-    <section ref={sectionRef} className="py-20 px-4 relative overflow-hidden">
-      <CursorGlow containerRef={sectionRef} color="mixed" size={300} intensity={0.15} />
-      <div className="container max-w-6xl mx-auto relative z-10">
+    <section className="py-20 px-4">
+      <div className="container max-w-6xl mx-auto">
         <MotionReveal>
           <div className="text-center mb-12">
             <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-4">
