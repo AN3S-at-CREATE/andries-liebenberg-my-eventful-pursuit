@@ -10,7 +10,7 @@ interface MetricCardProps {
 
 export const MetricCard = ({ label, value, basis, showBadge = false }: MetricCardProps) => {
   return (
-    <Card className="bg-card/50 backdrop-blur-sm border-border/50 hover:border-primary/30 transition-colors">
+    <Card interactive glow="cyan" className="bg-card/50 backdrop-blur-sm border-border/50">
       <CardHeader className="pb-2">
         <p className="text-sm text-muted-foreground">{label}</p>
       </CardHeader>
