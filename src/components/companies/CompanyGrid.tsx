@@ -1,12 +1,22 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { companies } from "@/data/companies";
-import { companyMetrics, getMetricsByCompanyId } from "@/data/companyMetrics";
+import { getMetricsByCompanyId } from "@/data/companyMetrics";
 import { CompanyCard } from "./CompanyCard";
+import { CompanyCardSkeleton } from "./CompanyCardSkeleton";
 import { CompanyFilters, type SortOption, type FilterOption } from "./CompanyFilters";
 
 export const CompanyGrid = () => {
   const [sortBy, setSortBy] = useState<SortOption>("growth");
   const [filterBy, setFilterBy] = useState<FilterOption>("all");
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    // Simulate initial load
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 800);
+    return () => clearTimeout(timer);
+  }, []);
 
   const filteredCompanies = companies.filter((company) => {
     if (filterBy === "all") return true;
@@ -42,13 +52,17 @@ export const CompanyGrid = () => {
       />
       
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {sortedCompanies.map((company) => {
-          const metrics = getMetricsByCompanyId(company.id);
-          if (!metrics) return null;
-          return (
-            <CompanyCard key={company.id} company={company} metrics={metrics} />
-          );
-        })}
+        {isLoading
+          ? Array.from({ length: 6 }).map((_, index) => (
+              <CompanyCardSkeleton key={index} />
+            ))
+          : sortedCompanies.map((company) => {
+              const metrics = getMetricsByCompanyId(company.id);
+              if (!metrics) return null;
+              return (
+                <CompanyCard key={company.id} company={company} metrics={metrics} />
+              );
+            })}
       </div>
     </div>
   );
