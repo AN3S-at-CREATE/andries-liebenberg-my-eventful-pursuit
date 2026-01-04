@@ -1,6 +1,7 @@
 import { ClipboardList, MessageSquareText, Calculator } from "lucide-react";
 import { AIToolCard } from "./AIToolCard";
 import { ConciergeModal } from "./concierge/ConciergeModal";
+import { ROICalculatorModal } from "./calculator/ROICalculatorModal";
 import { Button } from "@/components/ui/button";
 
 export function AIToolsSection() {
@@ -51,14 +52,27 @@ export function AIToolsSection() {
             />
           </AIToolCard>
 
-          {/* ROI Calculator */}
+          {/* ROI Calculator - AVAILABLE */}
           <AIToolCard
             icon={Calculator}
             title="ROI Calculator"
             description="Calculate potential returns from growth experiments with interactive sliders and ZAR output."
-            status="coming-soon"
+            status="available"
             accentColor="primary"
-          />
+          >
+            <ROICalculatorModal
+              trigger={
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="w-full border-primary/50 text-primary hover:bg-primary/10 hover:border-primary"
+                >
+                  <Calculator className="w-4 h-4 mr-2" />
+                  Calculate ROI
+                </Button>
+              }
+            />
+          </AIToolCard>
         </div>
       </div>
     </section>
