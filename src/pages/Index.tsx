@@ -10,6 +10,7 @@ import { ArrowRight, Building2, TrendingUp, Users, Star } from "lucide-react";
 import { Link } from "react-router-dom";
 import { MotionReveal, MotionStagger, MotionItem } from "@/components/motion/MotionReveal";
 import { motion, useScroll, useTransform } from "framer-motion";
+import { CursorGlow } from "@/components/effects/CursorGlow";
 
 const Index = () => {
   const heroRef = useRef<HTMLElement>(null);
@@ -29,6 +30,8 @@ const Index = () => {
       
       {/* Hero Section with Parallax */}
       <section ref={heroRef} className="relative py-24 px-4 overflow-hidden">
+        {/* Interactive cursor glow */}
+        <CursorGlow containerRef={heroRef} color="mixed" size={350} intensity={0.2} />
         {/* Parallax background layer */}
         <motion.div
           className="absolute inset-0 bg-gradient-to-b from-primary/5 via-transparent to-transparent"
