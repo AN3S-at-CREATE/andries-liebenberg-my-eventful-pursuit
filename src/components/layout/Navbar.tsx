@@ -19,7 +19,7 @@ export const Navbar = () => {
     <header className="sticky top-0 z-50 w-full border-b border-border/50 bg-background/80 backdrop-blur-md">
       <div className="container flex h-16 items-center justify-between">
         <Link to="/" className="flex items-center gap-2">
-          <img src={logo} alt="AN3S" className="h-8 w-auto" />
+          <img src={logo} alt="AN3S" className="h-10 w-auto transition-transform duration-200 hover:scale-110" />
         </Link>
 
         <nav className="hidden md:flex items-center gap-6">
@@ -85,7 +85,7 @@ export const Navbar = () => {
               <div className="flex flex-col h-full">
                 {/* Header */}
                 <div className="flex items-center justify-between pb-6 border-b border-border/50">
-                  <img src={logo} alt="AN3S" className="h-8 w-auto" />
+                  <img src={logo} alt="AN3S" className="h-10 w-auto" />
                 </div>
 
                 {/* Navigation Links */}
