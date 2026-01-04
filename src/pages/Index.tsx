@@ -1,6 +1,7 @@
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { CompaniesPreview } from "@/components/companies/CompaniesPreview";
+import { ContactForm } from "@/components/contact/ContactForm";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Building2, TrendingUp, Users, Star } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -81,24 +82,18 @@ const Index = () => {
       {/* Companies Preview */}
       <CompaniesPreview />
 
-      {/* CTA Section */}
-      <section className="py-20 px-4 bg-gradient-to-b from-transparent to-muted/30">
-        <div className="container max-w-2xl mx-auto text-center">
-          <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-4">
-            Ready to grow your business?
-          </h2>
-          <p className="text-lg text-muted-foreground mb-8">
-            Let's discuss how I can help you achieve similar results.
-          </p>
-          <Button asChild size="lg" className="bg-secondary hover:bg-secondary/90 text-secondary-foreground">
-            <a
-              href="mailto:book@an3s.info"
-              className="inline-flex items-center gap-2"
-            >
-              Get in Touch
-              <ArrowRight className="h-4 w-4" />
-            </a>
-          </Button>
+      {/* Contact Section */}
+      <section id="contact" className="py-20 px-4 bg-gradient-to-b from-transparent to-muted/30">
+        <div className="container max-w-2xl mx-auto">
+          <div className="text-center mb-10">
+            <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-4">
+              Ready to grow your business?
+            </h2>
+            <p className="text-lg text-muted-foreground">
+              Let's discuss how I can help you achieve similar results.
+            </p>
+          </div>
+          <ContactForm />
         </div>
       </section>
 
