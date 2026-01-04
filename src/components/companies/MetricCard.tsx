@@ -10,10 +10,12 @@ interface MetricCardProps {
 }
 
 export const MetricCard = ({ label, value, basis, showBadge = false, glowColor = "cyan" }: MetricCardProps) => {
-  const glowClass = glowColor === "pink" ? "border-glow-pink-hover" : "border-glow-hover";
-  
   return (
-    <Card interactive glow={glowColor} className={`bg-card/50 backdrop-blur-sm border-border/50 ${glowClass}`}>
+    <Card 
+      interactive 
+      glow={glowColor} 
+      className={glowColor === "pink" ? "glass-pink" : "glass-cyan"}
+    >
       <CardHeader className="pb-2">
         <p className="text-sm text-muted-foreground">{label}</p>
       </CardHeader>

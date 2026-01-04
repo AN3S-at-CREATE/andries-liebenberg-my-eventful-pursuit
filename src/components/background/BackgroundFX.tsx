@@ -168,10 +168,23 @@ export function BackgroundFX() {
   }, []);
 
   return (
-    <canvas
-      ref={canvasRef}
-      className="fixed inset-0 -z-10 pointer-events-none"
-      style={{ background: "hsl(223, 24%, 6%)" }}
-    />
+    <>
+      <canvas
+        ref={canvasRef}
+        className="fixed inset-0 -z-10 pointer-events-none"
+        style={{ background: "hsl(223, 24%, 6%)" }}
+      />
+      
+      {/* Cyan neon streak from left */}
+      <div 
+        className="fixed top-1/4 -left-32 w-96 h-[600px] bg-primary/15 blur-[150px] -rotate-12 pointer-events-none -z-10 animate-pulse-slow"
+      />
+      
+      {/* Pink neon streak from right */}
+      <div 
+        className="fixed bottom-1/4 -right-32 w-80 h-[500px] bg-secondary/15 blur-[120px] rotate-12 pointer-events-none -z-10 animate-pulse-slow"
+        style={{ animationDelay: "1s" }}
+      />
+    </>
   );
 }
