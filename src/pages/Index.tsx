@@ -1,6 +1,7 @@
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { CompaniesPreview } from "@/components/companies/CompaniesPreview";
+import { AIToolsSection } from "@/components/ai-tools/AIToolsSection";
 import { ContactForm } from "@/components/contact/ContactForm";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Building2, TrendingUp, Users, Star } from "lucide-react";
@@ -78,6 +79,9 @@ const Index = () => {
           </div>
         </div>
       </section>
+
+      {/* AI Tools Section */}
+      <AIToolsSection />
 
       {/* Companies Preview */}
       <CompaniesPreview />
