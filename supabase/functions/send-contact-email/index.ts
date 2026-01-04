@@ -93,13 +93,13 @@ const handler = async (req: Request): Promise<Response> => {
     `;
 
     await sendEmail(
-      ["book@an3s.info"],
+      ["book@hello.an3s.info"],
       `New Contact: ${name}${company ? ` from ${company}` : ""}`,
       notificationHtml,
-      "AN3S Contact Form <onboarding@resend.dev>"
+      "AN3S Contact Form <email@hello.an3s.info>"
     );
 
-    console.log("Notification email sent to book@an3s.info");
+    console.log("Notification email sent to book@hello.an3s.info");
 
     // Confirmation email to user
     const confirmationHtml = `
@@ -116,7 +116,7 @@ const handler = async (req: Request): Promise<Response> => {
         <p style="margin-top: 30px;">
           <strong>Andries Liebenberg</strong><br/>
           AN3S<br/>
-          <a href="mailto:book@an3s.info" style="color: #00d4ff;">book@an3s.info</a><br/>
+          <a href="mailto:book@hello.an3s.info" style="color: #00d4ff;">book@hello.an3s.info</a><br/>
           <a href="tel:+27729749703" style="color: #00d4ff;">+27 72 974 9703</a>
         </p>
         <hr style="border: none; border-top: 1px solid #ddd; margin: 30px 0;" />
@@ -131,7 +131,7 @@ const handler = async (req: Request): Promise<Response> => {
       [email],
       "Thanks for reaching out to AN3S",
       confirmationHtml,
-      "AN3S <onboarding@resend.dev>"
+      "AN3S <email@hello.an3s.info>"
     );
 
     console.log("Confirmation email sent to:", email);
