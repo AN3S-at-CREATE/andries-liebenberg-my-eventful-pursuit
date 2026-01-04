@@ -135,22 +135,44 @@ export default {
           "0%, 100%": { opacity: "0.15" },
           "50%": { opacity: "0.25" },
         },
+        // Attention pulse for chat button - visible but smooth
+        "attention-pulse": {
+          "0%, 100%": { 
+            transform: "scale(1)",
+            opacity: "0.4",
+          },
+          "50%": { 
+            transform: "scale(1.15)",
+            opacity: "0.7",
+          },
+        },
+        // Calmer skeleton loading
+        "skeleton-pulse": {
+          "0%, 100%": { opacity: "0.5" },
+          "50%": { opacity: "0.8" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
         "fade-in": "fade-in 0.5s ease-out forwards",
 
-        // Slower, more cinematic neon motion (less "busy")
-        "glow-pulse": "glow-pulse 8s ease-in-out infinite",
-        "glow-pulse-pink": "glow-pulse-pink 8s ease-in-out infinite",
-        "border-glow": "border-glow 10s ease-in-out infinite",
-        "border-glow-pink": "border-glow-pink 10s ease-in-out infinite",
-        "border-glow-dual": "border-glow-dual 12s ease-in-out infinite",
+        // Ambient cinematic motion (very slow, subtle)
+        "glow-pulse": "glow-pulse 16s ease-in-out infinite",
+        "glow-pulse-pink": "glow-pulse-pink 16s ease-in-out infinite",
+        "border-glow": "border-glow 18s ease-in-out infinite",
+        "border-glow-pink": "border-glow-pink 18s ease-in-out infinite",
+        "border-glow-dual": "border-glow-dual 20s ease-in-out infinite",
         "lift": "lift 0.2s ease-out forwards",
-        "glow-breathe": "glow-breathe 10s ease-in-out infinite",
+        "glow-breathe": "glow-breathe 18s ease-in-out infinite",
         "neon-flicker": "neon-flicker 2s linear infinite",
-        "pulse-slow": "pulse-slow 8s ease-in-out infinite",
+        "pulse-slow": "pulse-slow 16s ease-in-out infinite",
+        
+        // Attention animation for chat button (visible, controlled)
+        "attention-pulse": "attention-pulse 4s ease-in-out infinite",
+        
+        // Calmer skeleton loading
+        "skeleton-pulse": "skeleton-pulse 2.5s ease-in-out infinite",
       },
     },
   },
