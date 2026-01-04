@@ -21,9 +21,11 @@ export const TruthBadge = ({ basis }: TruthBadgeProps) => {
   return (
     <Tooltip>
       <TooltipTrigger asChild>
-        <Badge variant="outline" className="border-secondary/50 bg-secondary/10 text-secondary text-xs cursor-help">
-          Indicative (modelled)
-        </Badge>
+        <span className="inline-flex">
+          <Badge variant="outline" className="border-secondary/50 bg-secondary/10 text-secondary text-xs cursor-help">
+            Indicative (modelled)
+          </Badge>
+        </span>
       </TooltipTrigger>
       <TooltipContent className="max-w-xs">
         <p>Indicative range for presentation; exact financials available on request.</p>
