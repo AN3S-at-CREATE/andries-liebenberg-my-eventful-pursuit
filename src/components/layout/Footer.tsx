@@ -1,4 +1,5 @@
 import { Github, Linkedin, Mail, Phone } from "lucide-react";
+import logo from "@/assets/logo.svg";
 
 export const Footer = () => {
   return (
@@ -6,7 +7,7 @@ export const Footer = () => {
       <div className="container py-12">
         <div className="grid gap-8 md:grid-cols-3">
           <div>
-            <h3 className="font-heading text-lg font-bold text-primary mb-4">AN3S</h3>
+            <img src={logo} alt="AN3S Logo" className="h-12 mb-4" />
             <p className="text-sm text-muted-foreground">
               Building companies with real metrics and proven execution across South Africa.
             </p>
