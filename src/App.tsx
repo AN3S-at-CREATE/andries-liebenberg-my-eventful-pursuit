@@ -44,10 +44,10 @@ const App = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Simulate app initialization
+    // Simulate app initialization with extra delay for animation
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 1800);
+    }, 3800);
 
     return () => clearTimeout(timer);
   }, []);
