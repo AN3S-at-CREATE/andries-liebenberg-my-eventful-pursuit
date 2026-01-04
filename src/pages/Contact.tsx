@@ -1,16 +1,22 @@
+import { useRef } from "react";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { ScrollToTop } from "@/components/layout/ScrollToTop";
 import { ContactForm } from "@/components/contact/ContactForm";
 import { Card, CardContent } from "@/components/ui/card";
 import { Mail, Phone, MapPin, Clock, Github, Linkedin } from "lucide-react";
+import { CursorGlow } from "@/components/effects/CursorGlow";
 
 const Contact = () => {
+  const mainRef = useRef<HTMLElement>(null);
+  
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
       
-      <main className="container py-12">
+      <main ref={mainRef} className="container py-12 relative overflow-hidden">
+        <CursorGlow containerRef={mainRef} color="mixed" size={300} intensity={0.15} />
+        <div className="relative z-10">
         {/* Hero Section */}
         <div className="text-center mb-12">
           <h1 className="font-heading text-4xl md:text-5xl font-bold text-foreground mb-4">
@@ -167,6 +173,7 @@ const Contact = () => {
               </CardContent>
             </Card>
           </div>
+        </div>
         </div>
       </main>
 
