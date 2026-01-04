@@ -78,14 +78,17 @@ export const FloatingConciergeButton = forwardRef<HTMLDivElement>((_, ref) => {
       </div>
 
       {/* Floating Button */}
-      <Button
-        size="lg"
-        onClick={handleOpenChat}
-        className="h-14 w-14 rounded-full bg-secondary hover:bg-secondary/90 text-secondary-foreground shadow-lg shadow-secondary/25 transition-all duration-300 hover:scale-110 hover:drop-shadow-[0_0_15px_hsl(var(--secondary))]"
-      >
-        <MessageSquareText className="h-6 w-6" />
-        <span className="sr-only">Ask AN3S Concierge</span>
-      </Button>
+      <div className="relative">
+        <div className="absolute inset-0 rounded-full bg-secondary/50 animate-ping" />
+        <Button
+          size="lg"
+          onClick={handleOpenChat}
+          className="relative h-14 w-14 rounded-full bg-secondary hover:bg-secondary/90 text-secondary-foreground shadow-lg shadow-secondary/25 transition-all duration-300 hover:scale-110 hover:drop-shadow-[0_0_15px_hsl(var(--secondary))]"
+        >
+          <MessageSquareText className="h-6 w-6" />
+          <span className="sr-only">Ask AN3S Concierge</span>
+        </Button>
+      </div>
 
       {/* Chat Dialog */}
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
