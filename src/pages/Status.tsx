@@ -1,14 +1,17 @@
 import { useEffect, useState } from "react";
-import { useBackgroundFX } from "@/components/background/BackgroundFX";
+import { getBackgroundFXStatus } from "@/components/background/BackgroundFX";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { CheckCircle, XCircle, Palette } from "lucide-react";
 
 const Status = () => {
-  const { isMounted } = useBackgroundFX();
+  const [isMounted, setIsMounted] = useState(false);
   const [tokens, setTokens] = useState({ primary: "", secondary: "" });
   const [motionEnabled, setMotionEnabled] = useState(true);
 
   useEffect(() => {
+    // Check BackgroundFX status
+    setIsMounted(getBackgroundFXStatus().isMounted);
+
     // Check motion preference
     if (typeof window !== "undefined") {
       const prefersReducedMotion = window.matchMedia(
