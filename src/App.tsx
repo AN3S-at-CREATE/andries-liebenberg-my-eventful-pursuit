@@ -8,6 +8,7 @@ import Companies from "./pages/Companies";
 import CompanyDetail from "./pages/CompanyDetail";
 import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
+import { FloatingConciergeButton } from "./components/ai-tools/FloatingConciergeButton";
 
 const queryClient = new QueryClient();
 
@@ -25,6 +26,7 @@ const App = () => (
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
+        <FloatingConciergeButton />
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
