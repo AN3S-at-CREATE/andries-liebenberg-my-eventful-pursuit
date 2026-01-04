@@ -17,14 +17,14 @@ export const Footer = () => {
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li className="flex items-center gap-2">
                 <Mail className="h-4 w-4" />
-                <a href="mailto:hello@an3s.info" className="hover:text-foreground transition-colors">
-                  hello@an3s.info
+                <a href="mailto:email@hello.an3s.info" className="hover:text-foreground transition-colors">
+                  email@hello.an3s.info
                 </a>
               </li>
               <li className="flex items-center gap-2">
                 <Mail className="h-4 w-4" />
-                <a href="mailto:book@an3s.info" className="hover:text-foreground transition-colors">
-                  book@an3s.info
+                <a href="mailto:book@hello.an3s.info" className="hover:text-foreground transition-colors">
+                  book@hello.an3s.info
                 </a>
               </li>
               <li className="flex items-center gap-2">
