@@ -15,7 +15,7 @@ interface CompanyCardProps {
 export const CompanyCard = ({ company, metrics }: CompanyCardProps) => {
   return (
     <Link to={`/companies/${company.slug}`} className="group block">
-      <Card className="bg-card/50 backdrop-blur-sm border-border/50 hover:border-primary/50 transition-all duration-300 hover:shadow-lg hover:shadow-primary/10 h-full">
+      <Card interactive glow="cyan" className="bg-card/50 backdrop-blur-sm border-border/50 h-full">
         <CardHeader className="pb-3">
           <div className="flex items-start justify-between gap-2">
             <div className="space-y-2">
