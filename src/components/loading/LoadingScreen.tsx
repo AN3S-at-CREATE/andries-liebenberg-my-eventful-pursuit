@@ -54,7 +54,7 @@ export function LoadingScreen({ isLoading }: LoadingScreenProps) {
           <img 
             src={loadingGif} 
             alt="Loading..." 
-            className="w-40 h-40 object-contain"
+            className="w-56 h-56 object-contain"
           />
         </motion.div>
 
