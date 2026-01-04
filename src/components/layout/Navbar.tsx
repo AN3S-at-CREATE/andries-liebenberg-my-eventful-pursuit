@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Building2, Github, Linkedin, MessageCircle, Mail, Menu, X } from "lucide-react";
+import logo from "@/assets/logo.png";
 import {
   Sheet,
   SheetContent,
@@ -18,7 +19,7 @@ export const Navbar = () => {
     <header className="sticky top-0 z-50 w-full border-b border-border/50 bg-background/80 backdrop-blur-md">
       <div className="container flex h-16 items-center justify-between">
         <Link to="/" className="flex items-center gap-2">
-          <span className="font-heading text-xl font-bold text-primary">AN3S</span>
+          <img src={logo} alt="AN3S" className="h-8 w-auto" />
         </Link>
 
         <nav className="hidden md:flex items-center gap-6">
@@ -84,7 +85,7 @@ export const Navbar = () => {
               <div className="flex flex-col h-full">
                 {/* Header */}
                 <div className="flex items-center justify-between pb-6 border-b border-border/50">
-                  <span className="font-heading text-xl font-bold text-primary">AN3S</span>
+                  <img src={logo} alt="AN3S" className="h-8 w-auto" />
                 </div>
 
                 {/* Navigation Links */}
