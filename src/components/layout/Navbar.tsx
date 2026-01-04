@@ -26,22 +26,29 @@ export const Navbar = () => {
           />
         </Link>
 
-        <nav className="hidden md:flex items-center gap-6">
+        <nav className="hidden lg:flex items-center gap-5">
           <Link to="/" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
             Home
+          </Link>
+          <Link to="/about" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+            About
+          </Link>
+          <Link to="/expertise" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+            Expertise
+          </Link>
+          <Link to="/ai" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+            AI
           </Link>
           <Link to="/companies" className="text-sm text-muted-foreground hover:text-foreground transition-colors flex items-center gap-1">
             <Building2 className="h-4 w-4" />
             Companies
           </Link>
-          <a
-            href="https://profile.an3s.info"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-          >
-            Portfolio
-          </a>
+          <Link to="/showcase" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+            Showcase
+          </Link>
+          <Link to="/downloads" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+            Downloads
+          </Link>
           <Link to="/contact" className="text-sm text-muted-foreground hover:text-foreground transition-colors flex items-center gap-1">
             <Mail className="h-4 w-4" />
             Contact
@@ -79,7 +86,7 @@ export const Navbar = () => {
 
           {/* Mobile Menu */}
           <Sheet open={isOpen} onOpenChange={setIsOpen}>
-            <SheetTrigger asChild className="md:hidden">
+            <SheetTrigger asChild className="lg:hidden">
               <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-foreground">
                 <Menu className="h-5 w-5" />
                 <span className="sr-only">Open menu</span>
@@ -93,13 +100,34 @@ export const Navbar = () => {
                 </div>
 
                 {/* Navigation Links */}
-                <nav className="flex flex-col gap-1 py-6 flex-1">
+                <nav className="flex flex-col gap-1 py-6 flex-1 overflow-y-auto">
                   <Link
                     to="/"
                     onClick={closeMenu}
                     className="flex items-center gap-3 px-3 py-3 text-muted-foreground hover:text-foreground hover:bg-muted/50 rounded-md transition-colors"
                   >
                     Home
+                  </Link>
+                  <Link
+                    to="/about"
+                    onClick={closeMenu}
+                    className="flex items-center gap-3 px-3 py-3 text-muted-foreground hover:text-foreground hover:bg-muted/50 rounded-md transition-colors"
+                  >
+                    About
+                  </Link>
+                  <Link
+                    to="/expertise"
+                    onClick={closeMenu}
+                    className="flex items-center gap-3 px-3 py-3 text-muted-foreground hover:text-foreground hover:bg-muted/50 rounded-md transition-colors"
+                  >
+                    Expertise
+                  </Link>
+                  <Link
+                    to="/ai"
+                    onClick={closeMenu}
+                    className="flex items-center gap-3 px-3 py-3 text-muted-foreground hover:text-foreground hover:bg-muted/50 rounded-md transition-colors"
+                  >
+                    AI
                   </Link>
                   <Link
                     to="/companies"
@@ -109,16 +137,20 @@ export const Navbar = () => {
                     <Building2 className="h-4 w-4" />
                     Companies
                   </Link>
-                  <a
-                    href="https://profile.an3s.info"
-                    target="_blank"
-                    rel="noopener noreferrer"
+                  <Link
+                    to="/showcase"
                     onClick={closeMenu}
                     className="flex items-center gap-3 px-3 py-3 text-muted-foreground hover:text-foreground hover:bg-muted/50 rounded-md transition-colors"
                   >
-                    Portfolio
-                    <span className="text-xs text-muted-foreground">↗</span>
-                  </a>
+                    Showcase
+                  </Link>
+                  <Link
+                    to="/downloads"
+                    onClick={closeMenu}
+                    className="flex items-center gap-3 px-3 py-3 text-muted-foreground hover:text-foreground hover:bg-muted/50 rounded-md transition-colors"
+                  >
+                    Downloads
+                  </Link>
                   <Link
                     to="/contact"
                     onClick={closeMenu}
