@@ -19,6 +19,7 @@ import { cn } from "@/lib/utils";
 export const FloatingConciergeButton = forwardRef<HTMLDivElement>((_, ref) => {
   const [isHovered, setIsHovered] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const [hasInteracted, setHasInteracted] = useState(false);
   const [inputValue, setInputValue] = useState("");
   const [activeCategory, setActiveCategory] = useState<CategoryKey>("growth");
 
@@ -34,6 +35,7 @@ export const FloatingConciergeButton = forwardRef<HTMLDivElement>((_, ref) => {
   const handleOpenChat = () => {
     setIsHovered(false);
     setIsOpen(true);
+    setHasInteracted(true);
   };
 
   const handleSend = () => {
@@ -79,7 +81,9 @@ export const FloatingConciergeButton = forwardRef<HTMLDivElement>((_, ref) => {
 
       {/* Floating Button */}
       <div className="relative">
-        <div className="absolute inset-0 rounded-full bg-secondary/50 animate-ping" />
+        {!hasInteracted && (
+          <div className="absolute inset-0 rounded-full bg-secondary/50 animate-ping" />
+        )}
         <Button
           size="lg"
           onClick={handleOpenChat}
