@@ -86,3 +86,46 @@
     @apply bg-background text-foreground font-sans;
   }
 }
+
+@layer utilities {
+  /* Glow utilities using design tokens */
+  .glow-cyan {
+    box-shadow: 0 0 20px hsl(var(--primary) / 0.4);
+  }
+  .glow-pink {
+    box-shadow: 0 0 20px hsl(var(--secondary) / 0.4);
+  }
+  .glow-cyan-intense {
+    box-shadow: 0 0 30px hsl(var(--primary) / 0.6), 0 0 60px hsl(var(--primary) / 0.3);
+  }
+  .glow-pink-intense {
+    box-shadow: 0 0 30px hsl(var(--secondary) / 0.6), 0 0 60px hsl(var(--secondary) / 0.3);
+  }
+
+  /* Text glow effects */
+  .glow-text-cyan {
+    text-shadow: 0 0 10px hsl(var(--primary) / 0.5), 0 0 20px hsl(var(--primary) / 0.3);
+  }
+  .glow-text-pink {
+    text-shadow: 0 0 10px hsl(var(--secondary) / 0.5), 0 0 20px hsl(var(--secondary) / 0.3);
+  }
+
+  /* Border glow on hover */
+  .border-glow-hover:hover {
+    box-shadow: 0 0 15px hsl(var(--primary) / 0.4), 0 0 30px hsl(var(--primary) / 0.2);
+  }
+  .border-glow-pink-hover:hover {
+    box-shadow: 0 0 15px hsl(var(--secondary) / 0.4), 0 0 30px hsl(var(--secondary) / 0.2);
+  }
+
+  /* Section divider with gradient glow */
+  .divider-glow {
+    background: linear-gradient(
+      90deg,
+      transparent,
+      hsl(var(--primary) / 0.5),
+      hsl(var(--secondary) / 0.5),
+      transparent
+    );
+  }
+}

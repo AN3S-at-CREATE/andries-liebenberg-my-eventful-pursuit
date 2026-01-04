@@ -5,6 +5,7 @@ import { AIToolCard } from "./AIToolCard";
 import { ConciergeModal } from "./concierge/ConciergeModal";
 import { ROICalculatorModal } from "./calculator/ROICalculatorModal";
 import { Button } from "@/components/ui/button";
+import { MotionReveal, MotionStagger, MotionItem } from "@/components/motion/MotionReveal";
 
 export function AIToolsSection() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -43,73 +44,82 @@ export function AIToolsSection() {
       <div className="container max-w-5xl mx-auto">
         {/* Glass container for the section */}
         <div className="rounded-2xl bg-card/20 backdrop-blur-xl border border-foreground/5 p-8 md:p-12 shadow-[0_8px_32px_0_rgba(0,0,0,0.3),inset_0_1px_0_0_rgba(255,255,255,0.05)]">
-        {/* Header */}
-        <div className="text-center mb-12">
-          <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-4">
-            AI-Powered Growth Tools
-          </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Leverage AI to diagnose, plan, and calculate your growth potential
-            with tools built from real experience.
-          </p>
-        </div>
-        <div className="grid md:grid-cols-3 gap-6">
-          {/* AI Growth Diagnostic Wizard */}
-          <AIToolCard
-            icon={ClipboardList}
-            title="Growth Diagnostic"
-            description="7-step wizard to diagnose your business growth needs and get personalized recommendations."
-            status="coming-soon"
-            accentColor="primary"
-          />
+          {/* Header */}
+          <MotionReveal>
+            <div className="text-center mb-12">
+              <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-4">
+                AI-Powered Growth Tools
+              </h2>
+              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+                Leverage AI to diagnose, plan, and calculate your growth potential
+                with tools built from real experience.
+              </p>
+            </div>
+          </MotionReveal>
 
-          {/* Ask AN3S Concierge - AVAILABLE */}
-          <AIToolCard
-            icon={MessageSquareText}
-            title="Ask AN3S Concierge"
-            description="Chat with AI about my experience, methodologies, and how I can help grow your business."
-            status="available"
-            accentColor="secondary"
-          >
-            <ConciergeModal
-              trigger={
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="w-full border-secondary/50 text-secondary hover:bg-secondary/10 hover:border-secondary"
-                >
-                  <MessageSquareText className="w-4 h-4 mr-2" />
-                  Start Chat
-                </Button>
-              }
-            />
-          </AIToolCard>
+          <MotionStagger className="grid md:grid-cols-3 gap-6">
+            {/* AI Growth Diagnostic Wizard */}
+            <MotionItem>
+              <AIToolCard
+                icon={ClipboardList}
+                title="Growth Diagnostic"
+                description="7-step wizard to diagnose your business growth needs and get personalized recommendations."
+                status="coming-soon"
+                accentColor="primary"
+              />
+            </MotionItem>
 
-          {/* ROI Calculator - AVAILABLE */}
-          <AIToolCard
-            icon={Calculator}
-            title="ROI Calculator"
-            description="Calculate potential returns from growth experiments with interactive sliders and ZAR output."
-            status="available"
-            accentColor="primary"
-          >
-            <ROICalculatorModal
-              initialValues={roiInitialValues}
-              autoOpen={autoOpenROI}
-              onAutoOpenComplete={() => setAutoOpenROI(false)}
-              trigger={
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="w-full border-primary/50 text-primary hover:bg-primary/10 hover:border-primary"
-                >
-                  <Calculator className="w-4 h-4 mr-2" />
-                  Calculate ROI
-                </Button>
-              }
-            />
-          </AIToolCard>
-          </div>
+            {/* Ask AN3S Concierge - AVAILABLE */}
+            <MotionItem>
+              <AIToolCard
+                icon={MessageSquareText}
+                title="Ask AN3S Concierge"
+                description="Chat with AI about my experience, methodologies, and how I can help grow your business."
+                status="available"
+                accentColor="secondary"
+              >
+                <ConciergeModal
+                  trigger={
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="w-full border-secondary/50 text-secondary hover:bg-secondary/10 hover:border-secondary animate-border-glow-pink"
+                    >
+                      <MessageSquareText className="w-4 h-4 mr-2" />
+                      Start Chat
+                    </Button>
+                  }
+                />
+              </AIToolCard>
+            </MotionItem>
+
+            {/* ROI Calculator - AVAILABLE */}
+            <MotionItem>
+              <AIToolCard
+                icon={Calculator}
+                title="ROI Calculator"
+                description="Calculate potential returns from growth experiments with interactive sliders and ZAR output."
+                status="available"
+                accentColor="primary"
+              >
+                <ROICalculatorModal
+                  initialValues={roiInitialValues}
+                  autoOpen={autoOpenROI}
+                  onAutoOpenComplete={() => setAutoOpenROI(false)}
+                  trigger={
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="w-full border-primary/50 text-primary hover:bg-primary/10 hover:border-primary"
+                    >
+                      <Calculator className="w-4 h-4 mr-2" />
+                      Calculate ROI
+                    </Button>
+                  }
+                />
+              </AIToolCard>
+            </MotionItem>
+          </MotionStagger>
         </div>
       </div>
     </section>

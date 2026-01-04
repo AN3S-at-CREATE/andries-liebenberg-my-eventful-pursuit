@@ -7,34 +7,38 @@ import Index from "./pages/Index";
 import Companies from "./pages/Companies";
 import CompanyDetail from "./pages/CompanyDetail";
 import Contact from "./pages/Contact";
+import Status from "./pages/Status";
 import NotFound from "./pages/NotFound";
 import { FloatingConciergeButton } from "./components/ai-tools/FloatingConciergeButton";
 import { PageTransition } from "./components/layout/PageTransition";
-import { AnimatedBackground } from "./components/background/AnimatedBackground";
+import { BackgroundFXProvider, BackgroundFX } from "./components/background/BackgroundFX";
 
 const queryClient = new QueryClient();
 
 const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <AnimatedBackground />
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <PageTransition>
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/companies" element={<Companies />} />
-            <Route path="/companies/:slug" element={<CompanyDetail />} />
-            <Route path="/contact" element={<Contact />} />
-            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </PageTransition>
-        <FloatingConciergeButton />
-      </BrowserRouter>
-    </TooltipProvider>
-  </QueryClientProvider>
+  <BackgroundFXProvider>
+    <QueryClientProvider client={queryClient}>
+      <TooltipProvider>
+        <BackgroundFX />
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
+          <PageTransition>
+            <Routes>
+              <Route path="/" element={<Index />} />
+              <Route path="/companies" element={<Companies />} />
+              <Route path="/companies/:slug" element={<CompanyDetail />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/__status" element={<Status />} />
+              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </PageTransition>
+          <FloatingConciergeButton />
+        </BrowserRouter>
+      </TooltipProvider>
+    </QueryClientProvider>
+  </BackgroundFXProvider>
 );
 
 export default App;

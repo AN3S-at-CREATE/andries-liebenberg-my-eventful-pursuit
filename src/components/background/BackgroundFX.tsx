@@ -1,4 +1,46 @@
-import { useEffect, useRef } from "react";
+import { createContext, useContext, useEffect, useRef, useState, ReactNode } from "react";
+
+interface BackgroundFXContextType {
+  isMounted: boolean;
+  particleCount: number;
+}
+
+const BackgroundFXContext = createContext<BackgroundFXContextType>({
+  isMounted: false,
+  particleCount: 0,
+});
+
+export const useBackgroundFX = () => useContext(BackgroundFXContext);
+
+interface BackgroundFXProviderProps {
+  children: ReactNode;
+}
+
+export function BackgroundFXProvider({ children }: BackgroundFXProviderProps) {
+  const [isMounted, setIsMounted] = useState(false);
+  const [particleCount, setParticleCount] = useState(0);
+
+  return (
+    <BackgroundFXContext.Provider value={{ isMounted, particleCount }}>
+      <BackgroundFXUpdater setIsMounted={setIsMounted} setParticleCount={setParticleCount} />
+      {children}
+    </BackgroundFXContext.Provider>
+  );
+}
+
+interface BackgroundFXUpdaterProps {
+  setIsMounted: (v: boolean) => void;
+  setParticleCount: (v: number) => void;
+}
+
+function BackgroundFXUpdater({ setIsMounted, setParticleCount }: BackgroundFXUpdaterProps) {
+  useEffect(() => {
+    setIsMounted(true);
+    return () => setIsMounted(false);
+  }, [setIsMounted]);
+
+  return null;
+}
 
 interface Particle {
   x: number;
@@ -10,10 +52,11 @@ interface Particle {
   color: string;
 }
 
-export function AnimatedBackground() {
+export function BackgroundFX() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const animationRef = useRef<number>();
   const particlesRef = useRef<Particle[]>([]);
+  const { isMounted } = useBackgroundFX();
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -22,9 +65,9 @@ export function AnimatedBackground() {
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    // Colors from design system (HSL to RGB)
-    const cyanColor = "rgba(13, 229, 255, "; // hsl(186, 100%, 53%)
-    const pinkColor = "rgba(255, 26, 140, "; // hsl(331, 100%, 55%)
+    // Colors from design system
+    const cyanColor = "rgba(13, 229, 255, ";
+    const pinkColor = "rgba(255, 26, 140, ";
 
     const resizeCanvas = () => {
       canvas.width = window.innerWidth;
@@ -32,36 +75,37 @@ export function AnimatedBackground() {
     };
 
     const initParticles = () => {
-      const particleCount = Math.floor((canvas.width * canvas.height) / 25000);
+      const particleCount = Math.floor((canvas.width * canvas.height) / 20000);
       particlesRef.current = [];
 
       for (let i = 0; i < particleCount; i++) {
         particlesRef.current.push({
           x: Math.random() * canvas.width,
           y: Math.random() * canvas.height,
-          vx: (Math.random() - 0.5) * 0.3,
-          vy: (Math.random() - 0.5) * 0.3,
-          size: Math.random() * 2 + 0.5,
-          opacity: Math.random() * 0.5 + 0.1,
-          color: Math.random() > 0.5 ? cyanColor : pinkColor,
+          vx: (Math.random() - 0.5) * 0.4,
+          vy: (Math.random() - 0.5) * 0.4,
+          size: Math.random() * 2.5 + 0.5,
+          opacity: Math.random() * 0.6 + 0.15,
+          color: Math.random() > 0.4 ? cyanColor : pinkColor,
         });
       }
     };
 
     const drawGrid = () => {
       const horizonY = canvas.height * 0.65;
-      const gridLines = 20;
+      const gridLines = 25;
       const vanishingPointX = canvas.width / 2;
 
-      ctx.strokeStyle = "rgba(13, 229, 255, 0.08)";
+      // Grid lines with cyan
+      ctx.strokeStyle = "rgba(13, 229, 255, 0.06)";
       ctx.lineWidth = 1;
 
       // Horizontal lines (perspective)
       for (let i = 0; i <= gridLines; i++) {
         const progress = i / gridLines;
         const y = horizonY + (canvas.height - horizonY) * Math.pow(progress, 1.5);
-        const spread = 1 + progress * 2;
-        
+        const spread = 1 + progress * 2.5;
+
         ctx.beginPath();
         ctx.moveTo(vanishingPointX - (canvas.width * spread) / 2, y);
         ctx.lineTo(vanishingPointX + (canvas.width * spread) / 2, y);
@@ -69,23 +113,31 @@ export function AnimatedBackground() {
       }
 
       // Vertical lines (converging to vanishing point)
-      const verticalLines = 30;
+      const verticalLines = 35;
       for (let i = -verticalLines / 2; i <= verticalLines / 2; i++) {
         const baseX = vanishingPointX + i * (canvas.width / verticalLines) * 3;
-        
+
         ctx.beginPath();
         ctx.moveTo(vanishingPointX, horizonY);
         ctx.lineTo(baseX, canvas.height);
         ctx.stroke();
       }
 
-      // Horizon glow
-      const gradient = ctx.createLinearGradient(0, horizonY - 50, 0, horizonY + 50);
-      gradient.addColorStop(0, "rgba(13, 229, 255, 0)");
-      gradient.addColorStop(0.5, "rgba(13, 229, 255, 0.05)");
-      gradient.addColorStop(1, "rgba(13, 229, 255, 0)");
-      ctx.fillStyle = gradient;
-      ctx.fillRect(0, horizonY - 50, canvas.width, 100);
+      // Horizon glow (cyan)
+      const horizonGradient = ctx.createLinearGradient(0, horizonY - 60, 0, horizonY + 60);
+      horizonGradient.addColorStop(0, "rgba(13, 229, 255, 0)");
+      horizonGradient.addColorStop(0.5, "rgba(13, 229, 255, 0.08)");
+      horizonGradient.addColorStop(1, "rgba(13, 229, 255, 0)");
+      ctx.fillStyle = horizonGradient;
+      ctx.fillRect(0, horizonY - 60, canvas.width, 120);
+
+      // Bottom pink glow zone
+      const bottomGradient = ctx.createLinearGradient(0, canvas.height - 150, 0, canvas.height);
+      bottomGradient.addColorStop(0, "rgba(255, 26, 140, 0)");
+      bottomGradient.addColorStop(0.5, "rgba(255, 26, 140, 0.04)");
+      bottomGradient.addColorStop(1, "rgba(255, 26, 140, 0.02)");
+      ctx.fillStyle = bottomGradient;
+      ctx.fillRect(0, canvas.height - 150, canvas.width, 150);
     };
 
     const drawParticles = () => {
@@ -100,16 +152,16 @@ export function AnimatedBackground() {
         if (particle.y < 0) particle.y = canvas.height;
         if (particle.y > canvas.height) particle.y = 0;
 
-        // Draw particle with glow
+        // Draw particle core
         ctx.beginPath();
         ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
         ctx.fillStyle = particle.color + particle.opacity + ")";
         ctx.fill();
 
-        // Subtle glow effect
+        // Outer glow
         ctx.beginPath();
-        ctx.arc(particle.x, particle.y, particle.size * 3, 0, Math.PI * 2);
-        ctx.fillStyle = particle.color + (particle.opacity * 0.2) + ")";
+        ctx.arc(particle.x, particle.y, particle.size * 4, 0, Math.PI * 2);
+        ctx.fillStyle = particle.color + (particle.opacity * 0.15) + ")";
         ctx.fill();
       });
     };
@@ -117,27 +169,27 @@ export function AnimatedBackground() {
     const drawNoise = () => {
       const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
       const data = imageData.data;
-      
+
       for (let i = 0; i < data.length; i += 4) {
-        const noise = (Math.random() - 0.5) * 8;
+        const noise = (Math.random() - 0.5) * 6;
         data[i] += noise;
         data[i + 1] += noise;
         data[i + 2] += noise;
       }
-      
+
       ctx.putImageData(imageData, 0, 0);
     };
 
     const animate = () => {
-      // Clear with slight trail effect
+      // Clear with background color
       ctx.fillStyle = "hsl(223, 24%, 6%)";
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
       drawGrid();
       drawParticles();
-      
-      // Only apply noise occasionally for performance
-      if (Math.random() < 0.1) {
+
+      // Subtle noise effect occasionally
+      if (Math.random() < 0.08) {
         drawNoise();
       }
 
@@ -148,16 +200,18 @@ export function AnimatedBackground() {
     initParticles();
     animate();
 
-    window.addEventListener("resize", () => {
+    const handleResize = () => {
       resizeCanvas();
       initParticles();
-    });
+    };
+
+    window.addEventListener("resize", handleResize);
 
     return () => {
       if (animationRef.current) {
         cancelAnimationFrame(animationRef.current);
       }
-      window.removeEventListener("resize", resizeCanvas);
+      window.removeEventListener("resize", handleResize);
     };
   }, []);
 
