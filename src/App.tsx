@@ -9,6 +9,7 @@ import CompanyDetail from "./pages/CompanyDetail";
 import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
 import { FloatingConciergeButton } from "./components/ai-tools/FloatingConciergeButton";
+import { PageTransition } from "./components/layout/PageTransition";
 
 const queryClient = new QueryClient();
 
@@ -18,14 +19,16 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/companies" element={<Companies />} />
-          <Route path="/companies/:slug" element={<CompanyDetail />} />
-          <Route path="/contact" element={<Contact />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+        <PageTransition>
+          <Routes>
+            <Route path="/" element={<Index />} />
+            <Route path="/companies" element={<Companies />} />
+            <Route path="/companies/:slug" element={<CompanyDetail />} />
+            <Route path="/contact" element={<Contact />} />
+            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </PageTransition>
         <FloatingConciergeButton />
       </BrowserRouter>
     </TooltipProvider>
