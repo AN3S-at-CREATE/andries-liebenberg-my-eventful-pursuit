@@ -87,7 +87,7 @@ export const FloatingConciergeButton = forwardRef<HTMLDivElement>((_, ref) => {
       {/* Floating Button */}
       <div className="relative">
         {!hasInteracted && (
-          <div className="absolute inset-0 rounded-full bg-secondary/50 animate-ping" />
+          <div className="absolute inset-0 rounded-full bg-secondary/30 animate-pulse" />
         )}
         <Button
           size="lg"
