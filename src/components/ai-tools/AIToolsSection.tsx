@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { ClipboardList, MessageSquareText, Calculator } from "lucide-react";
 import { AIToolCard } from "./AIToolCard";
@@ -6,10 +6,8 @@ import { ConciergeModal } from "./concierge/ConciergeModal";
 import { ROICalculatorModal } from "./calculator/ROICalculatorModal";
 import { Button } from "@/components/ui/button";
 import { MotionReveal, MotionStagger, MotionItem } from "@/components/motion/MotionReveal";
-import { CursorGlow } from "@/components/effects/CursorGlow";
 
 export function AIToolsSection() {
-  const sectionRef = useRef<HTMLElement>(null);
   const [searchParams, setSearchParams] = useSearchParams();
   const [roiInitialValues, setRoiInitialValues] = useState<{
     revenue?: number;
@@ -42,9 +40,8 @@ export function AIToolsSection() {
   }, [searchParams, setSearchParams]);
 
   return (
-    <section ref={sectionRef} className="py-20 px-4 relative overflow-hidden">
-      <CursorGlow containerRef={sectionRef} color="mixed" size={300} intensity={0.15} />
-      <div className="container max-w-5xl mx-auto relative z-10">
+    <section className="py-20 px-4">
+      <div className="container max-w-5xl mx-auto">
         {/* Glass container for the section */}
         <div className="rounded-2xl bg-card/20 backdrop-blur-xl border border-foreground/5 p-8 md:p-12 shadow-[0_8px_32px_0_rgba(0,0,0,0.3),inset_0_1px_0_0_rgba(255,255,255,0.05)]">
           {/* Header */}

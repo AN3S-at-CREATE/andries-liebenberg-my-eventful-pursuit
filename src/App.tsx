@@ -37,6 +37,7 @@ import { FloatingConciergeButton } from "./components/ai-tools/FloatingConcierge
 import { PageTransition } from "./components/layout/PageTransition";
 import { BackgroundFX } from "./components/background/BackgroundFX";
 import { LoadingScreen } from "./components/loading/LoadingScreen";
+import { GlobalCursorGlow } from "./components/effects/GlobalCursorGlow";
 
 const queryClient = new QueryClient();
 
@@ -57,6 +58,7 @@ const App = () => {
       <TooltipProvider>
         <LoadingScreen isLoading={isLoading} />
         <BackgroundFX />
+        <GlobalCursorGlow color="mixed" size={350} intensity={0.2} />
         <Toaster />
         <Sonner />
         <BrowserRouter>

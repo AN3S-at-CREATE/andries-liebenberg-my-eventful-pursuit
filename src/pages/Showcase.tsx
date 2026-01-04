@@ -1,4 +1,3 @@
-import { useRef } from "react";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { ScrollToTop } from "@/components/layout/ScrollToTop";
@@ -8,7 +7,6 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { EventGallery } from "@/components/showcase/EventGallery";
-import { CursorGlow } from "@/components/effects/CursorGlow";
 import { 
   Image,
   Play, 
@@ -126,19 +124,13 @@ const stats = [
 ];
 
 const Showcase = () => {
-  const heroRef = useRef<HTMLElement>(null);
-  const galleryRef = useRef<HTMLElement>(null);
-  const eventsRef = useRef<HTMLElement>(null);
-  const casesRef = useRef<HTMLElement>(null);
-
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
       
       {/* Hero Section */}
-      <section ref={heroRef} className="relative py-24 px-4 overflow-hidden">
-        <CursorGlow containerRef={heroRef} color="mixed" size={350} intensity={0.2} />
-        <div className="container max-w-6xl mx-auto relative z-10">
+      <section className="relative py-24 px-4 overflow-hidden">
+        <div className="container max-w-6xl mx-auto">
           <MotionReveal>
             <div className="text-center mb-16">
               <Badge variant="glow-cyan" className="mb-4">Portfolio</Badge>
@@ -167,9 +159,8 @@ const Showcase = () => {
       </section>
 
       {/* Event Gallery Section */}
-      <section ref={galleryRef} className="py-16 px-4 bg-muted/20 relative overflow-hidden">
-        <CursorGlow containerRef={galleryRef} color="cyan" size={300} intensity={0.15} />
-        <div className="container max-w-6xl mx-auto relative z-10">
+      <section className="py-16 px-4 bg-muted/20">
+        <div className="container max-w-6xl mx-auto">
           <MotionReveal>
             <div className="text-center mb-12">
               <Badge variant="glow-cyan" className="mb-4">Photo Gallery</Badge>
@@ -216,9 +207,8 @@ const Showcase = () => {
       </section>
 
       {/* Event Portfolio Section */}
-      <section ref={eventsRef} className="py-16 px-4 bg-muted/20 relative overflow-hidden">
-        <CursorGlow containerRef={eventsRef} color="pink" size={300} intensity={0.15} />
-        <div className="container max-w-6xl mx-auto relative z-10">
+      <section className="py-16 px-4 bg-muted/20">
+        <div className="container max-w-6xl mx-auto">
           <MotionReveal>
             <div className="text-center mb-12">
               <Badge variant="glow-pink" className="mb-4">Event Portfolio</Badge>
@@ -274,9 +264,8 @@ const Showcase = () => {
       </section>
 
       {/* Case Studies Section */}
-      <section ref={casesRef} className="py-16 px-4 relative overflow-hidden">
-        <CursorGlow containerRef={casesRef} color="cyan" size={300} intensity={0.15} />
-        <div className="container max-w-6xl mx-auto relative z-10">
+      <section className="py-16 px-4">
+        <div className="container max-w-6xl mx-auto">
           <MotionReveal>
             <div className="text-center mb-12">
               <Badge variant="glow-cyan" className="mb-4">Case Studies</Badge>
