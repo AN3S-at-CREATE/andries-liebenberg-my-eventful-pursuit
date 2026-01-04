@@ -1,3 +1,4 @@
+import { useRef } from "react";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { ScrollToTop } from "@/components/layout/ScrollToTop";
@@ -8,16 +9,47 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight, Building2, TrendingUp, Users, Star } from "lucide-react";
 import { Link } from "react-router-dom";
 import { MotionReveal, MotionStagger, MotionItem } from "@/components/motion/MotionReveal";
+import { motion, useScroll, useTransform } from "framer-motion";
 
 const Index = () => {
+  const heroRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: heroRef,
+    offset: ["start start", "end start"],
+  });
+
+  // Parallax transforms
+  const backgroundY = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
+  const contentY = useTransform(scrollYProgress, [0, 1], ["0%", "15%"]);
+  const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
+
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
       
-      {/* Hero Section */}
-      <section className="relative py-24 px-4 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-primary/5 via-transparent to-transparent" />
-        <div className="container max-w-4xl mx-auto text-center relative z-10">
+      {/* Hero Section with Parallax */}
+      <section ref={heroRef} className="relative py-24 px-4 overflow-hidden">
+        {/* Parallax background layer */}
+        <motion.div
+          className="absolute inset-0 bg-gradient-to-b from-primary/5 via-transparent to-transparent"
+          style={{ y: backgroundY }}
+        />
+        
+        {/* Floating glow orbs with parallax */}
+        <motion.div
+          className="absolute top-20 left-1/4 w-64 h-64 rounded-full bg-primary/10 blur-[100px] pointer-events-none"
+          style={{ y: useTransform(scrollYProgress, [0, 1], ["0%", "50%"]) }}
+        />
+        <motion.div
+          className="absolute top-40 right-1/4 w-48 h-48 rounded-full bg-secondary/10 blur-[80px] pointer-events-none"
+          style={{ y: useTransform(scrollYProgress, [0, 1], ["0%", "70%"]) }}
+        />
+        
+        {/* Content with parallax */}
+        <motion.div
+          className="container max-w-4xl mx-auto text-center relative z-10"
+          style={{ y: contentY, opacity }}
+        >
           <MotionReveal delay={0}>
             <h1 className="font-heading text-4xl md:text-6xl font-bold text-foreground mb-6">
               I don't just talk growth —{" "}
@@ -49,7 +81,7 @@ const Index = () => {
               </Button>
             </div>
           </MotionReveal>
-        </div>
+        </motion.div>
       </section>
 
       {/* Divider */}
