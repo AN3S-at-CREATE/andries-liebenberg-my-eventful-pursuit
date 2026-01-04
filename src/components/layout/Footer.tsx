@@ -1,4 +1,5 @@
 import { Github, Linkedin, Mail, Phone } from "lucide-react";
+import { Link } from "react-router-dom";
 import logo from "@/assets/logo.svg";
 
 export const Footer = () => {
@@ -7,11 +8,13 @@ export const Footer = () => {
       <div className="container py-12">
         <div className="grid gap-8 md:grid-cols-3">
           <div>
-            <img 
-              src={logo} 
-              alt="AN3S Logo" 
-              className="h-12 mb-4 transition-all duration-300 hover:scale-110 hover:drop-shadow-[0_0_12px_hsl(var(--primary))]" 
-            />
+            <Link to="/">
+              <img 
+                src={logo} 
+                alt="AN3S Logo" 
+                className="h-12 mb-4 transition-all duration-300 hover:scale-110 hover:drop-shadow-[0_0_12px_hsl(var(--primary))]" 
+              />
+            </Link>
             <p className="text-sm text-muted-foreground">
               Building companies with real metrics and proven execution across South Africa.
             </p>
