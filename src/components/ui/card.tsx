@@ -4,9 +4,15 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const cardVariants = cva(
-  "rounded-lg border bg-card text-card-foreground shadow-sm transition-all duration-300 ease-out",
+  "rounded-lg border text-card-foreground shadow-sm transition-all duration-300 ease-out",
   {
     variants: {
+      variant: {
+        default: "bg-card",
+        glass: "bg-card/40 backdrop-blur-xl border-foreground/10 shadow-[0_8px_32px_0_rgba(0,0,0,0.3),inset_0_1px_0_0_rgba(255,255,255,0.05)]",
+        "glass-cyan": "bg-primary/5 backdrop-blur-xl border-primary/20 shadow-[0_8px_32px_0_hsl(var(--primary)/0.1),inset_0_1px_0_0_hsl(var(--primary)/0.1)]",
+        "glass-pink": "bg-secondary/5 backdrop-blur-xl border-secondary/20 shadow-[0_8px_32px_0_hsl(var(--secondary)/0.1),inset_0_1px_0_0_hsl(var(--secondary)/0.1)]",
+      },
       interactive: {
         true: "hover:-translate-y-1 hover:shadow-[0_8px_30px_-10px_hsl(var(--primary)/0.3)] hover:border-primary/30 cursor-pointer",
         false: "",
@@ -19,6 +25,7 @@ const cardVariants = cva(
       },
     },
     defaultVariants: {
+      variant: "default",
       interactive: false,
       glow: "none",
     },
@@ -30,10 +37,10 @@ export interface CardProps
     VariantProps<typeof cardVariants> {}
 
 const Card = React.forwardRef<HTMLDivElement, CardProps>(
-  ({ className, interactive, glow, ...props }, ref) => (
+  ({ className, variant, interactive, glow, ...props }, ref) => (
     <div
       ref={ref}
-      className={cn(cardVariants({ interactive, glow, className }))}
+      className={cn(cardVariants({ variant, interactive, glow, className }))}
       {...props}
     />
   )
