@@ -70,7 +70,7 @@ export const CursorGlow = ({
       {/* Primary glow */}
       <motion.div
         ref={glowRef}
-        className={`absolute pointer-events-none rounded-full blur-[80px] ${getGlowColor()}`}
+        className={`absolute pointer-events-none rounded-full blur-[80px] z-20 ${getGlowColor()}`}
         style={{
           width: size,
           height: size,
@@ -85,7 +85,7 @@ export const CursorGlow = ({
 
       {/* Secondary smaller glow for more intensity at center */}
       <motion.div
-        className="absolute pointer-events-none rounded-full blur-[40px] bg-primary/20"
+        className="absolute pointer-events-none rounded-full blur-[40px] bg-primary/20 z-20"
         style={{
           width: size * 0.4,
           height: size * 0.4,
