@@ -1,46 +1,4 @@
-import { createContext, useContext, useEffect, useRef, useState, ReactNode } from "react";
-
-interface BackgroundFXContextType {
-  isMounted: boolean;
-  particleCount: number;
-}
-
-const BackgroundFXContext = createContext<BackgroundFXContextType>({
-  isMounted: false,
-  particleCount: 0,
-});
-
-export const useBackgroundFX = () => useContext(BackgroundFXContext);
-
-interface BackgroundFXProviderProps {
-  children: ReactNode;
-}
-
-export function BackgroundFXProvider({ children }: BackgroundFXProviderProps) {
-  const [isMounted, setIsMounted] = useState(false);
-  const [particleCount, setParticleCount] = useState(0);
-
-  return (
-    <BackgroundFXContext.Provider value={{ isMounted, particleCount }}>
-      <BackgroundFXUpdater setIsMounted={setIsMounted} setParticleCount={setParticleCount} />
-      {children}
-    </BackgroundFXContext.Provider>
-  );
-}
-
-interface BackgroundFXUpdaterProps {
-  setIsMounted: (v: boolean) => void;
-  setParticleCount: (v: number) => void;
-}
-
-function BackgroundFXUpdater({ setIsMounted, setParticleCount }: BackgroundFXUpdaterProps) {
-  useEffect(() => {
-    setIsMounted(true);
-    return () => setIsMounted(false);
-  }, [setIsMounted]);
-
-  return null;
-}
+import { useEffect, useRef } from "react";
 
 interface Particle {
   x: number;
@@ -52,13 +10,18 @@ interface Particle {
   color: string;
 }
 
+// Simple global state for status page
+let backgroundMounted = false;
+export const getBackgroundFXStatus = () => ({ isMounted: backgroundMounted });
+
 export function BackgroundFX() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const animationRef = useRef<number>();
   const particlesRef = useRef<Particle[]>([]);
-  const { isMounted } = useBackgroundFX();
 
   useEffect(() => {
+    backgroundMounted = true;
+    
     const canvas = canvasRef.current;
     if (!canvas) return;
 
@@ -96,11 +59,9 @@ export function BackgroundFX() {
       const gridLines = 25;
       const vanishingPointX = canvas.width / 2;
 
-      // Grid lines with cyan
       ctx.strokeStyle = "rgba(13, 229, 255, 0.06)";
       ctx.lineWidth = 1;
 
-      // Horizontal lines (perspective)
       for (let i = 0; i <= gridLines; i++) {
         const progress = i / gridLines;
         const y = horizonY + (canvas.height - horizonY) * Math.pow(progress, 1.5);
@@ -112,18 +73,15 @@ export function BackgroundFX() {
         ctx.stroke();
       }
 
-      // Vertical lines (converging to vanishing point)
       const verticalLines = 35;
       for (let i = -verticalLines / 2; i <= verticalLines / 2; i++) {
         const baseX = vanishingPointX + i * (canvas.width / verticalLines) * 3;
-
         ctx.beginPath();
         ctx.moveTo(vanishingPointX, horizonY);
         ctx.lineTo(baseX, canvas.height);
         ctx.stroke();
       }
 
-      // Horizon glow (cyan)
       const horizonGradient = ctx.createLinearGradient(0, horizonY - 60, 0, horizonY + 60);
       horizonGradient.addColorStop(0, "rgba(13, 229, 255, 0)");
       horizonGradient.addColorStop(0.5, "rgba(13, 229, 255, 0.08)");
@@ -131,7 +89,6 @@ export function BackgroundFX() {
       ctx.fillStyle = horizonGradient;
       ctx.fillRect(0, horizonY - 60, canvas.width, 120);
 
-      // Bottom pink glow zone
       const bottomGradient = ctx.createLinearGradient(0, canvas.height - 150, 0, canvas.height);
       bottomGradient.addColorStop(0, "rgba(255, 26, 140, 0)");
       bottomGradient.addColorStop(0.5, "rgba(255, 26, 140, 0.04)");
@@ -142,23 +99,19 @@ export function BackgroundFX() {
 
     const drawParticles = () => {
       particlesRef.current.forEach((particle) => {
-        // Update position
         particle.x += particle.vx;
         particle.y += particle.vy;
 
-        // Wrap around edges
         if (particle.x < 0) particle.x = canvas.width;
         if (particle.x > canvas.width) particle.x = 0;
         if (particle.y < 0) particle.y = canvas.height;
         if (particle.y > canvas.height) particle.y = 0;
 
-        // Draw particle core
         ctx.beginPath();
         ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
         ctx.fillStyle = particle.color + particle.opacity + ")";
         ctx.fill();
 
-        // Outer glow
         ctx.beginPath();
         ctx.arc(particle.x, particle.y, particle.size * 4, 0, Math.PI * 2);
         ctx.fillStyle = particle.color + (particle.opacity * 0.15) + ")";
@@ -181,14 +134,12 @@ export function BackgroundFX() {
     };
 
     const animate = () => {
-      // Clear with background color
       ctx.fillStyle = "hsl(223, 24%, 6%)";
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
       drawGrid();
       drawParticles();
 
-      // Subtle noise effect occasionally
       if (Math.random() < 0.08) {
         drawNoise();
       }
@@ -208,6 +159,7 @@ export function BackgroundFX() {
     window.addEventListener("resize", handleResize);
 
     return () => {
+      backgroundMounted = false;
       if (animationRef.current) {
         cancelAnimationFrame(animationRef.current);
       }
