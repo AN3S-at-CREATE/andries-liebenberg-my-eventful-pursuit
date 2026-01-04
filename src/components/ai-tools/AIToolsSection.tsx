@@ -41,6 +41,8 @@ export function AIToolsSection() {
   return (
     <section className="py-20 px-4">
       <div className="container max-w-5xl mx-auto">
+        {/* Glass container for the section */}
+        <div className="rounded-2xl bg-card/20 backdrop-blur-xl border border-foreground/5 p-8 md:p-12 shadow-[0_8px_32px_0_rgba(0,0,0,0.3),inset_0_1px_0_0_rgba(255,255,255,0.05)]">
         {/* Header */}
         <div className="text-center mb-12">
           <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-4">
@@ -51,8 +53,6 @@ export function AIToolsSection() {
             with tools built from real experience.
           </p>
         </div>
-
-        {/* Tool Cards Grid */}
         <div className="grid md:grid-cols-3 gap-6">
           {/* AI Growth Diagnostic Wizard */}
           <AIToolCard
@@ -109,6 +109,7 @@ export function AIToolsSection() {
               }
             />
           </AIToolCard>
+          </div>
         </div>
       </div>
     </section>
