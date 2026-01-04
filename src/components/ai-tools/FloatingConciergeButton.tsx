@@ -1,4 +1,4 @@
-import { useState, forwardRef } from "react";
+import { useState, forwardRef, useEffect } from "react";
 import { MessageSquareText } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -19,7 +19,9 @@ import { cn } from "@/lib/utils";
 export const FloatingConciergeButton = forwardRef<HTMLDivElement>((_, ref) => {
   const [isHovered, setIsHovered] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-  const [hasInteracted, setHasInteracted] = useState(false);
+  const [hasInteracted, setHasInteracted] = useState(() => {
+    return localStorage.getItem("an3s-concierge-interacted") === "true";
+  });
   const [inputValue, setInputValue] = useState("");
   const [activeCategory, setActiveCategory] = useState<CategoryKey>("growth");
 
@@ -35,7 +37,10 @@ export const FloatingConciergeButton = forwardRef<HTMLDivElement>((_, ref) => {
   const handleOpenChat = () => {
     setIsHovered(false);
     setIsOpen(true);
-    setHasInteracted(true);
+    if (!hasInteracted) {
+      setHasInteracted(true);
+      localStorage.setItem("an3s-concierge-interacted", "true");
+    }
   };
 
   const handleSend = () => {
