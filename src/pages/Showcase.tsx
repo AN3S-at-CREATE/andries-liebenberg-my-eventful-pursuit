@@ -6,8 +6,9 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import { EventGallery } from "@/components/showcase/EventGallery";
 import { 
-  Image, 
+  Image,
   Play, 
   ExternalLink, 
   Calendar, 
@@ -154,10 +155,35 @@ const Showcase = () => {
               ))}
             </div>
           </MotionReveal>
+        </div>
+      </section>
 
-          {/* Live Portfolio CTA */}
+      {/* Event Gallery Section */}
+      <section className="py-16 px-4 bg-muted/20">
+        <div className="container max-w-6xl mx-auto">
+          <MotionReveal>
+            <div className="text-center mb-12">
+              <Badge variant="glow-cyan" className="mb-4">Photo Gallery</Badge>
+              <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-4">
+                Event <span className="text-primary glow-text-cyan">Highlights</span>
+              </h2>
+              <p className="text-muted-foreground max-w-2xl mx-auto">
+                Visual showcase of our spectacular event productions. Click any image to explore.
+              </p>
+            </div>
+          </MotionReveal>
+
           <MotionReveal delay={0.2}>
-            <Card className="glass p-8 md:p-12 text-center mb-16">
+            <EventGallery />
+          </MotionReveal>
+        </div>
+      </section>
+
+      {/* Live Portfolio CTA */}
+      <section className="py-16 px-4">
+        <div className="container max-w-6xl mx-auto">
+          <MotionReveal delay={0.2}>
+            <Card className="glass p-8 md:p-12 text-center">
               <Image className="h-16 w-16 text-primary mx-auto mb-6" />
               <h3 className="font-heading text-2xl font-bold text-foreground mb-4">Full Live Portfolio</h3>
               <p className="text-muted-foreground mb-8 max-w-xl mx-auto">
