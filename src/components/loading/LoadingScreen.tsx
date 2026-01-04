@@ -45,16 +45,29 @@ export function LoadingScreen({ isLoading }: LoadingScreenProps) {
 
       {/* Center content */}
       <div className="relative flex flex-col items-center gap-8">
-        {/* GIF Animation */}
+        {/* GIF Animation with glow */}
         <motion.div
+          className="relative"
           initial={{ scale: 0.8, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={{ duration: 0.5, ease: "easeOut" }}
         >
+          {/* Glow layer */}
+          <motion.div
+            className="absolute inset-0 rounded-full blur-2xl"
+            style={{
+              background: "radial-gradient(circle, hsl(var(--primary) / 0.4) 0%, hsl(var(--secondary) / 0.3) 50%, transparent 70%)",
+            }}
+            animate={{
+              opacity: [0.5, 0.8, 0.5],
+              scale: [1, 1.1, 1],
+            }}
+            transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+          />
           <img 
             src={loadingGif} 
             alt="Loading..." 
-            className="w-56 h-56 object-contain"
+            className="relative z-10 w-56 h-56 object-contain"
           />
         </motion.div>
 
