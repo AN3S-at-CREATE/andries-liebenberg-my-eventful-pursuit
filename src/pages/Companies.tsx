@@ -1,5 +1,6 @@
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
+import { ScrollToTop } from "@/components/layout/ScrollToTop";
 import { CompanyGrid } from "@/components/companies/CompanyGrid";
 import { PerformanceBriefModal } from "@/components/companies/PerformanceBriefModal";
 import { Button } from "@/components/ui/button";
@@ -47,6 +48,7 @@ const Companies = () => {
       </section>
 
       <Footer />
+      <ScrollToTop />
     </div>
   );
 };

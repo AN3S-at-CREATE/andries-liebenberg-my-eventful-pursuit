@@ -1,5 +1,6 @@
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
+import { ScrollToTop } from "@/components/layout/ScrollToTop";
 import { ContactForm } from "@/components/contact/ContactForm";
 import { Card, CardContent } from "@/components/ui/card";
 import { Mail, Phone, MapPin, Clock, Github, Linkedin } from "lucide-react";
@@ -170,6 +171,7 @@ const Contact = () => {
       </main>
 
       <Footer />
+      <ScrollToTop />
     </div>
   );
 };
