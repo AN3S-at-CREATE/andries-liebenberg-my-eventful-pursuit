@@ -5,6 +5,7 @@ import { ScrollToTop } from "@/components/layout/ScrollToTop";
 import { CompaniesPreview } from "@/components/companies/CompaniesPreview";
 import { AIToolsSection } from "@/components/ai-tools/AIToolsSection";
 import { ContactForm } from "@/components/contact/ContactForm";
+import { ParallaxElements } from "@/components/effects/ParallaxElements";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Building2, TrendingUp, Users, Star } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -29,20 +30,13 @@ const Index = () => {
       
       {/* Hero Section with Parallax */}
       <section ref={heroRef} className="relative py-24 px-4 overflow-hidden">
+        {/* Consistent parallax elements */}
+        <ParallaxElements variant="mixed" />
+        
         {/* Parallax background layer */}
         <motion.div
           className="absolute inset-0 bg-gradient-to-b from-primary/5 via-transparent to-transparent"
           style={{ y: backgroundY }}
-        />
-        
-        {/* Floating glow orbs with parallax */}
-        <motion.div
-          className="absolute top-20 left-1/4 w-64 h-64 rounded-full bg-primary/10 blur-[100px] pointer-events-none"
-          style={{ y: useTransform(scrollYProgress, [0, 1], ["0%", "50%"]) }}
-        />
-        <motion.div
-          className="absolute top-40 right-1/4 w-48 h-48 rounded-full bg-secondary/10 blur-[80px] pointer-events-none"
-          style={{ y: useTransform(scrollYProgress, [0, 1], ["0%", "70%"]) }}
         />
         
         {/* Content with parallax */}
