@@ -53,8 +53,8 @@ export const CompanyCard = ({ company, metrics }: CompanyCardProps) => {
             </div>
             <div className="text-center">
               <div className="flex items-center justify-center gap-1 text-secondary">
-                <Star className="h-4 w-4" />
-                <span className="font-heading font-bold">{formatPercentage(metrics.customerSatisfactionPct)}</span>
+                <Star className="h-4 w-4 drop-shadow-[0_0_4px_hsl(var(--secondary)/0.6)]" />
+                <span className="font-heading font-bold glow-text-pink">{formatPercentage(metrics.customerSatisfactionPct)}</span>
               </div>
               <p className="text-xs text-muted-foreground">Satisfaction</p>
             </div>
