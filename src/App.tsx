@@ -38,6 +38,7 @@ import CustomModels from "./pages/ai/CustomModels";
 import { FloatingConciergeButton } from "./components/ai-tools/FloatingConciergeButton";
 import { PageTransition } from "./components/layout/PageTransition";
 import { BackgroundFX } from "./components/background/BackgroundFX";
+import { ParallaxStarfield } from "./components/effects/ParallaxStarfield";
 import { LoadingScreen } from "./components/loading/LoadingScreen";
 import { GlobalCursorGlow } from "./components/effects/GlobalCursorGlow";
 
@@ -59,6 +60,7 @@ const App = () => {
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
         <LoadingScreen isLoading={isLoading} />
+        <ParallaxStarfield />
         <BackgroundFX />
         <GlobalCursorGlow color="mixed" size={350} intensity={0.2} />
         <Toaster />
