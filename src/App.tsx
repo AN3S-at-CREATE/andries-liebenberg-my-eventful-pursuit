@@ -39,6 +39,7 @@ import { FloatingConciergeButton } from "./components/ai-tools/FloatingConcierge
 import { PageTransition } from "./components/layout/PageTransition";
 import { BackgroundFX } from "./components/background/BackgroundFX";
 import { ParallaxStarfield } from "./components/effects/ParallaxStarfield";
+import { NebulaClouds } from "./components/effects/NebulaClouds";
 import { LoadingScreen } from "./components/loading/LoadingScreen";
 import { GlobalCursorGlow } from "./components/effects/GlobalCursorGlow";
 
@@ -61,6 +62,7 @@ const App = () => {
       <TooltipProvider>
         <LoadingScreen isLoading={isLoading} />
         <ParallaxStarfield />
+        <NebulaClouds />
         <BackgroundFX />
         <GlobalCursorGlow color="mixed" size={350} intensity={0.2} />
         <Toaster />
