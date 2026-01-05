@@ -54,28 +54,35 @@ const AI = () => {
         <div className="container max-w-6xl mx-auto relative z-10">
           <MotionReveal>
             <div className="text-center mb-16">
-              <Badge variant="glow-pink" className="mb-4">AI Innovation</Badge>
+              <Badge variant="glow-cyan" className="mb-4">AI Innovation</Badge>
               <h1 className="font-heading text-4xl md:text-6xl font-bold text-foreground mb-6">
-                AI Tools & <span className="text-secondary glow-text-pink">Projects</span>
+                <span className="text-primary glow-text-cyan">AI</span> Tools & <span className="text-secondary glow-text-pink">Projects</span>
               </h1>
               <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto">
-                I develop cutting-edge AI solutions that revolutionize events and marketing operations.
+                I develop <span className="text-primary">cutting-edge AI solutions</span> that revolutionize <span className="text-secondary">events</span> and <span className="text-primary">marketing</span> operations.
               </p>
             </div>
           </MotionReveal>
+
+          {/* Divider */}
+          <div className="divider-pink mb-12" />
 
           <MotionStagger className="grid md:grid-cols-2 gap-8">
             {aiTools.map((tool) => (
               <MotionItem key={tool.href}>
                 <Link to={tool.href}>
-                  <Card className={`${tool.accent === "cyan" ? "glass-cyan" : "glass-pink"} p-8 h-full group transition-all duration-300 hover:scale-105`}>
+                  <Card 
+                    interactive
+                    glow={tool.accent === "cyan" ? "cyan" : "pink"}
+                    className={`${tool.accent === "cyan" ? "glass-cyan border-l-4 border-l-primary" : "glass-pink border-l-4 border-l-secondary"} p-8 h-full group`}
+                  >
                     <div className="flex items-start justify-between mb-4">
-                      <tool.icon className={`h-10 w-10 ${tool.accent === "cyan" ? "text-primary" : "text-secondary"}`} />
-                      <Badge variant={tool.status === "Live" ? "glow-cyan" : tool.status === "Coming Soon" ? "glow-pink" : "outline"}>
+                      <tool.icon className={`h-10 w-10 ${tool.accent === "cyan" ? "text-primary" : "text-secondary"} group-hover:scale-110 transition-transform`} />
+                      <Badge variant={tool.status === "Live" ? "glow-cyan" : tool.status === "Coming Soon" ? "glow-pink" : "secondary"}>
                         {tool.status}
                       </Badge>
                     </div>
-                    <h3 className="font-heading text-xl font-bold text-foreground mb-3 group-hover:text-primary transition-colors">
+                    <h3 className={`font-heading text-xl font-bold text-foreground mb-3 ${tool.accent === "cyan" ? "group-hover:text-primary" : "group-hover:text-secondary"} transition-colors`}>
                       {tool.title}
                     </h3>
                     <p className="text-muted-foreground mb-4">{tool.description}</p>
@@ -89,11 +96,20 @@ const AI = () => {
             ))}
           </MotionStagger>
 
+          {/* Divider */}
+          <div className="divider-cyan mt-12 mb-8" />
+
           <MotionReveal delay={0.4}>
-            <div className="text-center mt-12">
-              <Button asChild size="lg" className="bg-secondary hover:bg-secondary/90">
+            <div className="text-center flex flex-wrap justify-center gap-4">
+              <Button asChild size="lg" variant="glow">
                 <Link to="/contact" className="inline-flex items-center gap-2">
                   Discuss AI Solutions
+                  <ArrowRight className="h-4 w-4" />
+                </Link>
+              </Button>
+              <Button asChild size="lg" variant="glow-pink">
+                <Link to="/expertise" className="inline-flex items-center gap-2">
+                  View Expertise
                   <ArrowRight className="h-4 w-4" />
                 </Link>
               </Button>
