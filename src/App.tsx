@@ -16,6 +16,8 @@ import Downloads from "./pages/Downloads";
 import Privacy from "./pages/Privacy";
 import Terms from "./pages/Terms";
 import CookiePolicy from "./pages/CookiePolicy";
+import Auth from "./pages/Auth";
+import Admin from "./pages/Admin";
 
 // Expertise pages
 import Expertise from "./pages/expertise";
@@ -94,6 +96,10 @@ const App = () => {
               <Route path="/privacy" element={<Privacy />} />
               <Route path="/terms" element={<Terms />} />
               <Route path="/cookie-policy" element={<CookiePolicy />} />
+              
+              {/* Admin routes */}
+              <Route path="/auth" element={<Auth />} />
+              <Route path="/admin" element={<Admin />} />
               
               <Route path="/__status" element={<Status />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
