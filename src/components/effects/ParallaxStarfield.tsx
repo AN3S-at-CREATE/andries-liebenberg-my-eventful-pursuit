@@ -1,16 +1,22 @@
-import { useEffect, useRef } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
+import { useScroll } from "framer-motion";
 
 interface Star {
   x: number;
   y: number;
   size: number;
   opacity: number;
-  speed: number; // Parallax speed multiplier
+  speed: number;
   color: "cyan" | "pink" | "white";
   twinkleSpeed: number;
   twinkleOffset: number;
 }
+
+// Check if device prefers reduced motion or is mobile
+const isMobile = () => typeof window !== "undefined" && window.innerWidth < 768;
+const prefersReducedMotion = () =>
+  typeof window !== "undefined" &&
+  window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 export function ParallaxStarfield() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -18,9 +24,22 @@ export function ParallaxStarfield() {
   const starsRef = useRef<Star[]>([]);
   const animationRef = useRef<number>();
   const scrollYRef = useRef(0);
+  const [isReducedMode, setIsReducedMode] = useState(false);
 
   const { scrollY } = useScroll();
-  
+
+  // Check for mobile/reduced motion on mount
+  useEffect(() => {
+    setIsReducedMode(isMobile() || prefersReducedMotion());
+    
+    const handleResize = () => {
+      setIsReducedMode(isMobile() || prefersReducedMotion());
+    };
+    
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   // Update scroll position for parallax
   useEffect(() => {
     const unsubscribe = scrollY.on("change", (latest) => {
@@ -37,12 +56,19 @@ export function ParallaxStarfield() {
     if (!ctx) return;
 
     const resizeCanvas = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight * 3; // Taller for scroll
+      // Use device pixel ratio for crisp rendering, but cap at 1 for mobile
+      const dpr = isReducedMode ? 1 : Math.min(window.devicePixelRatio, 2);
+      canvas.width = window.innerWidth * dpr;
+      canvas.height = window.innerHeight * (isReducedMode ? 2 : 3) * dpr;
+      ctx.scale(dpr, dpr);
+      canvas.style.width = `${window.innerWidth}px`;
+      canvas.style.height = `${window.innerHeight * (isReducedMode ? 2 : 3)}px`;
     };
 
     const initStars = () => {
-      const starCount = Math.floor((canvas.width * canvas.height) / 8000);
+      // Reduce star count significantly on mobile (1/3 of desktop)
+      const baseDensity = isReducedMode ? 24000 : 8000;
+      const starCount = Math.floor((window.innerWidth * window.innerHeight) / baseDensity);
       starsRef.current = [];
 
       for (let i = 0; i < starCount; i++) {
@@ -53,11 +79,11 @@ export function ParallaxStarfield() {
         else color = "white";
 
         starsRef.current.push({
-          x: Math.random() * canvas.width,
-          y: Math.random() * canvas.height,
-          size: Math.random() * 1.8 + 0.3,
+          x: Math.random() * window.innerWidth,
+          y: Math.random() * window.innerHeight * (isReducedMode ? 2 : 3),
+          size: Math.random() * (isReducedMode ? 1.2 : 1.8) + 0.3,
           opacity: Math.random() * 0.7 + 0.2,
-          speed: Math.random() * 0.5 + 0.1, // Different parallax speeds for depth
+          speed: Math.random() * 0.5 + 0.1,
           color,
           twinkleSpeed: Math.random() * 2 + 1,
           twinkleOffset: Math.random() * Math.PI * 2,
@@ -76,32 +102,46 @@ export function ParallaxStarfield() {
       }
     };
 
-    const animate = () => {
+    let lastFrameTime = 0;
+    const targetFPS = isReducedMode ? 30 : 60; // Limit FPS on mobile
+    const frameInterval = 1000 / targetFPS;
+
+    const animate = (currentTime: number) => {
+      // Throttle frame rate on mobile
+      if (currentTime - lastFrameTime < frameInterval) {
+        animationRef.current = requestAnimationFrame(animate);
+        return;
+      }
+      lastFrameTime = currentTime;
+
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      const time = Date.now() * 0.001;
+      const time = currentTime * 0.001;
       const scrollOffset = scrollYRef.current;
+      const canvasHeight = window.innerHeight * (isReducedMode ? 2 : 3);
 
       starsRef.current.forEach((star) => {
-        // Twinkle effect
-        const twinkle = Math.sin(time * star.twinkleSpeed + star.twinkleOffset) * 0.3 + 0.7;
+        // Skip twinkle calculation on reduced mode for performance
+        const twinkle = isReducedMode 
+          ? 0.85 
+          : Math.sin(time * star.twinkleSpeed + star.twinkleOffset) * 0.3 + 0.7;
         const finalOpacity = star.opacity * twinkle;
 
         // Parallax offset based on scroll and star's speed
-        const parallaxY = (star.y - scrollOffset * star.speed) % canvas.height;
-        const adjustedY = parallaxY < 0 ? parallaxY + canvas.height : parallaxY;
+        const parallaxY = (star.y - scrollOffset * star.speed) % canvasHeight;
+        const adjustedY = parallaxY < 0 ? parallaxY + canvasHeight : parallaxY;
 
         // Only draw stars in visible viewport area
         const viewportY = adjustedY - scrollOffset * 0.1;
-        if (viewportY > -100 && viewportY < window.innerHeight + 100) {
+        if (viewportY > -50 && viewportY < window.innerHeight + 50) {
           // Star core
           ctx.beginPath();
           ctx.arc(star.x, viewportY, star.size, 0, Math.PI * 2);
           ctx.fillStyle = getStarColor(star, finalOpacity);
           ctx.fill();
 
-          // Glow for larger/brighter stars
-          if (star.size > 1 && star.color !== "white") {
+          // Skip glow on mobile for performance
+          if (!isReducedMode && star.size > 1 && star.color !== "white") {
             ctx.beginPath();
             ctx.arc(star.x, viewportY, star.size * 3, 0, Math.PI * 2);
             ctx.fillStyle = getStarColor(star, finalOpacity * 0.15);
@@ -115,11 +155,16 @@ export function ParallaxStarfield() {
 
     resizeCanvas();
     initStars();
-    animate();
+    animationRef.current = requestAnimationFrame(animate);
 
+    // Debounce resize for performance
+    let resizeTimeout: number;
     const handleResize = () => {
-      resizeCanvas();
-      initStars();
+      clearTimeout(resizeTimeout);
+      resizeTimeout = window.setTimeout(() => {
+        resizeCanvas();
+        initStars();
+      }, 150);
     };
 
     window.addEventListener("resize", handleResize);
@@ -128,9 +173,10 @@ export function ParallaxStarfield() {
       if (animationRef.current) {
         cancelAnimationFrame(animationRef.current);
       }
+      clearTimeout(resizeTimeout);
       window.removeEventListener("resize", handleResize);
     };
-  }, []);
+  }, [isReducedMode]);
 
   return (
     <div
