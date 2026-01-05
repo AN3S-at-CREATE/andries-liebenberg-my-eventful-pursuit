@@ -1,7 +1,7 @@
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { ScrollToTop } from "@/components/layout/ScrollToTop";
-import { MotionReveal } from "@/components/motion/MotionReveal";
+import { MotionReveal, MotionStagger, MotionItem } from "@/components/motion/MotionReveal";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -47,10 +47,10 @@ const Downloads = () => {
             </div>
           </MotionReveal>
 
-          <div className="space-y-6">
-            {downloads.map((item, index) => (
-              <MotionReveal key={item.title} delay={0.1 * (index + 1)}>
-                <Card className="glass p-6 flex items-center justify-between">
+          <MotionStagger className="space-y-6">
+            {downloads.map((item) => (
+              <MotionItem key={item.title}>
+                <Card interactive glow="cyan" className="glass p-6 flex items-center justify-between">
                   <div className="flex items-center gap-4">
                     <div className="p-3 rounded-lg bg-primary/10">
                       <item.icon className="h-6 w-6 text-primary" />
@@ -65,9 +65,9 @@ const Downloads = () => {
                     Download
                   </Button>
                 </Card>
-              </MotionReveal>
+              </MotionItem>
             ))}
-          </div>
+          </MotionStagger>
 
           <MotionReveal delay={0.5}>
             <Card className="glass-pink mt-12 p-8 text-center">

@@ -4,6 +4,7 @@ import { getMetricsByCompanyId } from "@/data/companyMetrics";
 import { CompanyCard } from "./CompanyCard";
 import { CompanyCardSkeleton } from "./CompanyCardSkeleton";
 import { CompanyFilters, type SortOption, type FilterOption } from "./CompanyFilters";
+import { MotionStagger, MotionItem } from "@/components/motion/MotionReveal";
 
 export const CompanyGrid = () => {
   const [sortBy, setSortBy] = useState<SortOption>("growth");
@@ -51,19 +52,25 @@ export const CompanyGrid = () => {
         onFilterChange={setFilterBy}
       />
       
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {isLoading
-          ? Array.from({ length: 6 }).map((_, index) => (
-              <CompanyCardSkeleton key={index} />
-            ))
-          : sortedCompanies.map((company) => {
-              const metrics = getMetricsByCompanyId(company.id);
-              if (!metrics) return null;
-              return (
-                <CompanyCard key={company.id} company={company} metrics={metrics} />
-              );
-            })}
-      </div>
+      {isLoading ? (
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {Array.from({ length: 6 }).map((_, index) => (
+            <CompanyCardSkeleton key={index} />
+          ))}
+        </div>
+      ) : (
+        <MotionStagger className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {sortedCompanies.map((company) => {
+            const metrics = getMetricsByCompanyId(company.id);
+            if (!metrics) return null;
+            return (
+              <MotionItem key={company.id}>
+                <CompanyCard company={company} metrics={metrics} />
+              </MotionItem>
+            );
+          })}
+        </MotionStagger>
+      )}
     </div>
   );
 };

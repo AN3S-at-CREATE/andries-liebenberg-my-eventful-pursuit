@@ -75,7 +75,7 @@ const Expertise = () => {
             {expertiseAreas.map((area) => (
               <MotionItem key={area.href}>
                 <Link to={area.href}>
-                  <Card className={`${area.accent === "cyan" ? "glass-cyan" : "glass-pink"} p-8 h-full group transition-all duration-300 hover:scale-105`}>
+                  <Card interactive glow={area.accent === "cyan" ? "cyan" : "pink"} className={`${area.accent === "cyan" ? "glass-cyan" : "glass-pink"} p-8 h-full group`}>
                     <area.icon className={`h-10 w-10 mb-4 ${area.accent === "cyan" ? "text-primary" : "text-secondary"}`} />
                     <h3 className="font-heading text-xl font-bold text-foreground mb-3 group-hover:text-primary transition-colors">
                       {area.title}
