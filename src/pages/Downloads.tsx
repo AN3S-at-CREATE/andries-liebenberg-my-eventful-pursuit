@@ -2,6 +2,7 @@ import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { ScrollToTop } from "@/components/layout/ScrollToTop";
 import { MotionReveal, MotionStagger, MotionItem } from "@/components/motion/MotionReveal";
+import { ParallaxElements } from "@/components/effects/ParallaxElements";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -34,7 +35,8 @@ const Downloads = () => {
       <Navbar />
       
       <section className="relative py-24 px-4 overflow-hidden">
-        <div className="container max-w-4xl mx-auto">
+        <ParallaxElements variant="pink" />
+        <div className="container max-w-4xl mx-auto relative z-10">
           <MotionReveal>
             <div className="text-center mb-16">
               <Badge variant="glow-pink" className="mb-4">Resources</Badge>
