@@ -4,7 +4,10 @@ import logo from "@/assets/logo.svg";
 
 export const Footer = () => {
   return (
-    <footer className="border-t border-border/50 bg-muted/30">
+    <footer className="border-t border-secondary/30 bg-muted/30">
+      {/* Pink accent divider at top */}
+      <div className="divider-pink" />
+      
       <div className="container py-12">
         <div className="grid gap-8 md:grid-cols-4">
           <div>
@@ -24,20 +27,20 @@ export const Footer = () => {
             <h4 className="font-heading font-semibold text-foreground mb-4">Contact</h4>
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li className="flex items-center gap-2">
-                <Mail className="h-4 w-4" />
-                <a href="mailto:email@hello.an3s.info" className="hover:text-foreground transition-colors">
+                <Mail className="h-4 w-4 text-secondary" />
+                <a href="mailto:email@hello.an3s.info" className="hover:text-secondary transition-colors">
                   email@hello.an3s.info
                 </a>
               </li>
               <li className="flex items-center gap-2">
-                <Mail className="h-4 w-4" />
-                <a href="mailto:book@hello.an3s.info" className="hover:text-foreground transition-colors">
+                <Mail className="h-4 w-4 text-secondary" />
+                <a href="mailto:book@hello.an3s.info" className="hover:text-secondary transition-colors">
                   book@hello.an3s.info
                 </a>
               </li>
               <li className="flex items-center gap-2">
-                <Phone className="h-4 w-4" />
-                <a href="tel:+27729749703" className="hover:text-foreground transition-colors">
+                <Phone className="h-4 w-4 text-primary" />
+                <a href="tel:+27729749703" className="hover:text-primary transition-colors">
                   +27 72 974 9703
                 </a>
               </li>
@@ -52,7 +55,7 @@ export const Footer = () => {
                   href="https://an3s.info"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="hover:text-foreground transition-colors"
+                  className="hover:text-primary transition-colors"
                 >
                   an3s.info
                 </a>
@@ -62,29 +65,29 @@ export const Footer = () => {
                   href="https://profile.an3s.info"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="hover:text-foreground transition-colors"
+                  className="hover:text-secondary transition-colors"
                 >
                   Portfolio
                 </a>
               </li>
               <li className="flex items-center gap-2">
-                <Github className="h-4 w-4" />
+                <Github className="h-4 w-4 text-primary" />
                 <a
                   href="https://github.com/AN3S-CREATE"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="hover:text-foreground transition-colors"
+                  className="hover:text-primary transition-colors"
                 >
                   GitHub
                 </a>
               </li>
               <li className="flex items-center gap-2">
-                <Linkedin className="h-4 w-4" />
+                <Linkedin className="h-4 w-4 text-secondary" />
                 <a
                   href="https://www.linkedin.com/in/andriesliebenberg-an3s"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="hover:text-foreground transition-colors"
+                  className="hover:text-secondary transition-colors"
                 >
                   LinkedIn
                 </a>
@@ -96,17 +99,17 @@ export const Footer = () => {
             <h4 className="font-heading font-semibold text-foreground mb-4">Legal</h4>
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li>
-                <Link to="/privacy" className="hover:text-foreground transition-colors">
+                <Link to="/privacy" className="hover:text-secondary transition-colors">
                   Privacy Policy
                 </Link>
               </li>
               <li>
-                <Link to="/terms" className="hover:text-foreground transition-colors">
+                <Link to="/terms" className="hover:text-primary transition-colors">
                   Terms of Service
                 </Link>
               </li>
               <li>
-                <Link to="/cookie-policy" className="hover:text-foreground transition-colors">
+                <Link to="/cookie-policy" className="hover:text-secondary transition-colors">
                   Cookie Policy
                 </Link>
               </li>
@@ -114,10 +117,11 @@ export const Footer = () => {
           </div>
         </div>
 
-        <div className="mt-8 pt-8 border-t border-border/50 text-center text-sm text-muted-foreground">
-          <p>© {new Date().getFullYear()} AN3S. All rights reserved.</p>
+        {/* Pink/cyan mixed divider */}
+        <div className="mt-8 pt-8 border-t border-secondary/20 text-center text-sm text-muted-foreground">
+          <p>© {new Date().getFullYear()} <span className="text-primary">AN3S</span>. All rights reserved.</p>
           <p className="mt-2 text-xs">
-            By using this site, you consent to the collection and processing of your data in accordance with POPIA.
+            By using this site, you consent to the collection and processing of your data in accordance with <span className="text-secondary">POPIA</span>.
           </p>
         </div>
       </div>
