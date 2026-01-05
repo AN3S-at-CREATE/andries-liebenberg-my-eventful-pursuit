@@ -1,4 +1,5 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
+import { checkRateLimit, getClientIP, rateLimitResponse } from "../_shared/rateLimit.ts";
 
 const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY");
 
@@ -6,6 +7,9 @@ const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
+
+// Rate limit: 3 submissions per hour per IP
+const RATE_LIMIT_CONFIG = { maxRequests: 3, windowMs: 60 * 60 * 1000 };
 
 interface ContactRequest {
   name: string;
@@ -28,7 +32,8 @@ const sendEmail = async (to: string[], subject: string, html: string, from: stri
   
   if (!res.ok) {
     const error = await res.text();
-    throw new Error(`Resend API error: ${error}`);
+    console.error("[send-contact-email] Email provider error:", error);
+    throw new Error("EMAIL_SEND_FAILED");
   }
   
   return res.json();
@@ -39,15 +44,41 @@ const handler = async (req: Request): Promise<Response> => {
     return new Response(null, { headers: corsHeaders });
   }
 
+  // Rate limiting
+  const clientIP = getClientIP(req);
+  const rateLimitKey = `contact-email:${clientIP}`;
+  const rateLimit = checkRateLimit(rateLimitKey, RATE_LIMIT_CONFIG);
+
+  if (!rateLimit.allowed) {
+    console.log(`[send-contact-email] Rate limit exceeded for IP: ${clientIP}`);
+    return rateLimitResponse(rateLimit.resetAt);
+  }
+
   try {
     const { name, email, company, industry, goal, message }: ContactRequest = await req.json();
 
-    console.log("Received contact form submission:", { name, email, company, industry, goal });
+    console.log("[send-contact-email] Processing submission:", { 
+      name, 
+      hasEmail: !!email, 
+      company, 
+      industry, 
+      goal,
+      ip: clientIP,
+      remaining: rateLimit.remaining
+    });
 
     if (!name || !email || !message) {
-      console.error("Missing required fields");
       return new Response(
         JSON.stringify({ error: "Name, email, and message are required" }),
+        { status: 400, headers: { "Content-Type": "application/json", ...corsHeaders } }
+      );
+    }
+
+    // Basic email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return new Response(
+        JSON.stringify({ error: "Please provide a valid email address" }),
         { status: 400, headers: { "Content-Type": "application/json", ...corsHeaders } }
       );
     }
@@ -99,7 +130,7 @@ const handler = async (req: Request): Promise<Response> => {
       "AN3S Contact Form <email@hello.an3s.info>"
     );
 
-    console.log("Notification email sent to book@hello.an3s.info");
+    console.log("[send-contact-email] Notification sent");
 
     // Confirmation email to user
     const confirmationHtml = `
@@ -134,16 +165,16 @@ const handler = async (req: Request): Promise<Response> => {
       "AN3S <email@hello.an3s.info>"
     );
 
-    console.log("Confirmation email sent to:", email);
+    console.log("[send-contact-email] Confirmation sent, success");
 
     return new Response(
-      JSON.stringify({ success: true, message: "Emails sent successfully" }),
+      JSON.stringify({ success: true, message: "Message sent successfully" }),
       { status: 200, headers: { "Content-Type": "application/json", ...corsHeaders } }
     );
-  } catch (error: any) {
-    console.error("Error sending email:", error);
+  } catch (error: unknown) {
+    console.error("[send-contact-email] Error:", error);
     return new Response(
-      JSON.stringify({ error: error.message }),
+      JSON.stringify({ error: "Failed to send message. Please try again later." }),
       { status: 500, headers: { "Content-Type": "application/json", ...corsHeaders } }
     );
   }

@@ -1,10 +1,15 @@
 /// <reference types="https://esm.sh/@supabase/functions-js/src/edge-runtime.d.ts" />
 
+import { checkRateLimit, getClientIP, rateLimitResponse } from "../_shared/rateLimit.ts";
+
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers":
     "authorization, x-client-info, apikey, content-type",
 };
+
+// Rate limit: 20 messages per hour per IP
+const RATE_LIMIT_CONFIG = { maxRequests: 20, windowMs: 60 * 60 * 1000 };
 
 interface Message {
   role: "user" | "assistant";
@@ -22,6 +27,16 @@ Deno.serve(async (req) => {
     return new Response(null, { headers: corsHeaders });
   }
 
+  // Rate limiting
+  const clientIP = getClientIP(req);
+  const rateLimitKey = `an3s-concierge:${clientIP}`;
+  const rateLimit = checkRateLimit(rateLimitKey, RATE_LIMIT_CONFIG);
+
+  if (!rateLimit.allowed) {
+    console.log(`[AN3S Concierge] Rate limit exceeded for IP: ${clientIP}`);
+    return rateLimitResponse(rateLimit.resetAt);
+  }
+
   try {
     const { messages, knowledgeBase }: RequestBody = await req.json();
 
@@ -32,7 +47,7 @@ Deno.serve(async (req) => {
       );
     }
 
-    console.log(`[AN3S Concierge] Processing ${messages.length} messages`);
+    console.log(`[AN3S Concierge] Processing ${messages.length} messages, IP: ${clientIP}, remaining: ${rateLimit.remaining}`);
 
     const systemPrompt = `You are the AN3S Concierge, a helpful AI assistant for Andries Liebenberg's portfolio website.
 
@@ -59,9 +74,9 @@ Remember: You represent AN3S professionally. Be helpful, accurate, and never fab
 
     const lovableApiKey = Deno.env.get("LOVABLE_API_KEY");
     if (!lovableApiKey) {
-      console.error("[AN3S Concierge] LOVABLE_API_KEY not found");
+      console.error("[AN3S Concierge] API key not configured");
       return new Response(
-        JSON.stringify({ error: "API configuration error" }),
+        JSON.stringify({ error: "Service temporarily unavailable" }),
         { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
     }
@@ -86,9 +101,9 @@ Remember: You represent AN3S professionally. Be helpful, accurate, and never fab
 
     if (!response.ok) {
       const errorText = await response.text();
-      console.error(`[AN3S Concierge] AI Gateway error: ${response.status} - ${errorText}`);
+      console.error(`[AN3S Concierge] AI service error: ${response.status} - ${errorText}`);
       return new Response(
-        JSON.stringify({ error: "AI service temporarily unavailable" }),
+        JSON.stringify({ error: "Unable to respond right now. Please try again later." }),
         { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
     }
@@ -111,7 +126,7 @@ Remember: You represent AN3S professionally. Be helpful, accurate, and never fab
   } catch (error) {
     console.error("[AN3S Concierge] Error:", error);
     return new Response(
-      JSON.stringify({ error: "An unexpected error occurred" }),
+      JSON.stringify({ error: "Something went wrong. Please try again later." }),
       { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
     );
   }
