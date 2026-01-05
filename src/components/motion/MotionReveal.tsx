@@ -1,5 +1,20 @@
-import { motion, type Variants } from "framer-motion";
+import { motion, type Variants, type Transition } from "framer-motion";
 import { ReactNode } from "react";
+
+// Consistent motion timing across the site
+const MOTION_CONFIG = {
+  duration: 0.6, // 600ms - balanced for visibility without feeling slow
+  ease: [0.25, 0.1, 0.25, 1], // easeOut cubic-bezier
+  staggerDelay: 0.08,
+  hoverScale: 1.02,
+  hoverLift: -4,
+} as const;
+
+const createTransition = (delay: number = 0): Transition => ({
+  duration: MOTION_CONFIG.duration,
+  delay,
+  ease: MOTION_CONFIG.ease,
+});
 
 interface MotionRevealProps {
   children: ReactNode;
@@ -9,10 +24,10 @@ interface MotionRevealProps {
 }
 
 const directionOffsets = {
-  up: { y: 30, x: 0 },
-  down: { y: -30, x: 0 },
-  left: { x: 30, y: 0 },
-  right: { x: -30, y: 0 },
+  up: { y: 40, x: 0 },
+  down: { y: -40, x: 0 },
+  left: { x: 40, y: 0 },
+  right: { x: -40, y: 0 },
 };
 
 export function MotionReveal({ 
@@ -27,12 +42,8 @@ export function MotionReveal({
     <motion.div
       initial={{ opacity: 0, ...offset }}
       whileInView={{ opacity: 1, x: 0, y: 0 }}
-      viewport={{ once: true, margin: "-50px" }}
-      transition={{ 
-        duration: 0.6, 
-        delay, 
-        ease: [0.25, 0.1, 0.25, 1] 
-      }}
+      viewport={{ once: true, margin: "-80px" }}
+      transition={createTransition(delay)}
       className={className}
     >
       {children}
@@ -46,25 +57,16 @@ interface MotionStaggerProps {
   staggerDelay?: number;
 }
 
-const staggerContainer: Variants = {
-  hidden: {},
-  visible: {
-    transition: {
-      staggerChildren: 0.1,
-    },
-  },
-};
-
 export function MotionStagger({ 
   children, 
   className = "",
-  staggerDelay = 0.1 
+  staggerDelay = MOTION_CONFIG.staggerDelay 
 }: MotionStaggerProps) {
   return (
     <motion.div
       initial="hidden"
       whileInView="visible"
-      viewport={{ once: true, margin: "-50px" }}
+      viewport={{ once: true, margin: "-80px" }}
       variants={{
         hidden: {},
         visible: {
@@ -86,13 +88,13 @@ interface MotionItemProps {
 }
 
 const itemVariants: Variants = {
-  hidden: { opacity: 0, y: 20 },
+  hidden: { opacity: 0, y: 30 },
   visible: { 
     opacity: 1, 
     y: 0,
     transition: {
-      duration: 0.5,
-      ease: [0.25, 0.1, 0.25, 1],
+      duration: MOTION_CONFIG.duration,
+      ease: MOTION_CONFIG.ease,
     },
   },
 };
@@ -116,15 +118,58 @@ export function MotionScale({ children, className = "", delay = 0 }: MotionScale
     <motion.div
       initial={{ opacity: 0, scale: 0.9 }}
       whileInView={{ opacity: 1, scale: 1 }}
-      viewport={{ once: true, margin: "-50px" }}
-      transition={{ 
-        duration: 0.5, 
-        delay, 
-        ease: [0.25, 0.1, 0.25, 1] 
-      }}
+      viewport={{ once: true, margin: "-80px" }}
+      transition={createTransition(delay)}
       className={className}
     >
       {children}
     </motion.div>
   );
 }
+
+// New component for interactive hover cards/buttons
+interface MotionHoverProps {
+  children: ReactNode;
+  className?: string;
+  lift?: boolean;
+  scale?: boolean;
+  glow?: "cyan" | "pink" | "both";
+}
+
+export function MotionHover({ 
+  children, 
+  className = "", 
+  lift = true,
+  scale = true,
+  glow
+}: MotionHoverProps) {
+  const glowShadow = {
+    cyan: "0 0 30px -5px hsl(var(--primary) / 0.5)",
+    pink: "0 0 30px -5px hsl(var(--secondary) / 0.5)",
+    both: "0 0 30px -5px hsl(var(--primary) / 0.4), 0 0 30px -5px hsl(var(--secondary) / 0.3)",
+  };
+
+  return (
+    <motion.div
+      className={className}
+      whileHover={{
+        y: lift ? MOTION_CONFIG.hoverLift : 0,
+        scale: scale ? MOTION_CONFIG.hoverScale : 1,
+        boxShadow: glow ? glowShadow[glow] : undefined,
+      }}
+      whileTap={{
+        y: 0,
+        scale: 0.98,
+      }}
+      transition={{
+        duration: 0.2,
+        ease: "easeOut",
+      }}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
+// Export config for use in other components
+export const motionConfig = MOTION_CONFIG;

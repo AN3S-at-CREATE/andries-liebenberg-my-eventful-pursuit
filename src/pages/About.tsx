@@ -1,7 +1,7 @@
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { ScrollToTop } from "@/components/layout/ScrollToTop";
-import { MotionReveal } from "@/components/motion/MotionReveal";
+import { MotionReveal, MotionStagger, MotionItem } from "@/components/motion/MotionReveal";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -55,19 +55,19 @@ const About = () => {
           </MotionReveal>
 
           {/* Stats Grid */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-16">
-            {careerHighlights.map((stat, index) => (
-              <MotionReveal key={stat.label} delay={0.1 * (index + 1)}>
-                <Card className={stat.color === "primary" ? "glass-cyan p-6 text-center" : "glass-pink p-6 text-center"}>
+          <MotionStagger className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-16">
+            {careerHighlights.map((stat) => (
+              <MotionItem key={stat.label}>
+                <Card interactive glow={stat.color === "primary" ? "cyan" : "pink"} className={stat.color === "primary" ? "glass-cyan p-6 text-center" : "glass-pink p-6 text-center"}>
                   <stat.icon className={`h-8 w-8 mx-auto mb-2 ${stat.color === "primary" ? "text-primary" : "text-secondary"}`} />
                   <div className={`text-3xl md:text-4xl font-bold mb-2 ${stat.color === "primary" ? "text-primary" : "text-secondary"}`}>
                     {stat.value}
                   </div>
                   <p className="text-sm text-muted-foreground">{stat.label}</p>
                 </Card>
-              </MotionReveal>
+              </MotionItem>
             ))}
-          </div>
+          </MotionStagger>
 
           {/* Current Roles */}
           <MotionReveal delay={0.2}>
@@ -141,34 +141,40 @@ const About = () => {
           </MotionReveal>
 
           {/* Key Strengths */}
-          <MotionReveal delay={0.5}>
-            <div className="mt-16 grid md:grid-cols-3 gap-6">
-              <Card className="glass p-6 text-center">
+          <MotionStagger className="mt-16 grid md:grid-cols-3 gap-6">
+            <MotionItem>
+              <Card interactive glow="cyan" className="glass p-6 text-center h-full">
                 <Target className="h-10 w-10 text-primary mx-auto mb-4" />
                 <h3 className="font-heading text-lg font-bold text-foreground mb-2">Leadership</h3>
                 <p className="text-sm text-muted-foreground">Strategic planning and creative problem-solving that drives results.</p>
               </Card>
-              <Card className="glass p-6 text-center">
+            </MotionItem>
+            <MotionItem>
+              <Card interactive glow="pink" className="glass p-6 text-center h-full">
                 <Users className="h-10 w-10 text-secondary mx-auto mb-4" />
                 <h3 className="font-heading text-lg font-bold text-foreground mb-2">Client-Centric</h3>
                 <p className="text-sm text-muted-foreground">Ensuring every project exceeds expectations with personalized approaches.</p>
               </Card>
-              <Card className="glass p-6 text-center">
+            </MotionItem>
+            <MotionItem>
+              <Card interactive glow="cyan" className="glass p-6 text-center h-full">
                 <GraduationCap className="h-10 w-10 text-primary mx-auto mb-4" />
                 <h3 className="font-heading text-lg font-bold text-foreground mb-2">Mentorship</h3>
                 <p className="text-sm text-muted-foreground">Deep commitment to community engagement and developing future leaders.</p>
               </Card>
-            </div>
-          </MotionReveal>
+            </MotionItem>
+          </MotionStagger>
 
           {/* Achievements Grid */}
-          <MotionReveal delay={0.6}>
+          <MotionReveal>
             <h2 className="font-heading text-3xl font-bold text-foreground mb-8 mt-16 text-center">
               Career <span className="text-secondary">Highlights</span>
             </h2>
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {achievements.map((section, index) => (
-                <Card key={section.category} className={index % 2 === 0 ? "glass-cyan p-6" : "glass-pink p-6"}>
+          </MotionReveal>
+          <MotionStagger className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {achievements.map((section, index) => (
+              <MotionItem key={section.category}>
+                <Card interactive glow={index % 2 === 0 ? "cyan" : "pink"} className={index % 2 === 0 ? "glass-cyan p-6 h-full" : "glass-pink p-6 h-full"}>
                   <h3 className="font-heading text-lg font-bold text-foreground mb-4">{section.category}</h3>
                   <ul className="space-y-2">
                     {section.items.map((item, i) => (
@@ -179,9 +185,9 @@ const About = () => {
                     ))}
                   </ul>
                 </Card>
-              ))}
-            </div>
-          </MotionReveal>
+              </MotionItem>
+            ))}
+          </MotionStagger>
 
           {/* Testimonial */}
           <MotionReveal delay={0.7}>
@@ -213,33 +219,43 @@ const About = () => {
           </MotionReveal>
 
           {/* Vision for Future */}
-          <MotionReveal delay={0.9}>
+          <MotionReveal>
             <div className="mt-16 text-center">
               <h2 className="font-heading text-3xl font-bold text-foreground mb-6">
                 Vision for the <span className="text-primary">Future</span>
               </h2>
-              <div className="grid md:grid-cols-4 gap-4 mb-8">
-                <Card className="glass p-4">
-                  <Lightbulb className="h-6 w-6 text-primary mx-auto mb-2" />
-                  <p className="text-sm text-muted-foreground">Interactive Content</p>
-                </Card>
-                <Card className="glass p-4">
-                  <Lightbulb className="h-6 w-6 text-secondary mx-auto mb-2" />
-                  <p className="text-sm text-muted-foreground">Augmented Reality</p>
-                </Card>
-                <Card className="glass p-4">
-                  <Lightbulb className="h-6 w-6 text-primary mx-auto mb-2" />
-                  <p className="text-sm text-muted-foreground">AI Personalization</p>
-                </Card>
-                <Card className="glass p-4">
-                  <Lightbulb className="h-6 w-6 text-secondary mx-auto mb-2" />
-                  <p className="text-sm text-muted-foreground">Gamification</p>
-                </Card>
-              </div>
-              <p className="text-muted-foreground max-w-3xl mx-auto mb-8">
-                My personal motto, inspired by Queen, "The Show Must Go On," reflects my calm, decisive approach under pressure and my unwavering focus on delivering results.
-              </p>
             </div>
+          </MotionReveal>
+          <MotionStagger className="grid md:grid-cols-4 gap-4 mb-8">
+            <MotionItem>
+              <Card interactive glow="cyan" className="glass p-4 text-center">
+                <Lightbulb className="h-6 w-6 text-primary mx-auto mb-2" />
+                <p className="text-sm text-muted-foreground">Interactive Content</p>
+              </Card>
+            </MotionItem>
+            <MotionItem>
+              <Card interactive glow="pink" className="glass p-4 text-center">
+                <Lightbulb className="h-6 w-6 text-secondary mx-auto mb-2" />
+                <p className="text-sm text-muted-foreground">Augmented Reality</p>
+              </Card>
+            </MotionItem>
+            <MotionItem>
+              <Card interactive glow="cyan" className="glass p-4 text-center">
+                <Lightbulb className="h-6 w-6 text-primary mx-auto mb-2" />
+                <p className="text-sm text-muted-foreground">AI Personalization</p>
+              </Card>
+            </MotionItem>
+            <MotionItem>
+              <Card interactive glow="pink" className="glass p-4 text-center">
+                <Lightbulb className="h-6 w-6 text-secondary mx-auto mb-2" />
+                <p className="text-sm text-muted-foreground">Gamification</p>
+              </Card>
+            </MotionItem>
+          </MotionStagger>
+          <MotionReveal>
+            <p className="text-muted-foreground max-w-3xl mx-auto mb-8 text-center">
+              My personal motto, inspired by Queen, "The Show Must Go On," reflects my calm, decisive approach under pressure and my unwavering focus on delivering results.
+            </p>
           </MotionReveal>
 
           {/* CTA */}

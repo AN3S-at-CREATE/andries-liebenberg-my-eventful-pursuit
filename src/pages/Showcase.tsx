@@ -1,7 +1,7 @@
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { ScrollToTop } from "@/components/layout/ScrollToTop";
-import { MotionReveal } from "@/components/motion/MotionReveal";
+import { MotionReveal, MotionStagger, MotionItem } from "@/components/motion/MotionReveal";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -144,17 +144,17 @@ const Showcase = () => {
           </MotionReveal>
 
           {/* Stats Bar */}
-          <MotionReveal delay={0.1}>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-16">
-              {stats.map((stat, index) => (
-                <Card key={index} className="glass p-6 text-center">
+          <MotionStagger className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-16">
+            {stats.map((stat, index) => (
+              <MotionItem key={index}>
+                <Card interactive glow="cyan" className="glass p-6 text-center">
                   <stat.icon className="h-8 w-8 text-primary mx-auto mb-3" />
                   <div className="text-2xl md:text-3xl font-bold text-foreground">{stat.value}</div>
                   <div className="text-sm text-muted-foreground">{stat.label}</div>
                 </Card>
-              ))}
-            </div>
-          </MotionReveal>
+              </MotionItem>
+            ))}
+          </MotionStagger>
         </div>
       </section>
 
@@ -221,10 +221,10 @@ const Showcase = () => {
             </div>
           </MotionReveal>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <MotionStagger className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {eventPortfolio.map((event, index) => (
-              <MotionReveal key={index} delay={0.1 * index}>
-                <Card className={`${event.variant === 'cyan' ? 'glass-cyan' : 'glass-pink'} p-6 h-full`}>
+              <MotionItem key={index}>
+                <Card interactive glow={event.variant === 'cyan' ? 'cyan' : 'pink'} className={`${event.variant === 'cyan' ? 'glass-cyan' : 'glass-pink'} p-6 h-full`}>
                   <div className="flex items-start gap-4 mb-4">
                     <div className={`p-3 rounded-lg ${event.variant === 'cyan' ? 'bg-primary/20' : 'bg-secondary/20'}`}>
                       <event.icon className={`h-6 w-6 ${event.variant === 'cyan' ? 'text-primary' : 'text-secondary'}`} />
@@ -257,9 +257,9 @@ const Showcase = () => {
                     ))}
                   </div>
                 </Card>
-              </MotionReveal>
+              </MotionItem>
             ))}
-          </div>
+          </MotionStagger>
         </div>
       </section>
 
@@ -278,10 +278,10 @@ const Showcase = () => {
             </div>
           </MotionReveal>
 
-          <div className="grid md:grid-cols-2 gap-8">
+          <MotionStagger className="grid md:grid-cols-2 gap-8">
             {caseStudies.map((study, index) => (
-              <MotionReveal key={index} delay={0.1 * index}>
-                <Card className="glass p-8 h-full">
+              <MotionItem key={index}>
+                <Card interactive glow="cyan" className="glass p-8 h-full">
                   <div className="flex items-center justify-between mb-4">
                     <h3 className="font-heading text-xl font-bold text-foreground">{study.title}</h3>
                     <Badge variant="outline">{study.sector}</Badge>
@@ -316,9 +316,9 @@ const Showcase = () => {
                     </div>
                   </div>
                 </Card>
-              </MotionReveal>
+              </MotionItem>
             ))}
-          </div>
+          </MotionStagger>
         </div>
       </section>
 

@@ -4,7 +4,7 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const cardVariants = cva(
-  "rounded-lg border text-card-foreground shadow-sm transition-all duration-300 ease-out",
+  "rounded-lg border text-card-foreground shadow-sm transition-all duration-300 ease-out will-change-transform",
   {
     variants: {
       variant: {
@@ -14,14 +14,14 @@ const cardVariants = cva(
         "glass-pink": "bg-secondary/5 backdrop-blur-xl border-secondary/20 shadow-[0_8px_32px_0_hsl(var(--secondary)/0.1),inset_0_1px_0_0_hsl(var(--secondary)/0.1)]",
       },
       interactive: {
-        true: "hover:-translate-y-1 hover:shadow-[0_8px_30px_-10px_hsl(var(--primary)/0.3)] hover:border-primary/30 cursor-pointer",
+        true: "hover:-translate-y-1 hover:scale-[1.02] hover:shadow-[0_12px_40px_-10px_hsl(var(--primary)/0.4)] hover:border-primary/40 cursor-pointer active:translate-y-0 active:scale-100",
         false: "",
       },
       glow: {
         none: "",
-        cyan: "hover:shadow-[0_0_30px_-5px_hsl(var(--primary)/0.4)]",
-        pink: "hover:shadow-[0_0_30px_-5px_hsl(var(--secondary)/0.4)]",
-        both: "hover:shadow-[0_0_30px_-5px_hsl(var(--primary)/0.3),0_0_30px_-5px_hsl(var(--secondary)/0.2)]",
+        cyan: "hover:shadow-[0_0_40px_-8px_hsl(var(--primary)/0.5),0_8px_30px_-10px_hsl(var(--primary)/0.3)]",
+        pink: "hover:shadow-[0_0_40px_-8px_hsl(var(--secondary)/0.5),0_8px_30px_-10px_hsl(var(--secondary)/0.3)]",
+        both: "hover:shadow-[0_0_40px_-8px_hsl(var(--primary)/0.4),0_0_30px_-5px_hsl(var(--secondary)/0.3)]",
       },
     },
     defaultVariants: {
