@@ -2,12 +2,13 @@ import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { ScrollToTop } from "@/components/layout/ScrollToTop";
 import { MotionReveal, MotionStagger, MotionItem } from "@/components/motion/MotionReveal";
+import { ParallaxElements } from "@/components/effects/ParallaxElements";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { EventGallery } from "@/components/showcase/EventGallery";
-import { 
+import {
   Image,
   Play, 
   ExternalLink, 
@@ -130,6 +131,7 @@ const Showcase = () => {
       
       {/* Hero Section */}
       <section className="relative py-24 px-4 overflow-hidden">
+        <ParallaxElements variant="cyan" />
         <div className="container max-w-6xl mx-auto">
           <MotionReveal>
             <div className="text-center mb-16">
@@ -207,7 +209,8 @@ const Showcase = () => {
       </section>
 
       {/* Event Portfolio Section */}
-      <section className="py-16 px-4 bg-muted/20">
+      <section className="relative py-16 px-4 bg-muted/20 overflow-hidden">
+        <ParallaxElements variant="pink" />
         <div className="container max-w-6xl mx-auto">
           <MotionReveal>
             <div className="text-center mb-12">

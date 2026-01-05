@@ -2,6 +2,7 @@ import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { ScrollToTop } from "@/components/layout/ScrollToTop";
 import { MotionReveal, MotionStagger, MotionItem } from "@/components/motion/MotionReveal";
+import { ParallaxElements } from "@/components/effects/ParallaxElements";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -37,6 +38,7 @@ const About = () => {
       
       {/* Hero Section */}
       <section className="relative py-24 px-4 overflow-hidden">
+        <ParallaxElements variant="mixed" />
         <div className="container max-w-6xl mx-auto">
           <MotionReveal>
             <div className="text-center mb-16">
