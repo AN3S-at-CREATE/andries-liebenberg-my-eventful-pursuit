@@ -2,6 +2,7 @@ import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { ScrollToTop } from "@/components/layout/ScrollToTop";
 import { ContactForm } from "@/components/contact/ContactForm";
+import { ParallaxElements } from "@/components/effects/ParallaxElements";
 import { Card, CardContent } from "@/components/ui/card";
 import { Mail, Phone, MapPin, Clock, Github, Linkedin } from "lucide-react";
 
@@ -10,9 +11,10 @@ const Contact = () => {
     <div className="min-h-screen bg-background">
       <Navbar />
       
-      <main className="container py-12">
+      <main className="container py-12 relative overflow-hidden">
+        <ParallaxElements variant="mixed" />
         {/* Hero Section */}
-        <div className="text-center mb-12">
+        <div className="text-center mb-12 relative z-10">
           <h1 className="font-heading text-4xl md:text-5xl font-bold text-foreground mb-4">
             Get in <span className="text-primary">Touch</span>
           </h1>

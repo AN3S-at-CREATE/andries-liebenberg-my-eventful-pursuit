@@ -2,6 +2,7 @@ import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { ScrollToTop } from "@/components/layout/ScrollToTop";
 import { MotionReveal } from "@/components/motion/MotionReveal";
+import { ParallaxElements } from "@/components/effects/ParallaxElements";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -14,7 +15,8 @@ const NeuroLogix = () => {
       <Navbar />
       
       <section className="relative py-24 px-4 overflow-hidden">
-        <div className="container max-w-6xl mx-auto">
+        <ParallaxElements variant="cyan" />
+        <div className="container max-w-6xl mx-auto relative z-10">
           <MotionReveal>
             <div className="text-center mb-16">
               <Badge variant="glow-cyan" className="mb-4">AI Network</Badge>

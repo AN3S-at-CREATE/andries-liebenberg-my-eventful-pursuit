@@ -4,6 +4,7 @@ import { Footer } from "@/components/layout/Footer";
 import { MetricCard } from "@/components/companies/MetricCard";
 import { SectorBadge } from "@/components/companies/SectorBadge";
 import { TruthBadge } from "@/components/companies/TruthBadge";
+import { ParallaxElements } from "@/components/effects/ParallaxElements";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { companies, getCompanyBySlug } from "@/data/companies";
@@ -44,8 +45,9 @@ const CompanyDetail = () => {
       <Navbar />
 
       {/* Header */}
-      <section className="py-12 px-4 border-b border-border/50">
-        <div className="container max-w-4xl mx-auto">
+      <section className="relative py-12 px-4 border-b border-border/50 overflow-hidden">
+        <ParallaxElements variant="cyan" />
+        <div className="container max-w-4xl mx-auto relative z-10">
           <Link
             to="/companies"
             className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors mb-6"

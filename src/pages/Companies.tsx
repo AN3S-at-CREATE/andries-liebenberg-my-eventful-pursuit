@@ -3,6 +3,7 @@ import { Footer } from "@/components/layout/Footer";
 import { ScrollToTop } from "@/components/layout/ScrollToTop";
 import { CompanyGrid } from "@/components/companies/CompanyGrid";
 import { PerformanceBriefModal } from "@/components/companies/PerformanceBriefModal";
+import { ParallaxElements } from "@/components/effects/ParallaxElements";
 import { Button } from "@/components/ui/button";
 import { MessageCircle } from "lucide-react";
 import { MotionReveal } from "@/components/motion/MotionReveal";
@@ -13,8 +14,9 @@ const Companies = () => {
       <Navbar />
 
       {/* Hero */}
-      <section className="py-16 px-4 border-b border-border/50">
-        <div className="container max-w-6xl mx-auto">
+      <section className="relative py-16 px-4 border-b border-border/50 overflow-hidden">
+        <ParallaxElements variant="cyan" />
+        <div className="container max-w-6xl mx-auto relative z-10">
           <MotionReveal>
             <div className="text-center mb-8">
               <h1 className="font-heading text-4xl md:text-5xl font-bold text-foreground mb-4">
