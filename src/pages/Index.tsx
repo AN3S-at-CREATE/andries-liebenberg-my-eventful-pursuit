@@ -64,7 +64,7 @@ const Index = () => {
                   <ArrowRight className="h-4 w-4" />
                 </Link>
               </Button>
-              <Button asChild variant="outline" size="lg" className="border-secondary/50 hover:bg-secondary/10 hover:border-secondary border-glow-pink-hover">
+              <Button asChild variant="glow-pink" size="lg">
                 <a
                   href="https://wa.me/27729749703"
                   target="_blank"
@@ -78,8 +78,8 @@ const Index = () => {
         </motion.div>
       </section>
 
-      {/* Divider */}
-      <div className="divider-glow h-px w-full animate-glow-breathe" />
+      {/* Pink Accent Divider */}
+      <div className="divider-pink h-px w-full" />
 
       {/* Stats Section */}
       <section className="py-16 px-4 bg-muted/20">
@@ -125,14 +125,14 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Divider */}
-      <div className="divider-glow h-px w-full animate-glow-breathe" />
+      {/* Cyan Divider */}
+      <div className="divider-cyan h-px w-full" />
 
       {/* AI Tools Section */}
       <AIToolsSection />
 
-      {/* Divider */}
-      <div className="divider-glow h-px w-full animate-glow-breathe" />
+      {/* Pink Accent Divider */}
+      <div className="divider-pink h-px w-full" />
 
       {/* Companies Preview */}
       <CompaniesPreview />

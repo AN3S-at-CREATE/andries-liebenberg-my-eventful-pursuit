@@ -54,13 +54,8 @@ export function AIToolCard({
           {title}
         </h3>
         <Badge
-          variant={status === "available" ? "default" : "secondary"}
-          className={cn(
-            "text-xs shrink-0",
-            status === "available"
-              ? "bg-primary/20 text-primary border-primary/30"
-              : "bg-muted text-muted-foreground"
-          )}
+          variant={status === "available" ? "glow-cyan" : "glow-pink"}
+          className="text-xs shrink-0"
         >
           {status === "available" ? "Available" : "Coming Soon"}
         </Badge>

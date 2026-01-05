@@ -140,6 +140,30 @@
       transparent
     );
   }
+  
+  /* Pink accent divider */
+  .divider-pink {
+    background: linear-gradient(
+      90deg,
+      transparent 5%,
+      hsl(var(--secondary) / 0.4) 25%,
+      hsl(var(--secondary) / 0.6) 50%,
+      hsl(var(--secondary) / 0.4) 75%,
+      transparent 95%
+    );
+  }
+  
+  /* Cyan accent divider */
+  .divider-cyan {
+    background: linear-gradient(
+      90deg,
+      transparent 5%,
+      hsl(var(--primary) / 0.4) 25%,
+      hsl(var(--primary) / 0.6) 50%,
+      hsl(var(--primary) / 0.4) 75%,
+      transparent 95%
+    );
+  }
 
   /* Glass card utilities */
   .glass {
