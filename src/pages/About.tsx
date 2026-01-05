@@ -42,13 +42,14 @@ const About = () => {
         <div className="container max-w-6xl mx-auto">
           <MotionReveal>
             <div className="text-center mb-16">
-              <Badge variant="glow-cyan" className="mb-4">Architect of Experiences, Driver of Growth</Badge>
+              <Badge variant="glow-pink" className="mb-4">Architect of Experiences, Driver of Growth</Badge>
               <h1 className="font-heading text-4xl md:text-6xl font-bold text-foreground mb-6">
                 Andries Johannes{" "}
-                <span className="text-primary glow-text-cyan">Liebenberg</span>
+                <span className="text-primary glow-text-cyan">Lieben</span>
+                <span className="text-secondary glow-text-pink">berg</span>
               </h1>
               <p className="text-lg md:text-xl text-muted-foreground max-w-4xl mx-auto mb-6">
-                For over two decades, my professional life has been a dynamic exploration at the intersection of creativity, strategy, and execution. I've navigated the complex worlds of Marketing, Events Management, Sales, Technical Development, and Strategic Business Growth.
+                For over two decades, my professional life has been a dynamic exploration at the intersection of <span className="text-primary">creativity</span>, <span className="text-secondary">strategy</span>, and <span className="text-primary">execution</span>. I've navigated the complex worlds of Marketing, Events Management, Sales, Technical Development, and Strategic Business Growth.
               </p>
               <p className="text-base text-muted-foreground/80 max-w-3xl mx-auto">
                 As a third-generation event professional, creating experiences is in my blood, but I've always blended this innate understanding with sharp business strategy and cutting-edge technical skills.
@@ -71,25 +72,28 @@ const About = () => {
             ))}
           </MotionStagger>
 
+          {/* Divider */}
+          <div className="divider-cyan mb-12" />
+
           {/* Current Roles */}
           <MotionReveal delay={0.2}>
-            <Card className="glass p-8 mb-12">
+            <Card className="glass p-8 mb-12 border-l-4 border-l-primary">
               <h2 className="font-heading text-2xl font-bold text-foreground mb-6 flex items-center gap-3">
                 <Briefcase className="h-6 w-6 text-primary" />
-                Current Roles
+                Current <span className="text-secondary">Roles</span>
               </h2>
               <div className="grid md:grid-cols-2 gap-6">
-                <div className="flex items-start gap-4">
-                  <div className="w-3 h-3 rounded-full bg-primary mt-2 flex-shrink-0" />
+                <div className="flex items-start gap-4 group">
+                  <div className="w-3 h-3 rounded-full bg-primary mt-2 flex-shrink-0 group-hover:shadow-[0_0_10px_hsl(var(--primary))] transition-shadow" />
                   <div>
-                    <h3 className="font-semibold text-foreground">CMO and Events Manager</h3>
+                    <h3 className="font-semibold text-foreground group-hover:text-primary transition-colors">CMO and Events Manager</h3>
                     <p className="text-muted-foreground">Maono Moja Events — East African expansion</p>
                   </div>
                 </div>
-                <div className="flex items-start gap-4">
-                  <div className="w-3 h-3 rounded-full bg-secondary mt-2 flex-shrink-0" />
+                <div className="flex items-start gap-4 group">
+                  <div className="w-3 h-3 rounded-full bg-secondary mt-2 flex-shrink-0 group-hover:shadow-[0_0_10px_hsl(var(--secondary))] transition-shadow" />
                   <div>
-                    <h3 className="font-semibold text-foreground">Head of Marketing and Events</h3>
+                    <h3 className="font-semibold text-foreground group-hover:text-secondary transition-colors">Head of Marketing and Events</h3>
                     <p className="text-muted-foreground">360 Vision Events Group — South Africa</p>
                   </div>
                 </div>
@@ -99,26 +103,31 @@ const About = () => {
 
           {/* Heritage Section */}
           <MotionReveal delay={0.3}>
-            <Card className="glass-pink p-8 mb-12">
+            <Card className="glass-pink p-8 mb-12 border-r-4 border-r-secondary">
               <div className="flex flex-col md:flex-row items-center gap-6">
-                <Heart className="h-16 w-16 text-secondary flex-shrink-0" />
+                <Heart className="h-16 w-16 text-secondary flex-shrink-0 animate-pulse" />
                 <div>
-                  <h3 className="font-heading text-2xl font-bold text-foreground mb-3">My Unique Journey</h3>
+                  <h3 className="font-heading text-2xl font-bold text-foreground mb-3">
+                    My <span className="text-secondary">Unique</span> Journey
+                  </h3>
                   <p className="text-muted-foreground mb-4">
-                    My career began in Standard 6 (Grade 8), working in full-blown hospitality at my mom's venue, the old Denel Sports Grounds. I managed 5 venues and 7 bars, hosting weddings every weekend and corporate events during the week.
+                    My career began in Standard 6 (Grade 8), working in full-blown hospitality at my mom's venue, the old Denel Sports Grounds. I managed <span className="text-primary font-semibold">5 venues</span> and <span className="text-secondary font-semibold">7 bars</span>, hosting weddings every weekend and corporate events during the week.
                   </p>
                   <p className="text-muted-foreground">
-                    While others hung out at roadhouses or arcades, I was driving a 10-ton truck (nicknamed Lizy) and managing events. I employed almost half of my grade to assist with events. By the time I sought higher education in 2004, I had already managed 511 events with budgets totaling R12,880,000.
+                    While others hung out at roadhouses or arcades, I was driving a 10-ton truck (nicknamed Lizy) and managing events. I employed almost half of my grade to assist with events. By the time I sought higher education in 2004, I had already managed <span className="text-primary font-semibold">511 events</span> with budgets totaling <span className="text-secondary font-semibold">R12,880,000</span>.
                   </p>
                 </div>
               </div>
             </Card>
           </MotionReveal>
 
+          {/* Divider */}
+          <div className="divider-pink mb-12" />
+
           {/* Career Timeline */}
           <MotionReveal delay={0.4}>
             <h2 className="font-heading text-3xl font-bold text-foreground mb-8 text-center">
-              Career <span className="text-primary">Timeline</span>
+              Career <span className="text-primary">Time</span><span className="text-secondary">line</span>
             </h2>
             <div className="relative">
               <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-0.5 bg-gradient-to-b from-primary via-secondary to-primary hidden md:block" />
@@ -142,24 +151,27 @@ const About = () => {
             </div>
           </MotionReveal>
 
+          {/* Divider */}
+          <div className="divider-cyan mt-16 mb-8" />
+
           {/* Key Strengths */}
-          <MotionStagger className="mt-16 grid md:grid-cols-3 gap-6">
+          <MotionStagger className="grid md:grid-cols-3 gap-6">
             <MotionItem>
-              <Card interactive glow="cyan" className="glass p-6 text-center h-full">
+              <Card interactive glow="cyan" className="glass-cyan p-6 text-center h-full border-t-2 border-t-primary">
                 <Target className="h-10 w-10 text-primary mx-auto mb-4" />
                 <h3 className="font-heading text-lg font-bold text-foreground mb-2">Leadership</h3>
                 <p className="text-sm text-muted-foreground">Strategic planning and creative problem-solving that drives results.</p>
               </Card>
             </MotionItem>
             <MotionItem>
-              <Card interactive glow="pink" className="glass p-6 text-center h-full">
+              <Card interactive glow="pink" className="glass-pink p-6 text-center h-full border-t-2 border-t-secondary">
                 <Users className="h-10 w-10 text-secondary mx-auto mb-4" />
                 <h3 className="font-heading text-lg font-bold text-foreground mb-2">Client-Centric</h3>
                 <p className="text-sm text-muted-foreground">Ensuring every project exceeds expectations with personalized approaches.</p>
               </Card>
             </MotionItem>
             <MotionItem>
-              <Card interactive glow="cyan" className="glass p-6 text-center h-full">
+              <Card interactive glow="cyan" className="glass-cyan p-6 text-center h-full border-t-2 border-t-primary">
                 <GraduationCap className="h-10 w-10 text-primary mx-auto mb-4" />
                 <h3 className="font-heading text-lg font-bold text-foreground mb-2">Mentorship</h3>
                 <p className="text-sm text-muted-foreground">Deep commitment to community engagement and developing future leaders.</p>
@@ -167,10 +179,13 @@ const About = () => {
             </MotionItem>
           </MotionStagger>
 
+          {/* Divider */}
+          <div className="divider-pink mt-16 mb-8" />
+
           {/* Achievements Grid */}
           <MotionReveal>
-            <h2 className="font-heading text-3xl font-bold text-foreground mb-8 mt-16 text-center">
-              Career <span className="text-secondary">Highlights</span>
+            <h2 className="font-heading text-3xl font-bold text-foreground mb-8 text-center">
+              Career <span className="text-secondary">High</span><span className="text-primary">lights</span>
             </h2>
           </MotionReveal>
           <MotionStagger className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -193,38 +208,43 @@ const About = () => {
 
           {/* Testimonial */}
           <MotionReveal delay={0.7}>
-            <Card className="glass mt-16 p-8">
-              <Quote className="h-10 w-10 text-primary/50 mb-4" />
+            <Card className="glass mt-16 p-8 border-l-4 border-l-primary border-r-4 border-r-secondary">
+              <Quote className="h-10 w-10 text-secondary/50 mb-4" />
               <blockquote className="text-lg text-muted-foreground italic mb-4">
-                "Andries has been more than a colleague; he has been an inspiration, a leader, and a driving force behind the success. His strategic vision and innovative approach have consistently delivered outstanding results, making him an invaluable asset. Any organization would be fortunate to have Andries on their team."
+                "Andries has been more than a colleague; he has been an <span className="text-primary not-italic font-medium">inspiration</span>, a <span className="text-secondary not-italic font-medium">leader</span>, and a driving force behind the success. His strategic vision and innovative approach have consistently delivered outstanding results, making him an invaluable asset. Any organization would be fortunate to have Andries on their team."
               </blockquote>
-              <p className="text-sm text-foreground font-medium">— Letter of Recommendation</p>
+              <p className="text-sm text-foreground font-medium">— Letter of <span className="text-primary">Recommendation</span></p>
             </Card>
           </MotionReveal>
 
           {/* Mentorship Section */}
           <MotionReveal delay={0.8}>
-            <Card className="glass-cyan mt-12 p-8">
+            <Card className="glass-cyan mt-12 p-8 border-b-4 border-b-primary">
               <div className="flex flex-col md:flex-row items-center gap-6">
                 <Award className="h-16 w-16 text-primary flex-shrink-0" />
                 <div>
-                  <h3 className="font-heading text-2xl font-bold text-foreground mb-3">Mentorship & Giving Back</h3>
+                  <h3 className="font-heading text-2xl font-bold text-foreground mb-3">
+                    <span className="text-primary">Mentorship</span> & <span className="text-secondary">Giving Back</span>
+                  </h3>
                   <p className="text-muted-foreground mb-4">
-                    As an Honorary Alumnus of TUT, I actively give back through guest lecturing, contributing to curriculum development, sponsoring student projects (donating over ZAR 4 Million in equipment to TUT's Entertainment Technology program), and providing invaluable internship and freelance opportunities.
+                    As an Honorary Alumnus of TUT, I actively give back through guest lecturing, contributing to curriculum development, sponsoring student projects (donating over <span className="text-secondary font-semibold">ZAR 4 Million</span> in equipment to TUT's Entertainment Technology program), and providing invaluable internship and freelance opportunities.
                   </p>
                   <p className="text-muted-foreground">
-                    Currently developing "As an Events GURU," an ambitious AI-powered global platform designed to connect students with mentors and resources 24/7.
+                    Currently developing "<span className="text-primary">As an Events GURU</span>," an ambitious AI-powered global platform designed to connect students with mentors and resources 24/7.
                   </p>
                 </div>
               </div>
             </Card>
           </MotionReveal>
 
+          {/* Divider */}
+          <div className="divider-pink mt-12 mb-8" />
+
           {/* Vision for Future */}
           <MotionReveal>
-            <div className="mt-16 text-center">
+            <div className="text-center">
               <h2 className="font-heading text-3xl font-bold text-foreground mb-6">
-                Vision for the <span className="text-primary">Future</span>
+                Vision for the <span className="text-primary">Fu</span><span className="text-secondary">ture</span>
               </h2>
             </div>
           </MotionReveal>
@@ -263,13 +283,13 @@ const About = () => {
           {/* CTA */}
           <MotionReveal delay={1.0}>
             <div className="text-center mt-12 flex flex-wrap justify-center gap-4">
-              <Button asChild size="lg" className="bg-primary hover:bg-primary/90">
+              <Button asChild size="lg" variant="glow">
                 <Link to="/expertise" className="inline-flex items-center gap-2">
                   Explore My Expertise
                   <ArrowRight className="h-4 w-4" />
                 </Link>
               </Button>
-              <Button asChild size="lg" variant="outline">
+              <Button asChild size="lg" variant="glow-pink">
                 <Link to="/contact" className="inline-flex items-center gap-2">
                   Get in Touch
                   <ArrowRight className="h-4 w-4" />
