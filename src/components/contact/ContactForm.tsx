@@ -8,6 +8,19 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { Send, Loader2, CheckCircle } from "lucide-react";
+import { z } from "zod";
+
+const contactSchema = z.object({
+  name: z.string().min(2, "Name must be at least 2 characters").max(100, "Name is too long"),
+  email: z.string().email("Please enter a valid email address").max(100, "Email is too long"),
+  company: z.string().max(100, "Company name is too long").optional(),
+  industry: z.string().max(100, "Industry name is too long").optional(),
+  goal: z.string().max(200, "Goal description is too long").optional(),
+  message: z.string().min(10, "Message must be at least 10 characters").max(2000, "Message is too long"),
+  popiaConsent: z.literal(true, {
+    errorMap: () => ({ message: "You must accept the POPIA consent to proceed" }),
+  }),
+});
 
 interface ContactFormData {
   name: string;
@@ -41,20 +54,14 @@ export const ContactForm = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!formData.popiaConsent) {
-      toast({
-        variant: "destructive",
-        title: "Consent Required",
-        description: "Please accept the POPIA consent to proceed.",
-      });
-      return;
-    }
+    const result = contactSchema.safeParse(formData);
 
-    if (!formData.name || !formData.email || !formData.message) {
+    if (!result.success) {
+      const error = result.error.errors[0];
       toast({
         variant: "destructive",
-        title: "Missing Fields",
-        description: "Please fill in all required fields.",
+        title: "Validation Error",
+        description: error.message,
       });
       return;
     }
@@ -62,14 +69,15 @@ export const ContactForm = () => {
     setIsSubmitting(true);
 
     try {
+      const validatedData = result.data;
       const { data, error } = await supabase.functions.invoke("send-contact-email", {
         body: {
-          name: formData.name,
-          email: formData.email,
-          company: formData.company || undefined,
-          industry: formData.industry || undefined,
-          goal: formData.goal || undefined,
-          message: formData.message,
+          name: validatedData.name,
+          email: validatedData.email,
+          company: validatedData.company || undefined,
+          industry: validatedData.industry || undefined,
+          goal: validatedData.goal || undefined,
+          message: validatedData.message,
         },
       });
 
