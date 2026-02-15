@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import { setBackgroundFXMounted } from "@/lib/backgroundStatus";
 
 interface Particle {
   x: number;
@@ -10,23 +11,54 @@ interface Particle {
   color: string;
 }
 
-// Simple global state for status page
-let backgroundMounted = false;
-export const getBackgroundFXStatus = () => ({ isMounted: backgroundMounted });
-
 export function BackgroundFX() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const animationRef = useRef<number>();
   const particlesRef = useRef<Particle[]>([]);
 
   useEffect(() => {
-    backgroundMounted = true;
+    setBackgroundFXMounted(true);
     
     const canvas = canvasRef.current;
     if (!canvas) return;
 
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
+
+    // Create noise pattern once
+    let noisePattern: CanvasPattern | null = null;
+    try {
+      const noiseCanvas = document.createElement('canvas');
+      noiseCanvas.width = 256;
+      noiseCanvas.height = 256;
+      const nCtx = noiseCanvas.getContext('2d');
+      if (nCtx) {
+        const imageData = nCtx.createImageData(256, 256);
+        const data = imageData.data;
+        for (let i = 0; i < data.length; i += 4) {
+          const r = Math.random();
+          if (r < 0.25) {
+            // White, low opacity
+            data[i] = 255;
+            data[i + 1] = 255;
+            data[i + 2] = 255;
+            data[i + 3] = 4; // ~1.5%
+          } else if (r < 0.5) {
+            // Black, low opacity
+            data[i] = 0;
+            data[i + 1] = 0;
+            data[i + 2] = 0;
+            data[i + 3] = 8; // ~3%
+          } else {
+            data[i + 3] = 0; // Transparent
+          }
+        }
+        nCtx.putImageData(imageData, 0, 0);
+        noisePattern = ctx.createPattern(noiseCanvas, 'repeat');
+      }
+    } catch (e) {
+      console.error("Failed to create noise pattern", e);
+    }
 
     // Colors from design system
     const cyanColor = "rgba(13, 229, 255, ";
@@ -120,17 +152,16 @@ export function BackgroundFX() {
     };
 
     const drawNoise = () => {
-      const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-      const data = imageData.data;
+      if (!noisePattern) return;
 
-      for (let i = 0; i < data.length; i += 4) {
-        const noise = (Math.random() - 0.5) * 6;
-        data[i] += noise;
-        data[i + 1] += noise;
-        data[i + 2] += noise;
-      }
-
-      ctx.putImageData(imageData, 0, 0);
+      // Use efficient pattern tiling instead of pixel manipulation
+      ctx.save();
+      // Random offset to simulate static
+      ctx.translate(Math.random() * 100, Math.random() * 100);
+      ctx.fillStyle = noisePattern;
+      // Draw slightly larger to cover random offset
+      ctx.fillRect(-100, -100, canvas.width + 100, canvas.height + 100);
+      ctx.restore();
     };
 
     const animate = () => {
@@ -140,6 +171,7 @@ export function BackgroundFX() {
       drawGrid();
       drawParticles();
 
+      // Maintain original 8% probability for the glitch/noise effect
       if (Math.random() < 0.08) {
         drawNoise();
       }
@@ -159,7 +191,7 @@ export function BackgroundFX() {
     window.addEventListener("resize", handleResize);
 
     return () => {
-      backgroundMounted = false;
+      setBackgroundFXMounted(false);
       if (animationRef.current) {
         cancelAnimationFrame(animationRef.current);
       }

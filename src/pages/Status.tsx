@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getBackgroundFXStatus } from "@/components/background/BackgroundFX";
+import { getBackgroundFXStatus } from "@/lib/backgroundStatus";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { CheckCircle, XCircle, Palette, Sparkles } from "lucide-react";
