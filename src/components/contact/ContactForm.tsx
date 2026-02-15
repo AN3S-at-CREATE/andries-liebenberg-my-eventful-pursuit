@@ -88,7 +88,7 @@ export const ContactForm = () => {
         title: "Message Sent!",
         description: "Thank you for reaching out. I'll get back to you soon.",
       });
-    } catch (error) {
+    } catch (error: unknown) {
       console.error("Error submitting form:", error);
       toast({
         variant: "destructive",

@@ -71,7 +71,7 @@ export const FloatingConciergeButton = forwardRef<HTMLDivElement>((_, ref) => {
       {/* Tooltip - shows on hover */}
       <div className={cn(
         "absolute bottom-16 right-0 transition-all duration-300 pointer-events-none",
-        isHovered ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"
+        isHovered && !isOpen ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"
       )}>
         <div className="relative bg-card border border-border/50 rounded-lg p-4 shadow-lg shadow-secondary/10 w-[280px]">
           <div className="absolute -bottom-2 right-6 w-4 h-4 bg-card border-r border-b border-border/50 rotate-45" />
