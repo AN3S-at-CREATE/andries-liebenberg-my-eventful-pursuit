@@ -66,7 +66,7 @@ export function ROICalculatorModal({ trigger, initialValues, autoOpen, onAutoOpe
     const projections: ProjectionData[] = [];
     
     let cumulativeRevenue = 0;
-    let cumulativeInvestment = investmentAmount;
+    const cumulativeInvestment = investmentAmount;
     
     for (let month = 1; month <= timeframe; month++) {
       const projectedRevenue = currentRevenue * Math.pow(1 + monthlyGrowthRate, month);
