@@ -41,6 +41,7 @@ function validateInput(value: string, maxLength: number): string {
   // Trim and limit length
   const trimmed = value.trim().slice(0, maxLength);
   // Remove null bytes and control characters
+  // eslint-disable-next-line no-control-regex
   return trimmed.replace(/[\x00-\x08\x0B\x0C\x0E-\x1F]/g, '');
 }
 
@@ -82,12 +83,12 @@ const handler = async (req: Request): Promise<Response> => {
     const rawBody: ContactRequest = await req.json();
 
     // Validate and sanitize all inputs
-    const name = validateInput(rawBody.name, 100);
-    const email = validateInput(rawBody.email, 255);
+    const name = validateInput(rawBody.name || '', 100);
+    const email = validateInput(rawBody.email || '', 255);
     const company = validateInput(rawBody.company || '', 100);
     const industry = validateInput(rawBody.industry || '', 100);
     const goal = validateInput(rawBody.goal || '', 200);
-    const message = validateInput(rawBody.message, 5000);
+    const message = validateInput(rawBody.message || '', 5000);
 
     console.log("[send-contact-email] Processing submission:", { 
       hasName: !!name, 

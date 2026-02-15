@@ -85,7 +85,7 @@ const CompanyDetail = () => {
           </h2>
           
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4 mb-8">
-            <div className="lg:col-span-2">
+            <div className="md:col-span-2 lg:col-span-2">
               <Card className="bg-card/50 backdrop-blur-sm border-border/50 h-full">
                 <CardHeader className="pb-2">
                   <p className="text-sm text-muted-foreground">Revenue Range</p>
@@ -106,9 +106,6 @@ const CompanyDetail = () => {
               label="Customer Satisfaction"
               value={formatPercentage(metrics.customerSatisfactionPct)}
             />
-          </div>
-
-          <div className="grid gap-4 md:grid-cols-2">
             <MetricCard
               label="Clients Acquired"
               value={formatNumber(metrics.clientsAcquired)}

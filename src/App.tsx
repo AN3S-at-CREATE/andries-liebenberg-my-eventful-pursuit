@@ -54,7 +54,7 @@ const App = () => {
     // Simulate app initialization with extra delay for animation
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 3800);
+    }, 500);
 
     return () => clearTimeout(timer);
   }, []);
