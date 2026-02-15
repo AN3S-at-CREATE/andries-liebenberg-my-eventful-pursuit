@@ -11,7 +11,7 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/hooks/useAuth";
-import { Loader2, Lock, Mail } from "lucide-react";
+import { Loader2, Lock, Mail, Eye, EyeOff } from "lucide-react";
 
 const authSchema = z.object({
   email: z.string().email("Please enter a valid email address"),
@@ -23,6 +23,7 @@ type AuthFormData = z.infer<typeof authSchema>;
 const Auth = () => {
   const [isSignUp, setIsSignUp] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const { user, isLoading, signIn, signUp } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
@@ -139,11 +140,23 @@ const Auth = () => {
                   <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                   <Input
                     id="password"
-                    type="password"
+                    type={showPassword ? "text" : "password"}
                     placeholder="••••••••"
-                    className="pl-10"
+                    className="pl-10 pr-10"
                     {...register("password")}
                   />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-1 top-1/2 -translate-y-1/2 p-2 rounded-md text-muted-foreground hover:text-foreground transition-colors"
+                    aria-label={showPassword ? "Hide password" : "Show password"}
+                  >
+                    {showPassword ? (
+                      <EyeOff className="h-4 w-4" />
+                    ) : (
+                      <Eye className="h-4 w-4" />
+                    )}
+                  </button>
                 </div>
                 {errors.password && (
                   <p className="text-sm text-destructive">{errors.password.message}</p>
