@@ -51,12 +51,31 @@ const App = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Simulate app initialization with extra delay for animation
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 500);
+    const minimumVisibleTimeMs = 1400;
+    const initStartedAt = Date.now();
+    let timer: number | undefined;
 
-    return () => clearTimeout(timer);
+    const finishLoadingSequence = () => {
+      const elapsedTime = Date.now() - initStartedAt;
+      const remainingTime = Math.max(minimumVisibleTimeMs - elapsedTime, 0);
+
+      timer = window.setTimeout(() => {
+        setIsLoading(false);
+      }, remainingTime);
+    };
+
+    if (document.readyState === "complete") {
+      finishLoadingSequence();
+    } else {
+      window.addEventListener("load", finishLoadingSequence, { once: true });
+    }
+
+    return () => {
+      if (timer) {
+        window.clearTimeout(timer);
+      }
+      window.removeEventListener("load", finishLoadingSequence);
+    };
   }, []);
 
   return (
