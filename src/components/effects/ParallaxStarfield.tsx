@@ -12,6 +12,12 @@ interface Star {
   twinkleOffset: number;
 }
 
+const STAR_COLORS = {
+  cyan: "rgb(13, 229, 255)",
+  pink: "rgb(255, 26, 140)",
+  white: "rgb(255, 255, 255)",
+};
+
 // Check if device prefers reduced motion or is mobile
 const isMobile = () => typeof window !== "undefined" && window.innerWidth < 768;
 const prefersReducedMotion = () =>
@@ -89,17 +95,12 @@ export function ParallaxStarfield() {
           twinkleOffset: Math.random() * Math.PI * 2,
         });
       }
-    };
 
-    const getStarColor = (star: Star, opacity: number): string => {
-      switch (star.color) {
-        case "cyan":
-          return `rgba(13, 229, 255, ${opacity})`;
-        case "pink":
-          return `rgba(255, 26, 140, ${opacity})`;
-        default:
-          return `rgba(255, 255, 255, ${opacity})`;
-      }
+      // Sort stars by color to batch canvas state changes
+      starsRef.current.sort((a, b) => {
+        if (a.color === b.color) return 0;
+        return a.color > b.color ? 1 : -1;
+      });
     };
 
     let lastFrameTime = 0;
@@ -119,11 +120,12 @@ export function ParallaxStarfield() {
       const time = currentTime * 0.001;
       const scrollOffset = scrollYRef.current;
       const canvasHeight = window.innerHeight * (isReducedMode ? 2 : 3);
+      let currentFillStyle = "";
 
       starsRef.current.forEach((star) => {
         // Skip twinkle calculation on reduced mode for performance
-        const twinkle = isReducedMode 
-          ? 0.85 
+        const twinkle = isReducedMode
+          ? 0.85
           : Math.sin(time * star.twinkleSpeed + star.twinkleOffset) * 0.3 + 0.7;
         const finalOpacity = star.opacity * twinkle;
 
@@ -134,17 +136,25 @@ export function ParallaxStarfield() {
         // Only draw stars in visible viewport area
         const viewportY = adjustedY - scrollOffset * 0.1;
         if (viewportY > -50 && viewportY < window.innerHeight + 50) {
+          const color = STAR_COLORS[star.color];
+
+          // Only change fillStyle if color changes (batched by sorting)
+          if (currentFillStyle !== color) {
+            ctx.fillStyle = color;
+            currentFillStyle = color;
+          }
+
           // Star core
+          ctx.globalAlpha = finalOpacity;
           ctx.beginPath();
           ctx.arc(star.x, viewportY, star.size, 0, Math.PI * 2);
-          ctx.fillStyle = getStarColor(star, finalOpacity);
           ctx.fill();
 
           // Skip glow on mobile for performance
           if (!isReducedMode && star.size > 1 && star.color !== "white") {
+            ctx.globalAlpha = finalOpacity * 0.15;
             ctx.beginPath();
             ctx.arc(star.x, viewportY, star.size * 3, 0, Math.PI * 2);
-            ctx.fillStyle = getStarColor(star, finalOpacity * 0.15);
             ctx.fill();
           }
         }
