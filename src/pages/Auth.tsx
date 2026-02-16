@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Navbar } from "@/components/layout/Navbar";
@@ -11,14 +10,8 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/hooks/useAuth";
-import { Loader2, Lock, Mail, Eye, EyeOff } from "lucide-react";
-
-const authSchema = z.object({
-  email: z.string().email("Please enter a valid email address"),
-  password: z.string().min(6, "Password must be at least 6 characters"),
-});
-
-type AuthFormData = z.infer<typeof authSchema>;
+import { Loader2, Lock, Mail, Eye, EyeOff, ShieldCheck } from "lucide-react";
+import { loginSchema, signUpSchema, AuthFormData } from "@/lib/auth-schemas";
 
 const Auth = () => {
   const [isSignUp, setIsSignUp] = useState(false);
@@ -34,7 +27,7 @@ const Auth = () => {
     formState: { errors },
     reset,
   } = useForm<AuthFormData>({
-    resolver: zodResolver(authSchema),
+    resolver: zodResolver(isSignUp ? signUpSchema : loginSchema),
   });
 
   // Redirect if already logged in
@@ -160,6 +153,20 @@ const Auth = () => {
                 </div>
                 {errors.password && (
                   <p className="text-sm text-destructive">{errors.password.message}</p>
+                )}
+
+                {isSignUp && (
+                  <div className="rounded-md bg-muted p-3 text-xs text-muted-foreground space-y-1 mt-2">
+                    <div className="flex items-center gap-1.5 font-medium text-foreground">
+                      <ShieldCheck className="h-3.5 w-3.5 text-primary" />
+                      <span>Password requirements:</span>
+                    </div>
+                    <ul className="list-disc list-inside pl-1 space-y-0.5 opacity-90">
+                      <li>At least 8 characters</li>
+                      <li>One uppercase & one lowercase letter</li>
+                      <li>One number & one special character</li>
+                    </ul>
+                  </div>
                 )}
               </div>
 
