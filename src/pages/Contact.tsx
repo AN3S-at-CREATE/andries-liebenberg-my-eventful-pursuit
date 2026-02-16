@@ -111,6 +111,7 @@ const Contact = () => {
                       href="https://github.com/AN3S-CREATE"
                       target="_blank"
                       rel="noopener noreferrer"
+                      aria-label="GitHub Profile"
                       className="p-2 rounded-lg bg-primary/10 text-primary hover:bg-primary/20 hover:shadow-[0_0_10px_hsl(var(--primary)/0.3)] transition-all"
                     >
                       <Github className="h-5 w-5" />
@@ -119,6 +120,7 @@ const Contact = () => {
                       href="https://www.linkedin.com/in/andriesliebenberg-an3s"
                       target="_blank"
                       rel="noopener noreferrer"
+                      aria-label="LinkedIn Profile"
                       className="p-2 rounded-lg bg-secondary/10 text-secondary hover:bg-secondary/20 hover:shadow-[0_0_10px_hsl(var(--secondary)/0.3)] transition-all"
                     >
                       <Linkedin className="h-5 w-5" />

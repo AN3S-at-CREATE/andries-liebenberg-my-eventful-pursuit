@@ -119,6 +119,7 @@ export const Navbar = () => {
             href="https://github.com/AN3S-CREATE"
             target="_blank"
             rel="noopener noreferrer"
+            aria-label="GitHub Profile"
             className="hidden sm:block text-muted-foreground hover:text-primary transition-colors"
           >
             <Github className="h-5 w-5" />
@@ -127,6 +128,7 @@ export const Navbar = () => {
             href="https://www.linkedin.com/in/andriesliebenberg-an3s"
             target="_blank"
             rel="noopener noreferrer"
+            aria-label="LinkedIn Profile"
             className="hidden sm:block text-muted-foreground hover:text-secondary transition-colors"
           >
             <Linkedin className="h-5 w-5" />
@@ -258,6 +260,7 @@ export const Navbar = () => {
                       href="https://github.com/AN3S-CREATE"
                       target="_blank"
                       rel="noopener noreferrer"
+                      aria-label="GitHub Profile"
                       className="text-muted-foreground hover:text-primary transition-colors"
                     >
                       <Github className="h-5 w-5" />
@@ -266,6 +269,7 @@ export const Navbar = () => {
                       href="https://www.linkedin.com/in/andriesliebenberg-an3s"
                       target="_blank"
                       rel="noopener noreferrer"
+                      aria-label="LinkedIn Profile"
                       className="text-muted-foreground hover:text-secondary transition-colors"
                     >
                       <Linkedin className="h-5 w-5" />
