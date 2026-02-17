@@ -112,6 +112,7 @@ const Contact = () => {
                       target="_blank"
                       rel="noopener noreferrer"
                       className="p-2 rounded-lg bg-primary/10 text-primary hover:bg-primary/20 hover:shadow-[0_0_10px_hsl(var(--primary)/0.3)] transition-all"
+                      aria-label="GitHub Profile"
                     >
                       <Github className="h-5 w-5" />
                     </a>
@@ -120,6 +121,7 @@ const Contact = () => {
                       target="_blank"
                       rel="noopener noreferrer"
                       className="p-2 rounded-lg bg-secondary/10 text-secondary hover:bg-secondary/20 hover:shadow-[0_0_10px_hsl(var(--secondary)/0.3)] transition-all"
+                      aria-label="LinkedIn Profile"
                     >
                       <Linkedin className="h-5 w-5" />
                     </a>
