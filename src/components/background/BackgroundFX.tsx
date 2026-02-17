@@ -9,6 +9,8 @@ interface Particle {
   size: number;
   opacity: number;
   color: string;
+  colorString: string;
+  glowString: string;
 }
 
 export function BackgroundFX() {
@@ -64,9 +66,64 @@ export function BackgroundFX() {
     const cyanColor = "rgba(13, 229, 255, ";
     const pinkColor = "rgba(255, 26, 140, ";
 
+    // Optimization: Render grid to offscreen canvas
+    const gridCanvas = document.createElement('canvas');
+    const gridCtx = gridCanvas.getContext('2d');
+
+    const renderGridToOffscreen = (targetCtx: CanvasRenderingContext2D, width: number, height: number) => {
+      targetCtx.clearRect(0, 0, width, height);
+
+      const horizonY = height * 0.65;
+      const gridLines = 25;
+      const vanishingPointX = width / 2;
+
+      targetCtx.strokeStyle = "rgba(13, 229, 255, 0.06)";
+      targetCtx.lineWidth = 1;
+
+      for (let i = 0; i <= gridLines; i++) {
+        const progress = i / gridLines;
+        const y = horizonY + (height - horizonY) * Math.pow(progress, 1.5);
+        const spread = 1 + progress * 2.5;
+
+        targetCtx.beginPath();
+        targetCtx.moveTo(vanishingPointX - (width * spread) / 2, y);
+        targetCtx.lineTo(vanishingPointX + (width * spread) / 2, y);
+        targetCtx.stroke();
+      }
+
+      const verticalLines = 35;
+      for (let i = -verticalLines / 2; i <= verticalLines / 2; i++) {
+        const baseX = vanishingPointX + i * (width / verticalLines) * 3;
+        targetCtx.beginPath();
+        targetCtx.moveTo(vanishingPointX, horizonY);
+        targetCtx.lineTo(baseX, height);
+        targetCtx.stroke();
+      }
+
+      const horizonGradient = targetCtx.createLinearGradient(0, horizonY - 60, 0, horizonY + 60);
+      horizonGradient.addColorStop(0, "rgba(13, 229, 255, 0)");
+      horizonGradient.addColorStop(0.5, "rgba(13, 229, 255, 0.08)");
+      horizonGradient.addColorStop(1, "rgba(13, 229, 255, 0)");
+      targetCtx.fillStyle = horizonGradient;
+      targetCtx.fillRect(0, horizonY - 60, width, 120);
+
+      const bottomGradient = targetCtx.createLinearGradient(0, height - 150, 0, height);
+      bottomGradient.addColorStop(0, "rgba(255, 26, 140, 0)");
+      bottomGradient.addColorStop(0.5, "rgba(255, 26, 140, 0.04)");
+      bottomGradient.addColorStop(1, "rgba(255, 26, 140, 0.02)");
+      targetCtx.fillStyle = bottomGradient;
+      targetCtx.fillRect(0, height - 150, width, 150);
+    };
+
     const resizeCanvas = () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
+
+      if (gridCtx) {
+        gridCanvas.width = window.innerWidth;
+        gridCanvas.height = window.innerHeight;
+        renderGridToOffscreen(gridCtx, window.innerWidth, window.innerHeight);
+      }
     };
 
     const initParticles = () => {
@@ -74,59 +131,21 @@ export function BackgroundFX() {
       particlesRef.current = [];
 
       for (let i = 0; i < particleCount; i++) {
+        const opacity = Math.random() * 0.6 + 0.15;
+        const color = Math.random() > 0.4 ? cyanColor : pinkColor;
+
         particlesRef.current.push({
           x: Math.random() * canvas.width,
           y: Math.random() * canvas.height,
           vx: (Math.random() - 0.5) * 0.4,
           vy: (Math.random() - 0.5) * 0.4,
           size: Math.random() * 2.5 + 0.5,
-          opacity: Math.random() * 0.6 + 0.15,
-          color: Math.random() > 0.4 ? cyanColor : pinkColor,
+          opacity,
+          color,
+          colorString: color + opacity + ")",
+          glowString: color + (opacity * 0.15) + ")",
         });
       }
-    };
-
-    const drawGrid = () => {
-      const horizonY = canvas.height * 0.65;
-      const gridLines = 25;
-      const vanishingPointX = canvas.width / 2;
-
-      ctx.strokeStyle = "rgba(13, 229, 255, 0.06)";
-      ctx.lineWidth = 1;
-
-      for (let i = 0; i <= gridLines; i++) {
-        const progress = i / gridLines;
-        const y = horizonY + (canvas.height - horizonY) * Math.pow(progress, 1.5);
-        const spread = 1 + progress * 2.5;
-
-        ctx.beginPath();
-        ctx.moveTo(vanishingPointX - (canvas.width * spread) / 2, y);
-        ctx.lineTo(vanishingPointX + (canvas.width * spread) / 2, y);
-        ctx.stroke();
-      }
-
-      const verticalLines = 35;
-      for (let i = -verticalLines / 2; i <= verticalLines / 2; i++) {
-        const baseX = vanishingPointX + i * (canvas.width / verticalLines) * 3;
-        ctx.beginPath();
-        ctx.moveTo(vanishingPointX, horizonY);
-        ctx.lineTo(baseX, canvas.height);
-        ctx.stroke();
-      }
-
-      const horizonGradient = ctx.createLinearGradient(0, horizonY - 60, 0, horizonY + 60);
-      horizonGradient.addColorStop(0, "rgba(13, 229, 255, 0)");
-      horizonGradient.addColorStop(0.5, "rgba(13, 229, 255, 0.08)");
-      horizonGradient.addColorStop(1, "rgba(13, 229, 255, 0)");
-      ctx.fillStyle = horizonGradient;
-      ctx.fillRect(0, horizonY - 60, canvas.width, 120);
-
-      const bottomGradient = ctx.createLinearGradient(0, canvas.height - 150, 0, canvas.height);
-      bottomGradient.addColorStop(0, "rgba(255, 26, 140, 0)");
-      bottomGradient.addColorStop(0.5, "rgba(255, 26, 140, 0.04)");
-      bottomGradient.addColorStop(1, "rgba(255, 26, 140, 0.02)");
-      ctx.fillStyle = bottomGradient;
-      ctx.fillRect(0, canvas.height - 150, canvas.width, 150);
     };
 
     const drawParticles = () => {
@@ -141,12 +160,12 @@ export function BackgroundFX() {
 
         ctx.beginPath();
         ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
-        ctx.fillStyle = particle.color + particle.opacity + ")";
+        ctx.fillStyle = particle.colorString;
         ctx.fill();
 
         ctx.beginPath();
         ctx.arc(particle.x, particle.y, particle.size * 4, 0, Math.PI * 2);
-        ctx.fillStyle = particle.color + (particle.opacity * 0.15) + ")";
+        ctx.fillStyle = particle.glowString;
         ctx.fill();
       });
     };
@@ -168,7 +187,10 @@ export function BackgroundFX() {
       ctx.fillStyle = "hsl(223, 24%, 6%)";
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-      drawGrid();
+      if (gridCanvas.width > 0) {
+        ctx.drawImage(gridCanvas, 0, 0);
+      }
+
       drawParticles();
 
       // Maintain original 8% probability for the glitch/noise effect
