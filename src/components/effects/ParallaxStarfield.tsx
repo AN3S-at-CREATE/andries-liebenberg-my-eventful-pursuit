@@ -18,6 +18,13 @@ const prefersReducedMotion = () =>
   typeof window !== "undefined" &&
   window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+// Optimization: Pre-defined hex colors to avoid string allocation in render loop
+const STAR_COLORS = {
+  cyan: "#0DE5FF",
+  pink: "#FF1A8C",
+  white: "#FFFFFF",
+};
+
 export function ParallaxStarfield() {
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -89,17 +96,9 @@ export function ParallaxStarfield() {
           twinkleOffset: Math.random() * Math.PI * 2,
         });
       }
-    };
 
-    const getStarColor = (star: Star, opacity: number): string => {
-      switch (star.color) {
-        case "cyan":
-          return `rgba(13, 229, 255, ${opacity})`;
-        case "pink":
-          return `rgba(255, 26, 140, ${opacity})`;
-        default:
-          return `rgba(255, 255, 255, ${opacity})`;
-      }
+      // Optimization: Sort stars by color to batch draw calls and minimize ctx.fillStyle changes
+      starsRef.current.sort((a, b) => a.color.localeCompare(b.color));
     };
 
     let lastFrameTime = 0;
@@ -120,7 +119,14 @@ export function ParallaxStarfield() {
       const scrollOffset = scrollYRef.current;
       const canvasHeight = window.innerHeight * (isReducedMode ? 2 : 3);
 
-      starsRef.current.forEach((star) => {
+      const stars = starsRef.current;
+      const len = stars.length;
+      let currentFillStyle = "";
+
+      // Optimization: Use for loop instead of forEach
+      for (let i = 0; i < len; i++) {
+        const star = stars[i];
+
         // Skip twinkle calculation on reduced mode for performance
         const twinkle = isReducedMode 
           ? 0.85 
@@ -134,21 +140,33 @@ export function ParallaxStarfield() {
         // Only draw stars in visible viewport area
         const viewportY = adjustedY - scrollOffset * 0.1;
         if (viewportY > -50 && viewportY < window.innerHeight + 50) {
+
+          // Optimization: Only update fillStyle when color group changes
+          if (currentFillStyle !== star.color) {
+            currentFillStyle = star.color;
+            ctx.fillStyle = STAR_COLORS[star.color];
+          }
+
+          // Optimization: Use globalAlpha for opacity instead of creating new string
+          ctx.globalAlpha = finalOpacity;
+
           // Star core
           ctx.beginPath();
           ctx.arc(star.x, viewportY, star.size, 0, Math.PI * 2);
-          ctx.fillStyle = getStarColor(star, finalOpacity);
           ctx.fill();
 
           // Skip glow on mobile for performance
           if (!isReducedMode && star.size > 1 && star.color !== "white") {
+            ctx.globalAlpha = finalOpacity * 0.15;
             ctx.beginPath();
             ctx.arc(star.x, viewportY, star.size * 3, 0, Math.PI * 2);
-            ctx.fillStyle = getStarColor(star, finalOpacity * 0.15);
             ctx.fill();
           }
         }
-      });
+      }
+
+      // Reset globalAlpha
+      ctx.globalAlpha = 1.0;
 
       animationRef.current = requestAnimationFrame(animate);
     };
