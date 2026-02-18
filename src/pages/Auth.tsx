@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Navbar } from "@/components/layout/Navbar";
@@ -12,30 +11,12 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/hooks/useAuth";
 import { Loader2, Lock, Mail, Eye, EyeOff } from "lucide-react";
-
-const authSchema = z.object({
-  email: z.string().email("Please enter a valid email address"),
-  password: z.string().min(6, "Password must be at least 6 characters"),
-});
-
-type AuthFormData = z.infer<typeof authSchema>;
+import { signInSchema, signUpSchema, SignInFormData, SignUpFormData } from "@/lib/auth-schemas";
 
 const Auth = () => {
   const [isSignUp, setIsSignUp] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
-  const { user, isLoading, signIn, signUp } = useAuth();
+  const { user, isLoading } = useAuth();
   const navigate = useNavigate();
-  const { toast } = useToast();
-
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    reset,
-  } = useForm<AuthFormData>({
-    resolver: zodResolver(authSchema),
-  });
 
   // Redirect if already logged in
   useEffect(() => {
@@ -44,33 +25,69 @@ const Auth = () => {
     }
   }, [user, isLoading, navigate]);
 
-  const onSubmit = async (data: AuthFormData) => {
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <Loader2 className="h-8 w-8 animate-spin text-primary" />
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen flex flex-col">
+      <Navbar />
+      <main className="flex-1 flex items-center justify-center py-16 px-4">
+        <AuthForm
+          key={isSignUp ? "signup" : "signin"}
+          isSignUp={isSignUp}
+          toggleMode={() => setIsSignUp(!isSignUp)}
+        />
+      </main>
+      <Footer />
+    </div>
+  );
+};
+
+interface AuthFormProps {
+  isSignUp: boolean;
+  toggleMode: () => void;
+}
+
+const AuthForm = ({ isSignUp, toggleMode }: AuthFormProps) => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const { signIn, signUp } = useAuth();
+  const navigate = useNavigate();
+  const { toast } = useToast();
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<SignInFormData | SignUpFormData>({
+    resolver: zodResolver(isSignUp ? signUpSchema : signInSchema),
+  });
+
+  const onSubmit = async (data: SignInFormData | SignUpFormData) => {
     setIsSubmitting(true);
 
     try {
       if (isSignUp) {
         const { error } = await signUp(data.email, data.password);
         if (error) {
-          if (error.message.includes("already registered")) {
-            toast({
-              title: "Account exists",
-              description: "This email is already registered. Please sign in instead.",
-              variant: "destructive",
-            });
-          } else {
-            toast({
-              title: "Sign up failed",
-              description: error.message,
-              variant: "destructive",
-            });
-          }
+          // Sentinel: Prevent user enumeration by showing generic error
+          console.error("Sign up error:", error); // Log internally
+          toast({
+            title: "Sign up failed",
+            description: "Unable to create account. Please check your details or try signing in.",
+            variant: "destructive",
+          });
         } else {
           toast({
             title: "Account created",
             description: "Check your email to verify your account, then sign in.",
           });
-          setIsSignUp(false);
-          reset();
+          toggleMode();
         }
       } else {
         const { error } = await signIn(data.email, data.password);
@@ -89,116 +106,104 @@ const Auth = () => {
     }
   };
 
-  if (isLoading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <Loader2 className="h-8 w-8 animate-spin text-primary" />
-      </div>
-    );
-  }
-
   return (
-    <div className="min-h-screen flex flex-col">
-      <Navbar />
-      <main className="flex-1 flex items-center justify-center py-16 px-4">
-        <Card className="w-full max-w-md bg-card/50 backdrop-blur-sm border-border/50">
-          <CardHeader className="text-center">
-            <div className="mx-auto w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mb-4">
-              <Lock className="h-6 w-6 text-primary" />
+    <Card className="w-full max-w-md bg-card/50 backdrop-blur-sm border-border/50">
+      <CardHeader className="text-center">
+        <div className="mx-auto w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mb-4">
+          <Lock className="h-6 w-6 text-primary" />
+        </div>
+        <CardTitle className="text-2xl">
+          {isSignUp ? "Create Account" : "Admin Login"}
+        </CardTitle>
+        <CardDescription>
+          {isSignUp
+            ? "Sign up for admin access"
+            : "Sign in to access the admin dashboard"}
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+          <div className="space-y-2">
+            <Label htmlFor="email">Email</Label>
+            <div className="relative">
+              <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+              <Input
+                id="email"
+                type="email"
+                placeholder="you@example.com"
+                className="pl-10"
+                {...register("email")}
+              />
             </div>
-            <CardTitle className="text-2xl">
-              {isSignUp ? "Create Account" : "Admin Login"}
-            </CardTitle>
-            <CardDescription>
-              {isSignUp
-                ? "Sign up for admin access"
-                : "Sign in to access the admin dashboard"}
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-              <div className="space-y-2">
-                <Label htmlFor="email">Email</Label>
-                <div className="relative">
-                  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                  <Input
-                    id="email"
-                    type="email"
-                    placeholder="you@example.com"
-                    className="pl-10"
-                    {...register("email")}
-                  />
-                </div>
-                {errors.email && (
-                  <p className="text-sm text-destructive">{errors.email.message}</p>
-                )}
-              </div>
+            {errors.email && (
+              <p className="text-sm text-destructive">{errors.email.message}</p>
+            )}
+          </div>
 
-              <div className="space-y-2">
-                <Label htmlFor="password">Password</Label>
-                <div className="relative">
-                  <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                  <Input
-                    id="password"
-                    type={showPassword ? "text" : "password"}
-                    placeholder="••••••••"
-                    className="pl-10 pr-10"
-                    {...register("password")}
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-1 top-1/2 -translate-y-1/2 p-2 rounded-md text-muted-foreground hover:text-foreground transition-colors"
-                    aria-label={showPassword ? "Hide password" : "Show password"}
-                  >
-                    {showPassword ? (
-                      <EyeOff className="h-4 w-4" />
-                    ) : (
-                      <Eye className="h-4 w-4" />
-                    )}
-                  </button>
-                </div>
-                {errors.password && (
-                  <p className="text-sm text-destructive">{errors.password.message}</p>
-                )}
-              </div>
-
-              <Button
-                type="submit"
-                className="w-full"
-                disabled={isSubmitting}
-              >
-                {isSubmitting ? (
-                  <>
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    {isSignUp ? "Creating account..." : "Signing in..."}
-                  </>
-                ) : (
-                  <>{isSignUp ? "Create Account" : "Sign In"}</>
-                )}
-              </Button>
-            </form>
-
-            <div className="mt-6 text-center text-sm">
-              <span className="text-muted-foreground">
-                {isSignUp ? "Already have an account? " : "Need an account? "}
-              </span>
+          <div className="space-y-2">
+            <Label htmlFor="password">Password</Label>
+            <div className="relative">
+              <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+              <Input
+                id="password"
+                type={showPassword ? "text" : "password"}
+                placeholder="••••••••"
+                className="pl-10 pr-10"
+                {...register("password")}
+              />
               <button
                 type="button"
-                onClick={() => {
-                  setIsSignUp(!isSignUp);
-                  reset();
-                }}
-                className="text-primary hover:underline font-medium"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-1 top-1/2 -translate-y-1/2 p-2 rounded-md text-muted-foreground hover:text-foreground transition-colors"
+                aria-label={showPassword ? "Hide password" : "Show password"}
               >
-                {isSignUp ? "Sign in" : "Sign up"}
+                {showPassword ? (
+                  <EyeOff className="h-4 w-4" />
+                ) : (
+                  <Eye className="h-4 w-4" />
+                )}
               </button>
             </div>
-          </CardContent>
-        </Card>
-      </main>
-      <Footer />
-    </div>
+            {errors.password && (
+              <p className="text-sm text-destructive">{errors.password.message}</p>
+            )}
+            {isSignUp && (
+              <p className="text-xs text-muted-foreground mt-1">
+                Password must be at least 8 characters, with uppercase, lowercase, number, and special character.
+              </p>
+            )}
+          </div>
+
+          <Button
+            type="submit"
+            className="w-full"
+            disabled={isSubmitting}
+          >
+            {isSubmitting ? (
+              <>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                {isSignUp ? "Creating account..." : "Signing in..."}
+              </>
+            ) : (
+              <>{isSignUp ? "Create Account" : "Sign In"}</>
+            )}
+          </Button>
+        </form>
+
+        <div className="mt-6 text-center text-sm">
+          <span className="text-muted-foreground">
+            {isSignUp ? "Already have an account? " : "Need an account? "}
+          </span>
+          <button
+            type="button"
+            onClick={toggleMode}
+            className="text-primary hover:underline font-medium"
+          >
+            {isSignUp ? "Sign in" : "Sign up"}
+          </button>
+        </div>
+      </CardContent>
+    </Card>
   );
 };
 
