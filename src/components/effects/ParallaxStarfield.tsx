@@ -18,10 +18,23 @@ const prefersReducedMotion = () =>
   typeof window !== "undefined" &&
   window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+const STAR_COLORS = {
+  cyan: "rgb(13, 229, 255)",
+  pink: "rgb(255, 26, 140)",
+  white: "rgb(255, 255, 255)",
+};
+
+type StarColor = keyof typeof STAR_COLORS;
+
 export function ParallaxStarfield() {
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const starsRef = useRef<Star[]>([]);
+  // Group stars by color to batch render calls
+  const starsRef = useRef<{ [key in StarColor]: Star[] }>({
+    cyan: [],
+    pink: [],
+    white: [],
+  });
   const animationRef = useRef<number>();
   const scrollYRef = useRef(0);
   const [isReducedMode, setIsReducedMode] = useState(false);
@@ -69,7 +82,9 @@ export function ParallaxStarfield() {
       // Reduce star count significantly on mobile (1/3 of desktop)
       const baseDensity = isReducedMode ? 24000 : 8000;
       const starCount = Math.floor((window.innerWidth * window.innerHeight) / baseDensity);
-      starsRef.current = [];
+
+      // Reset grouped stars
+      starsRef.current = { cyan: [], pink: [], white: [] };
 
       for (let i = 0; i < starCount; i++) {
         const colorRand = Math.random();
@@ -78,7 +93,7 @@ export function ParallaxStarfield() {
         else if (colorRand < 0.25) color = "pink";
         else color = "white";
 
-        starsRef.current.push({
+        const star: Star = {
           x: Math.random() * window.innerWidth,
           y: Math.random() * window.innerHeight * (isReducedMode ? 2 : 3),
           size: Math.random() * (isReducedMode ? 1.2 : 1.8) + 0.3,
@@ -87,18 +102,9 @@ export function ParallaxStarfield() {
           color,
           twinkleSpeed: Math.random() * 2 + 1,
           twinkleOffset: Math.random() * Math.PI * 2,
-        });
-      }
-    };
+        };
 
-    const getStarColor = (star: Star, opacity: number): string => {
-      switch (star.color) {
-        case "cyan":
-          return `rgba(13, 229, 255, ${opacity})`;
-        case "pink":
-          return `rgba(255, 26, 140, ${opacity})`;
-        default:
-          return `rgba(255, 255, 255, ${opacity})`;
+        starsRef.current[color].push(star);
       }
     };
 
@@ -120,35 +126,49 @@ export function ParallaxStarfield() {
       const scrollOffset = scrollYRef.current;
       const canvasHeight = window.innerHeight * (isReducedMode ? 2 : 3);
 
-      starsRef.current.forEach((star) => {
-        // Skip twinkle calculation on reduced mode for performance
-        const twinkle = isReducedMode 
-          ? 0.85 
-          : Math.sin(time * star.twinkleSpeed + star.twinkleOffset) * 0.3 + 0.7;
-        const finalOpacity = star.opacity * twinkle;
+      // Optimization: Batch stars by color to reduce fillStyle changes and string allocations
+      (Object.keys(starsRef.current) as StarColor[]).forEach((color) => {
+        const stars = starsRef.current[color];
+        if (stars.length === 0) return;
 
-        // Parallax offset based on scroll and star's speed
-        const parallaxY = (star.y - scrollOffset * star.speed) % canvasHeight;
-        const adjustedY = parallaxY < 0 ? parallaxY + canvasHeight : parallaxY;
+        // Set color once per group
+        ctx.fillStyle = STAR_COLORS[color];
 
-        // Only draw stars in visible viewport area
-        const viewportY = adjustedY - scrollOffset * 0.1;
-        if (viewportY > -50 && viewportY < window.innerHeight + 50) {
-          // Star core
-          ctx.beginPath();
-          ctx.arc(star.x, viewportY, star.size, 0, Math.PI * 2);
-          ctx.fillStyle = getStarColor(star, finalOpacity);
-          ctx.fill();
+        stars.forEach((star) => {
+          // Skip twinkle calculation on reduced mode for performance
+          const twinkle = isReducedMode
+            ? 0.85
+            : Math.sin(time * star.twinkleSpeed + star.twinkleOffset) * 0.3 + 0.7;
+          const finalOpacity = star.opacity * twinkle;
 
-          // Skip glow on mobile for performance
-          if (!isReducedMode && star.size > 1 && star.color !== "white") {
+          // Parallax offset based on scroll and star's speed
+          const parallaxY = (star.y - scrollOffset * star.speed) % canvasHeight;
+          const adjustedY = parallaxY < 0 ? parallaxY + canvasHeight : parallaxY;
+
+          // Only draw stars in visible viewport area
+          const viewportY = adjustedY - scrollOffset * 0.1;
+          if (viewportY > -50 && viewportY < window.innerHeight + 50) {
+            // Star core
             ctx.beginPath();
-            ctx.arc(star.x, viewportY, star.size * 3, 0, Math.PI * 2);
-            ctx.fillStyle = getStarColor(star, finalOpacity * 0.15);
+            ctx.arc(star.x, viewportY, star.size, 0, Math.PI * 2);
+            // Use globalAlpha for opacity instead of creating new color string
+            ctx.globalAlpha = finalOpacity;
             ctx.fill();
+
+            // Skip glow on mobile for performance
+            if (!isReducedMode && star.size > 1 && star.color !== "white") {
+              ctx.beginPath();
+              ctx.arc(star.x, viewportY, star.size * 3, 0, Math.PI * 2);
+              // Reduce opacity for glow
+              ctx.globalAlpha = finalOpacity * 0.15;
+              ctx.fill();
+            }
           }
-        }
+        });
       });
+
+      // Reset globalAlpha to default
+      ctx.globalAlpha = 1.0;
 
       animationRef.current = requestAnimationFrame(animate);
     };
