@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Navbar } from "@/components/layout/Navbar";
@@ -12,13 +11,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/hooks/useAuth";
 import { Loader2, Lock, Mail, Eye, EyeOff } from "lucide-react";
-
-const authSchema = z.object({
-  email: z.string().email("Please enter a valid email address"),
-  password: z.string().min(6, "Password must be at least 6 characters"),
-});
-
-type AuthFormData = z.infer<typeof authSchema>;
+import { signUpSchema, signInSchema, AuthFormData } from "@/lib/auth-schemas";
 
 const Auth = () => {
   const [isSignUp, setIsSignUp] = useState(false);
@@ -34,7 +27,10 @@ const Auth = () => {
     formState: { errors },
     reset,
   } = useForm<AuthFormData>({
-    resolver: zodResolver(authSchema),
+    resolver: (values, context, options) => {
+      const schema = isSignUp ? signUpSchema : signInSchema;
+      return zodResolver(schema)(values, context, options);
+    },
   });
 
   // Redirect if already logged in
