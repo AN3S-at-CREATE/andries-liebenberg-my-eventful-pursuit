@@ -30,6 +30,7 @@ export function CategoryTabs({
               ? "text-primary border-b-2 border-primary bg-primary/5"
               : "text-muted-foreground hover:text-foreground hover:bg-muted/30"
           )}
+          aria-label={label}
         >
           <Icon className="w-3.5 h-3.5" />
           <span className="hidden sm:inline">{label}</span>
