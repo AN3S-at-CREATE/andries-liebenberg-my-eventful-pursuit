@@ -18,6 +18,12 @@ const prefersReducedMotion = () =>
   typeof window !== "undefined" &&
   window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+const STAR_COLORS = {
+  cyan: "rgb(13, 229, 255)",
+  pink: "rgb(255, 26, 140)",
+  white: "rgb(255, 255, 255)",
+} as const;
+
 export function ParallaxStarfield() {
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -91,17 +97,6 @@ export function ParallaxStarfield() {
       }
     };
 
-    const getStarColor = (star: Star, opacity: number): string => {
-      switch (star.color) {
-        case "cyan":
-          return `rgba(13, 229, 255, ${opacity})`;
-        case "pink":
-          return `rgba(255, 26, 140, ${opacity})`;
-        default:
-          return `rgba(255, 255, 255, ${opacity})`;
-      }
-    };
-
     let lastFrameTime = 0;
     const targetFPS = isReducedMode ? 30 : 60; // Limit FPS on mobile
     const frameInterval = 1000 / targetFPS;
@@ -137,14 +132,16 @@ export function ParallaxStarfield() {
           // Star core
           ctx.beginPath();
           ctx.arc(star.x, viewportY, star.size, 0, Math.PI * 2);
-          ctx.fillStyle = getStarColor(star, finalOpacity);
+          // Use globalAlpha to avoid expensive string allocation/GC for rgba() strings in the render loop
+          ctx.globalAlpha = finalOpacity;
+          ctx.fillStyle = STAR_COLORS[star.color];
           ctx.fill();
 
           // Skip glow on mobile for performance
           if (!isReducedMode && star.size > 1 && star.color !== "white") {
             ctx.beginPath();
             ctx.arc(star.x, viewportY, star.size * 3, 0, Math.PI * 2);
-            ctx.fillStyle = getStarColor(star, finalOpacity * 0.15);
+            ctx.globalAlpha = finalOpacity * 0.15;
             ctx.fill();
           }
         }
