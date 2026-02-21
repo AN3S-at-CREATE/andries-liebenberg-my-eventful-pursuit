@@ -5,6 +5,11 @@ import { ContactForm } from "@/components/contact/ContactForm";
 import { ParallaxElements } from "@/components/effects/ParallaxElements";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { Mail, Phone, MapPin, Clock, Github, Linkedin } from "lucide-react";
 
 const Contact = () => {
@@ -107,22 +112,39 @@ const Contact = () => {
                 <div className="mt-6 pt-6 border-t border-primary/30">
                   <p className="text-sm text-secondary mb-3">Connect with me</p>
                   <div className="flex gap-3">
-                    <a
-                      href="https://github.com/AN3S-CREATE"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="p-2 rounded-lg bg-primary/10 text-primary hover:bg-primary/20 hover:shadow-[0_0_10px_hsl(var(--primary)/0.3)] transition-all"
-                    >
-                      <Github className="h-5 w-5" />
-                    </a>
-                    <a
-                      href="https://www.linkedin.com/in/andriesliebenberg-an3s"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="p-2 rounded-lg bg-secondary/10 text-secondary hover:bg-secondary/20 hover:shadow-[0_0_10px_hsl(var(--secondary)/0.3)] transition-all"
-                    >
-                      <Linkedin className="h-5 w-5" />
-                    </a>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <a
+                          href="https://github.com/AN3S-CREATE"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="p-2 rounded-lg bg-primary/10 text-primary hover:bg-primary/20 hover:shadow-[0_0_10px_hsl(var(--primary)/0.3)] transition-all"
+                          aria-label="GitHub Profile"
+                        >
+                          <Github className="h-5 w-5" />
+                        </a>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>GitHub Profile</p>
+                      </TooltipContent>
+                    </Tooltip>
+
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <a
+                          href="https://www.linkedin.com/in/andriesliebenberg-an3s"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="p-2 rounded-lg bg-secondary/10 text-secondary hover:bg-secondary/20 hover:shadow-[0_0_10px_hsl(var(--secondary)/0.3)] transition-all"
+                          aria-label="LinkedIn Profile"
+                        >
+                          <Linkedin className="h-5 w-5" />
+                        </a>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>LinkedIn Profile</p>
+                      </TooltipContent>
+                    </Tooltip>
                   </div>
                 </div>
               </CardContent>
