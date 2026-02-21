@@ -12,6 +12,13 @@ interface Star {
   twinkleOffset: number;
 }
 
+// Pre-defined colors to avoid string allocation in render loop
+const STAR_COLORS = {
+  cyan: "rgb(13, 229, 255)",
+  pink: "rgb(255, 26, 140)",
+  white: "rgb(255, 255, 255)",
+};
+
 // Check if device prefers reduced motion or is mobile
 const isMobile = () => typeof window !== "undefined" && window.innerWidth < 768;
 const prefersReducedMotion = () =>
@@ -89,17 +96,9 @@ export function ParallaxStarfield() {
           twinkleOffset: Math.random() * Math.PI * 2,
         });
       }
-    };
 
-    const getStarColor = (star: Star, opacity: number): string => {
-      switch (star.color) {
-        case "cyan":
-          return `rgba(13, 229, 255, ${opacity})`;
-        case "pink":
-          return `rgba(255, 26, 140, ${opacity})`;
-        default:
-          return `rgba(255, 255, 255, ${opacity})`;
-      }
+      // Sort stars by color to batch draw calls and minimize state changes
+      starsRef.current.sort((a, b) => a.color.localeCompare(b.color));
     };
 
     let lastFrameTime = 0;
@@ -120,6 +119,8 @@ export function ParallaxStarfield() {
       const scrollOffset = scrollYRef.current;
       const canvasHeight = window.innerHeight * (isReducedMode ? 2 : 3);
 
+      let currentColor = "";
+
       starsRef.current.forEach((star) => {
         // Skip twinkle calculation on reduced mode for performance
         const twinkle = isReducedMode 
@@ -134,21 +135,33 @@ export function ParallaxStarfield() {
         // Only draw stars in visible viewport area
         const viewportY = adjustedY - scrollOffset * 0.1;
         if (viewportY > -50 && viewportY < window.innerHeight + 50) {
+
+          // Update context color only when it changes (batching)
+          if (star.color !== currentColor) {
+            ctx.fillStyle = STAR_COLORS[star.color];
+            currentColor = star.color;
+          }
+
           // Star core
           ctx.beginPath();
           ctx.arc(star.x, viewportY, star.size, 0, Math.PI * 2);
-          ctx.fillStyle = getStarColor(star, finalOpacity);
+          // Use globalAlpha for opacity instead of constructing new rgba strings
+          ctx.globalAlpha = finalOpacity;
           ctx.fill();
 
           // Skip glow on mobile for performance
           if (!isReducedMode && star.size > 1 && star.color !== "white") {
             ctx.beginPath();
             ctx.arc(star.x, viewportY, star.size * 3, 0, Math.PI * 2);
-            ctx.fillStyle = getStarColor(star, finalOpacity * 0.15);
+            // Reuse current fillStyle, just adjust alpha
+            ctx.globalAlpha = finalOpacity * 0.15;
             ctx.fill();
           }
         }
       });
+
+      // Reset globalAlpha at end of frame to be safe
+      ctx.globalAlpha = 1.0;
 
       animationRef.current = requestAnimationFrame(animate);
     };
