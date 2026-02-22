@@ -13,15 +13,34 @@ export const GlobalCursorGlow = ({
   intensity = 0.15,
 }: GlobalCursorGlowProps) => {
   const [isVisible, setIsVisible] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
   // Spring-based smooth cursor following
   const mouseX = useSpring(0, { stiffness: 150, damping: 20 });
   const mouseY = useSpring(0, { stiffness: 150, damping: 20 });
 
+  // Transforms must be declared unconditionally
+  const glowX = useTransform(mouseX, (x) => x - size / 2);
+  const glowY = useTransform(mouseY, (y) => y - size / 2);
+  const centerGlowX = useTransform(mouseX, (x) => x - (size * 0.4) / 2);
+  const centerGlowY = useTransform(mouseY, (y) => y - (size * 0.4) / 2);
+
   useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.matchMedia("(pointer: coarse)").matches);
+    };
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
+  useEffect(() => {
+    if (isMobile) return;
+
     const handleMouseMove = (e: MouseEvent) => {
       mouseX.set(e.clientX);
-      mouseY.set(e.clientY + window.scrollY);
+      // FIXED: Removed window.scrollY to fix positioning with fixed container
+      mouseY.set(e.clientY);
       if (!isVisible) setIsVisible(true);
     };
 
@@ -37,7 +56,7 @@ export const GlobalCursorGlow = ({
       document.documentElement.removeEventListener("mouseleave", handleMouseLeave);
       document.documentElement.removeEventListener("mouseenter", handleMouseEnter);
     };
-  }, [mouseX, mouseY, isVisible]);
+  }, [mouseX, mouseY, isVisible, isMobile]);
 
   const getGlowColor = () => {
     switch (color) {
@@ -51,6 +70,8 @@ export const GlobalCursorGlow = ({
     }
   };
 
+  if (isMobile) return null;
+
   return (
     <div className="fixed inset-0 pointer-events-none z-50 overflow-hidden">
       {/* Primary glow */}
@@ -59,8 +80,9 @@ export const GlobalCursorGlow = ({
         style={{
           width: size,
           height: size,
-          x: useTransform(mouseX, (x) => x - size / 2),
-          y: useTransform(mouseY, (y) => y - size / 2),
+          x: glowX,
+          y: glowY,
+          willChange: "transform",
         }}
         initial={{ opacity: 0 }}
         animate={{ opacity: isVisible ? intensity : 0 }}
@@ -73,8 +95,9 @@ export const GlobalCursorGlow = ({
         style={{
           width: size * 0.4,
           height: size * 0.4,
-          x: useTransform(mouseX, (x) => x - (size * 0.4) / 2),
-          y: useTransform(mouseY, (y) => y - (size * 0.4) / 2),
+          x: centerGlowX,
+          y: centerGlowY,
+          willChange: "transform",
         }}
         initial={{ opacity: 0 }}
         animate={{ opacity: isVisible ? intensity * 1.5 : 0 }}
