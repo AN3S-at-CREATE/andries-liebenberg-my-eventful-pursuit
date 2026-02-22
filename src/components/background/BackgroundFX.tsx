@@ -8,13 +8,20 @@ interface Particle {
   vy: number;
   size: number;
   opacity: number;
-  color: string;
 }
+
+// Pre-defined colors for batch rendering
+const CYAN_COLOR = "rgb(13, 229, 255)";
+const PINK_COLOR = "rgb(255, 26, 140)";
 
 export function BackgroundFX() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const animationRef = useRef<number>();
-  const particlesRef = useRef<Particle[]>([]);
+  // Group particles by color to minimize state changes
+  const particlesRef = useRef<{ cyan: Particle[]; pink: Particle[] }>({
+    cyan: [],
+    pink: [],
+  });
 
   useEffect(() => {
     setBackgroundFXMounted(true);
@@ -60,10 +67,6 @@ export function BackgroundFX() {
       console.error("Failed to create noise pattern", e);
     }
 
-    // Colors from design system
-    const cyanColor = "rgba(13, 229, 255, ";
-    const pinkColor = "rgba(255, 26, 140, ";
-
     const resizeCanvas = () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
@@ -71,18 +74,25 @@ export function BackgroundFX() {
 
     const initParticles = () => {
       const particleCount = Math.floor((canvas.width * canvas.height) / 20000);
-      particlesRef.current = [];
+      // Reset groups
+      particlesRef.current = { cyan: [], pink: [] };
 
       for (let i = 0; i < particleCount; i++) {
-        particlesRef.current.push({
+        const isCyan = Math.random() > 0.4;
+        const particle: Particle = {
           x: Math.random() * canvas.width,
           y: Math.random() * canvas.height,
           vx: (Math.random() - 0.5) * 0.4,
           vy: (Math.random() - 0.5) * 0.4,
           size: Math.random() * 2.5 + 0.5,
           opacity: Math.random() * 0.6 + 0.15,
-          color: Math.random() > 0.4 ? cyanColor : pinkColor,
-        });
+        };
+
+        if (isCyan) {
+          particlesRef.current.cyan.push(particle);
+        } else {
+          particlesRef.current.pink.push(particle);
+        }
       }
     };
 
@@ -130,7 +140,7 @@ export function BackgroundFX() {
     };
 
     const drawParticles = () => {
-      particlesRef.current.forEach((particle) => {
+      const processParticle = (particle: Particle) => {
         particle.x += particle.vx;
         particle.y += particle.vy;
 
@@ -138,17 +148,37 @@ export function BackgroundFX() {
         if (particle.x > canvas.width) particle.x = 0;
         if (particle.y < 0) particle.y = canvas.height;
         if (particle.y > canvas.height) particle.y = 0;
+      };
 
-        ctx.beginPath();
-        ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
-        ctx.fillStyle = particle.color + particle.opacity + ")";
-        ctx.fill();
+      const drawGroup = (particles: Particle[], color: string) => {
+        if (particles.length === 0) return;
 
-        ctx.beginPath();
-        ctx.arc(particle.x, particle.y, particle.size * 4, 0, Math.PI * 2);
-        ctx.fillStyle = particle.color + (particle.opacity * 0.15) + ")";
-        ctx.fill();
-      });
+        ctx.fillStyle = color;
+
+        particles.forEach(particle => {
+          processParticle(particle);
+
+          // Draw core
+          ctx.globalAlpha = particle.opacity;
+          ctx.beginPath();
+          ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
+          ctx.fill();
+
+          // Draw glow
+          ctx.globalAlpha = particle.opacity * 0.15;
+          ctx.beginPath();
+          ctx.arc(particle.x, particle.y, particle.size * 4, 0, Math.PI * 2);
+          ctx.fill();
+        });
+      };
+
+      // Batch draw calls by color to optimize performance
+      // Avoiding string concatenation in the loop reduces GC pressure significantly
+      drawGroup(particlesRef.current.cyan, CYAN_COLOR);
+      drawGroup(particlesRef.current.pink, PINK_COLOR);
+
+      // Reset globalAlpha for other drawings
+      ctx.globalAlpha = 1;
     };
 
     const drawNoise = () => {
