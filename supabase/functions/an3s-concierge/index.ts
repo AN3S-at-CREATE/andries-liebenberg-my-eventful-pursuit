@@ -1,6 +1,7 @@
 /// <reference types="https://esm.sh/@supabase/functions-js/src/edge-runtime.d.ts" />
 
 import { checkRateLimit, getClientIP, rateLimitResponse } from "../_shared/rateLimit.ts";
+import { generateKnowledgePrompt } from "./data.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -18,7 +19,6 @@ interface Message {
 
 interface RequestBody {
   messages: Message[];
-  knowledgeBase: string;
 }
 
 Deno.serve(async (req) => {
@@ -38,7 +38,7 @@ Deno.serve(async (req) => {
   }
 
   try {
-    const { messages, knowledgeBase }: RequestBody = await req.json();
+    const { messages }: RequestBody = await req.json();
 
     if (!messages || messages.length === 0) {
       return new Response(
@@ -48,6 +48,8 @@ Deno.serve(async (req) => {
     }
 
     console.log(`[AN3S Concierge] Processing ${messages.length} messages, IP: ${clientIP}, remaining: ${rateLimit.remaining}`);
+
+    const knowledgeBase = generateKnowledgePrompt();
 
     const systemPrompt = `You are the AN3S Concierge, a helpful AI assistant for Andries Liebenberg's portfolio website.
 
