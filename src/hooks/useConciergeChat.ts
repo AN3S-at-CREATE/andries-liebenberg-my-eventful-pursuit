@@ -1,6 +1,5 @@
 import { useState, useCallback, useRef, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
-import { generateKnowledgePrompt } from "@/data/an3sKnowledge";
 import { toast } from "sonner";
 
 export interface ChatMessage {
@@ -72,7 +71,6 @@ export function useConciergeChat() {
           {
             body: {
               messages: messageHistory,
-              knowledgeBase: generateKnowledgePrompt(),
             },
           }
         );
