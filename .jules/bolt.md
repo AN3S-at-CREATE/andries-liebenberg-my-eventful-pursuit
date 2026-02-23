@@ -5,3 +5,7 @@
 ## 2026-02-21 - [Canvas Allocation Bottleneck]
 **Learning:** Constructing new color strings (e.g. `rgba(r,g,b,a)`) for every entity in a render loop causes massive Garbage Collection pressure.
 **Action:** Use `ctx.globalAlpha` for opacity changes and keep `ctx.fillStyle` constant. Batch draw calls by color to minimize state changes.
+
+## 2026-02-22 - [Canvas Shape Primitive Optimization]
+**Learning:** `ctx.arc()` involves expensive path tessellation. For particle systems with thousands of small particles (< 2px radius), `ctx.fillRect()` is significantly faster and visually indistinguishable from a circle.
+**Action:** Replaced `ctx.arc()` with `ctx.fillRect()` for stars with radius < 1.5 in `ParallaxStarfield`.
