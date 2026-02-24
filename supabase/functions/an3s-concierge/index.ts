@@ -1,6 +1,7 @@
 /// <reference types="https://esm.sh/@supabase/functions-js/src/edge-runtime.d.ts" />
 
 import { checkRateLimit, getClientIP, rateLimitResponse } from "../_shared/rateLimit.ts";
+import { generateKnowledgePrompt } from "./data.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -18,7 +19,6 @@ interface Message {
 
 interface RequestBody {
   messages: Message[];
-  knowledgeBase: string;
 }
 
 Deno.serve(async (req) => {
@@ -38,7 +38,7 @@ Deno.serve(async (req) => {
   }
 
   try {
-    const { messages, knowledgeBase }: RequestBody = await req.json();
+    const { messages }: RequestBody = await req.json();
 
     if (!messages || messages.length === 0) {
       return new Response(
@@ -67,7 +67,7 @@ FORMATTING:
 - Be conversational but professional
 
 === KNOWLEDGE BASE START ===
-${knowledgeBase}
+${generateKnowledgePrompt()}
 === KNOWLEDGE BASE END ===
 
 Remember: You represent AN3S professionally. Be helpful, accurate, and never fabricate information.`;
