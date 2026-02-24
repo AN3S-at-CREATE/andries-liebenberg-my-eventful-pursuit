@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import { setBackgroundFXMounted } from "@/lib/backgroundStatus";
 
+// Optimized particle interface - color is now an enum/type key, not a full string
 interface Particle {
   x: number;
   y: number;
@@ -8,13 +9,17 @@ interface Particle {
   vy: number;
   size: number;
   opacity: number;
-  color: string;
+  colorType: "cyan" | "pink";
 }
 
 export function BackgroundFX() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const animationRef = useRef<number>();
-  const particlesRef = useRef<Particle[]>([]);
+  // Group particles by color for batch rendering
+  const particlesRef = useRef<{ cyan: Particle[]; pink: Particle[] }>({
+    cyan: [],
+    pink: [],
+  });
 
   useEffect(() => {
     setBackgroundFXMounted(true);
@@ -60,9 +65,11 @@ export function BackgroundFX() {
       console.error("Failed to create noise pattern", e);
     }
 
-    // Colors from design system
-    const cyanColor = "rgba(13, 229, 255, ";
-    const pinkColor = "rgba(255, 26, 140, ";
+    // Colors from design system (without alpha)
+    const COLORS = {
+      cyan: "rgb(13, 229, 255)",
+      pink: "rgb(255, 26, 140)",
+    };
 
     const resizeCanvas = () => {
       canvas.width = window.innerWidth;
@@ -71,17 +78,18 @@ export function BackgroundFX() {
 
     const initParticles = () => {
       const particleCount = Math.floor((canvas.width * canvas.height) / 20000);
-      particlesRef.current = [];
+      particlesRef.current = { cyan: [], pink: [] };
 
       for (let i = 0; i < particleCount; i++) {
-        particlesRef.current.push({
+        const colorType = Math.random() > 0.4 ? "cyan" : "pink";
+        particlesRef.current[colorType].push({
           x: Math.random() * canvas.width,
           y: Math.random() * canvas.height,
           vx: (Math.random() - 0.5) * 0.4,
           vy: (Math.random() - 0.5) * 0.4,
           size: Math.random() * 2.5 + 0.5,
           opacity: Math.random() * 0.6 + 0.15,
-          color: Math.random() > 0.4 ? cyanColor : pinkColor,
+          colorType,
         });
       }
     };
@@ -130,25 +138,44 @@ export function BackgroundFX() {
     };
 
     const drawParticles = () => {
-      particlesRef.current.forEach((particle) => {
-        particle.x += particle.vx;
-        particle.y += particle.vy;
+      // Draw by color group to minimize state changes
+      (["cyan", "pink"] as const).forEach(colorType => {
+        const particles = particlesRef.current[colorType];
+        if (!particles.length) return;
 
-        if (particle.x < 0) particle.x = canvas.width;
-        if (particle.x > canvas.width) particle.x = 0;
-        if (particle.y < 0) particle.y = canvas.height;
-        if (particle.y > canvas.height) particle.y = 0;
+        ctx.fillStyle = COLORS[colorType];
 
-        ctx.beginPath();
-        ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
-        ctx.fillStyle = particle.color + particle.opacity + ")";
-        ctx.fill();
+        particles.forEach((particle) => {
+          particle.x += particle.vx;
+          particle.y += particle.vy;
 
-        ctx.beginPath();
-        ctx.arc(particle.x, particle.y, particle.size * 4, 0, Math.PI * 2);
-        ctx.fillStyle = particle.color + (particle.opacity * 0.15) + ")";
-        ctx.fill();
+          if (particle.x < 0) particle.x = canvas.width;
+          if (particle.x > canvas.width) particle.x = 0;
+          if (particle.y < 0) particle.y = canvas.height;
+          if (particle.y > canvas.height) particle.y = 0;
+
+          // Optimization: Use globalAlpha instead of string concatenation
+          ctx.globalAlpha = particle.opacity;
+
+          if (particle.size < 1.5) {
+             // Optimization: Use fillRect for small particles
+             ctx.fillRect(particle.x, particle.y, particle.size * 2, particle.size * 2);
+          } else {
+             ctx.beginPath();
+             ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
+             ctx.fill();
+          }
+
+          // Glow effect
+          ctx.globalAlpha = particle.opacity * 0.15;
+          ctx.beginPath();
+          ctx.arc(particle.x, particle.y, particle.size * 4, 0, Math.PI * 2);
+          ctx.fill();
+        });
       });
+
+      // Reset globalAlpha
+      ctx.globalAlpha = 1.0;
     };
 
     const drawNoise = () => {
@@ -165,8 +192,8 @@ export function BackgroundFX() {
     };
 
     const animate = () => {
-      ctx.fillStyle = "hsl(223, 24%, 6%)";
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      // Clear canvas instead of filling with opaque color to reveal underlying layers
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
 
       drawGrid();
       drawParticles();
@@ -204,7 +231,7 @@ export function BackgroundFX() {
       <canvas
         ref={canvasRef}
         className="fixed inset-0 -z-10 pointer-events-none"
-        style={{ background: "hsl(223, 24%, 6%)" }}
+        style={{ background: "transparent" }}
       />
       
       {/* Cyan neon streak from left */}
