@@ -1,6 +1,11 @@
 import { useEffect, useRef } from "react";
 import { setBackgroundFXMounted } from "@/lib/backgroundStatus";
 
+const PARTICLE_COLORS = {
+  cyan: "rgb(13, 229, 255)",
+  pink: "rgb(255, 26, 140)",
+};
+
 interface Particle {
   x: number;
   y: number;
@@ -8,13 +13,16 @@ interface Particle {
   vy: number;
   size: number;
   opacity: number;
-  color: string;
+  colorType: keyof typeof PARTICLE_COLORS;
 }
 
 export function BackgroundFX() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const animationRef = useRef<number>();
-  const particlesRef = useRef<Particle[]>([]);
+  const particlesRef = useRef<Record<keyof typeof PARTICLE_COLORS, Particle[]>>({
+    cyan: [],
+    pink: [],
+  });
 
   useEffect(() => {
     setBackgroundFXMounted(true);
@@ -60,10 +68,6 @@ export function BackgroundFX() {
       console.error("Failed to create noise pattern", e);
     }
 
-    // Colors from design system
-    const cyanColor = "rgba(13, 229, 255, ";
-    const pinkColor = "rgba(255, 26, 140, ";
-
     const resizeCanvas = () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
@@ -71,17 +75,18 @@ export function BackgroundFX() {
 
     const initParticles = () => {
       const particleCount = Math.floor((canvas.width * canvas.height) / 20000);
-      particlesRef.current = [];
+      particlesRef.current = { cyan: [], pink: [] };
 
       for (let i = 0; i < particleCount; i++) {
-        particlesRef.current.push({
+        const colorType = Math.random() > 0.4 ? "cyan" : "pink";
+        particlesRef.current[colorType].push({
           x: Math.random() * canvas.width,
           y: Math.random() * canvas.height,
           vx: (Math.random() - 0.5) * 0.4,
           vy: (Math.random() - 0.5) * 0.4,
           size: Math.random() * 2.5 + 0.5,
           opacity: Math.random() * 0.6 + 0.15,
-          color: Math.random() > 0.4 ? cyanColor : pinkColor,
+          colorType,
         });
       }
     };
@@ -130,25 +135,45 @@ export function BackgroundFX() {
     };
 
     const drawParticles = () => {
-      particlesRef.current.forEach((particle) => {
-        particle.x += particle.vx;
-        particle.y += particle.vy;
+      // Batch particles by color to minimize state changes
+      (Object.keys(particlesRef.current) as (keyof typeof PARTICLE_COLORS)[]).forEach((color) => {
+        const particles = particlesRef.current[color];
+        if (particles.length === 0) return;
 
-        if (particle.x < 0) particle.x = canvas.width;
-        if (particle.x > canvas.width) particle.x = 0;
-        if (particle.y < 0) particle.y = canvas.height;
-        if (particle.y > canvas.height) particle.y = 0;
+        // Set color once per group to avoid string parsing overhead in loop
+        ctx.fillStyle = PARTICLE_COLORS[color];
 
-        ctx.beginPath();
-        ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
-        ctx.fillStyle = particle.color + particle.opacity + ")";
-        ctx.fill();
+        particles.forEach((particle) => {
+          particle.x += particle.vx;
+          particle.y += particle.vy;
 
-        ctx.beginPath();
-        ctx.arc(particle.x, particle.y, particle.size * 4, 0, Math.PI * 2);
-        ctx.fillStyle = particle.color + (particle.opacity * 0.15) + ")";
-        ctx.fill();
+          if (particle.x < 0) particle.x = canvas.width;
+          if (particle.x > canvas.width) particle.x = 0;
+          if (particle.y < 0) particle.y = canvas.height;
+          if (particle.y > canvas.height) particle.y = 0;
+
+          // Core
+          ctx.globalAlpha = particle.opacity;
+
+          if (particle.size < 1.5) {
+             // Optimization: Use fillRect for small particles
+             ctx.fillRect(particle.x - particle.size, particle.y - particle.size, particle.size * 2, particle.size * 2);
+          } else {
+             ctx.beginPath();
+             ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
+             ctx.fill();
+          }
+
+          // Glow
+          ctx.globalAlpha = particle.opacity * 0.15;
+          ctx.beginPath();
+          ctx.arc(particle.x, particle.y, particle.size * 4, 0, Math.PI * 2);
+          ctx.fill();
+        });
       });
+
+      // Reset globalAlpha for subsequent draw calls
+      ctx.globalAlpha = 1.0;
     };
 
     const drawNoise = () => {
@@ -165,6 +190,7 @@ export function BackgroundFX() {
     };
 
     const animate = () => {
+      ctx.globalAlpha = 1.0; // Ensure reset
       ctx.fillStyle = "hsl(223, 24%, 6%)";
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
