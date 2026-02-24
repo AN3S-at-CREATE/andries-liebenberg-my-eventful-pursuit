@@ -152,9 +152,20 @@ export function ParallaxStarfield() {
             if (viewportY > -50 && viewportY < window.innerHeight + 50) {
               // Star core
               ctx.globalAlpha = finalOpacity;
-              ctx.beginPath();
-              ctx.arc(star.x, viewportY, star.size, 0, Math.PI * 2);
-              ctx.fill();
+
+              if (star.size < 1.5) {
+                // Optimization: Use fillRect for small stars to avoid expensive path construction
+                ctx.fillRect(
+                  star.x - star.size,
+                  viewportY - star.size,
+                  star.size * 2,
+                  star.size * 2
+                );
+              } else {
+                ctx.beginPath();
+                ctx.arc(star.x, viewportY, star.size, 0, Math.PI * 2);
+                ctx.fill();
+              }
 
               // Skip glow on mobile for performance
               if (!isReducedMode && star.size > 1 && color !== "white") {
