@@ -10,8 +10,8 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/hooks/useAuth";
-import { Loader2, Lock, Mail, Eye, EyeOff, ShieldCheck } from "lucide-react";
-import { loginSchema, signUpSchema, AuthFormData } from "@/lib/auth-schemas";
+import { Loader2, Lock, Mail, Eye, EyeOff } from "lucide-react";
+import { signUpSchema, signInSchema, AuthFormData } from "@/lib/auth-schemas";
 
 const Auth = () => {
   const [isSignUp, setIsSignUp] = useState(false);
@@ -27,7 +27,10 @@ const Auth = () => {
     formState: { errors },
     reset,
   } = useForm<AuthFormData>({
-    resolver: zodResolver(isSignUp ? signUpSchema : loginSchema),
+    resolver: (values, context, options) => {
+      const schema = isSignUp ? signUpSchema : signInSchema;
+      return zodResolver(schema)(values, context, options);
+    },
   });
 
   // Redirect if already logged in

@@ -120,6 +120,7 @@ export const Navbar = () => {
             target="_blank"
             rel="noopener noreferrer"
             className="hidden sm:block text-muted-foreground hover:text-primary transition-colors"
+            aria-label="GitHub Profile"
           >
             <Github className="h-5 w-5" />
           </a>
@@ -128,6 +129,7 @@ export const Navbar = () => {
             target="_blank"
             rel="noopener noreferrer"
             className="hidden sm:block text-muted-foreground hover:text-secondary transition-colors"
+            aria-label="LinkedIn Profile"
           >
             <Linkedin className="h-5 w-5" />
           </a>
@@ -259,6 +261,7 @@ export const Navbar = () => {
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-muted-foreground hover:text-primary transition-colors"
+                      aria-label="GitHub Profile"
                     >
                       <Github className="h-5 w-5" />
                     </a>
@@ -267,6 +270,7 @@ export const Navbar = () => {
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-muted-foreground hover:text-secondary transition-colors"
+                      aria-label="LinkedIn Profile"
                     >
                       <Linkedin className="h-5 w-5" />
                     </a>
