@@ -157,6 +157,20 @@ const Auth = () => {
                 {errors.password && (
                   <p className="text-sm text-destructive">{errors.password.message}</p>
                 )}
+
+                {isSignUp && (
+                  <div className="rounded-md bg-muted p-3 text-xs text-muted-foreground space-y-1 mt-2">
+                    <div className="flex items-center gap-1.5 font-medium text-foreground">
+                      <ShieldCheck className="h-3.5 w-3.5 text-primary" />
+                      <span>Password requirements:</span>
+                    </div>
+                    <ul className="list-disc list-inside pl-1 space-y-0.5 opacity-90">
+                      <li>At least 8 characters</li>
+                      <li>One uppercase & one lowercase letter</li>
+                      <li>One number & one special character</li>
+                    </ul>
+                  </div>
+                )}
               </div>
 
               <Button
