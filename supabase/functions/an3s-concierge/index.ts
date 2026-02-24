@@ -40,14 +40,43 @@ Deno.serve(async (req) => {
   try {
     const { messages }: RequestBody = await req.json();
 
-    if (!messages || messages.length === 0) {
+    if (!Array.isArray(messages) || messages.length === 0) {
       return new Response(
-        JSON.stringify({ error: "No messages provided" }),
+        JSON.stringify({ error: "No messages provided or invalid format" }),
         { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
     }
 
-    console.log(`[AN3S Concierge] Processing ${messages.length} messages, IP: ${clientIP}, remaining: ${rateLimit.remaining}`);
+    // Input validation and sanitization
+    const MAX_MESSAGE_LENGTH = 1000;
+    const sanitizedMessages: Message[] = [];
+    const validRoles = ["user", "assistant"];
+
+    // Process only the last 10 messages to maintain context without overloading
+    for (const msg of messages.slice(-10)) {
+      if (!msg.role || !validRoles.includes(msg.role)) {
+        console.warn(`[AN3S Concierge] Invalid role detected: ${msg.role}`);
+        return new Response(
+          JSON.stringify({ error: "Invalid message format" }),
+          { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+        );
+      }
+
+      if (typeof msg.content !== "string") {
+         console.warn(`[AN3S Concierge] Invalid content type detected`);
+         return new Response(
+          JSON.stringify({ error: "Invalid message content" }),
+          { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+        );
+      }
+
+      sanitizedMessages.push({
+        role: msg.role,
+        content: msg.content.slice(0, MAX_MESSAGE_LENGTH).trim()
+      });
+    }
+
+    console.log(`[AN3S Concierge] Processing ${sanitizedMessages.length} messages, IP: ${clientIP}, remaining: ${rateLimit.remaining}`);
 
     const systemPrompt = `You are the AN3S Concierge, a helpful AI assistant for Andries Liebenberg's portfolio website.
 
@@ -92,7 +121,7 @@ Remember: You represent AN3S professionally. Be helpful, accurate, and never fab
         model: "google/gemini-2.5-flash",
         messages: [
           { role: "system", content: systemPrompt },
-          ...messages,
+          ...sanitizedMessages,
         ],
         max_tokens: 1024,
         temperature: 0.7,
