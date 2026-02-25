@@ -9,3 +9,8 @@
    **Bottleneck:** The `ParallaxStarfield` component was using `ctx.arc()` (which constructs a path) for thousands of stars every frame, creating significant CPU overhead even for tiny 1px dots.
    **Learning:** `ctx.fillRect()` is significantly faster than `ctx.arc()` for small shapes because it skips the path construction step. For particles smaller than 1.5px, the visual difference between a square and a circle is negligible.
    **Prevention:** When building particle systems on Canvas, prefer `fillRect` for small particles (< 2px) to reduce draw call overhead.
+
+## 2025-10-27 - Global Cursor Glow Optimization
+   **Bottleneck:** `GlobalCursorGlow` component was adding event listeners and rendering complex DOM elements even on mobile devices where hover effects are irrelevant. Additionally, it had a visual bug where `window.scrollY` was incorrectly added to mouse coordinates in a `fixed` container.
+   **Learning:** Heavy cursor effects should be disabled on mobile/touch devices to save battery and CPU. Fixed position elements use viewport coordinates, so adding scroll offset results in incorrect positioning.
+   **Prevention:** Use `useIsMobile` hook to conditionally render heavy interactive effects. Ensure coordinate systems (viewport vs document) match the positioning strategy (fixed vs absolute).
