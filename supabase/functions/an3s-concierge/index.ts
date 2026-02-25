@@ -40,14 +40,39 @@ Deno.serve(async (req) => {
   try {
     const { messages }: RequestBody = await req.json();
 
-    if (!messages || messages.length === 0) {
+    // Security: Strict Input Validation
+    if (!messages || !Array.isArray(messages) || messages.length === 0) {
       return new Response(
-        JSON.stringify({ error: "No messages provided" }),
+        JSON.stringify({ error: "Invalid messages format" }),
         { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
     }
 
-    console.log(`[AN3S Concierge] Processing ${messages.length} messages, IP: ${clientIP}, remaining: ${rateLimit.remaining}`);
+    // Limit to last 10 messages to prevent context window abuse
+    const recentMessages = messages.slice(-10);
+
+    for (const msg of recentMessages) {
+      if (!msg.role || !["user", "assistant"].includes(msg.role)) {
+        return new Response(
+          JSON.stringify({ error: "Invalid message role" }),
+          { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+        );
+      }
+      if (!msg.content || typeof msg.content !== "string") {
+        return new Response(
+          JSON.stringify({ error: "Invalid message content type" }),
+          { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+        );
+      }
+      if (msg.content.length > 1000) {
+        return new Response(
+          JSON.stringify({ error: "Message content too long" }),
+          { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+        );
+      }
+    }
+
+    console.log(`[AN3S Concierge] Processing ${recentMessages.length} messages, IP: ${clientIP}, remaining: ${rateLimit.remaining}`);
 
     const systemPrompt = `You are the AN3S Concierge, a helpful AI assistant for Andries Liebenberg's portfolio website.
 
@@ -92,7 +117,7 @@ Remember: You represent AN3S professionally. Be helpful, accurate, and never fab
         model: "google/gemini-2.5-flash",
         messages: [
           { role: "system", content: systemPrompt },
-          ...messages,
+          ...recentMessages,
         ],
         max_tokens: 1024,
         temperature: 0.7,
