@@ -11,6 +11,9 @@ interface Particle {
   color: string;
 }
 
+const CYAN_RGB = "rgb(13, 229, 255)";
+const PINK_RGB = "rgb(255, 26, 140)";
+
 export function BackgroundFX() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const animationRef = useRef<number>();
@@ -60,10 +63,6 @@ export function BackgroundFX() {
       console.error("Failed to create noise pattern", e);
     }
 
-    // Colors from design system
-    const cyanColor = "rgba(13, 229, 255, ";
-    const pinkColor = "rgba(255, 26, 140, ";
-
     const resizeCanvas = () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
@@ -81,9 +80,13 @@ export function BackgroundFX() {
           vy: (Math.random() - 0.5) * 0.4,
           size: Math.random() * 2.5 + 0.5,
           opacity: Math.random() * 0.6 + 0.15,
-          color: Math.random() > 0.4 ? cyanColor : pinkColor,
+          color: Math.random() > 0.4 ? CYAN_RGB : PINK_RGB,
         });
       }
+
+      // Sort particles by color to enable batch rendering
+      // This minimizes expensive context state changes (fillStyle)
+      particlesRef.current.sort((a, b) => a.color.localeCompare(b.color));
     };
 
     const drawGrid = () => {
@@ -130,6 +133,8 @@ export function BackgroundFX() {
     };
 
     const drawParticles = () => {
+      let currentFillStyle = "";
+
       particlesRef.current.forEach((particle) => {
         particle.x += particle.vx;
         particle.y += particle.vy;
@@ -139,16 +144,33 @@ export function BackgroundFX() {
         if (particle.y < 0) particle.y = canvas.height;
         if (particle.y > canvas.height) particle.y = 0;
 
-        ctx.beginPath();
-        ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
-        ctx.fillStyle = particle.color + particle.opacity + ")";
-        ctx.fill();
+        // Optimization: Batch draw calls by color to minimize state changes
+        if (currentFillStyle !== particle.color) {
+          ctx.fillStyle = particle.color;
+          currentFillStyle = particle.color;
+        }
 
+        // Optimization: Use globalAlpha instead of string concatenation
+        ctx.globalAlpha = particle.opacity;
+
+        // Optimization: Use fillRect for small particles
+        if (particle.size < 1.5) {
+          ctx.fillRect(particle.x - particle.size, particle.y - particle.size, particle.size * 2, particle.size * 2);
+        } else {
+          ctx.beginPath();
+          ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
+          ctx.fill();
+        }
+
+        // Draw glow
+        ctx.globalAlpha = particle.opacity * 0.15;
         ctx.beginPath();
         ctx.arc(particle.x, particle.y, particle.size * 4, 0, Math.PI * 2);
-        ctx.fillStyle = particle.color + (particle.opacity * 0.15) + ")";
         ctx.fill();
       });
+
+      // Reset globalAlpha to avoid side effects on other draw calls (like drawGrid or background clear)
+      ctx.globalAlpha = 1;
     };
 
     const drawNoise = () => {
