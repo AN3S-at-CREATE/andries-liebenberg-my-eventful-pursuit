@@ -38,16 +38,55 @@ Deno.serve(async (req) => {
   }
 
   try {
-    const { messages }: RequestBody = await req.json();
+    const requestData = await req.json();
+    const rawMessages = requestData.messages;
 
-    if (!messages || messages.length === 0) {
+    // 🛡️ SENTINEL SECURITY CHECK: Input Validation
+    // Prevent prompt injection, DoS, and malformed requests
+    if (!Array.isArray(rawMessages) || rawMessages.length === 0) {
       return new Response(
         JSON.stringify({ error: "No messages provided" }),
         { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
     }
 
-    console.log(`[AN3S Concierge] Processing ${messages.length} messages, IP: ${clientIP}, remaining: ${rateLimit.remaining}`);
+    const MAX_HISTORY = 10;
+    const MAX_CONTENT_LENGTH = 1000;
+    const ALLOWED_ROLES = ["user", "assistant"];
+
+    const messages = rawMessages
+      .filter((msg: unknown) => {
+        if (typeof msg !== "object" || msg === null) return false;
+        const m = msg as Record<string, unknown>;
+        // Strict Role Check: Prevent system prompt injection
+        if (
+          typeof m.role !== "string" ||
+          !ALLOWED_ROLES.includes(m.role)
+        )
+          return false;
+        // Content Check: Ensure string and non-empty
+        if (typeof m.content !== "string" || !m.content.trim()) return false;
+        return true;
+      })
+      .map((msg: unknown) => {
+        const m = msg as { role: string; content: string };
+        return {
+          role: m.role as "user" | "assistant",
+          // Truncate content to prevent token exhaustion
+          content: m.content.substring(0, MAX_CONTENT_LENGTH),
+        };
+      })
+      // Limit history to control costs and context window
+      .slice(-MAX_HISTORY);
+
+    if (messages.length === 0) {
+      return new Response(
+        JSON.stringify({ error: "No valid messages found" }),
+        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    console.log(`[AN3S Concierge] Processing ${messages.length} valid messages, IP: ${clientIP}, remaining: ${rateLimit.remaining}`);
 
     const systemPrompt = `You are the AN3S Concierge, a helpful AI assistant for Andries Liebenberg's portfolio website.
 
