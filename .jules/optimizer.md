@@ -9,3 +9,8 @@
    **Bottleneck:** The `ParallaxStarfield` component was using `ctx.arc()` (which constructs a path) for thousands of stars every frame, creating significant CPU overhead even for tiny 1px dots.
    **Learning:** `ctx.fillRect()` is significantly faster than `ctx.arc()` for small shapes because it skips the path construction step. For particles smaller than 1.5px, the visual difference between a square and a circle is negligible.
    **Prevention:** When building particle systems on Canvas, prefer `fillRect` for small particles (< 2px) to reduce draw call overhead.
+
+## 2025-05-24 - Conditional Hooks & Early Returns
+   **Bottleneck:** `GlobalCursorGlow` was optimized to return `null` on mobile devices, but `useTransform` calls were initially placed inline within the returned JSX. When the component returned `null` early, these hooks were skipped, violating React's Rules of Hooks ("Rendered fewer hooks than expected").
+   **Learning:** Even when conditionally rendering `null` for performance, all hooks (including `useTransform` from Framer Motion) must be called unconditionally at the top level of the component *before* any early return statements.
+   **Prevention:** Always declare `useSpring`, `useTransform`, and other hooks at the top of the component scope, and assign their results to variables before using them in conditional JSX or early returns.
