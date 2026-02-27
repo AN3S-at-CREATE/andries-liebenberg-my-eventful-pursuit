@@ -14,6 +14,11 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 const expertiseItems = [
   { title: "Events Management", url: "/expertise/events-management", icon: Calendar },
@@ -115,24 +120,40 @@ export const Navbar = () => {
         </nav>
 
         <div className="flex items-center gap-3">
-          <a
-            href="https://github.com/AN3S-CREATE"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hidden sm:block text-muted-foreground hover:text-primary transition-colors"
-            aria-label="GitHub Profile"
-          >
-            <Github className="h-5 w-5" />
-          </a>
-          <a
-            href="https://www.linkedin.com/in/andriesliebenberg-an3s"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hidden sm:block text-muted-foreground hover:text-secondary transition-colors"
-            aria-label="LinkedIn Profile"
-          >
-            <Linkedin className="h-5 w-5" />
-          </a>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <a
+                href="https://github.com/AN3S-CREATE"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hidden sm:block text-muted-foreground hover:text-primary transition-colors"
+                aria-label="GitHub Profile"
+              >
+                <Github className="h-5 w-5" />
+              </a>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>GitHub Profile</p>
+            </TooltipContent>
+          </Tooltip>
+
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <a
+                href="https://www.linkedin.com/in/andriesliebenberg-an3s"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hidden sm:block text-muted-foreground hover:text-secondary transition-colors"
+                aria-label="LinkedIn Profile"
+              >
+                <Linkedin className="h-5 w-5" />
+              </a>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>LinkedIn Profile</p>
+            </TooltipContent>
+          </Tooltip>
+
           <Button asChild size="sm" className="hidden sm:inline-flex bg-primary hover:bg-primary/90 text-primary-foreground">
             <a
               href="https://wa.me/27729749703"
@@ -256,24 +277,39 @@ export const Navbar = () => {
                 <div className="py-6 border-t border-primary/30">
                   <p className="text-xs text-secondary mb-4 px-3">Connect</p>
                   <div className="flex items-center gap-4 px-3">
-                    <a
-                      href="https://github.com/AN3S-CREATE"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-muted-foreground hover:text-primary transition-colors"
-                      aria-label="GitHub Profile"
-                    >
-                      <Github className="h-5 w-5" />
-                    </a>
-                    <a
-                      href="https://www.linkedin.com/in/andriesliebenberg-an3s"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-muted-foreground hover:text-secondary transition-colors"
-                      aria-label="LinkedIn Profile"
-                    >
-                      <Linkedin className="h-5 w-5" />
-                    </a>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <a
+                          href="https://github.com/AN3S-CREATE"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-muted-foreground hover:text-primary transition-colors"
+                          aria-label="GitHub Profile"
+                        >
+                          <Github className="h-5 w-5" />
+                        </a>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>GitHub Profile</p>
+                      </TooltipContent>
+                    </Tooltip>
+
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <a
+                          href="https://www.linkedin.com/in/andriesliebenberg-an3s"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-muted-foreground hover:text-secondary transition-colors"
+                          aria-label="LinkedIn Profile"
+                        >
+                          <Linkedin className="h-5 w-5" />
+                        </a>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>LinkedIn Profile</p>
+                      </TooltipContent>
+                    </Tooltip>
                   </div>
                 </div>
 
