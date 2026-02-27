@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion, useSpring, useTransform } from "framer-motion";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 interface GlobalCursorGlowProps {
   color?: "cyan" | "pink" | "mixed";
@@ -12,13 +13,23 @@ export const GlobalCursorGlow = ({
   size = 300,
   intensity = 0.15,
 }: GlobalCursorGlowProps) => {
+  const isMobile = useIsMobile();
   const [isVisible, setIsVisible] = useState(false);
 
   // Spring-based smooth cursor following
   const mouseX = useSpring(0, { stiffness: 150, damping: 20 });
   const mouseY = useSpring(0, { stiffness: 150, damping: 20 });
 
+  // Transform values calculated unconditionally to satisfy hook rules
+  const x1 = useTransform(mouseX, (x) => x - size / 2);
+  const y1 = useTransform(mouseY, (y) => y - size / 2);
+  const x2 = useTransform(mouseX, (x) => x - (size * 0.4) / 2);
+  const y2 = useTransform(mouseY, (y) => y - (size * 0.4) / 2);
+
   useEffect(() => {
+    // Optimization: Skip event listeners on mobile
+    if (isMobile) return;
+
     const handleMouseMove = (e: MouseEvent) => {
       mouseX.set(e.clientX);
       mouseY.set(e.clientY + window.scrollY);
@@ -37,7 +48,10 @@ export const GlobalCursorGlow = ({
       document.documentElement.removeEventListener("mouseleave", handleMouseLeave);
       document.documentElement.removeEventListener("mouseenter", handleMouseEnter);
     };
-  }, [mouseX, mouseY, isVisible]);
+  }, [mouseX, mouseY, isVisible, isMobile]);
+
+  // Optimization: Do not render anything on mobile to save resources
+  if (isMobile) return null;
 
   const getGlowColor = () => {
     switch (color) {
@@ -59,8 +73,8 @@ export const GlobalCursorGlow = ({
         style={{
           width: size,
           height: size,
-          x: useTransform(mouseX, (x) => x - size / 2),
-          y: useTransform(mouseY, (y) => y - size / 2),
+          x: x1,
+          y: y1,
         }}
         initial={{ opacity: 0 }}
         animate={{ opacity: isVisible ? intensity : 0 }}
@@ -73,8 +87,8 @@ export const GlobalCursorGlow = ({
         style={{
           width: size * 0.4,
           height: size * 0.4,
-          x: useTransform(mouseX, (x) => x - (size * 0.4) / 2),
-          y: useTransform(mouseY, (y) => y - (size * 0.4) / 2),
+          x: x2,
+          y: y2,
         }}
         initial={{ opacity: 0 }}
         animate={{ opacity: isVisible ? intensity * 1.5 : 0 }}
