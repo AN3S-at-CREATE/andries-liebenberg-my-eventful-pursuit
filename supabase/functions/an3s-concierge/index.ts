@@ -40,11 +40,50 @@ Deno.serve(async (req) => {
   try {
     const { messages }: RequestBody = await req.json();
 
-    if (!messages || messages.length === 0) {
+    // Input Validation
+    if (!messages || !Array.isArray(messages) || messages.length === 0) {
       return new Response(
-        JSON.stringify({ error: "No messages provided" }),
+        JSON.stringify({ error: "Invalid input: 'messages' must be a non-empty array" }),
         { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
+    }
+
+    if (messages.length > 10) {
+      return new Response(
+        JSON.stringify({ error: "Too many messages in context (max 10)" }),
+        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    // Validate each message content
+    for (const msg of messages) {
+      if (typeof msg !== 'object' || msg === null) {
+        return new Response(
+          JSON.stringify({ error: "Invalid message format" }),
+          { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+        );
+      }
+
+      if (msg.role !== 'user' && msg.role !== 'assistant') {
+        return new Response(
+          JSON.stringify({ error: "Invalid role (must be 'user' or 'assistant')" }),
+          { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+        );
+      }
+
+      if (typeof msg.content !== 'string') {
+        return new Response(
+          JSON.stringify({ error: "Message content must be a string" }),
+          { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+        );
+      }
+
+      if (msg.content.length > 2000) {
+        return new Response(
+          JSON.stringify({ error: "Message content too long (max 2000 chars)" }),
+          { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+        );
+      }
     }
 
     console.log(`[AN3S Concierge] Processing ${messages.length} messages, IP: ${clientIP}, remaining: ${rateLimit.remaining}`);
