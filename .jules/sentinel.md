@@ -7,3 +7,8 @@
 **Vulnerability:** The AI's "knowledge base" (system prompt context) was sent by the client in the API request body. This allowed malicious users to inject false instructions or override system rules by manipulating the request payload (Prompt Injection).
 **Learning:** Never trust the client to provide the "source of truth" context for an AI agent. The context must be generated or retrieved server-side where it cannot be tampered with.
 **Prevention:** Hardcode or retrieve context data within the Edge Function. Client input should be strictly limited to the user's message.
+
+## 2025-02-21 - Edge Function Input Validation
+**Vulnerability:** The concierge edge function lacked validation for the input `messages` array, potentially allowing denial-of-service (DoS) via large payloads or malformed inputs crashing the function.
+**Learning:** Even internal-like APIs need strict schema validation. Validating array length and content type at the edge prevents resource exhaustion and ensures predictable behavior before processing expensive AI requests.
+**Prevention:** Always validate input schemas (types, lengths, required fields) immediately upon function entry.
