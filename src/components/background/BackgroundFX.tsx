@@ -61,8 +61,8 @@ export function BackgroundFX() {
     }
 
     // Colors from design system
-    const cyanColor = "rgba(13, 229, 255, ";
-    const pinkColor = "rgba(255, 26, 140, ";
+    const cyanColor = "rgb(13, 229, 255)";
+    const pinkColor = "rgb(255, 26, 140)";
 
     const resizeCanvas = () => {
       canvas.width = window.innerWidth;
@@ -84,6 +84,10 @@ export function BackgroundFX() {
           color: Math.random() > 0.4 ? cyanColor : pinkColor,
         });
       }
+
+      // Sort particles by color to enable batched rendering, which minimizes
+      // ctx.fillStyle changes in the draw loop, significantly improving performance.
+      particlesRef.current.sort((a, b) => a.color.localeCompare(b.color));
     };
 
     const drawGrid = () => {
@@ -130,6 +134,13 @@ export function BackgroundFX() {
     };
 
     const drawParticles = () => {
+      let currentColor = '';
+
+      // We optimize particle rendering by:
+      // 1. Avoiding string allocation for colors (using globalAlpha instead of constructing rgba strings)
+      // 2. Batching draw calls by keeping fillStyle constant for consecutive particles of the same color
+      // 3. Using fillRect instead of arc for very small particles to avoid path overhead
+
       particlesRef.current.forEach((particle) => {
         particle.x += particle.vx;
         particle.y += particle.vy;
@@ -139,16 +150,31 @@ export function BackgroundFX() {
         if (particle.y < 0) particle.y = canvas.height;
         if (particle.y > canvas.height) particle.y = 0;
 
-        ctx.beginPath();
-        ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
-        ctx.fillStyle = particle.color + particle.opacity + ")";
-        ctx.fill();
+        // Only change fillStyle when the color actually changes (relies on pre-sorting)
+        if (currentColor !== particle.color) {
+          ctx.fillStyle = particle.color;
+          currentColor = particle.color;
+        }
 
+        // Draw core
+        ctx.globalAlpha = particle.opacity;
+        if (particle.size < 1.5) {
+          ctx.fillRect(particle.x - particle.size, particle.y - particle.size, particle.size * 2, particle.size * 2);
+        } else {
+          ctx.beginPath();
+          ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
+          ctx.fill();
+        }
+
+        // Draw glow
+        ctx.globalAlpha = particle.opacity * 0.15;
         ctx.beginPath();
         ctx.arc(particle.x, particle.y, particle.size * 4, 0, Math.PI * 2);
-        ctx.fillStyle = particle.color + (particle.opacity * 0.15) + ")";
         ctx.fill();
       });
+
+      // Reset globalAlpha to default to avoid side-effects on subsequent rendering layers
+      ctx.globalAlpha = 1;
     };
 
     const drawNoise = () => {
