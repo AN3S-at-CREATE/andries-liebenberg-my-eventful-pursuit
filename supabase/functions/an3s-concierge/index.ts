@@ -38,13 +38,59 @@ Deno.serve(async (req) => {
   }
 
   try {
-    const { messages }: RequestBody = await req.json();
+    const body: unknown = await req.json();
 
-    if (!messages || messages.length === 0) {
+    if (typeof body !== 'object' || body === null || !('messages' in body)) {
       return new Response(
-        JSON.stringify({ error: "No messages provided" }),
+        JSON.stringify({ error: "Invalid request body" }),
         { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
+    }
+
+    const { messages } = body as RequestBody;
+
+    if (!Array.isArray(messages) || messages.length === 0) {
+      return new Response(
+        JSON.stringify({ error: "Messages must be a non-empty array" }),
+        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    if (messages.length > 10) {
+      return new Response(
+        JSON.stringify({ error: "Too many messages. Maximum is 10." }),
+        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    for (const msg of messages) {
+      if (typeof msg !== 'object' || msg === null) {
+        return new Response(
+          JSON.stringify({ error: "Invalid message format" }),
+          { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+        );
+      }
+
+      if (msg.role !== 'user' && msg.role !== 'assistant') {
+        return new Response(
+          JSON.stringify({ error: "Message role must be 'user' or 'assistant'" }),
+          { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+        );
+      }
+
+      if (typeof msg.content !== 'string' || msg.content.trim() === '') {
+        return new Response(
+          JSON.stringify({ error: "Message content must be a non-empty string" }),
+          { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+        );
+      }
+
+      if (msg.content.length > 2000) {
+        return new Response(
+          JSON.stringify({ error: "Message content exceeds maximum length of 2000 characters" }),
+          { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+        );
+      }
     }
 
     console.log(`[AN3S Concierge] Processing ${messages.length} messages, IP: ${clientIP}, remaining: ${rateLimit.remaining}`);
