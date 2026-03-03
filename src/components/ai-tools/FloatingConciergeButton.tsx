@@ -2,6 +2,11 @@ import { useState, forwardRef, useEffect } from "react";
 import { MessageSquareText } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import {
   Dialog,
   DialogContent,
   DialogHeader,
@@ -111,14 +116,22 @@ export const FloatingConciergeButton = forwardRef<HTMLDivElement>((_, ref) => {
                 Ask AN3S Concierge
               </DialogTitle>
               {messages.length > 0 && (
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  onClick={clearChat}
-                  className="h-8 w-8 text-muted-foreground hover:text-foreground"
-                >
-                  <Trash2 className="w-4 h-4" />
-                </Button>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      onClick={clearChat}
+                      className="h-8 w-8 text-muted-foreground hover:text-foreground"
+                      aria-label="Clear chat"
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>Clear chat</p>
+                  </TooltipContent>
+                </Tooltip>
               )}
             </div>
           </DialogHeader>
@@ -193,6 +206,7 @@ export const FloatingConciergeButton = forwardRef<HTMLDivElement>((_, ref) => {
                 onClick={handleSend}
                 disabled={!inputValue.trim() || isLoading || remainingMessages <= 0}
                 className="bg-primary hover:bg-primary/90"
+                aria-label="Send message"
               >
                 {isLoading ? (
                   <Loader2 className="w-4 h-4 animate-spin" />
