@@ -47,19 +47,12 @@ const Auth = () => {
       if (isSignUp) {
         const { error } = await signUp(data.email, data.password);
         if (error) {
-          if (error.message.includes("already registered")) {
-            toast({
-              title: "Account exists",
-              description: "This email is already registered. Please sign in instead.",
-              variant: "destructive",
-            });
-          } else {
-            toast({
-              title: "Sign up failed",
-              description: error.message,
-              variant: "destructive",
-            });
-          }
+          // 🛡️ Security: Use generic error message to prevent user enumeration
+          toast({
+            title: "Sign up failed",
+            description: "An error occurred during sign up. Please try again.",
+            variant: "destructive",
+          });
         } else {
           toast({
             title: "Account created",
@@ -71,9 +64,10 @@ const Auth = () => {
       } else {
         const { error } = await signIn(data.email, data.password);
         if (error) {
+          // 🛡️ Security: Ensure generic error message to prevent user enumeration
           toast({
             title: "Sign in failed",
-            description: "Invalid email or password. Please try again.",
+            description: "Invalid login credentials. Please try again.",
             variant: "destructive",
           });
         } else {
