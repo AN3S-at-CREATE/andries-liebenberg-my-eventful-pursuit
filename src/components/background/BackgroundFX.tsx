@@ -61,8 +61,8 @@ export function BackgroundFX() {
     }
 
     // Colors from design system
-    const cyanColor = "rgba(13, 229, 255, ";
-    const pinkColor = "rgba(255, 26, 140, ";
+    const cyanColor = "rgb(13, 229, 255)";
+    const pinkColor = "rgb(255, 26, 140)";
 
     const resizeCanvas = () => {
       canvas.width = window.innerWidth;
@@ -84,6 +84,9 @@ export function BackgroundFX() {
           color: Math.random() > 0.4 ? cyanColor : pinkColor,
         });
       }
+
+      // Sort particles by color for batched rendering
+      particlesRef.current.sort((a, b) => a.color.localeCompare(b.color));
     };
 
     const drawGrid = () => {
@@ -130,6 +133,8 @@ export function BackgroundFX() {
     };
 
     const drawParticles = () => {
+      let currentColor = "";
+
       particlesRef.current.forEach((particle) => {
         particle.x += particle.vx;
         particle.y += particle.vy;
@@ -139,16 +144,35 @@ export function BackgroundFX() {
         if (particle.y < 0) particle.y = canvas.height;
         if (particle.y > canvas.height) particle.y = 0;
 
-        ctx.beginPath();
-        ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
-        ctx.fillStyle = particle.color + particle.opacity + ")";
-        ctx.fill();
+        if (currentColor !== particle.color) {
+          ctx.fillStyle = particle.color;
+          currentColor = particle.color;
+        }
 
+        // Inner core
+        ctx.globalAlpha = particle.opacity;
+        if (particle.size < 1.5) {
+          ctx.fillRect(
+            particle.x - particle.size,
+            particle.y - particle.size,
+            particle.size * 2,
+            particle.size * 2
+          );
+        } else {
+          ctx.beginPath();
+          ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
+          ctx.fill();
+        }
+
+        // Outer glow
+        ctx.globalAlpha = particle.opacity * 0.15;
         ctx.beginPath();
         ctx.arc(particle.x, particle.y, particle.size * 4, 0, Math.PI * 2);
-        ctx.fillStyle = particle.color + (particle.opacity * 0.15) + ")";
         ctx.fill();
       });
+
+      // Reset global alpha to default before exiting
+      ctx.globalAlpha = 1.0;
     };
 
     const drawNoise = () => {
@@ -165,8 +189,7 @@ export function BackgroundFX() {
     };
 
     const animate = () => {
-      ctx.fillStyle = "hsl(223, 24%, 6%)";
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
 
       drawGrid();
       drawParticles();
@@ -204,7 +227,6 @@ export function BackgroundFX() {
       <canvas
         ref={canvasRef}
         className="fixed inset-0 -z-10 pointer-events-none"
-        style={{ background: "hsl(223, 24%, 6%)" }}
       />
       
       {/* Cyan neon streak from left */}
