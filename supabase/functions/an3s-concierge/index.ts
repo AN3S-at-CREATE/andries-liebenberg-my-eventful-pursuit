@@ -38,16 +38,69 @@ Deno.serve(async (req) => {
   }
 
   try {
-    const { messages }: RequestBody = await req.json();
+    const rawBody: unknown = await req.json();
 
-    if (!messages || messages.length === 0) {
+    if (!rawBody || typeof rawBody !== "object" || !("messages" in rawBody)) {
+      return new Response(
+        JSON.stringify({ error: "Invalid request payload" }),
+        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    const { messages } = rawBody as { messages: unknown };
+
+    if (!Array.isArray(messages) || messages.length === 0) {
       return new Response(
         JSON.stringify({ error: "No messages provided" }),
         { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
     }
 
-    console.log(`[AN3S Concierge] Processing ${messages.length} messages, IP: ${clientIP}, remaining: ${rateLimit.remaining}`);
+    if (messages.length > 10) {
+      return new Response(
+        JSON.stringify({ error: "Too many messages. Maximum is 10." }),
+        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    const validMessages: Message[] = [];
+    for (const msg of messages) {
+      if (!msg || typeof msg !== "object") {
+        return new Response(
+          JSON.stringify({ error: "Invalid message format" }),
+          { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+        );
+      }
+
+      const m = msg as Record<string, unknown>;
+      const role = m.role;
+      const content = m.content;
+
+      if (role !== "user" && role !== "assistant") {
+        return new Response(
+          JSON.stringify({ error: "Invalid role. Only 'user' or 'assistant' allowed." }),
+          { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+        );
+      }
+
+      if (typeof content !== "string" || content.trim() === "") {
+        return new Response(
+          JSON.stringify({ error: "Message content must be a non-empty string." }),
+          { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+        );
+      }
+
+      if (content.length > 2000) {
+        return new Response(
+          JSON.stringify({ error: "Message content exceeds maximum length of 2000 characters." }),
+          { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+        );
+      }
+
+      validMessages.push({ role, content });
+    }
+
+    console.log(`[AN3S Concierge] Processing ${validMessages.length} valid messages, IP: ${clientIP}, remaining: ${rateLimit.remaining}`);
 
     const systemPrompt = `You are the AN3S Concierge, a helpful AI assistant for Andries Liebenberg's portfolio website.
 
@@ -92,7 +145,7 @@ Remember: You represent AN3S professionally. Be helpful, accurate, and never fab
         model: "google/gemini-2.5-flash",
         messages: [
           { role: "system", content: systemPrompt },
-          ...messages,
+          ...validMessages,
         ],
         max_tokens: 1024,
         temperature: 0.7,
