@@ -61,12 +61,62 @@ export function BackgroundFX() {
     }
 
     // Colors from design system
-    const cyanColor = "rgba(13, 229, 255, ";
-    const pinkColor = "rgba(255, 26, 140, ";
+    const cyanColor = "13, 229, 255";
+    const pinkColor = "255, 26, 140";
+
+    let gridCanvas: HTMLCanvasElement | null = null;
 
     const resizeCanvas = () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
+
+      // Cache the static grid
+      gridCanvas = document.createElement('canvas');
+      gridCanvas.width = canvas.width;
+      gridCanvas.height = canvas.height;
+      const gCtx = gridCanvas.getContext('2d');
+      if (gCtx) {
+        const horizonY = gridCanvas.height * 0.65;
+        const gridLines = 25;
+        const vanishingPointX = gridCanvas.width / 2;
+
+        gCtx.strokeStyle = "rgba(13, 229, 255, 0.06)";
+        gCtx.lineWidth = 1;
+
+        for (let i = 0; i <= gridLines; i++) {
+          const progress = i / gridLines;
+          const y = horizonY + (gridCanvas.height - horizonY) * Math.pow(progress, 1.5);
+          const spread = 1 + progress * 2.5;
+
+          gCtx.beginPath();
+          gCtx.moveTo(vanishingPointX - (gridCanvas.width * spread) / 2, y);
+          gCtx.lineTo(vanishingPointX + (gridCanvas.width * spread) / 2, y);
+          gCtx.stroke();
+        }
+
+        const verticalLines = 35;
+        for (let i = -verticalLines / 2; i <= verticalLines / 2; i++) {
+          const baseX = vanishingPointX + i * (gridCanvas.width / verticalLines) * 3;
+          gCtx.beginPath();
+          gCtx.moveTo(vanishingPointX, horizonY);
+          gCtx.lineTo(baseX, gridCanvas.height);
+          gCtx.stroke();
+        }
+
+        const horizonGradient = gCtx.createLinearGradient(0, horizonY - 60, 0, horizonY + 60);
+        horizonGradient.addColorStop(0, "rgba(13, 229, 255, 0)");
+        horizonGradient.addColorStop(0.5, "rgba(13, 229, 255, 0.08)");
+        horizonGradient.addColorStop(1, "rgba(13, 229, 255, 0)");
+        gCtx.fillStyle = horizonGradient;
+        gCtx.fillRect(0, horizonY - 60, gridCanvas.width, 120);
+
+        const bottomGradient = gCtx.createLinearGradient(0, gridCanvas.height - 150, 0, gridCanvas.height);
+        bottomGradient.addColorStop(0, "rgba(255, 26, 140, 0)");
+        bottomGradient.addColorStop(0.5, "rgba(255, 26, 140, 0.04)");
+        bottomGradient.addColorStop(1, "rgba(255, 26, 140, 0.02)");
+        gCtx.fillStyle = bottomGradient;
+        gCtx.fillRect(0, gridCanvas.height - 150, gridCanvas.width, 150);
+      }
     };
 
     const initParticles = () => {
@@ -84,52 +134,20 @@ export function BackgroundFX() {
           color: Math.random() > 0.4 ? cyanColor : pinkColor,
         });
       }
+
+      // Sort by color to allow batching ctx.fillStyle in the render loop
+      particlesRef.current.sort((a, b) => a.color.localeCompare(b.color));
     };
 
     const drawGrid = () => {
-      const horizonY = canvas.height * 0.65;
-      const gridLines = 25;
-      const vanishingPointX = canvas.width / 2;
-
-      ctx.strokeStyle = "rgba(13, 229, 255, 0.06)";
-      ctx.lineWidth = 1;
-
-      for (let i = 0; i <= gridLines; i++) {
-        const progress = i / gridLines;
-        const y = horizonY + (canvas.height - horizonY) * Math.pow(progress, 1.5);
-        const spread = 1 + progress * 2.5;
-
-        ctx.beginPath();
-        ctx.moveTo(vanishingPointX - (canvas.width * spread) / 2, y);
-        ctx.lineTo(vanishingPointX + (canvas.width * spread) / 2, y);
-        ctx.stroke();
+      if (gridCanvas) {
+        ctx.drawImage(gridCanvas, 0, 0);
       }
-
-      const verticalLines = 35;
-      for (let i = -verticalLines / 2; i <= verticalLines / 2; i++) {
-        const baseX = vanishingPointX + i * (canvas.width / verticalLines) * 3;
-        ctx.beginPath();
-        ctx.moveTo(vanishingPointX, horizonY);
-        ctx.lineTo(baseX, canvas.height);
-        ctx.stroke();
-      }
-
-      const horizonGradient = ctx.createLinearGradient(0, horizonY - 60, 0, horizonY + 60);
-      horizonGradient.addColorStop(0, "rgba(13, 229, 255, 0)");
-      horizonGradient.addColorStop(0.5, "rgba(13, 229, 255, 0.08)");
-      horizonGradient.addColorStop(1, "rgba(13, 229, 255, 0)");
-      ctx.fillStyle = horizonGradient;
-      ctx.fillRect(0, horizonY - 60, canvas.width, 120);
-
-      const bottomGradient = ctx.createLinearGradient(0, canvas.height - 150, 0, canvas.height);
-      bottomGradient.addColorStop(0, "rgba(255, 26, 140, 0)");
-      bottomGradient.addColorStop(0.5, "rgba(255, 26, 140, 0.04)");
-      bottomGradient.addColorStop(1, "rgba(255, 26, 140, 0.02)");
-      ctx.fillStyle = bottomGradient;
-      ctx.fillRect(0, canvas.height - 150, canvas.width, 150);
     };
 
     const drawParticles = () => {
+      let currentColor = "";
+
       particlesRef.current.forEach((particle) => {
         particle.x += particle.vx;
         particle.y += particle.vy;
@@ -139,16 +157,36 @@ export function BackgroundFX() {
         if (particle.y < 0) particle.y = canvas.height;
         if (particle.y > canvas.height) particle.y = 0;
 
-        ctx.beginPath();
-        ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
-        ctx.fillStyle = particle.color + particle.opacity + ")";
-        ctx.fill();
+        // Batch color changes
+        if (currentColor !== particle.color) {
+          currentColor = particle.color;
+          ctx.fillStyle = `rgb(${currentColor})`;
+        }
 
+        // Core particle
+        ctx.globalAlpha = particle.opacity;
+        if (particle.size < 1.5) {
+          ctx.fillRect(
+            particle.x - particle.size,
+            particle.y - particle.size,
+            particle.size * 2,
+            particle.size * 2
+          );
+        } else {
+          ctx.beginPath();
+          ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
+          ctx.fill();
+        }
+
+        // Particle glow
+        ctx.globalAlpha = particle.opacity * 0.15;
         ctx.beginPath();
         ctx.arc(particle.x, particle.y, particle.size * 4, 0, Math.PI * 2);
-        ctx.fillStyle = particle.color + (particle.opacity * 0.15) + ")";
         ctx.fill();
       });
+
+      // Reset globalAlpha to default for next draws
+      ctx.globalAlpha = 1.0;
     };
 
     const drawNoise = () => {
@@ -165,8 +203,7 @@ export function BackgroundFX() {
     };
 
     const animate = () => {
-      ctx.fillStyle = "hsl(223, 24%, 6%)";
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
 
       drawGrid();
       drawParticles();
@@ -204,7 +241,6 @@ export function BackgroundFX() {
       <canvas
         ref={canvasRef}
         className="fixed inset-0 -z-10 pointer-events-none"
-        style={{ background: "hsl(223, 24%, 6%)" }}
       />
       
       {/* Cyan neon streak from left */}
