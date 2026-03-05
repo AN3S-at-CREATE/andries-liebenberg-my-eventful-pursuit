@@ -91,6 +91,10 @@ export const EventGallery = () => {
               src={image.src}
               alt={image.title}
               className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+              loading="lazy"
+              decoding="async"
+              width="1024"
+              height="576"
             />
             
             {/* Overlay */}
@@ -162,6 +166,10 @@ export const EventGallery = () => {
                 src={galleryImages[selectedIndex].src}
                 alt={galleryImages[selectedIndex].title}
                 className="w-full h-auto rounded-t-lg"
+                loading="lazy"
+                decoding="async"
+                width="1024"
+                height="576"
               />
 
               {/* Info bar */}
