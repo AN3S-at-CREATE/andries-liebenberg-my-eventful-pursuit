@@ -9,3 +9,7 @@
 ## 2025-06-21 - Canvas State Management Overhead
 **Learning:** In HTML5 Canvas render loops, state changes like `ctx.fillStyle` are extremely expensive. Changing `fillStyle` ~200 times per frame causes massive GC churn and CPU overhead. Additionally, dynamically concatenating colors (`color + opacity + ")"`) for `rgba` compounds this issue.
 **Action:** Always sort objects by style during initialization. In the draw loop, track the applied state (`lastColor`) and update the context only when it actually changes. Use `ctx.globalAlpha` combined with static color strings instead of dynamic string concatenation for variable opacity.
+
+## 2025-07-15 - Unnecessary Framer Motion Rendering on Mobile
+**Learning:** `GlobalCursorGlow` component heavily utilizes Framer Motion to animate a cursor glow effect. This creates continuous calculations and DOM manipulations that are completely redundant and wasteful on touch devices, where no actual cursor exists. However, rendering Framer Motion hooks conditionally can break React rules, causing errors.
+**Action:** Detect mobile devices (via `useIsMobile`) and return `null` early to skip the rendering of Framer Motion elements, ensuring the hooks (`useSpring`, `useTransform`) are called unconditionally *before* the early return. Also skip adding pointer event listeners on mobile to save memory.
