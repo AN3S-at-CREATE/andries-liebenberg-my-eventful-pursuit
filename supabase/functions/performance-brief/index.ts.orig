@@ -66,19 +66,11 @@ serve(async (req) => {
   }
 
   try {
-    const rawBody: unknown = await req.json();
+    const { companyId, audience } = await req.json();
 
-    if (!rawBody || typeof rawBody !== "object" || !("companyId" in rawBody) || !("audience" in rawBody)) {
-      return new Response(
-        JSON.stringify({ error: "Invalid request body" }),
-        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
-      );
-    }
-    const { companyId, audience } = rawBody as { companyId: string, audience: string };
-
-    console.log("[performance-brief] Generating brief:", { 
-      companyId, 
-      audience, 
+    console.log("[performance-brief] Generating brief:", {
+      companyId,
+      audience,
       ip: clientIP,
       remaining: rateLimit.remaining
     });
@@ -131,7 +123,7 @@ ${revenueDisclaimer}
       partner: "Focus on collaboration opportunities, complementary capabilities, and mutual growth potential. Highlight synergies and shared values.",
     };
 
-    const systemPrompt = `You are a professional executive brief writer for AN3S (Andries Liebenberg). Generate a concise 1-page executive performance brief based ONLY on the provided company data. 
+    const systemPrompt = `You are a professional executive brief writer for AN3S (Andries Liebenberg). Generate a concise 1-page executive performance brief based ONLY on the provided company data.
 
 CRITICAL RULES:
 1. NEVER invent data, statistics, clients, contracts, or figures not provided
