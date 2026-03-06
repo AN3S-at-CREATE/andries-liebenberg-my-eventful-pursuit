@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import { motion, useSpring, useTransform } from "framer-motion";
+import { motion, useSpring } from "framer-motion";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 interface GlobalCursorGlowProps {
   color?: "cyan" | "pink" | "mixed";
@@ -13,12 +14,15 @@ export const GlobalCursorGlow = ({
   intensity = 0.15,
 }: GlobalCursorGlowProps) => {
   const [isVisible, setIsVisible] = useState(false);
+  const isMobile = useIsMobile();
 
   // Spring-based smooth cursor following
   const mouseX = useSpring(0, { stiffness: 150, damping: 20 });
   const mouseY = useSpring(0, { stiffness: 150, damping: 20 });
 
   useEffect(() => {
+    if (isMobile) return;
+
     const handleMouseMove = (e: MouseEvent) => {
       mouseX.set(e.clientX);
       mouseY.set(e.clientY + window.scrollY);
@@ -37,7 +41,11 @@ export const GlobalCursorGlow = ({
       document.documentElement.removeEventListener("mouseleave", handleMouseLeave);
       document.documentElement.removeEventListener("mouseenter", handleMouseEnter);
     };
-  }, [mouseX, mouseY, isVisible]);
+  }, [mouseX, mouseY, isVisible, isMobile]);
+
+  if (isMobile) {
+    return null;
+  }
 
   const getGlowColor = () => {
     switch (color) {
@@ -59,8 +67,10 @@ export const GlobalCursorGlow = ({
         style={{
           width: size,
           height: size,
-          x: useTransform(mouseX, (x) => x - size / 2),
-          y: useTransform(mouseY, (y) => y - size / 2),
+          x: mouseX, // using spring values directly
+          y: mouseY, // using spring values directly
+          marginLeft: -size / 2, // applying offset via margin
+          marginTop: -size / 2,
         }}
         initial={{ opacity: 0 }}
         animate={{ opacity: isVisible ? intensity : 0 }}
@@ -73,8 +83,10 @@ export const GlobalCursorGlow = ({
         style={{
           width: size * 0.4,
           height: size * 0.4,
-          x: useTransform(mouseX, (x) => x - (size * 0.4) / 2),
-          y: useTransform(mouseY, (y) => y - (size * 0.4) / 2),
+          x: mouseX,
+          y: mouseY,
+          marginLeft: -(size * 0.4) / 2,
+          marginTop: -(size * 0.4) / 2,
         }}
         initial={{ opacity: 0 }}
         animate={{ opacity: isVisible ? intensity * 1.5 : 0 }}
