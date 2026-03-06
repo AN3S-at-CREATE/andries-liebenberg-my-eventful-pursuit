@@ -103,7 +103,13 @@ export function LoadingScreen({ isLoading }: LoadingScreenProps) {
               />
 
               {mediaFailed ? (
-                <img src={logo} alt="AN3S logo" className="relative z-10 h-56 w-56 object-contain" />
+                <img
+                  src={logo}
+                  alt="AN3S logo"
+                  className="relative z-10 h-56 w-56 object-contain"
+                  width="224"
+                  height="224"
+                />
               ) : (
                 <img
                   src={loadingGif}
@@ -111,6 +117,8 @@ export function LoadingScreen({ isLoading }: LoadingScreenProps) {
                   className="relative z-10 h-56 w-56 object-contain"
                   decoding="async"
                   onError={() => setMediaFailed(true)}
+                  width="224"
+                  height="224"
                 />
               )}
             </motion.div>
