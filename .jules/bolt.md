@@ -9,3 +9,7 @@
 ## 2025-06-21 - Canvas State Management Overhead
 **Learning:** In HTML5 Canvas render loops, state changes like `ctx.fillStyle` are extremely expensive. Changing `fillStyle` ~200 times per frame causes massive GC churn and CPU overhead. Additionally, dynamically concatenating colors (`color + opacity + ")"`) for `rgba` compounds this issue.
 **Action:** Always sort objects by style during initialization. In the draw loop, track the applied state (`lastColor`) and update the context only when it actually changes. Use `ctx.globalAlpha` combined with static color strings instead of dynamic string concatenation for variable opacity.
+
+## 2025-06-21 - Conditional Returns with Framer Motion Hooks
+**Learning:** When attempting to optimize out components on mobile using early returns (`if (isMobile) return null;`), you must be careful if the component uses Framer Motion hooks like `useTransform` inline within the JSX style props. React's rules of hooks dictate that hooks cannot be called conditionally, meaning any early return placed above the inline hook call will result in a runtime error ("Rendered fewer hooks than expected").
+**Action:** Always extract Framer Motion hooks unconditionally to the top level of the component before adding any conditional early returns for performance optimizations.
