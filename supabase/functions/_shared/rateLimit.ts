@@ -53,20 +53,25 @@ export function checkRateLimit(
 }
 
 export function getClientIP(req: Request): string {
-  // Try various headers that might contain the real IP
-  const forwardedFor = req.headers.get("x-forwarded-for");
-  if (forwardedFor) {
-    return forwardedFor.split(",")[0].trim();
-  }
-  
-  const realIP = req.headers.get("x-real-ip");
-  if (realIP) {
-    return realIP;
-  }
+  // Try various headers that might contain the real IP, prioritizing those
+  // less likely to be spoofed by the client (added by trusted proxies)
   
   const cfConnectingIP = req.headers.get("cf-connecting-ip");
   if (cfConnectingIP) {
     return cfConnectingIP;
+  }
+
+  const realIP = req.headers.get("x-real-ip");
+  if (realIP) {
+    return realIP;
+  }
+
+  // Fallback to x-forwarded-for, but take the right-most IP to prevent spoofing
+  // (the last proxy appends the real client IP to the end of the list)
+  const forwardedFor = req.headers.get("x-forwarded-for");
+  if (forwardedFor) {
+    const ips = forwardedFor.split(",");
+    return ips[ips.length - 1].trim();
   }
   
   return "unknown";
