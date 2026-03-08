@@ -49,10 +49,9 @@ export const Navbar = () => {
             src={logo} 
             alt="AN3S" 
             className="h-10 w-auto transition-all duration-300 hover:scale-110 hover:drop-shadow-[0_0_12px_hsl(var(--secondary))]" 
-            loading="lazy"
-            decoding="async"
             width="160"
             height="40"
+            // Removed loading="lazy" and decoding="async" for faster LCP on above-the-fold logo
           />
         </Link>
 
@@ -184,10 +183,9 @@ export const Navbar = () => {
                     src={logo}
                     alt="AN3S"
                     className="h-10 w-auto"
-                    loading="lazy"
-                    decoding="async"
                     width="160"
                     height="40"
+                    // Removed loading="lazy" and decoding="async" for faster LCP
                   />
                 </div>
 
