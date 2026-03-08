@@ -76,16 +76,35 @@ export const EventGallery = () => {
     }
   };
 
+  // Support ArrowLeft and ArrowRight keyboard navigation
+  // Note: Radix UI Dialog already traps focus and handles Escape to close
+  const handleKeyDownLightbox = (e: React.KeyboardEvent) => {
+    if (e.key === "ArrowLeft") {
+      goToPrevious();
+    } else if (e.key === "ArrowRight") {
+      goToNext();
+    }
+  };
+
   return (
     <>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {galleryImages.map((image, index) => (
           <div
             key={index}
-            className="relative group cursor-pointer overflow-hidden rounded-xl aspect-video"
+            className="relative group cursor-pointer overflow-hidden rounded-xl aspect-video focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
             onClick={() => openLightbox(index)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                openLightbox(index);
+              }
+            }}
             onMouseEnter={() => setHoveredIndex(index)}
             onMouseLeave={() => setHoveredIndex(null)}
+            role="button"
+            tabIndex={0}
+            aria-label={`View ${image.title} in lightbox`}
           >
             <img
               src={image.src}
@@ -130,7 +149,10 @@ export const EventGallery = () => {
 
       {/* Lightbox */}
       <Dialog open={selectedIndex !== null} onOpenChange={closeLightbox}>
-        <DialogContent className="max-w-5xl w-full p-0 bg-background/95 backdrop-blur-xl border-border/50">
+        <DialogContent
+          className="max-w-5xl w-full p-0 bg-background/95 backdrop-blur-xl border-border/50"
+          onKeyDown={handleKeyDownLightbox}
+        >
           {selectedIndex !== null && (
             <div className="relative">
               {/* Close button */}
@@ -139,6 +161,7 @@ export const EventGallery = () => {
                 size="icon"
                 className="absolute top-4 right-4 z-10 bg-background/50 hover:bg-background/80"
                 onClick={closeLightbox}
+                aria-label="Close lightbox"
               >
                 <X className="h-5 w-5" />
               </Button>
@@ -149,6 +172,7 @@ export const EventGallery = () => {
                 size="icon"
                 className="absolute left-4 top-1/2 -translate-y-1/2 z-10 bg-background/50 hover:bg-background/80"
                 onClick={goToPrevious}
+                aria-label="Previous image"
               >
                 <ChevronLeft className="h-6 w-6" />
               </Button>
@@ -157,6 +181,7 @@ export const EventGallery = () => {
                 size="icon"
                 className="absolute right-4 top-1/2 -translate-y-1/2 z-10 bg-background/50 hover:bg-background/80"
                 onClick={goToNext}
+                aria-label="Next image"
               >
                 <ChevronRight className="h-6 w-6" />
               </Button>
