@@ -14,3 +14,8 @@
    **Bottleneck:** Missing explicit `width` and `height` attributes on `<img>` tags, leading to Cumulative Layout Shift (CLS), and missing `loading="lazy"` on below-the-fold images causing unnecessary early network requests.
    **Learning:** Browsers cannot reserve space for images without explicit dimensions, which causes layout shifts as the image loads. Deferring off-screen image loading with `loading="lazy"` speeds up initial page load and saves bandwidth.
    **Prevention:** Always declare `width` and `height` attributes on all `<img>` tags (matching their CSS aspect ratio) and apply `loading="lazy"` for below-the-fold images. Use `decoding="async"` for non-critical images to avoid blocking the main thread.
+
+## 2026-03-08 - Above-the-fold Image Loading Optimization
+   **Bottleneck:** The main logo image in the Navbar was marked with `loading="lazy"`, which tells the browser to de-prioritize its loading. Because the Navbar is visible immediately on page load, this harms the Largest Contentful Paint (LCP) performance metric.
+   **Learning:** Applying lazy loading to above-the-fold content delays rendering of elements that the user expects to see immediately. LCP represents how quickly the main content of a webpage loads. Delaying it reduces perceived performance and harms SEO. Critical above-the-fold images should be loaded eagerly and prioritized using `fetchpriority="high"`.
+   **Prevention:** Never apply `loading="lazy"` to above-the-fold images (like logos in the header or hero banner images). Instead, use `fetchpriority="high"` and `decoding="sync"` to ensure they load as fast as possible to improve LCP.
