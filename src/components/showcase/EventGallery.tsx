@@ -82,10 +82,19 @@ export const EventGallery = () => {
         {galleryImages.map((image, index) => (
           <div
             key={index}
-            className="relative group cursor-pointer overflow-hidden rounded-xl aspect-video"
+            className="relative group cursor-pointer overflow-hidden rounded-xl aspect-video focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
             onClick={() => openLightbox(index)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                openLightbox(index);
+              }
+            }}
             onMouseEnter={() => setHoveredIndex(index)}
             onMouseLeave={() => setHoveredIndex(null)}
+            role="button"
+            tabIndex={0}
+            aria-label={`View ${image.title} gallery`}
           >
             <img
               src={image.src}
@@ -139,6 +148,7 @@ export const EventGallery = () => {
                 size="icon"
                 className="absolute top-4 right-4 z-10 bg-background/50 hover:bg-background/80"
                 onClick={closeLightbox}
+                aria-label="Close gallery"
               >
                 <X className="h-5 w-5" />
               </Button>
@@ -149,6 +159,7 @@ export const EventGallery = () => {
                 size="icon"
                 className="absolute left-4 top-1/2 -translate-y-1/2 z-10 bg-background/50 hover:bg-background/80"
                 onClick={goToPrevious}
+                aria-label="Previous image"
               >
                 <ChevronLeft className="h-6 w-6" />
               </Button>
@@ -157,6 +168,7 @@ export const EventGallery = () => {
                 size="icon"
                 className="absolute right-4 top-1/2 -translate-y-1/2 z-10 bg-background/50 hover:bg-background/80"
                 onClick={goToNext}
+                aria-label="Next image"
               >
                 <ChevronRight className="h-6 w-6" />
               </Button>
