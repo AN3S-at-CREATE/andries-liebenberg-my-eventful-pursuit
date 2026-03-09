@@ -107,6 +107,8 @@ export function LoadingScreen({ isLoading }: LoadingScreenProps) {
                   src={logo}
                   alt="AN3S logo"
                   className="relative z-10 h-56 w-56 object-contain"
+                  fetchPriority="high"
+                  decoding="sync"
                   width="224"
                   height="224"
                 />
@@ -115,7 +117,8 @@ export function LoadingScreen({ isLoading }: LoadingScreenProps) {
                   src={loadingGif}
                   alt="Loading animation"
                   className="relative z-10 h-56 w-56 object-contain"
-                  decoding="async"
+                  fetchPriority="high"
+                  decoding="sync"
                   onError={() => setMediaFailed(true)}
                   width="224"
                   height="224"

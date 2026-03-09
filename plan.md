@@ -1,8 +1,10 @@
-1. **Optimize Event Gallery Images:** The EventGallery component uses large images without specifying `width` and `height`, and without using `loading="lazy"`. I will modify `src/components/showcase/EventGallery.tsx` to include `loading="lazy"`, `width="1024"`, and `height="576"` on the `<img>` tags in the gallery and the lightbox. I will also make sure to use `decoding="async"` where applicable. I will also do the same for the logo in the Footer, Navbar and LoadingScreen.
-   - Files to modify:
-     - `src/components/layout/Footer.tsx` (add width, height, loading="lazy", decoding="async")
-     - `src/components/layout/Navbar.tsx` (add width, height, loading="lazy", decoding="async")
-     - `src/components/loading/LoadingScreen.tsx` (already checked some, but we'll add width and height)
-     - `src/components/showcase/EventGallery.tsx` (add width, height, loading="lazy", decoding="async")
-2. **Pre-commit checks:** Complete pre-commit steps to ensure proper testing, verification, review, and reflection are done.
-3. **Submit:** Submit the changes with branch name "optimizer/image-optimization", and PR title "🚀 Optimizer: [Performance improvement] Optimize images with loading=lazy and explicit dimensions".
+1. **Remove `loading="lazy"` from above-the-fold images:**
+   - Modify `src/components/layout/Navbar.tsx` to ensure both logo `<img>` tags use `fetchPriority="high"` and `decoding="sync"` instead of `loading="lazy"`. Since these are in the navbar, they are above the fold.
+2. **Review and optimize other `<img>` tags:**
+   - In `src/components/layout/Footer.tsx`, the logo is below the fold. `loading="lazy"` is appropriate, so we can keep it as is.
+   - In `src/components/loading/LoadingScreen.tsx`, check images to ensure they aren't using lazy loading unnecessarily if they're critical.
+   - In `src/components/showcase/EventGallery.tsx`, ensure `width` and `height` are provided and lazy loading is used correctly.
+3. **Complete pre-commit steps to ensure proper testing, verification, review, and reflection are done.**
+4. **Submit PR:**
+   - Use title `🚀 Optimizer: [Performance improvement]`
+   - Add description of changes.
