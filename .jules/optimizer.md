@@ -14,3 +14,8 @@
    **Bottleneck:** Missing explicit `width` and `height` attributes on `<img>` tags, leading to Cumulative Layout Shift (CLS), and missing `loading="lazy"` on below-the-fold images causing unnecessary early network requests.
    **Learning:** Browsers cannot reserve space for images without explicit dimensions, which causes layout shifts as the image loads. Deferring off-screen image loading with `loading="lazy"` speeds up initial page load and saves bandwidth.
    **Prevention:** Always declare `width` and `height` attributes on all `<img>` tags (matching their CSS aspect ratio) and apply `loading="lazy"` for below-the-fold images. Use `decoding="async"` for non-critical images to avoid blocking the main thread.
+
+## 2023-10-24 - LCP optimization for above-the-fold images
+   **Bottleneck:** Above-the-fold images (e.g., logos in Navbar) had `loading="lazy"` and `decoding="async"` attributes, which delays their loading and rendering, potentially negatively impacting the Largest Contentful Paint (LCP) metric.
+   **Learning:** Browsers defer loading of images with `loading="lazy"`. While great for below-the-fold content, applying this to critical above-the-fold images delays their appearance.
+   **Prevention:** Never use `loading="lazy"` or `decoding="async"` on above-the-fold images. Instead, use React camel-case `fetchPriority="high"` and `decoding="sync"` for critical above-the-fold images to protect LCP.
