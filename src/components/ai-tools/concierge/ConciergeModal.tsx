@@ -82,6 +82,7 @@ export function ConciergeModal({ trigger }: ConciergeModalProps) {
                 size="icon"
                 onClick={clearChat}
                 className="h-8 w-8 text-muted-foreground hover:text-foreground"
+                aria-label="Clear chat history"
               >
                 <Trash2 className="w-4 h-4" />
               </Button>
