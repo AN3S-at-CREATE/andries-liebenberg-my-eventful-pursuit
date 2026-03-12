@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { companies } from "@/data/companies";
 import { getMetricsByCompanyId } from "@/data/companyMetrics";
 import { CompanyCard } from "./CompanyCard";
@@ -19,29 +19,33 @@ export const CompanyGrid = () => {
     return () => clearTimeout(timer);
   }, []);
 
-  const filteredCompanies = companies.filter((company) => {
-    if (filterBy === "all") return true;
-    return company.sector.toLowerCase().includes(filterBy.toLowerCase());
-  });
+  const filteredCompanies = useMemo(() => {
+    return companies.filter((company) => {
+      if (filterBy === "all") return true;
+      return company.sector.toLowerCase().includes(filterBy.toLowerCase());
+    });
+  }, [filterBy]);
 
-  const sortedCompanies = [...filteredCompanies].sort((a, b) => {
-    const metricsA = getMetricsByCompanyId(a.id);
-    const metricsB = getMetricsByCompanyId(b.id);
-    if (!metricsA || !metricsB) return 0;
+  const sortedCompanies = useMemo(() => {
+    return [...filteredCompanies].sort((a, b) => {
+      const metricsA = getMetricsByCompanyId(a.id);
+      const metricsB = getMetricsByCompanyId(b.id);
+      if (!metricsA || !metricsB) return 0;
 
-    switch (sortBy) {
-      case "growth":
-        return metricsB.revenueGrowthPct - metricsA.revenueGrowthPct;
-      case "clients":
-        return metricsB.clientsAcquired - metricsA.clientsAcquired;
-      case "projects":
-        return metricsB.projectsCompleted - metricsA.projectsCompleted;
-      case "satisfaction":
-        return metricsB.customerSatisfactionPct - metricsA.customerSatisfactionPct;
-      default:
-        return 0;
-    }
-  });
+      switch (sortBy) {
+        case "growth":
+          return metricsB.revenueGrowthPct - metricsA.revenueGrowthPct;
+        case "clients":
+          return metricsB.clientsAcquired - metricsA.clientsAcquired;
+        case "projects":
+          return metricsB.projectsCompleted - metricsA.projectsCompleted;
+        case "satisfaction":
+          return metricsB.customerSatisfactionPct - metricsA.customerSatisfactionPct;
+        default:
+          return 0;
+      }
+    });
+  }, [filteredCompanies, sortBy]);
 
   return (
     <div className="space-y-6">
