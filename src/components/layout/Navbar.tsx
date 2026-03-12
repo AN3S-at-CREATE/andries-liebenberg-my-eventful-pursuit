@@ -14,6 +14,11 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 const expertiseItems = [
   { title: "Events Management", url: "/expertise/events-management", icon: Calendar },
@@ -40,10 +45,16 @@ export const Navbar = () => {
     <header className="sticky top-0 z-50 w-full border-b border-secondary/30 bg-background/80 backdrop-blur-md">
       <div className="container flex h-16 items-center justify-between">
         <Link to="/" className="flex items-center gap-2">
+          {/* 🚀 Optimizer: Removed loading="lazy" and added fetchPriority="high" for critical above-the-fold logo to protect LCP */}
           <img 
             src={logo} 
             alt="AN3S" 
             className="h-10 w-auto transition-all duration-300 hover:scale-110 hover:drop-shadow-[0_0_12px_hsl(var(--secondary))]" 
+            fetchPriority="high"
+            decoding="sync"
+            width="160"
+            height="40"
+            // Removed loading="lazy" and decoding="async" for faster LCP on above-the-fold logo
           />
         </Link>
 
@@ -115,22 +126,38 @@ export const Navbar = () => {
         </nav>
 
         <div className="flex items-center gap-3">
-          <a
-            href="https://github.com/AN3S-CREATE"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hidden sm:block text-muted-foreground hover:text-primary transition-colors"
-          >
-            <Github className="h-5 w-5" />
-          </a>
-          <a
-            href="https://www.linkedin.com/in/andriesliebenberg-an3s"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hidden sm:block text-muted-foreground hover:text-secondary transition-colors"
-          >
-            <Linkedin className="h-5 w-5" />
-          </a>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <a
+                href="https://github.com/AN3S-CREATE"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hidden sm:block text-muted-foreground hover:text-primary transition-colors"
+                aria-label="GitHub Profile"
+              >
+                <Github className="h-5 w-5" />
+              </a>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>GitHub Profile</p>
+            </TooltipContent>
+          </Tooltip>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <a
+                href="https://www.linkedin.com/in/andriesliebenberg-an3s"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hidden sm:block text-muted-foreground hover:text-secondary transition-colors"
+                aria-label="LinkedIn Profile"
+              >
+                <Linkedin className="h-5 w-5" />
+              </a>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>LinkedIn Profile</p>
+            </TooltipContent>
+          </Tooltip>
           <Button asChild size="sm" className="hidden sm:inline-flex bg-primary hover:bg-primary/90 text-primary-foreground">
             <a
               href="https://wa.me/27729749703"
@@ -155,7 +182,17 @@ export const Navbar = () => {
               <div className="flex flex-col h-full">
                 {/* Header */}
                 <div className="flex items-center justify-between pb-6 border-b border-secondary/30">
-                  <img src={logo} alt="AN3S" className="h-10 w-auto" />
+                  {/* 🚀 Optimizer: Removed loading="lazy" and added fetchPriority="high" for critical above-the-fold logo to protect LCP */}
+                  <img
+                    src={logo}
+                    alt="AN3S"
+                    className="h-10 w-auto"
+                    fetchPriority="high"
+                    decoding="sync"
+                    width="160"
+                    height="40"
+                    // Removed loading="lazy" and decoding="async" for faster LCP
+                  />
                 </div>
 
                 {/* Navigation Links */}
@@ -254,22 +291,38 @@ export const Navbar = () => {
                 <div className="py-6 border-t border-primary/30">
                   <p className="text-xs text-secondary mb-4 px-3">Connect</p>
                   <div className="flex items-center gap-4 px-3">
-                    <a
-                      href="https://github.com/AN3S-CREATE"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-muted-foreground hover:text-primary transition-colors"
-                    >
-                      <Github className="h-5 w-5" />
-                    </a>
-                    <a
-                      href="https://www.linkedin.com/in/andriesliebenberg-an3s"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-muted-foreground hover:text-secondary transition-colors"
-                    >
-                      <Linkedin className="h-5 w-5" />
-                    </a>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <a
+                          href="https://github.com/AN3S-CREATE"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-muted-foreground hover:text-primary transition-colors"
+                          aria-label="GitHub Profile"
+                        >
+                          <Github className="h-5 w-5" />
+                        </a>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>GitHub Profile</p>
+                      </TooltipContent>
+                    </Tooltip>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <a
+                          href="https://www.linkedin.com/in/andriesliebenberg-an3s"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-muted-foreground hover:text-secondary transition-colors"
+                          aria-label="LinkedIn Profile"
+                        >
+                          <Linkedin className="h-5 w-5" />
+                        </a>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>LinkedIn Profile</p>
+                      </TooltipContent>
+                    </Tooltip>
                   </div>
                 </div>
 

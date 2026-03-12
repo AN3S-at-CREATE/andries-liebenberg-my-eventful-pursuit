@@ -354,6 +354,8 @@ const Admin = () => {
                               variant="ghost"
                               size="icon"
                               onClick={() => setSelectedSubmission(submission)}
+                              aria-label="View submission"
+                              title="View submission"
                             >
                               <Eye className="h-4 w-4" />
                             </Button>
@@ -362,6 +364,8 @@ const Admin = () => {
                               size="icon"
                               onClick={() => deleteSubmission(submission.id)}
                               className="text-destructive hover:text-destructive"
+                              aria-label="Delete submission"
+                              title="Delete submission"
                             >
                               <Trash2 className="h-4 w-4" />
                             </Button>

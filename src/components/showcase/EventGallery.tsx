@@ -3,6 +3,11 @@ import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Badge } from "@/components/ui/badge";
 import { X, ChevronLeft, ChevronRight, ZoomIn } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 import eventCorporate from "@/assets/showcase/event-corporate.jpg";
 import eventGala from "@/assets/showcase/event-gala.jpg";
@@ -91,6 +96,10 @@ export const EventGallery = () => {
               src={image.src}
               alt={image.title}
               className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+              loading="lazy"
+              decoding="async"
+              width="1024"
+              height="576"
             />
             
             {/* Overlay */}
@@ -135,6 +144,7 @@ export const EventGallery = () => {
                 size="icon"
                 className="absolute top-4 right-4 z-10 bg-background/50 hover:bg-background/80"
                 onClick={closeLightbox}
+                aria-label="Close lightbox"
               >
                 <X className="h-5 w-5" />
               </Button>
@@ -145,6 +155,7 @@ export const EventGallery = () => {
                 size="icon"
                 className="absolute left-4 top-1/2 -translate-y-1/2 z-10 bg-background/50 hover:bg-background/80"
                 onClick={goToPrevious}
+                aria-label="Previous image"
               >
                 <ChevronLeft className="h-6 w-6" />
               </Button>
@@ -153,6 +164,7 @@ export const EventGallery = () => {
                 size="icon"
                 className="absolute right-4 top-1/2 -translate-y-1/2 z-10 bg-background/50 hover:bg-background/80"
                 onClick={goToNext}
+                aria-label="Next image"
               >
                 <ChevronRight className="h-6 w-6" />
               </Button>
@@ -162,6 +174,10 @@ export const EventGallery = () => {
                 src={galleryImages[selectedIndex].src}
                 alt={galleryImages[selectedIndex].title}
                 className="w-full h-auto rounded-t-lg"
+                loading="lazy"
+                decoding="async"
+                width="1024"
+                height="576"
               />
 
               {/* Info bar */}
