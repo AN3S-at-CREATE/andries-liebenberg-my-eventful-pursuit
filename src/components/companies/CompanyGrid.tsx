@@ -19,17 +19,22 @@ export const CompanyGrid = () => {
     return () => clearTimeout(timer);
   }, []);
 
-  const filteredCompanies = useMemo(() => {
-    return companies.filter((company) => {
+  // Wrap derived arrays in useMemo and use a Map for O(1) metrics lookup
+  const { sortedCompanies, metricsMap } = useMemo(() => {
+    const filtered = companies.filter((company) => {
       if (filterBy === "all") return true;
       return company.sector.toLowerCase().includes(filterBy.toLowerCase());
     });
-  }, [filterBy]);
 
-  const sortedCompanies = useMemo(() => {
-    return [...filteredCompanies].sort((a, b) => {
-      const metricsA = getMetricsByCompanyId(a.id);
-      const metricsB = getMetricsByCompanyId(b.id);
+    // Precompute a Map for O(1) lookups to avoid O(N) array .find() in sort comparator
+    const map = new Map();
+    filtered.forEach(company => {
+      map.set(company.id, getMetricsByCompanyId(company.id));
+    });
+
+    const sorted = [...filtered].sort((a, b) => {
+      const metricsA = map.get(a.id);
+      const metricsB = map.get(b.id);
       if (!metricsA || !metricsB) return 0;
 
       switch (sortBy) {
@@ -45,7 +50,9 @@ export const CompanyGrid = () => {
           return 0;
       }
     });
-  }, [filteredCompanies, sortBy]);
+
+    return { sortedCompanies: sorted, metricsMap: map };
+  }, [filterBy, sortBy]);
 
   return (
     <div className="space-y-6">
@@ -65,7 +72,7 @@ export const CompanyGrid = () => {
       ) : (
         <MotionStagger className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {sortedCompanies.map((company) => {
-            const metrics = getMetricsByCompanyId(company.id);
+            const metrics = metricsMap.get(company.id);
             if (!metrics) return null;
             return (
               <MotionItem key={company.id}>
