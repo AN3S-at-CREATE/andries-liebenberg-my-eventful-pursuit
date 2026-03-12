@@ -103,23 +103,32 @@ export function LoadingScreen({ isLoading }: LoadingScreenProps) {
               />
 
               {mediaFailed ? (
+                <>
+                {/* 🚀 Optimizer: Added fetchPriority="high" for critical loading fallback logo to protect LCP */}
                 <img
                   src={logo}
                   alt="AN3S logo"
                   className="relative z-10 h-56 w-56 object-contain"
+                  fetchPriority="high"
+                  decoding="sync"
                   width="224"
                   height="224"
                 />
+                </>
               ) : (
+                <>
+                {/* 🚀 Optimizer: Added fetchPriority="high" for critical loading animation to protect LCP */}
                 <img
                   src={loadingGif}
                   alt="Loading animation"
                   className="relative z-10 h-56 w-56 object-contain"
-                  decoding="async"
+                  fetchPriority="high"
+                  decoding="sync"
                   onError={() => setMediaFailed(true)}
                   width="224"
                   height="224"
                 />
+                </>
               )}
             </motion.div>
 
