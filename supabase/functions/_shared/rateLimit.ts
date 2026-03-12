@@ -54,7 +54,7 @@ export function checkRateLimit(
 
 export function getClientIP(req: Request): string {
   // Try various headers that might contain the real IP
-  // Prioritize cf-connecting-ip and x-real-ip over x-forwarded-for to prevent spoofing
+  // Prioritize non-spoofable headers
   const cfConnectingIP = req.headers.get("cf-connecting-ip");
   if (cfConnectingIP) {
     return cfConnectingIP;
@@ -67,7 +67,7 @@ export function getClientIP(req: Request): string {
   
   const forwardedFor = req.headers.get("x-forwarded-for");
   if (forwardedFor) {
-    // Return the left-most IP as it's the original client IP (though spoofable)
+    // Note: The left-most IP can be spoofed by the client
     return forwardedFor.split(",")[0].trim();
   }
   

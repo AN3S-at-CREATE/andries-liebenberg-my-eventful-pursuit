@@ -1,0 +1,19 @@
+--- supabase/functions/performance-brief/index.ts
++++ supabase/functions/performance-brief/index.ts
+@@ -62,7 +62,15 @@
+   }
+
+   try {
+-    const { companyId, audience } = await req.json();
++    const rawBody: unknown = await req.json();
++
++    if (!rawBody || typeof rawBody !== "object" || !("companyId" in rawBody) || !("audience" in rawBody)) {
++      return new Response(
++        JSON.stringify({ error: "Invalid request body" }),
++        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
++      );
++    }
++    const { companyId, audience } = rawBody as { companyId: string, audience: string };
+
+     console.log("[performance-brief] Generating brief:", {
+       companyId,

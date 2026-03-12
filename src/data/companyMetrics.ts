@@ -118,5 +118,9 @@ export const companyMetrics: CompanyMetric[] = [
   },
 ];
 
+const companyMetricsMap = new Map<string, CompanyMetric>(
+  companyMetrics.map(metric => [metric.companyId, metric])
+);
+
 export const getMetricsByCompanyId = (companyId: string): CompanyMetric | undefined =>
-  companyMetrics.find((m) => m.companyId === companyId);
+  companyMetricsMap.get(companyId);
