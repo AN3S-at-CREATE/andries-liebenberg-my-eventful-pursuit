@@ -20,12 +20,26 @@ export const GlobalCursorGlow = ({
   const mouseX = useSpring(0, { stiffness: 150, damping: 20 });
   const mouseY = useSpring(0, { stiffness: 150, damping: 20 });
 
+  // Unconditionally call useTransform at the top level
+  // This avoids conditional hook issues when we early return for mobile
+  const primaryX = useTransform(mouseX, (x) => x - size / 2);
+  const primaryY = useTransform(mouseY, (y) => y - size / 2);
+
+  const secondaryX = useTransform(mouseX, (x) => x - (size * 0.4) / 2);
+  const secondaryY = useTransform(mouseY, (y) => y - (size * 0.4) / 2);
+
   useEffect(() => {
+<<<<<<< bolt/cursor-glow-mobile-perf-2545825553555502445
+    // Optimization: Do not attach listeners on mobile
+=======
+>>>>>>> main
     if (isMobile) return;
 
     const handleMouseMove = (e: MouseEvent) => {
       mouseX.set(e.clientX);
-      mouseY.set(e.clientY + window.scrollY);
+      // Removed window.scrollY because we are using 'fixed inset-0'
+      // The fixed container already tracks the viewport, so clientY is correct
+      mouseY.set(e.clientY);
       if (!isVisible) setIsVisible(true);
     };
 
@@ -42,6 +56,12 @@ export const GlobalCursorGlow = ({
       document.documentElement.removeEventListener("mouseenter", handleMouseEnter);
     };
   }, [mouseX, mouseY, isVisible, isMobile]);
+<<<<<<< bolt/cursor-glow-mobile-perf-2545825553555502445
+
+  // Optimization: Mobile devices don't have cursors
+  if (isMobile) return null;
+=======
+>>>>>>> main
 
   const getGlowColor = () => {
     switch (color) {
