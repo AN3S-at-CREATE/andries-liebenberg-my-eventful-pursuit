@@ -174,6 +174,7 @@ export const PerformanceBriefModal = () => {
                 size="icon"
                 className="absolute top-2 right-2 h-8 w-8"
                 onClick={handleCopy}
+                aria-label="Copy performance brief"
               >
                 <Copy className="h-4 w-4" />
               </Button>

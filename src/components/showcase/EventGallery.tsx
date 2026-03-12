@@ -139,57 +139,35 @@ export const EventGallery = () => {
           {selectedIndex !== null && (
             <div className="relative">
               {/* Close button */}
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    className="absolute top-4 right-4 z-10 bg-background/50 hover:bg-background/80"
-                    onClick={closeLightbox}
-                    aria-label="Close gallery"
-                  >
-                    <X className="h-5 w-5" />
-                  </Button>
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>Close gallery</p>
-                </TooltipContent>
-              </Tooltip>
+              <Button
+                variant="ghost"
+                size="icon"
+                className="absolute top-4 right-4 z-10 bg-background/50 hover:bg-background/80"
+                onClick={closeLightbox}
+                aria-label="Close lightbox"
+              >
+                <X className="h-5 w-5" />
+              </Button>
 
               {/* Navigation buttons */}
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    className="absolute left-4 top-1/2 -translate-y-1/2 z-10 bg-background/50 hover:bg-background/80"
-                    onClick={goToPrevious}
-                    aria-label="Previous image"
-                  >
-                    <ChevronLeft className="h-6 w-6" />
-                  </Button>
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>Previous image</p>
-                </TooltipContent>
-              </Tooltip>
-
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    className="absolute right-4 top-1/2 -translate-y-1/2 z-10 bg-background/50 hover:bg-background/80"
-                    onClick={goToNext}
-                    aria-label="Next image"
-                  >
-                    <ChevronRight className="h-6 w-6" />
-                  </Button>
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>Next image</p>
-                </TooltipContent>
-              </Tooltip>
+              <Button
+                variant="ghost"
+                size="icon"
+                className="absolute left-4 top-1/2 -translate-y-1/2 z-10 bg-background/50 hover:bg-background/80"
+                onClick={goToPrevious}
+                aria-label="Previous image"
+              >
+                <ChevronLeft className="h-6 w-6" />
+              </Button>
+              <Button
+                variant="ghost"
+                size="icon"
+                className="absolute right-4 top-1/2 -translate-y-1/2 z-10 bg-background/50 hover:bg-background/80"
+                onClick={goToNext}
+                aria-label="Next image"
+              >
+                <ChevronRight className="h-6 w-6" />
+              </Button>
 
               {/* Image */}
               <img
