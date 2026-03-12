@@ -75,9 +75,19 @@ serve(async (req) => {
       remaining: rateLimit.remaining
     });
 
-    if (!companyId || !audience) {
+    if (!companyId || !audience || typeof companyId !== "string" || typeof audience !== "string") {
       return new Response(
         JSON.stringify({ error: "Please select a company and audience" }),
+        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    // Security: Validate audience against allowed values to prevent prompt injection
+    const allowedAudiences = ["investor", "client", "partner"];
+    if (!allowedAudiences.includes(audience)) {
+      console.log(`[performance-brief] Invalid audience requested: ${audience.substring(0, 100)}`);
+      return new Response(
+        JSON.stringify({ error: "Invalid audience selected" }),
         { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
     }
