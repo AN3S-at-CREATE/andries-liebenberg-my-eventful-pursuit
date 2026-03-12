@@ -41,7 +41,12 @@ export function SuggestedPrompts({
   const prompts = promptsByCategory[category];
 
   return (
-    <div className="space-y-3">
+    <div
+      className="space-y-3"
+      role="tabpanel"
+      id={`panel-${category}`}
+      aria-labelledby={`tab-${category}`}
+    >
       <p className="text-sm text-muted-foreground text-center">
         Try asking:
       </p>

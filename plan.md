@@ -1,8 +1,22 @@
-1. **Optimize Event Gallery Images:** The EventGallery component uses large images without specifying `width` and `height`, and without using `loading="lazy"`. I will modify `src/components/showcase/EventGallery.tsx` to include `loading="lazy"`, `width="1024"`, and `height="576"` on the `<img>` tags in the gallery and the lightbox. I will also make sure to use `decoding="async"` where applicable. I will also do the same for the logo in the Footer, Navbar and LoadingScreen.
-   - Files to modify:
-     - `src/components/layout/Footer.tsx` (add width, height, loading="lazy", decoding="async")
-     - `src/components/layout/Navbar.tsx` (add width, height, loading="lazy", decoding="async")
-     - `src/components/loading/LoadingScreen.tsx` (already checked some, but we'll add width and height)
-     - `src/components/showcase/EventGallery.tsx` (add width, height, loading="lazy", decoding="async")
-2. **Pre-commit checks:** Complete pre-commit steps to ensure proper testing, verification, review, and reflection are done.
-3. **Submit:** Submit the changes with branch name "optimizer/image-optimization", and PR title "🚀 Optimizer: [Performance improvement] Optimize images with loading=lazy and explicit dimensions".
+1. **Optimize `GlobalCursorGlow.tsx` for mobile performance**
+   - **File:** `src/components/effects/GlobalCursorGlow.tsx`
+   - **Changes:**
+     - Import `useIsMobile` from `@/hooks/use-mobile`.
+     - Retrieve `isMobile` status using the hook at the top level.
+     - Extract inline `useTransform` hook calls to the top level (before any conditional returns) to comply with React rules.
+     - Add early return in `useEffect` and skip attaching mouse tracking event listeners if `isMobile` is true.
+     - Add `if (isMobile) return null;` just before rendering to avoid rendering glow DOM nodes on mobile entirely.
+     - Include performance code comments explaining the optimizations.
+
+2. **Verification step**
+   - Run `pnpm install --frozen-lockfile` to ensure clean node environment.
+   - Run `pnpm lint` and `pnpm build` in a bash session to verify that no regressions were introduced and that all dependencies correctly resolve.
+   - Verify file contents using `read_file` to ensure modifications were applied exactly.
+
+3. **Complete pre-commit steps to ensure proper testing, verification, review, and reflection are done.**
+   - Run `pre_commit_instructions` tool to get and execute necessary steps.
+   - Ensure a journal entry is written to `.jules/optimizer.md` following the Optimizer's format.
+
+4. **Submit PR**
+   - PR title: `🚀 Optimizer: [Performance improvement] Disable cursor glow on mobile devices`
+   - Push and submit.

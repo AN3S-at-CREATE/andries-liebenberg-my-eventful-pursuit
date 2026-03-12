@@ -3,6 +3,11 @@ import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Badge } from "@/components/ui/badge";
 import { X, ChevronLeft, ChevronRight, ZoomIn } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 import eventCorporate from "@/assets/showcase/event-corporate.jpg";
 import eventGala from "@/assets/showcase/event-gala.jpg";
@@ -148,7 +153,7 @@ export const EventGallery = () => {
                 size="icon"
                 className="absolute top-4 right-4 z-10 bg-background/50 hover:bg-background/80"
                 onClick={closeLightbox}
-                aria-label="Close gallery"
+                aria-label="Close lightbox"
               >
                 <X className="h-5 w-5" />
               </Button>
