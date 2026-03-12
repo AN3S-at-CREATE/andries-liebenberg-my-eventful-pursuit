@@ -54,6 +54,7 @@ export const Navbar = () => {
             decoding="sync"
             width="160"
             height="40"
+            // Removed loading="lazy" and decoding="async" for faster LCP on above-the-fold logo
           />
         </Link>
 
@@ -190,6 +191,7 @@ export const Navbar = () => {
                     decoding="sync"
                     width="160"
                     height="40"
+                    // Removed loading="lazy" and decoding="async" for faster LCP
                   />
                 </div>
 
