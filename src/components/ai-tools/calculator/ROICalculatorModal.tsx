@@ -231,6 +231,7 @@ export function ROICalculatorModal({ trigger, initialValues, autoOpen, onAutoOpe
                 onClick={handleCopyLink}
                 className="h-8 w-8 text-muted-foreground hover:text-primary"
                 title="Copy shareable link"
+                aria-label="Copy shareable link"
               >
                 {linkCopied ? <Check className="w-4 h-4 text-primary" /> : <Link className="w-4 h-4" />}
               </Button>
@@ -241,6 +242,7 @@ export function ROICalculatorModal({ trigger, initialValues, autoOpen, onAutoOpe
                 disabled={isExporting}
                 className="h-8 w-8 text-muted-foreground hover:text-primary"
                 title="Export as PDF"
+                aria-label="Export as PDF"
               >
                 <Download className={`w-4 h-4 ${isExporting ? "animate-spin" : ""}`} />
               </Button>
