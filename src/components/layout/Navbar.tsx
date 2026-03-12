@@ -45,7 +45,7 @@ export const Navbar = () => {
     <header className="sticky top-0 z-50 w-full border-b border-secondary/30 bg-background/80 backdrop-blur-md">
       <div className="container flex h-16 items-center justify-between">
         <Link to="/" className="flex items-center gap-2">
-          {/* 🚀 Optimizer: LCP optimization for above-the-fold images */}
+          {/* 🚀 Optimizer: Removed loading="lazy" and added fetchPriority="high" for critical above-the-fold logo to protect LCP */}
           <img 
             src={logo} 
             alt="AN3S" 
@@ -181,7 +181,7 @@ export const Navbar = () => {
               <div className="flex flex-col h-full">
                 {/* Header */}
                 <div className="flex items-center justify-between pb-6 border-b border-secondary/30">
-                  {/* 🚀 Optimizer: LCP optimization for above-the-fold images */}
+                  {/* 🚀 Optimizer: Removed loading="lazy" and added fetchPriority="high" for critical above-the-fold logo to protect LCP */}
                   <img
                     src={logo}
                     alt="AN3S"
