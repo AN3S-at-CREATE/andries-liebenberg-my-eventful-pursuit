@@ -20,20 +20,23 @@ export const GlobalCursorGlow = ({
   const mouseX = useSpring(0, { stiffness: 150, damping: 20 });
   const mouseY = useSpring(0, { stiffness: 150, damping: 20 });
 
-  // 🚀 Optimizer: Move useTransform hooks to the top level to obey Rules of Hooks
-  const primaryGlowX = useTransform(mouseX, (x) => x - size / 2);
-  const primaryGlowY = useTransform(mouseY, (y) => y - size / 2);
+  // Unconditionally call useTransform at the top level
+  // This avoids conditional hook issues when we early return for mobile
+  const primaryX = useTransform(mouseX, (x) => x - size / 2);
+  const primaryY = useTransform(mouseY, (y) => y - size / 2);
 
-  const secondaryGlowX = useTransform(mouseX, (x) => x - (size * 0.4) / 2);
-  const secondaryGlowY = useTransform(mouseY, (y) => y - (size * 0.4) / 2);
+  const secondaryX = useTransform(mouseX, (x) => x - (size * 0.4) / 2);
+  const secondaryY = useTransform(mouseY, (y) => y - (size * 0.4) / 2);
 
   useEffect(() => {
-    // 🚀 Optimizer: Avoid attaching expensive mouse listeners on mobile devices
+>>>>>>> main
     if (isMobile) return;
 
     const handleMouseMove = (e: MouseEvent) => {
       mouseX.set(e.clientX);
-      mouseY.set(e.clientY + window.scrollY);
+      // Removed window.scrollY because we are using 'fixed inset-0'
+      // The fixed container already tracks the viewport, so clientY is correct
+      mouseY.set(e.clientY);
       if (!isVisible) setIsVisible(true);
     };
 
@@ -50,6 +53,7 @@ export const GlobalCursorGlow = ({
       document.documentElement.removeEventListener("mouseenter", handleMouseEnter);
     };
   }, [mouseX, mouseY, isVisible, isMobile]);
+>>>>>>> main
 
   const getGlowColor = () => {
     switch (color) {
@@ -63,7 +67,13 @@ export const GlobalCursorGlow = ({
     }
   };
 
-  // 🚀 Optimizer: Return null early on mobile to skip DOM rendering entirely
+  // Call hooks unconditionally
+  const primaryX = useTransform(mouseX, (x) => x - size / 2);
+  const primaryY = useTransform(mouseY, (y) => y - size / 2);
+
+  const secondaryX = useTransform(mouseX, (x) => x - (size * 0.4) / 2);
+  const secondaryY = useTransform(mouseY, (y) => y - (size * 0.4) / 2);
+
   if (isMobile) {
     return null;
   }
@@ -76,8 +86,8 @@ export const GlobalCursorGlow = ({
         style={{
           width: size,
           height: size,
-          x: primaryGlowX,
-          y: primaryGlowY,
+          x: primaryX,
+          y: primaryY,
         }}
         initial={{ opacity: 0 }}
         animate={{ opacity: isVisible ? intensity : 0 }}
@@ -90,8 +100,8 @@ export const GlobalCursorGlow = ({
         style={{
           width: size * 0.4,
           height: size * 0.4,
-          x: secondaryGlowX,
-          y: secondaryGlowY,
+          x: secondaryX,
+          y: secondaryY,
         }}
         initial={{ opacity: 0 }}
         animate={{ opacity: isVisible ? intensity * 1.5 : 0 }}
