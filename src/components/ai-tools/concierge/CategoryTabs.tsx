@@ -19,13 +19,21 @@ export function CategoryTabs({
   onCategoryChange,
 }: CategoryTabsProps) {
   return (
-    <div className="flex border-b border-border/50">
+    <div
+      className="flex border-b border-border/50"
+      role="tablist"
+      aria-label="Prompt Categories"
+    >
       {categories.map(({ key, label, icon: Icon }) => (
         <button
           key={key}
+          role="tab"
+          aria-selected={activeCategory === key}
+          aria-controls={`panel-${key}`}
+          id={`tab-${key}`}
           onClick={() => onCategoryChange(key)}
           className={cn(
-            "flex-1 flex items-center justify-center gap-1.5 px-3 py-2.5 text-xs font-medium transition-all",
+            "flex-1 flex items-center justify-center gap-1.5 px-3 py-2.5 text-xs font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary",
             activeCategory === key
               ? "text-primary border-b-2 border-primary bg-primary/5"
               : "text-muted-foreground hover:text-foreground hover:bg-muted/30"
