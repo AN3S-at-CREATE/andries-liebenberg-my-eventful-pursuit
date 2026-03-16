@@ -1,19 +1,33 @@
---- supabase/functions/performance-brief/index.ts
-+++ supabase/functions/performance-brief/index.ts
-@@ -62,7 +62,15 @@
-   }
+--- a/src/components/layout/ScrollToTop.tsx
++++ b/src/components/layout/ScrollToTop.tsx
+@@ -7,16 +7,28 @@
+   const [isVisible, setIsVisible] = useState(false);
 
-   try {
--    const { companyId, audience } = await req.json();
-+    const rawBody: unknown = await req.json();
+   useEffect(() => {
++    let ticking = false;
 +
-+    if (!rawBody || typeof rawBody !== "object" || !("companyId" in rawBody) || !("audience" in rawBody)) {
-+      return new Response(
-+        JSON.stringify({ error: "Invalid request body" }),
-+        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
-+      );
-+    }
-+    const { companyId, audience } = rawBody as { companyId: string, audience: string };
+     const toggleVisibility = () => {
+       if (window.scrollY > 300) {
+         setIsVisible(true);
+       } else {
+         setIsVisible(false);
+       }
++      ticking = false;
+     };
 
-     console.log("[performance-brief] Generating brief:", {
-       companyId,
+-    window.addEventListener("scroll", toggleVisibility);
+-    return () => window.removeEventListener("scroll", toggleVisibility);
++    const onScroll = () => {
++      if (!ticking) {
++        window.requestAnimationFrame(toggleVisibility);
++        ticking = true;
++      }
++    };
++
++    // 🚀 Optimizer: Added requestAnimationFrame debouncing and { passive: true }
++    // to prevent layout thrashing and high CPU usage during continuous scrolling.
++    window.addEventListener("scroll", onScroll, { passive: true });
++    return () => window.removeEventListener("scroll", onScroll);
+   }, []);
+
+   const scrollToTop = () => {
