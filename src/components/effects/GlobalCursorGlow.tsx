@@ -20,8 +20,7 @@ export const GlobalCursorGlow = ({
   const mouseX = useSpring(0, { stiffness: 150, damping: 20 });
   const mouseY = useSpring(0, { stiffness: 150, damping: 20 });
 
-  // Unconditionally call useTransform at the top level
-  // This avoids conditional hook issues when we early return for mobile
+  // Call hooks unconditionally at the top level
   const primaryX = useTransform(mouseX, (x) => x - size / 2);
   const primaryY = useTransform(mouseY, (y) => y - size / 2);
 
@@ -29,13 +28,10 @@ export const GlobalCursorGlow = ({
   const secondaryY = useTransform(mouseY, (y) => y - (size * 0.4) / 2);
 
   useEffect(() => {
->>>>>>> main
     if (isMobile) return;
 
     const handleMouseMove = (e: MouseEvent) => {
       mouseX.set(e.clientX);
-      // Removed window.scrollY because we are using 'fixed inset-0'
-      // The fixed container already tracks the viewport, so clientY is correct
       mouseY.set(e.clientY);
       if (!isVisible) setIsVisible(true);
     };
@@ -43,9 +39,9 @@ export const GlobalCursorGlow = ({
     const handleMouseLeave = () => setIsVisible(false);
     const handleMouseEnter = () => setIsVisible(true);
 
-    window.addEventListener("mousemove", handleMouseMove);
-    document.documentElement.addEventListener("mouseleave", handleMouseLeave);
-    document.documentElement.addEventListener("mouseenter", handleMouseEnter);
+    window.addEventListener("mousemove", handleMouseMove, { passive: true });
+    document.documentElement.addEventListener("mouseleave", handleMouseLeave, { passive: true });
+    document.documentElement.addEventListener("mouseenter", handleMouseEnter, { passive: true });
 
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
@@ -53,7 +49,6 @@ export const GlobalCursorGlow = ({
       document.documentElement.removeEventListener("mouseenter", handleMouseEnter);
     };
   }, [mouseX, mouseY, isVisible, isMobile]);
->>>>>>> main
 
   const getGlowColor = () => {
     switch (color) {
@@ -66,13 +61,6 @@ export const GlobalCursorGlow = ({
         return "bg-gradient-radial from-primary/25 via-secondary/15 to-transparent";
     }
   };
-
-  // Call hooks unconditionally
-  const primaryX = useTransform(mouseX, (x) => x - size / 2);
-  const primaryY = useTransform(mouseY, (y) => y - size / 2);
-
-  const secondaryX = useTransform(mouseX, (x) => x - (size * 0.4) / 2);
-  const secondaryY = useTransform(mouseY, (y) => y - (size * 0.4) / 2);
 
   if (isMobile) {
     return null;
