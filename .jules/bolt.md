@@ -19,3 +19,6 @@
 **Learning:** During array sorting in `CompanyGrid.tsx`, using an O(N) function like `getMetricsByCompanyId` (which uses `.find()`) inside the comparator creates an O(M * N log N) performance bottleneck.
 **Action:** Precompute a `Map` of necessary lookup data in O(M) time before sorting. Use the Map for O(1) lookups inside the sort comparator. Always wrap derived sorted/filtered arrays in `useMemo` to prevent unnecessary re-computations on re-renders.
 >>>>>>> main
+## 2026-03-30 - [Scroll Event Optimization]
+**Learning:** High-frequency events like `scroll` can cause layout thrashing, main thread blocking, and high CPU usage if unoptimized and executed synchronously.
+**Action:** Always debounce continuous scroll events using `window.requestAnimationFrame()` and mark the event listener as `{ passive: true }` to avoid blocking the browser's native scrolling.
