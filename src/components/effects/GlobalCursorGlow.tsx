@@ -29,13 +29,10 @@ export const GlobalCursorGlow = ({
   const secondaryY = useTransform(mouseY, (y) => y - (size * 0.4) / 2);
 
   useEffect(() => {
->>>>>>> main
     if (isMobile) return;
 
     const handleMouseMove = (e: MouseEvent) => {
       mouseX.set(e.clientX);
-      // Removed window.scrollY because we are using 'fixed inset-0'
-      // The fixed container already tracks the viewport, so clientY is correct
       mouseY.set(e.clientY);
       if (!isVisible) setIsVisible(true);
     };
@@ -53,7 +50,6 @@ export const GlobalCursorGlow = ({
       document.documentElement.removeEventListener("mouseenter", handleMouseEnter);
     };
   }, [mouseX, mouseY, isVisible, isMobile]);
->>>>>>> main
 
   const getGlowColor = () => {
     switch (color) {
@@ -66,13 +62,6 @@ export const GlobalCursorGlow = ({
         return "bg-gradient-radial from-primary/25 via-secondary/15 to-transparent";
     }
   };
-
-  // Call hooks unconditionally
-  const primaryX = useTransform(mouseX, (x) => x - size / 2);
-  const primaryY = useTransform(mouseY, (y) => y - size / 2);
-
-  const secondaryX = useTransform(mouseX, (x) => x - (size * 0.4) / 2);
-  const secondaryY = useTransform(mouseY, (y) => y - (size * 0.4) / 2);
 
   if (isMobile) {
     return null;
