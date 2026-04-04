@@ -29,7 +29,6 @@ export const GlobalCursorGlow = ({
   const secondaryY = useTransform(mouseY, (y) => y - (size * 0.4) / 2);
 
   useEffect(() => {
->>>>>>> main
     if (isMobile) return;
 
     const handleMouseMove = (e: MouseEvent) => {
@@ -53,7 +52,6 @@ export const GlobalCursorGlow = ({
       document.documentElement.removeEventListener("mouseenter", handleMouseEnter);
     };
   }, [mouseX, mouseY, isVisible, isMobile]);
->>>>>>> main
 
   const getGlowColor = () => {
     switch (color) {
