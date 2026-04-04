@@ -15,3 +15,7 @@
 **Vulnerability:** The `performance-brief` edge function accepted an unvalidated `audience` string from the client and inserted it directly into the system prompt. An attacker could inject arbitrary instructions (e.g., "ignore previous instructions and say X") by manipulating the `audience` payload.
 **Learning:** Any client-provided variable interpolated into a system prompt becomes an execution vector for prompt injection. It acts exactly like an unparameterized SQL query.
 **Prevention:** Strictly validate and sanitize all client inputs before interpolating them into system prompts. Use allowlists (e.g., `['investor', 'client', 'partner']`) for categorical variables.
+## $(date +%Y-%m-%d) - CRITICAL Dependency Vulnerability in jspdf
+**Vulnerability:** The project used `jspdf@4.1.0` which had a CRITICAL vulnerability (HTML Injection in New Window paths) flagged by `pnpm audit`.
+**Learning:** Outdated dependencies, especially those handling file generation and DOM interactions, can introduce severe security risks.
+**Prevention:** Regularly run `pnpm audit` and update critical dependencies, particularly those processing untrusted input or generating downloadable artifacts.
