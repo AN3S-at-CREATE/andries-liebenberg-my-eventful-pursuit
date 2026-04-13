@@ -16,12 +16,9 @@ export const GlobalCursorGlow = ({
   const [isVisible, setIsVisible] = useState(false);
   const isMobile = useIsMobile();
 
-  // Spring-based smooth cursor following
   const mouseX = useSpring(0, { stiffness: 150, damping: 20 });
   const mouseY = useSpring(0, { stiffness: 150, damping: 20 });
 
-  // Unconditionally call useTransform at the top level
-  // This avoids conditional hook issues when we early return for mobile
   const primaryX = useTransform(mouseX, (x) => x - size / 2);
   const primaryY = useTransform(mouseY, (y) => y - size / 2);
 
@@ -29,13 +26,10 @@ export const GlobalCursorGlow = ({
   const secondaryY = useTransform(mouseY, (y) => y - (size * 0.4) / 2);
 
   useEffect(() => {
->>>>>>> main
     if (isMobile) return;
 
     const handleMouseMove = (e: MouseEvent) => {
       mouseX.set(e.clientX);
-      // Removed window.scrollY because we are using 'fixed inset-0'
-      // The fixed container already tracks the viewport, so clientY is correct
       mouseY.set(e.clientY);
       if (!isVisible) setIsVisible(true);
     };
@@ -53,7 +47,6 @@ export const GlobalCursorGlow = ({
       document.documentElement.removeEventListener("mouseenter", handleMouseEnter);
     };
   }, [mouseX, mouseY, isVisible, isMobile]);
->>>>>>> main
 
   const getGlowColor = () => {
     switch (color) {
@@ -67,20 +60,12 @@ export const GlobalCursorGlow = ({
     }
   };
 
-  // Call hooks unconditionally
-  const primaryX = useTransform(mouseX, (x) => x - size / 2);
-  const primaryY = useTransform(mouseY, (y) => y - size / 2);
-
-  const secondaryX = useTransform(mouseX, (x) => x - (size * 0.4) / 2);
-  const secondaryY = useTransform(mouseY, (y) => y - (size * 0.4) / 2);
-
   if (isMobile) {
     return null;
   }
 
   return (
     <div className="fixed inset-0 pointer-events-none z-50 overflow-hidden">
-      {/* Primary glow */}
       <motion.div
         className={`absolute pointer-events-none rounded-full blur-[80px] ${getGlowColor()}`}
         style={{
@@ -93,8 +78,6 @@ export const GlobalCursorGlow = ({
         animate={{ opacity: isVisible ? intensity : 0 }}
         transition={{ duration: 0.3 }}
       />
-
-      {/* Secondary smaller glow for more intensity at center */}
       <motion.div
         className="absolute pointer-events-none rounded-full blur-[40px] bg-primary/20"
         style={{
