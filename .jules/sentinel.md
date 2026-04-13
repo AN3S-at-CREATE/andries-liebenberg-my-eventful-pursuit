@@ -15,3 +15,7 @@
 **Vulnerability:** The `performance-brief` edge function accepted an unvalidated `audience` string from the client and inserted it directly into the system prompt. An attacker could inject arbitrary instructions (e.g., "ignore previous instructions and say X") by manipulating the `audience` payload.
 **Learning:** Any client-provided variable interpolated into a system prompt becomes an execution vector for prompt injection. It acts exactly like an unparameterized SQL query.
 **Prevention:** Strictly validate and sanitize all client inputs before interpolating them into system prompts. Use allowlists (e.g., `['investor', 'client', 'partner']`) for categorical variables.
+## 2026-04-13 - [XSS via dangerouslySetInnerHTML in Chart Component]
+**Vulnerability:** The `ChartStyle` component in `shadcn/ui` charts used `dangerouslySetInnerHTML` to inject styles dynamically, which could lead to Cross-Site Scripting (XSS) if the `id` or other properties were externally controlled.
+**Learning:** Default UI components from libraries like `shadcn/ui` might prioritize convenience over strict security by using `dangerouslySetInnerHTML`.
+**Prevention:** Always replace `dangerouslySetInnerHTML` with standard React string interpolation as children of elements (like `<style>`) where HTML escaping and DOM-safe formatting are handled automatically by React.
