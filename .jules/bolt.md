@@ -19,3 +19,6 @@
 **Learning:** During array sorting in `CompanyGrid.tsx`, using an O(N) function like `getMetricsByCompanyId` (which uses `.find()`) inside the comparator creates an O(M * N log N) performance bottleneck.
 **Action:** Precompute a `Map` of necessary lookup data in O(M) time before sorting. Use the Map for O(1) lookups inside the sort comparator. Always wrap derived sorted/filtered arrays in `useMemo` to prevent unnecessary re-computations on re-renders.
 >>>>>>> main
+## 2025-06-25 - [Canvas Gradient Creation Bottleneck]
+**Learning:** Creating complex `CanvasGradient` objects using `ctx.createLinearGradient()` inside a `requestAnimationFrame` loop (60 times a second) is a very heavy operation. It causes excessive Garbage Collection (GC) pressure and unnecessary main thread CPU usage, dragging down overall animation performance.
+**Action:** When a gradient only depends on static dimensions (like canvas width/height), initialize it once and cache it in a variable. Re-create the gradient only when the canvas is resized (e.g., inside the `resize` event handler). Then, simply reuse the cached gradient in the draw loop.
