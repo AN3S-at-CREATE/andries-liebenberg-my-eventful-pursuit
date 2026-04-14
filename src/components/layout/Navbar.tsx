@@ -4,6 +4,11 @@ import { Button } from "@/components/ui/button";
 import { Building2, Github, Linkedin, MessageCircle, Mail, Menu, ChevronDown, Calendar, Megaphone, TrendingUp, Code, Rocket, Users, Zap, Plane, Brain, Wrench } from "lucide-react";
 import logo from "@/assets/logo.svg";
 import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import {
   Sheet,
   SheetContent,
   SheetTrigger,
@@ -172,12 +177,19 @@ export const Navbar = () => {
 
           {/* Mobile Menu */}
           <Sheet open={isOpen} onOpenChange={setIsOpen}>
-            <SheetTrigger asChild className="lg:hidden">
-              <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-foreground">
-                <Menu className="h-5 w-5" />
-                <span className="sr-only">Open menu</span>
-              </Button>
-            </SheetTrigger>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <SheetTrigger asChild className="lg:hidden">
+                  <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-foreground">
+                    <Menu className="h-5 w-5" />
+                    <span className="sr-only">Open menu</span>
+                  </Button>
+                </SheetTrigger>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Open menu</p>
+              </TooltipContent>
+            </Tooltip>
             <SheetContent side="right" className="w-80 bg-background border-secondary/30">
               <div className="flex flex-col h-full">
                 {/* Header */}
