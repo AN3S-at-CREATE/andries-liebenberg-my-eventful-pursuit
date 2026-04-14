@@ -19,3 +19,7 @@
 **Learning:** During array sorting in `CompanyGrid.tsx`, using an O(N) function like `getMetricsByCompanyId` (which uses `.find()`) inside the comparator creates an O(M * N log N) performance bottleneck.
 **Action:** Precompute a `Map` of necessary lookup data in O(M) time before sorting. Use the Map for O(1) lookups inside the sort comparator. Always wrap derived sorted/filtered arrays in `useMemo` to prevent unnecessary re-computations on re-renders.
 >>>>>>> main
+
+## 2025-06-21 - [Scroll Event Layout Thrashing]
+**Learning:** Synchronous `scroll` event listeners that update React state (like in `ScrollToTop.tsx`) fire much faster than the display refresh rate, causing massive layout thrashing and blocking the main thread.
+**Action:** Always debounce synchronous scroll event listeners using `window.requestAnimationFrame()` with a `ticking` lock, and mark the event listener with `{ passive: true }` to avoid blocking the browser's native scrolling.
