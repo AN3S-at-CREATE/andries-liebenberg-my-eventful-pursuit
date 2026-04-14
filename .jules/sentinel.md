@@ -15,3 +15,7 @@
 **Vulnerability:** The `performance-brief` edge function accepted an unvalidated `audience` string from the client and inserted it directly into the system prompt. An attacker could inject arbitrary instructions (e.g., "ignore previous instructions and say X") by manipulating the `audience` payload.
 **Learning:** Any client-provided variable interpolated into a system prompt becomes an execution vector for prompt injection. It acts exactly like an unparameterized SQL query.
 **Prevention:** Strictly validate and sanitize all client inputs before interpolating them into system prompts. Use allowlists (e.g., `['investor', 'client', 'partner']`) for categorical variables.
+## 2026-03-17 - Insecure Client-Side ID Generation
+**Vulnerability:** The `useConciergeChat` hook used `Date.now()` to generate unique IDs for chat messages sent to the AI backend.
+**Learning:** `Date.now()` generates predictable IDs based on the current timestamp. This introduces enumeration risks and potential collisions if multiple messages or users generate IDs simultaneously.
+**Prevention:** Always use cryptographically secure random identifier generation like `crypto.randomUUID()` to prevent ID predictability and collisions.

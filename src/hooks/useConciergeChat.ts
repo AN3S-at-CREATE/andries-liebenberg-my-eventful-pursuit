@@ -49,7 +49,7 @@ export function useConciergeChat() {
       }
 
       const userMessage: ChatMessage = {
-        id: `user-${Date.now()}`,
+        id: `user-${crypto.randomUUID()}`,
         role: "user",
         content: content.trim(),
         timestamp: new Date(),
@@ -80,7 +80,7 @@ export function useConciergeChat() {
         }
 
         const assistantMessage: ChatMessage = {
-          id: `assistant-${Date.now()}`,
+          id: `assistant-${crypto.randomUUID()}`,
           role: "assistant",
           content: data.message,
           timestamp: new Date(),
