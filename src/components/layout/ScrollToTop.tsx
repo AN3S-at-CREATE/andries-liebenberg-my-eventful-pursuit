@@ -7,15 +7,24 @@ export const ScrollToTop = () => {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
+    let ticking = false;
+
     const toggleVisibility = () => {
-      if (window.scrollY > 300) {
-        setIsVisible(true);
-      } else {
-        setIsVisible(false);
+      // ⚡ Bolt Optimization: Debounce scroll events using requestAnimationFrame
+      // This prevents layout thrashing and limits executions to screen refresh rate (typically 60fps)
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          setIsVisible(window.scrollY > 300);
+          ticking = false;
+        });
+        ticking = true;
       }
     };
 
-    window.addEventListener("scroll", toggleVisibility);
+    // ⚡ Bolt Optimization: Add { passive: true } to scroll listener
+    // This explicitly tells the browser we won't call preventDefault(), allowing it
+    // to scroll immediately without waiting for the main thread, resulting in smoother scrolling.
+    window.addEventListener("scroll", toggleVisibility, { passive: true });
     return () => window.removeEventListener("scroll", toggleVisibility);
   }, []);
 
