@@ -15,3 +15,7 @@
 **Vulnerability:** The `performance-brief` edge function accepted an unvalidated `audience` string from the client and inserted it directly into the system prompt. An attacker could inject arbitrary instructions (e.g., "ignore previous instructions and say X") by manipulating the `audience` payload.
 **Learning:** Any client-provided variable interpolated into a system prompt becomes an execution vector for prompt injection. It acts exactly like an unparameterized SQL query.
 **Prevention:** Strictly validate and sanitize all client inputs before interpolating them into system prompts. Use allowlists (e.g., `['investor', 'client', 'partner']`) for categorical variables.
+## 2025-02-21 - [Missing Security Headers in Edge Functions]
+**Vulnerability:** Missing security headers like X-Content-Type-Options, X-Frame-Options, and X-XSS-Protection in Supabase edge function rate limit responses.
+**Learning:** Default Response objects in Deno/Supabase do not automatically include standard security headers, requiring explicit configuration for every response to protect against MIME sniffing and clickjacking.
+**Prevention:** Implement a centralized response handler or middleware in Edge Functions to ensure all responses (including errors and rate limits) consistently include secure default headers.
