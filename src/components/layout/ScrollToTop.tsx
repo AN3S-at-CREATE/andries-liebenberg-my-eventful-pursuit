@@ -7,16 +7,26 @@ export const ScrollToTop = () => {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
+    let ticking = false;
+
     const toggleVisibility = () => {
       if (window.scrollY > 300) {
         setIsVisible(true);
       } else {
         setIsVisible(false);
       }
+      ticking = false;
     };
 
-    window.addEventListener("scroll", toggleVisibility);
-    return () => window.removeEventListener("scroll", toggleVisibility);
+    const handleScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(toggleVisibility);
+        ticking = true;
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const scrollToTop = () => {
