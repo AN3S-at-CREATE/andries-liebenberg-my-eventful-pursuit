@@ -17,3 +17,6 @@
 ## 2026-04-17 - [Scroll Event Layout Thrashing]
 **Learning:** Synchronous `scroll` event listeners can cause significant layout thrashing and high CPU usage during continuous scrolling. It can block the browser's native scrolling.
 **Action:** Always debounce synchronous `scroll` event listeners using `window.requestAnimationFrame()` and mark the event listener with `{ passive: true }` to prevent blocking the main thread and the browser's native scrolling.
+## 2024-03-24 - Main Thread Blocking from mousemove Events
+**Learning:** High-frequency native events like `mousemove` can easily block the main thread and cause layout thrashing if they trigger synchronous DOM reads (like `getBoundingClientRect()`) or complex state updates on every event firing. This is particularly problematic for users with high-polling-rate mice.
+**Action:** Always wrap high-frequency native event listeners (like `mousemove` or `scroll`) in `window.requestAnimationFrame()` using a `ticking` boolean flag to throttle execution to the display refresh rate (typically 60Hz).
