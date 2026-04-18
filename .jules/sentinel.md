@@ -15,3 +15,7 @@
 **Vulnerability:** The `performance-brief` edge function accepted an unvalidated `audience` string from the client and inserted it directly into the system prompt. An attacker could inject arbitrary instructions (e.g., "ignore previous instructions and say X") by manipulating the `audience` payload.
 **Learning:** Any client-provided variable interpolated into a system prompt becomes an execution vector for prompt injection. It acts exactly like an unparameterized SQL query.
 **Prevention:** Strictly validate and sanitize all client inputs before interpolating them into system prompts. Use allowlists (e.g., `['investor', 'client', 'partner']`) for categorical variables.
+## 2024-05-18 - Rate Limit IP Spoofing via X-Forwarded-For
+**Vulnerability:** The in-memory rate limiter `checkRateLimit` relied on `getClientIP`, which parsed the `x-forwarded-for` header by taking the left-most IP (`forwardedFor.split(",")[0]`).
+**Learning:** In proxy chains, the client-provided IP is the left-most IP in `X-Forwarded-For`, which is easily spoofed. The actual connecting IP appended by the trusted proxy is the right-most IP. Using the left-most IP allowed malicious clients to completely bypass rate limits by injecting fake IPs.
+**Prevention:** Always extract the right-most IP (`forwardedFor.split(",").pop()`) when using `X-Forwarded-For` to identify the connecting client, or rely on non-spoofable headers like `cf-connecting-ip`.

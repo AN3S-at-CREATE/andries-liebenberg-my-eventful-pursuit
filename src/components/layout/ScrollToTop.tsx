@@ -19,15 +19,13 @@ export const ScrollToTop = () => {
     };
 
     const onScroll = () => {
-      // Use requestAnimationFrame to throttle scroll events and prevent layout thrashing
-      // Ensures toggleVisibility runs at most once per frame
       if (!ticking) {
         window.requestAnimationFrame(toggleVisibility);
         ticking = true;
       }
     };
 
-    // Mark event listener as passive to avoid blocking the main thread during scrolling
+    // 🚀 Optimizer: Debounce scroll events using requestAnimationFrame and use passive listener
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
