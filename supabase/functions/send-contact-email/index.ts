@@ -105,8 +105,8 @@ const handler = async (req: Request): Promise<Response> => {
       );
     }
 
-    // Basic email validation
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    // Strict email validation to prevent email injection attacks (e.g. comma-separated lists)
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     if (!emailRegex.test(email)) {
       return new Response(
         JSON.stringify({ error: "Please provide a valid email address" }),

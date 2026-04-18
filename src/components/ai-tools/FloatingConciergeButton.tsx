@@ -7,6 +7,11 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Send, Loader2, Trash2 } from "lucide-react";
@@ -111,15 +116,22 @@ export const FloatingConciergeButton = forwardRef<HTMLDivElement>((_, ref) => {
                 Ask AN3S Concierge
               </DialogTitle>
               {messages.length > 0 && (
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  onClick={clearChat}
-                  className="h-8 w-8 text-muted-foreground hover:text-foreground"
-                  aria-label="Clear chat history"
-                >
-                  <Trash2 className="w-4 h-4" />
-                </Button>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      onClick={clearChat}
+                      className="h-8 w-8 text-muted-foreground hover:text-foreground"
+                      aria-label="Clear chat history"
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>Clear chat history</p>
+                  </TooltipContent>
+                </Tooltip>
               )}
             </div>
           </DialogHeader>
