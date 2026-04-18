@@ -67,8 +67,8 @@ export function getClientIP(req: Request): string {
   
   const forwardedFor = req.headers.get("x-forwarded-for");
   if (forwardedFor) {
-    // Note: The left-most IP can be spoofed by the client
-    return forwardedFor.split(",")[0].trim();
+    // Use the right-most IP to prevent client spoofing of the left-most IP
+    return forwardedFor.split(",").pop()?.trim() || "unknown";
   }
   
   return "unknown";

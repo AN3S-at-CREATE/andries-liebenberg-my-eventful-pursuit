@@ -18,15 +18,16 @@ export const ScrollToTop = () => {
       ticking = false;
     };
 
-    const handleScroll = () => {
+    const onScroll = () => {
       if (!ticking) {
         window.requestAnimationFrame(toggleVisibility);
         ticking = true;
       }
     };
 
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
+    // 🚀 Optimizer: Debounce scroll events using requestAnimationFrame and use passive listener
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   const scrollToTop = () => {
