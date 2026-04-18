@@ -17,6 +17,7 @@ import {
 } from "@/components/ui/select";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { companies } from "@/data/companies";
 import { supabase } from "@/integrations/supabase/client";
 import { Sparkles, Copy, Loader2 } from "lucide-react";
@@ -169,15 +170,22 @@ export const PerformanceBriefModal = () => {
 
           {brief && (
             <div className="relative mt-4 p-4 bg-muted/30 rounded-lg border border-border/50">
-              <Button
-                variant="ghost"
-                size="icon"
-                className="absolute top-2 right-2 h-8 w-8"
-                onClick={handleCopy}
-                aria-label="Copy performance brief"
-              >
-                <Copy className="h-4 w-4" />
-              </Button>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="absolute top-2 right-2 h-8 w-8"
+                    onClick={handleCopy}
+                    aria-label="Copy performance brief"
+                  >
+                    <Copy className="h-4 w-4" />
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Copy brief</p>
+                </TooltipContent>
+              </Tooltip>
               <div className="prose prose-sm prose-invert max-w-none whitespace-pre-wrap text-foreground">
                 {brief}
               </div>
