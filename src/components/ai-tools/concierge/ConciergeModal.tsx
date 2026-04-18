@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/tooltip";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { MessageSquareText, Send, Loader2, Trash2 } from "lucide-react";
 import { useConciergeChat } from "@/hooks/useConciergeChat";
 import { ChatMessage } from "./ChatMessage";
