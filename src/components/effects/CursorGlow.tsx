@@ -31,18 +31,27 @@ export const CursorGlow = ({
     const container = containerRef.current;
     if (!container) return;
 
+    let ticking = false;
+
     const handleMouseMove = (e: MouseEvent) => {
-      const rect = container.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      mouseX.set(x);
-      mouseY.set(y);
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          // 🚀 Optimizer: Debounce mousemove events to prevent main thread blocking
+          const rect = container.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+          mouseX.set(x);
+          mouseY.set(y);
+          ticking = false;
+        });
+        ticking = true;
+      }
     };
 
     const handleMouseEnter = () => setIsHovering(true);
     const handleMouseLeave = () => setIsHovering(false);
 
-    container.addEventListener("mousemove", handleMouseMove);
+    container.addEventListener("mousemove", handleMouseMove, { passive: true });
     container.addEventListener("mouseenter", handleMouseEnter);
     container.addEventListener("mouseleave", handleMouseLeave);
 
