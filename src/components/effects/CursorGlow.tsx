@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, useSpring, useTransform } from "framer-motion";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 interface CursorGlowProps {
   containerRef: React.RefObject<HTMLElement>;
@@ -16,6 +17,7 @@ export const CursorGlow = ({
 }: CursorGlowProps) => {
   const [isHovering, setIsHovering] = useState(false);
   const glowRef = useRef<HTMLDivElement>(null);
+  const isMobile = useIsMobile();
 
   // Spring-based smooth cursor following
   const mouseX = useSpring(0, { stiffness: 150, damping: 20 });
@@ -28,6 +30,7 @@ export const CursorGlow = ({
   );
 
   useEffect(() => {
+    if (isMobile) return;
     const container = containerRef.current;
     if (!container) return;
 
@@ -51,7 +54,7 @@ export const CursorGlow = ({
       container.removeEventListener("mouseenter", handleMouseEnter);
       container.removeEventListener("mouseleave", handleMouseLeave);
     };
-  }, [containerRef, mouseX, mouseY]);
+  }, [containerRef, mouseX, mouseY, isMobile]);
 
   const getGlowColor = () => {
     switch (color) {
@@ -65,6 +68,10 @@ export const CursorGlow = ({
     }
   };
 
+  if (isMobile) {
+    return null;
+  }
+
   return (
     <>
       {/* Primary glow */}
@@ -74,8 +81,10 @@ export const CursorGlow = ({
         style={{
           width: size,
           height: size,
-          x: useTransform(mouseX, (x) => x - size / 2),
-          y: useTransform(mouseY, (y) => y - size / 2),
+          x: mouseX,
+          y: mouseY,
+          marginLeft: -size / 2,
+          marginTop: -size / 2,
           opacity: isHovering ? intensity : 0,
         }}
         initial={{ opacity: 0 }}
@@ -89,8 +98,10 @@ export const CursorGlow = ({
         style={{
           width: size * 0.4,
           height: size * 0.4,
-          x: useTransform(mouseX, (x) => x - (size * 0.4) / 2),
-          y: useTransform(mouseY, (y) => y - (size * 0.4) / 2),
+          x: mouseX,
+          y: mouseY,
+          marginLeft: -(size * 0.4) / 2,
+          marginTop: -(size * 0.4) / 2,
           opacity: isHovering ? intensity * 1.5 : 0,
         }}
         initial={{ opacity: 0 }}

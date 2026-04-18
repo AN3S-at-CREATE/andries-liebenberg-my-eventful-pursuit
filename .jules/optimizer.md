@@ -23,3 +23,7 @@
 **Bottleneck:** `ctx.createLinearGradient` was called on every frame in the `drawGrid` loop within `BackgroundFX.tsx`, causing high Garbage Collection pressure and performance drops.
 **Learning:** Recreating complex objects like `CanvasGradient` inside animation loops forces the engine to repeatedly allocate and discard memory.
 **Prevention:** Cache these objects outside the loop (e.g., in outer scope) and only recreate them during initialization or window resize events.
+## 2026-04-18 - Optimize CursorGlow for Mobile Devices
+**Bottleneck:** `CursorGlow` component attached mouse event listeners and rendered visual effects on all devices, leading to main thread blocking and unnecessary work on touch interfaces (where hovers and mouse tracking are non-applicable).
+**Learning:** Visual custom cursor effects should always short-circuit when on a mobile/touch device to avoid main thread pressure and save battery/CPU. Additionally, Framer Motion's `useTransform` must not be used inline inside `style` props when early returns are present to avoid conditionally calling hooks.
+**Prevention:** Always verify input modalities (`useIsMobile`) for visual-only interactions. Use static CSS offsets (like `marginLeft`) instead of computing them dynamically with hooks when combined with early returns.
