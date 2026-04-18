@@ -28,16 +28,25 @@ export const GlobalCursorGlow = ({
   useEffect(() => {
     if (isMobile) return;
 
+    let ticking = false;
+
     const handleMouseMove = (e: MouseEvent) => {
-      mouseX.set(e.clientX);
-      mouseY.set(e.clientY);
-      if (!isVisible) setIsVisible(true);
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          // 🚀 Optimizer: Debounce mousemove events to prevent main thread blocking
+          mouseX.set(e.clientX);
+          mouseY.set(e.clientY);
+          if (!isVisible) setIsVisible(true);
+          ticking = false;
+        });
+        ticking = true;
+      }
     };
 
     const handleMouseLeave = () => setIsVisible(false);
     const handleMouseEnter = () => setIsVisible(true);
 
-    window.addEventListener("mousemove", handleMouseMove);
+    window.addEventListener("mousemove", handleMouseMove, { passive: true });
     document.documentElement.addEventListener("mouseleave", handleMouseLeave);
     document.documentElement.addEventListener("mouseenter", handleMouseEnter);
 

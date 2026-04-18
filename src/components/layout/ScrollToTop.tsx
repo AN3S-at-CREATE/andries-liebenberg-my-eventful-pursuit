@@ -19,13 +19,19 @@ export const ScrollToTop = () => {
         });
         ticking = true;
       }
+      ticking = false;
     };
 
-    // ⚡ Bolt Optimization: Add { passive: true } to scroll listener
-    // This explicitly tells the browser we won't call preventDefault(), allowing it
-    // to scroll immediately without waiting for the main thread, resulting in smoother scrolling.
-    window.addEventListener("scroll", toggleVisibility, { passive: true });
-    return () => window.removeEventListener("scroll", toggleVisibility);
+    const onScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(toggleVisibility);
+        ticking = true;
+      }
+    };
+
+    // 🚀 Optimizer: Debounce scroll events using requestAnimationFrame and use passive listener
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   const scrollToTop = () => {

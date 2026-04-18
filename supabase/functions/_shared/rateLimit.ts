@@ -67,8 +67,8 @@ export function getClientIP(req: Request): string {
   
   const forwardedFor = req.headers.get("x-forwarded-for");
   if (forwardedFor) {
-    // Note: The left-most IP can be spoofed by the client
-    return forwardedFor.split(",")[0].trim();
+    // Use the right-most IP to prevent client spoofing of the left-most IP
+    return forwardedFor.split(",").pop()?.trim() || "unknown";
   }
   
   return "unknown";
@@ -85,6 +85,10 @@ export function rateLimitResponse(resetAt: number): Response {
         "Retry-After": String(retryAfter),
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "DENY",
+        "X-XSS-Protection": "1; mode=block",
+        "Content-Security-Policy": "default-src 'none'",
       },
     }
   );
