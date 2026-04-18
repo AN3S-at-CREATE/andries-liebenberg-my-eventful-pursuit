@@ -15,3 +15,7 @@
 **Vulnerability:** The `performance-brief` edge function accepted an unvalidated `audience` string from the client and inserted it directly into the system prompt. An attacker could inject arbitrary instructions (e.g., "ignore previous instructions and say X") by manipulating the `audience` payload.
 **Learning:** Any client-provided variable interpolated into a system prompt becomes an execution vector for prompt injection. It acts exactly like an unparameterized SQL query.
 **Prevention:** Strictly validate and sanitize all client inputs before interpolating them into system prompts. Use allowlists (e.g., `['investor', 'client', 'partner']`) for categorical variables.
+## 2025-04-14 - Prevent User Enumeration on Signup
+**Vulnerability:** The signup flow in `src/pages/Auth.tsx` returned a distinct error message ("This email is already registered") when a user attempted to sign up with an existing email, allowing attackers to enumerate registered users.
+**Learning:** Returning differential responses during authentication/registration flows allows attackers to map out user accounts, which is a precursor to targeted attacks like credential stuffing.
+**Prevention:** Always return a generic success message during registration (e.g., "Check your email for a verification link") regardless of whether the account already exists or not. If the account exists, the backend should silently ignore the request or send a "login instead" email to the user.
