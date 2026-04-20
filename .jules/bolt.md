@@ -20,3 +20,7 @@
 ## 2024-03-24 - Main Thread Blocking from mousemove Events
 **Learning:** High-frequency native events like `mousemove` can easily block the main thread and cause layout thrashing if they trigger synchronous DOM reads (like `getBoundingClientRect()`) or complex state updates on every event firing. This is particularly problematic for users with high-polling-rate mice.
 **Action:** Always wrap high-frequency native event listeners (like `mousemove` or `scroll`) in `window.requestAnimationFrame()` using a `ticking` boolean flag to throttle execution to the display refresh rate (typically 60Hz).
+
+## 2024-05-24 - [Unnecessary Re-renders in Grid Items]
+**Learning:** Found that `CompanyCard` was re-rendering unnecessarily when its parent `CompanyGrid` updated state (e.g., during sorting or filtering), even though the card receives static prop data (`company` and `metrics`).
+**Action:** Wrapped `CompanyCard` in `React.memo()`. This prevents the component from re-rendering when the parent updates, reducing React virtual DOM reconciliation overhead and improving performance for sortable/filterable grid items.
