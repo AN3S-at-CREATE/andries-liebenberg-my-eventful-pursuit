@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { Link } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { TruthBadge } from "./TruthBadge";
@@ -12,7 +13,7 @@ interface CompanyCardProps {
   metrics: CompanyMetric;
 }
 
-export const CompanyCard = ({ company, metrics }: CompanyCardProps) => {
+export const CompanyCard = memo(({ company, metrics }: CompanyCardProps) => {
   return (
     <Link to={`/companies/${company.slug}`} className="group block">
       <Card interactive glow="cyan" className="bg-card/50 backdrop-blur-sm border-border/50 h-full">
@@ -63,4 +64,4 @@ export const CompanyCard = ({ company, metrics }: CompanyCardProps) => {
       </Card>
     </Link>
   );
-};
+});
