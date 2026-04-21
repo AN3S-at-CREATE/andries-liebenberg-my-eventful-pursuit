@@ -1,4 +1,4 @@
-import { useState, forwardRef, useEffect } from "react";
+import { useState, forwardRef } from "react";
 import { MessageSquareText } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -19,10 +19,8 @@ import { useConciergeChat } from "@/hooks/useConciergeChat";
 import { ChatMessage } from "./concierge/ChatMessage";
 import { CategoryTabs } from "./concierge/CategoryTabs";
 import { SuggestedPrompts, type CategoryKey } from "./concierge/SuggestedPrompts";
-import { cn } from "@/lib/utils";
 
 export const FloatingConciergeButton = forwardRef<HTMLDivElement>((_, ref) => {
-  const [isHovered, setIsHovered] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [hasInteracted, setHasInteracted] = useState(() => {
     return localStorage.getItem("an3s-concierge-interacted") === "true";
@@ -40,7 +38,6 @@ export const FloatingConciergeButton = forwardRef<HTMLDivElement>((_, ref) => {
   } = useConciergeChat();
 
   const handleOpenChat = () => {
-    setIsHovered(false);
     setIsOpen(true);
     if (!hasInteracted) {
       setHasInteracted(true);
@@ -70,38 +67,37 @@ export const FloatingConciergeButton = forwardRef<HTMLDivElement>((_, ref) => {
     <div 
       ref={ref} 
       className="fixed bottom-6 right-6 z-50"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
     >
-      {/* Tooltip - shows on hover */}
-      <div className={cn(
-        "absolute bottom-16 right-0 transition-all duration-300 pointer-events-none",
-        isHovered && !isOpen ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"
-      )}>
-        <div className="relative bg-card border border-border/50 rounded-lg p-4 shadow-lg shadow-secondary/10 w-[280px]">
-          <div className="absolute -bottom-2 right-6 w-4 h-4 bg-card border-r border-b border-border/50 rotate-45" />
-          <p className="text-sm text-foreground font-medium mb-1">
-            Ask AN3S Concierge
-          </p>
-          <p className="text-xs text-muted-foreground">
-            Chat with AI about my experience and how I can help your business.
-          </p>
-        </div>
-      </div>
-
-      {/* Floating Button */}
+      {/* Floating Button with Tooltip */}
       <div className="relative">
         {!hasInteracted && (
           <div className="absolute -inset-1 rounded-full bg-secondary/50 animate-attention-pulse motion-reduce:animate-none" />
         )}
-        <Button
-          size="lg"
-          onClick={handleOpenChat}
-          className="relative h-14 w-14 rounded-full bg-secondary hover:bg-secondary/90 text-secondary-foreground shadow-lg shadow-secondary/25 transition-all duration-300 hover:scale-110 hover:drop-shadow-[0_0_15px_hsl(var(--secondary))]"
-        >
-          <MessageSquareText className="h-6 w-6" />
-          <span className="sr-only">Ask AN3S Concierge</span>
-        </Button>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Button
+              size="lg"
+              onClick={handleOpenChat}
+              className="relative h-14 w-14 rounded-full bg-secondary hover:bg-secondary/90 text-secondary-foreground shadow-lg shadow-secondary/25 transition-all duration-300 hover:scale-110 hover:drop-shadow-[0_0_15px_hsl(var(--secondary))]"
+            >
+              <MessageSquareText className="h-6 w-6" />
+              <span className="sr-only">Ask AN3S Concierge</span>
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent
+            side="top"
+            align="end"
+            sideOffset={8}
+            className="bg-card border-border/50 p-4 w-[280px] shadow-lg shadow-secondary/10"
+          >
+            <p className="text-sm text-foreground font-medium mb-1">
+              Ask AN3S Concierge
+            </p>
+            <p className="text-xs text-muted-foreground">
+              Chat with AI about my experience and how I can help your business.
+            </p>
+          </TooltipContent>
+        </Tooltip>
       </div>
 
       {/* Chat Dialog */}
