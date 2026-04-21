@@ -20,3 +20,6 @@
 ## 2024-03-24 - Main Thread Blocking from mousemove Events
 **Learning:** High-frequency native events like `mousemove` can easily block the main thread and cause layout thrashing if they trigger synchronous DOM reads (like `getBoundingClientRect()`) or complex state updates on every event firing. This is particularly problematic for users with high-polling-rate mice.
 **Action:** Always wrap high-frequency native event listeners (like `mousemove` or `scroll`) in `window.requestAnimationFrame()` using a `ticking` boolean flag to throttle execution to the display refresh rate (typically 60Hz).
+## 2024-04-21 - [Fixing Over-nested requestAnimationFrame Debouncing]
+**Learning:** Over-nesting `requestAnimationFrame` calls and mutating the `ticking` flag synchronously outside the inner callback completely nullifies the debounce benefits, leading to layout thrashing on scroll.
+**Action:** When debouncing scroll or high-frequency events, always ensure the `ticking = false` reset is strictly within the inner `requestAnimationFrame` callback to throttle execution to the refresh rate.
