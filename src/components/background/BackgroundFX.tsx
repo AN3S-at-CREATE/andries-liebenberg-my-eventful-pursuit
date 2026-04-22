@@ -215,18 +215,25 @@ export function BackgroundFX() {
     initParticles();
     animate();
 
+    let resizeTimeout: number;
     const handleResize = () => {
-      resizeCanvas();
-      initParticles();
+      // ⚡ Bolt Optimization: Debounce resize events to prevent layout thrashing
+      // and expensive canvas re-initialization during continuous resizing
+      window.clearTimeout(resizeTimeout);
+      resizeTimeout = window.setTimeout(() => {
+        resizeCanvas();
+        initParticles();
+      }, 150);
     };
 
-    window.addEventListener("resize", handleResize);
+    window.addEventListener("resize", handleResize, { passive: true });
 
     return () => {
       setBackgroundFXMounted(false);
       if (animationRef.current) {
         cancelAnimationFrame(animationRef.current);
       }
+      window.clearTimeout(resizeTimeout);
       window.removeEventListener("resize", handleResize);
     };
   }, []);
