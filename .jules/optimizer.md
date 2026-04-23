@@ -23,3 +23,8 @@
 **Bottleneck:** `ctx.createLinearGradient` was called on every frame in the `drawGrid` loop within `BackgroundFX.tsx`, causing high Garbage Collection pressure and performance drops.
 **Learning:** Recreating complex objects like `CanvasGradient` inside animation loops forces the engine to repeatedly allocate and discard memory.
 **Prevention:** Cache these objects outside the loop (e.g., in outer scope) and only recreate them during initialization or window resize events.
+
+## 2024-05-14 - Debounce Window Resize Event in BackgroundFX
+**Bottleneck:** The window `resize` event listener in `src/components/background/BackgroundFX.tsx` was firing synchronously, causing synchronous canvas re-initialization and expensive recalculation on every resize tick.
+**Learning:** This can lead to main thread blocking, layout thrashing, and high CPU usage.
+**Prevention:** Always debounce window resize event handlers (e.g., using `setTimeout` of 150ms) to ensure expensive code only runs after the resize operation is complete.
