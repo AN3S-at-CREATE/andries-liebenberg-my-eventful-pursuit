@@ -23,3 +23,8 @@
 **Vulnerability:** The email validation regex `/^[^\s@]+@[^\s@]+\.[^\s@]+$/` in `send-contact-email` was too permissive and allowed comma-separated multiple emails. This could allow an attacker to send spam to arbitrary recipients by appending multiple emails in the input (Email Injection).
 **Learning:** Simple negated character class regexes for email validation often fail to enforce strict structure and can allow unexpected characters like commas, which are meaningful to email clients and APIs.
 **Prevention:** Always use strict, standard email validation regexes (e.g., `/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/`) or dedicated validation libraries to prevent injection attacks via email fields.
+
+## 2026-03-24 - [CRITICAL] jsPDF HTML Injection Vulnerability
+**Vulnerability:** The project was using `jspdf` version `<=4.2.0`, which had a critical vulnerability (CVE-2026-31938) where HTML injection was possible when using new window paths.
+**Learning:** Outdated dependencies with known vulnerabilities can expose the application to critical risks like XSS and HTML injection, especially when handling PDF generation on the client side.
+**Prevention:** Regularly audit dependencies using tools like `pnpm audit` and keep them updated to their patched versions to prevent known vulnerabilities from being exploited.
