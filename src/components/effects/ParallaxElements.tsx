@@ -21,9 +21,21 @@ export function ParallaxElements({ variant = "mixed" }: ParallaxElementsProps) {
   useEffect(() => {
     setIsReducedMode(checkReducedMode());
     
-    const handleResize = () => setIsReducedMode(checkReducedMode());
+    // ⚡ Bolt Optimization: Debounce resize events using a 150ms timeout.
+    // This prevents main thread blocking and layout thrashing from continuous state updates
+    // when evaluating the checkReducedMode condition during window resizing.
+    let resizeTimeout: number;
+    const handleResize = () => {
+      clearTimeout(resizeTimeout);
+      resizeTimeout = window.setTimeout(() => {
+        setIsReducedMode(checkReducedMode());
+      }, 150);
+    };
     window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+    return () => {
+      clearTimeout(resizeTimeout);
+      window.removeEventListener("resize", handleResize);
+    };
   }, []);
 
   const { scrollYProgress } = useScroll({
