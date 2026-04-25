@@ -40,12 +40,22 @@ export function ParallaxStarfield() {
   useEffect(() => {
     setIsReducedMode(isMobile() || prefersReducedMotion());
     
+    // ⚡ Bolt Optimization: Debounce resize events using a 150ms timeout.
+    // This prevents main thread blocking from rapid, continuous state updates
+    // when calculating the mobile or prefersReducedMotion mode on window resize.
+    let resizeTimeout: number;
     const handleResize = () => {
-      setIsReducedMode(isMobile() || prefersReducedMotion());
+      clearTimeout(resizeTimeout);
+      resizeTimeout = window.setTimeout(() => {
+        setIsReducedMode(isMobile() || prefersReducedMotion());
+      }, 150);
     };
     
     window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+    return () => {
+      clearTimeout(resizeTimeout);
+      window.removeEventListener("resize", handleResize);
+    };
   }, []);
 
   useEffect(() => {

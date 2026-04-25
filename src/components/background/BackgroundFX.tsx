@@ -215,9 +215,16 @@ export function BackgroundFX() {
     initParticles();
     animate();
 
+    // ⚡ Bolt Optimization: Debounce resize events using a 150ms timeout.
+    // This prevents high CPU usage and main thread blocking from immediate layout recalculations
+    // and canvas re-initializations during rapid window resize events.
+    let resizeTimeout: number;
     const handleResize = () => {
-      resizeCanvas();
-      initParticles();
+      clearTimeout(resizeTimeout);
+      resizeTimeout = window.setTimeout(() => {
+        resizeCanvas();
+        initParticles();
+      }, 150);
     };
 
     window.addEventListener("resize", handleResize);
@@ -227,6 +234,7 @@ export function BackgroundFX() {
       if (animationRef.current) {
         cancelAnimationFrame(animationRef.current);
       }
+      clearTimeout(resizeTimeout);
       window.removeEventListener("resize", handleResize);
     };
   }, []);
