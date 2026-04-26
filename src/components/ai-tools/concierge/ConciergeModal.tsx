@@ -173,18 +173,30 @@ export function ConciergeModal({ trigger }: ConciergeModalProps) {
               placeholder="Ask me anything..."
               disabled={isLoading || remainingMessages <= 0}
               className="flex-1 bg-muted/30 border-border/50 focus-visible:ring-primary"
+              aria-label="Chat input"
             />
-            <Button
-              onClick={handleSend}
-              disabled={!inputValue.trim() || isLoading || remainingMessages <= 0}
-              className="bg-primary hover:bg-primary/90"
-            >
-              {isLoading ? (
-                <Loader2 className="w-4 h-4 animate-spin" />
-              ) : (
-                <Send className="w-4 h-4" />
-              )}
-            </Button>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <span>
+                  <Button
+                    onClick={handleSend}
+                    disabled={!inputValue.trim() || isLoading || remainingMessages <= 0}
+                    className="bg-primary hover:bg-primary/90"
+                    size="icon"
+                    aria-label="Send message"
+                  >
+                    {isLoading ? (
+                      <Loader2 className="w-4 h-4 animate-spin" />
+                    ) : (
+                      <Send className="w-4 h-4" />
+                    )}
+                  </Button>
+                </span>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Send message</p>
+              </TooltipContent>
+            </Tooltip>
           </div>
           <p className="text-xs text-muted-foreground text-center">
             {remainingMessages > 0 ? (
