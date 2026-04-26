@@ -215,9 +215,15 @@ export function BackgroundFX() {
     initParticles();
     animate();
 
+    let resizeTimeout: number;
     const handleResize = () => {
-      resizeCanvas();
-      initParticles();
+      // 🚀 Optimizer: Debounce resize events to prevent layout thrashing and high CPU usage
+      // from continuous canvas re-initialization during window resizing
+      window.clearTimeout(resizeTimeout);
+      resizeTimeout = window.setTimeout(() => {
+        resizeCanvas();
+        initParticles();
+      }, 150);
     };
 
     window.addEventListener("resize", handleResize);
@@ -227,6 +233,7 @@ export function BackgroundFX() {
       if (animationRef.current) {
         cancelAnimationFrame(animationRef.current);
       }
+      window.clearTimeout(resizeTimeout);
       window.removeEventListener("resize", handleResize);
     };
   }, []);
