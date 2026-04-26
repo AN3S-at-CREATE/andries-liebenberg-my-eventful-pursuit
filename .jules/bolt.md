@@ -20,3 +20,7 @@
 ## 2024-03-24 - Main Thread Blocking from mousemove Events
 **Learning:** High-frequency native events like `mousemove` can easily block the main thread and cause layout thrashing if they trigger synchronous DOM reads (like `getBoundingClientRect()`) or complex state updates on every event firing. This is particularly problematic for users with high-polling-rate mice.
 **Action:** Always wrap high-frequency native event listeners (like `mousemove` or `scroll`) in `window.requestAnimationFrame()` using a `ticking` boolean flag to throttle execution to the display refresh rate (typically 60Hz).
+
+## 2024-05-18 - [Window Event Debouncing]
+**Learning:** Frequent events like `scroll` and `resize` can easily overwhelm the main thread. Implementing `requestAnimationFrame` debouncing incorrectly (e.g., with nested rAF calls or prematurely clearing the `ticking` flag synchronously outside the callback) nullifies the debounce benefits and continues to allow layout thrashing. Furthermore, resizing a canvas and regenerating/sorting thousands of particles on every intermediate resize event (instead of just at the end) causes massive GC pressure and CPU spikes.
+**Action:** When using `requestAnimationFrame` debouncing, ensure the `ticking` flag is ONLY reset inside the async callback itself. For heavy operations like canvas re-initialization, always debounce the `resize` event using a `setTimeout` of 150ms rather than rAF to wait for the resize action to finish.
