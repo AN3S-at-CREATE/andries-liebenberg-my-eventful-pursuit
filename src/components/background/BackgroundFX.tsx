@@ -215,9 +215,15 @@ export function BackgroundFX() {
     initParticles();
     animate();
 
+    let resizeTimeout: number;
+
     const handleResize = () => {
-      resizeCanvas();
-      initParticles();
+      // ⚡ Bolt Optimization: Debounce heavy canvas re-initialization on resize
+      clearTimeout(resizeTimeout);
+      resizeTimeout = window.setTimeout(() => {
+        resizeCanvas();
+        initParticles();
+      }, 150);
     };
 
     window.addEventListener("resize", handleResize);
@@ -227,6 +233,7 @@ export function BackgroundFX() {
       if (animationRef.current) {
         cancelAnimationFrame(animationRef.current);
       }
+      clearTimeout(resizeTimeout);
       window.removeEventListener("resize", handleResize);
     };
   }, []);
