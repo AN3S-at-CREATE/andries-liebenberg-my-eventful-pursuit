@@ -215,15 +215,23 @@ export function BackgroundFX() {
     initParticles();
     animate();
 
+    let resizeTimeout: number;
+
     const handleResize = () => {
-      resizeCanvas();
-      initParticles();
+      window.clearTimeout(resizeTimeout);
+      // ⚡ Bolt Optimization: Debounce window resize to prevent layout thrashing and massive CPU overhead
+      // Re-initializing thousands of particles synchronously on every resize tick causes UI jank.
+      resizeTimeout = window.setTimeout(() => {
+        resizeCanvas();
+        initParticles();
+      }, 150);
     };
 
     window.addEventListener("resize", handleResize);
 
     return () => {
       setBackgroundFXMounted(false);
+      window.clearTimeout(resizeTimeout);
       if (animationRef.current) {
         cancelAnimationFrame(animationRef.current);
       }
