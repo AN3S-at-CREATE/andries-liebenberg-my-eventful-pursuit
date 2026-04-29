@@ -46,24 +46,19 @@ const Auth = () => {
     try {
       if (isSignUp) {
         const { error } = await signUp(data.email, data.password);
-        if (error) {
-          if (error.message.includes("already registered")) {
-            toast({
-              title: "Account exists",
-              description: "This email is already registered. Please sign in instead.",
-              variant: "destructive",
-            });
-          } else {
-            toast({
-              title: "Sign up failed",
-              description: error.message,
-              variant: "destructive",
-            });
-          }
+
+        // Prevent user enumeration by showing the same success message
+        // whether the account exists or was just created
+        if (error && !error.message.includes("already registered")) {
+          toast({
+            title: "Sign up failed",
+            description: error.message,
+            variant: "destructive",
+          });
         } else {
           toast({
-            title: "Account created",
-            description: "Check your email to verify your account, then sign in.",
+            title: "Check your email",
+            description: "If the email is not registered yet, you will receive a verification link.",
           });
           setIsSignUp(false);
           reset();
