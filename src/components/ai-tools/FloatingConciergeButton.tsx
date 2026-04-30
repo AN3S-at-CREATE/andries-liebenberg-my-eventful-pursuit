@@ -199,6 +199,7 @@ export const FloatingConciergeButton = forwardRef<HTMLDivElement>((_, ref) => {
                 onChange={(e) => setInputValue(e.target.value)}
                 onKeyDown={handleKeyDown}
                 placeholder="Ask me anything..."
+                aria-label="Type your message"
                 disabled={isLoading || remainingMessages <= 0}
                 className="flex-1 bg-muted/30 border-border/50 focus-visible:ring-primary"
               />
