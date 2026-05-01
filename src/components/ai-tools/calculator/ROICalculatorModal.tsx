@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
+import { Tooltip as UITooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { Calculator, TrendingUp, Clock, Target, Phone, Link, Download, Check } from "lucide-react";
 import { formatZAR, formatPercentage } from "@/lib/formatters";
 import { toast } from "sonner";
@@ -225,27 +226,41 @@ export function ROICalculatorModal({ trigger, initialValues, autoOpen, onAutoOpe
             </div>
             {/* Share/Export buttons */}
             <div className="flex items-center gap-1">
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={handleCopyLink}
-                className="h-8 w-8 text-muted-foreground hover:text-primary"
-                title="Copy shareable link"
-                aria-label="Copy shareable link"
-              >
-                {linkCopied ? <Check className="w-4 h-4 text-primary" /> : <Link className="w-4 h-4" />}
-              </Button>
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={handleExportPDF}
-                disabled={isExporting}
-                className="h-8 w-8 text-muted-foreground hover:text-primary"
-                title="Export as PDF"
-                aria-label="Export as PDF"
-              >
-                <Download className={`w-4 h-4 ${isExporting ? "animate-spin" : ""}`} />
-              </Button>
+              <UITooltip>
+                <TooltipTrigger asChild>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={handleCopyLink}
+                    className="h-8 w-8 text-muted-foreground hover:text-primary"
+                    aria-label="Copy shareable link"
+                  >
+                    {linkCopied ? <Check className="w-4 h-4 text-primary" /> : <Link className="w-4 h-4" />}
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Copy shareable link</p>
+                </TooltipContent>
+              </UITooltip>
+              <UITooltip>
+                <TooltipTrigger asChild>
+                  <span tabIndex={isExporting ? 0 : -1}>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      onClick={handleExportPDF}
+                      disabled={isExporting}
+                      className="h-8 w-8 text-muted-foreground hover:text-primary"
+                      aria-label="Export as PDF"
+                    >
+                      <Download className={`w-4 h-4 ${isExporting ? "animate-spin" : ""}`} />
+                    </Button>
+                  </span>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Export as PDF</p>
+                </TooltipContent>
+              </UITooltip>
             </div>
           </DialogTitle>
         </DialogHeader>
