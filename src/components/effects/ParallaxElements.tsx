@@ -21,9 +21,19 @@ export function ParallaxElements({ variant = "mixed" }: ParallaxElementsProps) {
   useEffect(() => {
     setIsReducedMode(checkReducedMode());
     
-    const handleResize = () => setIsReducedMode(checkReducedMode());
+    // 🚀 Optimizer: Debounce window resize to prevent layout thrashing
+    let resizeTimeout: number;
+    const handleResize = () => {
+      window.clearTimeout(resizeTimeout);
+      resizeTimeout = window.setTimeout(() => {
+        setIsReducedMode(checkReducedMode());
+      }, 150);
+    };
     window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+    return () => {
+      window.clearTimeout(resizeTimeout);
+      window.removeEventListener("resize", handleResize);
+    };
   }, []);
 
   const { scrollYProgress } = useScroll({
