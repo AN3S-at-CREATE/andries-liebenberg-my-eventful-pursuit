@@ -215,9 +215,14 @@ export function BackgroundFX() {
     initParticles();
     animate();
 
+    // 🚀 Optimizer: Debounce window resize to prevent layout thrashing
+    let resizeTimeout: number;
     const handleResize = () => {
-      resizeCanvas();
-      initParticles();
+      window.clearTimeout(resizeTimeout);
+      resizeTimeout = window.setTimeout(() => {
+        resizeCanvas();
+        initParticles();
+      }, 150);
     };
 
     window.addEventListener("resize", handleResize);
@@ -227,6 +232,7 @@ export function BackgroundFX() {
       if (animationRef.current) {
         cancelAnimationFrame(animationRef.current);
       }
+      window.clearTimeout(resizeTimeout);
       window.removeEventListener("resize", handleResize);
     };
   }, []);

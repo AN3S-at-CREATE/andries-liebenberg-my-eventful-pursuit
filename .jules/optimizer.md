@@ -23,3 +23,7 @@
 **Bottleneck:** `ctx.createLinearGradient` was called on every frame in the `drawGrid` loop within `BackgroundFX.tsx`, causing high Garbage Collection pressure and performance drops.
 **Learning:** Recreating complex objects like `CanvasGradient` inside animation loops forces the engine to repeatedly allocate and discard memory.
 **Prevention:** Cache these objects outside the loop (e.g., in outer scope) and only recreate them during initialization or window resize events.
+## 2025-06-25 - [Debounce Layout Thrashing from Window Resizes]
+**Bottleneck:** The `resize` event listeners in Canvas-based components (`BackgroundFX.tsx` and `ParallaxElements.tsx`) were triggering heavy recalculations, DOM reads, and Canvas re-initializations continuously on every single frame during window resizing, leading to layout thrashing, massive CPU spikes, and janky browser performance.
+**Learning:** Browsers fire `resize` events very rapidly (dozens of times per second). Executing expensive synchronous operations like `canvas.width = window.innerWidth` or state updates on every event blocks the main thread and ruins the framerate.
+**Prevention:** Always debounce window `resize` event listeners using `window.setTimeout()` (e.g., waiting ~150ms after the last resize event) to ensure expensive recalculations only occur once the user has finished resizing the window. In React `useEffect`, always use `window.clearTimeout()` in the cleanup function to prevent memory leaks and state updates on unmounted components.
