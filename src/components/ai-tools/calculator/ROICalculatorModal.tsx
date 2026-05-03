@@ -17,9 +17,14 @@ import {
   XAxis,
   YAxis,
   CartesianGrid,
-  Tooltip,
+  Tooltip as RechartsTooltip,
   ResponsiveContainer,
 } from "recharts";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 interface ROICalculatorModalProps {
   trigger?: React.ReactNode;
@@ -225,27 +230,39 @@ export function ROICalculatorModal({ trigger, initialValues, autoOpen, onAutoOpe
             </div>
             {/* Share/Export buttons */}
             <div className="flex items-center gap-1">
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={handleCopyLink}
-                className="h-8 w-8 text-muted-foreground hover:text-primary"
-                title="Copy shareable link"
-                aria-label="Copy shareable link"
-              >
-                {linkCopied ? <Check className="w-4 h-4 text-primary" /> : <Link className="w-4 h-4" />}
-              </Button>
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={handleExportPDF}
-                disabled={isExporting}
-                className="h-8 w-8 text-muted-foreground hover:text-primary"
-                title="Export as PDF"
-                aria-label="Export as PDF"
-              >
-                <Download className={`w-4 h-4 ${isExporting ? "animate-spin" : ""}`} />
-              </Button>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={handleCopyLink}
+                    className="h-8 w-8 text-muted-foreground hover:text-primary"
+                    aria-label="Copy shareable link"
+                  >
+                    {linkCopied ? <Check className="w-4 h-4 text-primary" /> : <Link className="w-4 h-4" />}
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Copy shareable link</p>
+                </TooltipContent>
+              </Tooltip>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={handleExportPDF}
+                    disabled={isExporting}
+                    className="h-8 w-8 text-muted-foreground hover:text-primary"
+                    aria-label="Export as PDF"
+                  >
+                    <Download className={`w-4 h-4 ${isExporting ? "animate-spin" : ""}`} />
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Export as PDF</p>
+                </TooltipContent>
+              </Tooltip>
             </div>
           </DialogTitle>
         </DialogHeader>
@@ -423,7 +440,7 @@ export function ROICalculatorModal({ trigger, initialValues, autoOpen, onAutoOpe
                       fontSize={12}
                       tickFormatter={(v) => `R${(v / 1000).toFixed(0)}k`}
                     />
-                    <Tooltip 
+                    <RechartsTooltip
                       contentStyle={{
                         backgroundColor: 'hsl(var(--card))',
                         border: '1px solid hsl(var(--border))',
