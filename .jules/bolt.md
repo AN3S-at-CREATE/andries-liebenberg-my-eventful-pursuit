@@ -20,3 +20,6 @@
 ## 2024-03-24 - Main Thread Blocking from mousemove Events
 **Learning:** High-frequency native events like `mousemove` can easily block the main thread and cause layout thrashing if they trigger synchronous DOM reads (like `getBoundingClientRect()`) or complex state updates on every event firing. This is particularly problematic for users with high-polling-rate mice.
 **Action:** Always wrap high-frequency native event listeners (like `mousemove` or `scroll`) in `window.requestAnimationFrame()` using a `ticking` boolean flag to throttle execution to the display refresh rate (typically 60Hz).
+## 2024-05-03 - [Fix requestAnimationFrame Debounce Bug]
+**Learning:** In React, synchronous state variable assignments immediately following a `requestAnimationFrame` call (like `ticking = false` placed outside the callback) completely negate the debounce, leading to severe layout thrashing and making the code perform identically to an unoptimized listener. Furthermore, nested `requestAnimationFrame` calls can cause issues.
+**Action:** When using a `ticking` flag with `requestAnimationFrame`, strictly reset the flag inside the async callback itself.
