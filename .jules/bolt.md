@@ -20,3 +20,6 @@
 ## 2024-03-24 - Main Thread Blocking from mousemove Events
 **Learning:** High-frequency native events like `mousemove` can easily block the main thread and cause layout thrashing if they trigger synchronous DOM reads (like `getBoundingClientRect()`) or complex state updates on every event firing. This is particularly problematic for users with high-polling-rate mice.
 **Action:** Always wrap high-frequency native event listeners (like `mousemove` or `scroll`) in `window.requestAnimationFrame()` using a `ticking` boolean flag to throttle execution to the display refresh rate (typically 60Hz).
+## 2026-05-04 - Debounce canvas resize events
+**Learning:** Re-initializing heavy canvas rendering contexts and regenerating thousands of particles on every synchronous window `resize` event causes massive main thread blocking and jank.
+**Action:** Always debounce continuous event listeners like `resize` (e.g., using a `setTimeout` of 150ms) before triggering heavy visual recalculations, and ensure the timeout is cleared on component unmount.
