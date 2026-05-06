@@ -1,3 +1,6 @@
 ## 2026-02-21 - Accessible Icon Buttons
 **Learning:** Icon-only buttons (like social links) require a dual strategy for full accessibility: `aria-label` provides programmatic context for screen readers, while a `Tooltip` offers visual context for sighted users on hover. Relying on one or the other leaves a gap in the user experience.
 **Action:** Always wrap icon-only buttons in a Tooltip component AND ensure the interactive element (button/link) has a descriptive aria-label.
+## 2024-05-06 - Replacing Native Tooltips on Disabled Elements
+**Learning:** Native HTML `title` attributes on icon-only buttons create an accessibility issue, and replacing them with rich UI Tooltips requires special handling for disabled elements. Because disabled elements do not fire pointer events in React, a `TooltipTrigger` directly wrapping a `<Button disabled>` will fail to show the tooltip.
+**Action:** When replacing native tooltips with Shadcn Tooltips on potentially disabled elements, wrap the disabled button in a `<span>` with a conditional `tabIndex` (e.g., `<span tabIndex={isDisabled ? 0 : -1}>`) to ensure the wrapper captures pointer and focus events, keeping the tooltip accessible while preventing double-focus when the button is active.
