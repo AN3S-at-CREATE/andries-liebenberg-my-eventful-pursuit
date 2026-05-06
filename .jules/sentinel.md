@@ -23,3 +23,8 @@
 **Vulnerability:** The email validation regex `/^[^\s@]+@[^\s@]+\.[^\s@]+$/` in `send-contact-email` was too permissive and allowed comma-separated multiple emails. This could allow an attacker to send spam to arbitrary recipients by appending multiple emails in the input (Email Injection).
 **Learning:** Simple negated character class regexes for email validation often fail to enforce strict structure and can allow unexpected characters like commas, which are meaningful to email clients and APIs.
 **Prevention:** Always use strict, standard email validation regexes (e.g., `/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/`) or dedicated validation libraries to prevent injection attacks via email fields.
+
+## 2024-05-06 - Prevent User Enumeration in Auth
+**Vulnerability:** User enumeration during signup by returning a distinct error message when an email is already registered.
+**Learning:** Returning detailed error messages indicating an account exists allows attackers to enumerate registered users, which can be used for targeted attacks.
+**Prevention:** Always return a generic success message (e.g., "Check your email") regardless of whether an "already registered" error occurs during signup.
