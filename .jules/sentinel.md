@@ -23,3 +23,8 @@
 **Vulnerability:** The email validation regex `/^[^\s@]+@[^\s@]+\.[^\s@]+$/` in `send-contact-email` was too permissive and allowed comma-separated multiple emails. This could allow an attacker to send spam to arbitrary recipients by appending multiple emails in the input (Email Injection).
 **Learning:** Simple negated character class regexes for email validation often fail to enforce strict structure and can allow unexpected characters like commas, which are meaningful to email clients and APIs.
 **Prevention:** Always use strict, standard email validation regexes (e.g., `/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/`) or dedicated validation libraries to prevent injection attacks via email fields.
+
+## 2025-05-07 - Upgrade jspdf to fix HTML and PDF Object Injections
+**Vulnerability:** The project relied on an outdated version of `jspdf` (4.0.0 or 4.1.0) which was vulnerable to several high and critical CVEs, including HTML Injection in New Window paths (GHSA-q2cx-w4h4-6g55) and PDF Object Injection via Unsanitized Input.
+**Learning:** Third-party libraries that generate complex document formats like PDFs are frequent vectors for injection and DoS attacks. The `jspdf` package prior to 4.2.1 failed to properly sanitize inputs used in `addJS` and new window creation paths, allowing arbitrary code execution.
+**Prevention:** Regularly audit and upgrade client-side libraries that handle complex data formatting. Use `pnpm audit` routinely in CI/CD pipelines to catch vulnerabilities early.
