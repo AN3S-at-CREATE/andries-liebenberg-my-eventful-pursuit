@@ -1,22 +1,21 @@
-1. **Optimize `GlobalCursorGlow.tsx` for mobile performance**
-   - **File:** `src/components/effects/GlobalCursorGlow.tsx`
-   - **Changes:**
-     - Import `useIsMobile` from `@/hooks/use-mobile`.
-     - Retrieve `isMobile` status using the hook at the top level.
-     - Extract inline `useTransform` hook calls to the top level (before any conditional returns) to comply with React rules.
-     - Add early return in `useEffect` and skip attaching mouse tracking event listeners if `isMobile` is true.
-     - Add `if (isMobile) return null;` just before rendering to avoid rendering glow DOM nodes on mobile entirely.
-     - Include performance code comments explaining the optimizations.
+1. **Analyze `src/components/ai-tools/calculator/ROICalculatorModal.tsx` for UX Improvement:**
+   - There are two icon-only buttons for "Copy shareable link" and "Export as PDF" which currently use the native HTML `title` attribute for tooltips.
+   - Using native `title` attribute isn't great for consistent UX and visual design. We should replace them with the Shadcn UI `<Tooltip>` component.
+   - But wait, `Tooltip` is already imported from `recharts`! We need to handle this carefully to avoid naming collision. We will import the Shadcn UI tooltip components and alias the `recharts` one if necessary, or just alias the Shadcn ones. The standard in this codebase seems to be aliasing `Tooltip` from `recharts` if we are importing the Shadcn one, or aliasing the `recharts` one. Let's check `memory` - "If this causes import collisions (e.g., with Recharts), resolve them by aliasing the third-party import (e.g., import { Tooltip as RechartsTooltip }), leaving the Shadcn import exactly as Tooltip."
 
-2. **Verification step**
-   - Run `pnpm install --frozen-lockfile` to ensure clean node environment.
-   - Run `pnpm lint` and `pnpm build` in a bash session to verify that no regressions were introduced and that all dependencies correctly resolve.
-   - Verify file contents using `read_file` to ensure modifications were applied exactly.
+2. **Modify `src/components/ai-tools/calculator/ROICalculatorModal.tsx`:**
+   - Update `recharts` import to alias `Tooltip as RechartsTooltip`.
+   - Update `<Tooltip>` in `<AreaChart>` to `<RechartsTooltip>`.
+   - Import `Tooltip, TooltipContent, TooltipTrigger` from `@/components/ui/tooltip`.
+   - Wrap the "Copy shareable link" and "Export as PDF" `<Button>` elements in Shadcn UI `<Tooltip>` components. Use `<TooltipTrigger asChild>` as per memory constraints.
+   - Remove the `title` attributes from the `<Button>` elements.
 
-3. **Complete pre-commit steps to ensure proper testing, verification, review, and reflection are done.**
-   - Run `pre_commit_instructions` tool to get and execute necessary steps.
-   - Ensure a journal entry is written to `.jules/optimizer.md` following the Optimizer's format.
+3. **Verify Changes:**
+   - Run `pnpm lint`, `pnpm build`, and tests if any using a bash session.
+   - Ensure the UI builds correctly.
 
-4. **Submit PR**
-   - PR title: `🚀 Optimizer: [Performance improvement] Disable cursor glow on mobile devices`
-   - Push and submit.
+4. **Document UX Learning:**
+   - Write to `.jules/palette.md` to document replacing native `title` with Shadcn Tooltip for icon-only buttons.
+
+5. **Pre-commit:**
+   - Complete pre-commit steps to ensure proper testing, verification, review, and reflection are done.
