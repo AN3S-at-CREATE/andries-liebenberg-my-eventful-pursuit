@@ -24,3 +24,6 @@
 ## 2025-08-14 - [Resize Event Layout Thrashing and Canvas Re-initialization]
 **Learning:** Synchronous and un-debounced window `resize` event listeners cause severe performance drops, especially when triggering heavy operations like HTML5 Canvas dimension recalculations, gradient recreation, and particle array re-initialization. This causes layout thrashing and massive Garbage Collection spikes during window resizing.
 **Action:** Always debounce window `resize` event listeners (e.g., using a `setTimeout` of 150ms) to prevent unnecessary heavy recalculations and re-renders until the resize action is complete.
+## 2024-05-30 - [Nested rAF Scroll Debounce Bug]
+**Learning:** Found a broken scroll debounce pattern where an outer `requestAnimationFrame` called a function that used an inner `requestAnimationFrame`, and the `ticking` guard flag was immediately reset synchronously outside of the inner rAF. This nullifies the debounce effect entirely and causes redundant rAF calls, leading to potential layout thrashing.
+**Action:** When implementing `requestAnimationFrame` debouncing, always use a single rAF block per event and ensure the `ticking` flag is reset to `false` *only* inside the rAF callback itself.
