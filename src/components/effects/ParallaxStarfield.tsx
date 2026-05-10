@@ -40,12 +40,20 @@ export function ParallaxStarfield() {
   useEffect(() => {
     setIsReducedMode(isMobile() || prefersReducedMotion());
     
+    let resizeTimeout: ReturnType<typeof setTimeout>;
     const handleResize = () => {
-      setIsReducedMode(isMobile() || prefersReducedMotion());
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(() => {
+        setIsReducedMode(isMobile() || prefersReducedMotion());
+      }, 150);
     };
     
+    // 🚀 Optimizer: Debounce resize events using setTimeout
     window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+    return () => {
+      clearTimeout(resizeTimeout);
+      window.removeEventListener("resize", handleResize);
+    };
   }, []);
 
   useEffect(() => {
