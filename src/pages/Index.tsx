@@ -2,8 +2,10 @@ import { useRef } from "react";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { ScrollToTop } from "@/components/layout/ScrollToTop";
+import { Suspense, lazy } from "react";
 import { CompaniesPreview } from "@/components/companies/CompaniesPreview";
-import { AIToolsSection } from "@/components/ai-tools/AIToolsSection";
+// 🚀 Optimizer: Lazily loading AIToolsSection to code-split the heavy 'recharts' dependency, reducing the initial Index page bundle size
+const AIToolsSection = lazy(() => import("@/components/ai-tools/AIToolsSection").then(module => ({ default: module.AIToolsSection })));
 import { ContactForm } from "@/components/contact/ContactForm";
 import { ParallaxElements } from "@/components/effects/ParallaxElements";
 import { Button } from "@/components/ui/button";
@@ -151,7 +153,9 @@ const Index = () => {
       <div className="divider-cyan h-px w-full" />
 
       {/* AI Tools Section */}
-      <AIToolsSection />
+      <Suspense fallback={<div className="h-[600px] flex items-center justify-center text-muted-foreground">Loading AI Tools...</div>}>
+        <AIToolsSection />
+      </Suspense>
 
       {/* Pink Accent Divider */}
       <div className="divider-pink h-px w-full" />

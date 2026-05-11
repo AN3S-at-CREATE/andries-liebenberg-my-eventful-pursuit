@@ -23,3 +23,8 @@
 **Bottleneck:** `ctx.createLinearGradient` was called on every frame in the `drawGrid` loop within `BackgroundFX.tsx`, causing high Garbage Collection pressure and performance drops.
 **Learning:** Recreating complex objects like `CanvasGradient` inside animation loops forces the engine to repeatedly allocate and discard memory.
 **Prevention:** Cache these objects outside the loop (e.g., in outer scope) and only recreate them during initialization or window resize events.
+
+## 2025-05-11 - Dynamic Import for Heavy Dependencies
+**Bottleneck:** The `Index` page was statically importing `AIToolsSection`, which itself imports `ROICalculatorModal`. Because the calculator relies on a heavy charting library (`recharts`), this dependency was bundled into the `Index` page chunk, causing it to be over 400KB and negatively impacting initial page load times.
+**Learning:** Heavy, non-critical dependencies like charts or PDF generators that are only visible after user interaction (or lower down the page) should not block the initial page rendering. Static imports pull these libraries into the main bundle or top-level chunk.
+**Prevention:** Use `React.lazy` to dynamically import components that wrap heavy libraries (like `recharts` or `html2canvas`) and wrap them in a `Suspense` boundary. This code-splits the heavy dependencies into a separate chunk that is only loaded when needed.
