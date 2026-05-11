@@ -12,7 +12,7 @@ import { z } from "zod";
 
 const contactSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters").max(100, "Name is too long"),
-  email: z.string().email("Please enter a valid email address").max(100, "Email is too long"),
+  email: z.string().regex(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, "Please enter a valid email address").max(100, "Email is too long"),
   company: z.string().max(100, "Company name is too long").optional(),
   industry: z.string().max(100, "Industry name is too long").optional(),
   goal: z.string().max(200, "Goal description is too long").optional(),
