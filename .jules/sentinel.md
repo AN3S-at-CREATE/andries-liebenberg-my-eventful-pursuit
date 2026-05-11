@@ -23,3 +23,7 @@
 **Vulnerability:** The email validation regex `/^[^\s@]+@[^\s@]+\.[^\s@]+$/` in `send-contact-email` was too permissive and allowed comma-separated multiple emails. This could allow an attacker to send spam to arbitrary recipients by appending multiple emails in the input (Email Injection).
 **Learning:** Simple negated character class regexes for email validation often fail to enforce strict structure and can allow unexpected characters like commas, which are meaningful to email clients and APIs.
 **Prevention:** Always use strict, standard email validation regexes (e.g., `/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/`) or dedicated validation libraries to prevent injection attacks via email fields.
+## 2024-06-03 - Email Validation Vulnerability
+**Vulnerability:** The standard `z.string().email(...)` validation is often too permissive and may allow unexpected characters (like commas) that can lead to email injection attacks.
+**Learning:** Simple email validation methods provided by libraries like Zod might not enforce strict structural rules, making them susceptible to injection if the input is passed to an email sending service or used in backend logic.
+**Prevention:** Always use a strict, standard regex (e.g., `/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/`) in schemas to prevent injection attacks via email fields.

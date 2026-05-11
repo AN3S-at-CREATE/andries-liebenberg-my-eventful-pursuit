@@ -9,12 +9,12 @@ export const passwordRequirements = z
   .regex(/[^A-Za-z0-9]/, "Password must contain at least one special character");
 
 export const signUpSchema = z.object({
-  email: z.string().email("Please enter a valid email address"),
+  email: z.string().regex(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, "Please enter a valid email address"),
   password: passwordRequirements,
 });
 
 export const signInSchema = z.object({
-  email: z.string().email("Please enter a valid email address"),
+  email: z.string().regex(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, "Please enter a valid email address"),
   password: z.string().min(1, "Password is required"),
 });
 
