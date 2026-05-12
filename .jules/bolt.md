@@ -24,3 +24,7 @@
 ## 2025-08-14 - [Resize Event Layout Thrashing and Canvas Re-initialization]
 **Learning:** Synchronous and un-debounced window `resize` event listeners cause severe performance drops, especially when triggering heavy operations like HTML5 Canvas dimension recalculations, gradient recreation, and particle array re-initialization. This causes layout thrashing and massive Garbage Collection spikes during window resizing.
 **Action:** Always debounce window `resize` event listeners (e.g., using a `setTimeout` of 150ms) to prevent unnecessary heavy recalculations and re-renders until the resize action is complete.
+
+## 2024-05-12 - [MatchMedia Layout Thrashing in Resize Events]
+**Learning:** Evaluating `window.matchMedia` and updating React state synchronously within an un-debounced window `resize` event listener causes layout thrashing and excessive re-renders, blocking the main thread during window resize interactions.
+**Action:** Always debounce synchronous `resize` event listeners (e.g. using `setTimeout` of 150ms) to batch state updates, preventing performance degradation and high CPU usage when responding to window dimension changes.
