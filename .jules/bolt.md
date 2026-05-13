@@ -24,3 +24,7 @@
 ## 2025-08-14 - [Resize Event Layout Thrashing and Canvas Re-initialization]
 **Learning:** Synchronous and un-debounced window `resize` event listeners cause severe performance drops, especially when triggering heavy operations like HTML5 Canvas dimension recalculations, gradient recreation, and particle array re-initialization. This causes layout thrashing and massive Garbage Collection spikes during window resizing.
 **Action:** Always debounce window `resize` event listeners (e.g., using a `setTimeout` of 150ms) to prevent unnecessary heavy recalculations and re-renders until the resize action is complete.
+
+## 2026-05-18 - [Broken requestAnimationFrame Debouncing]
+**Learning:** When implementing `requestAnimationFrame` debouncing with a `ticking` flag, resetting the flag to `false` synchronously outside of the callback logic nullifies the debounce effect entirely. It must only be reset asynchronously within the callback itself. Also, over-nesting `requestAnimationFrame` calls can break the event cycle.
+**Action:** Always inline the DOM read/write logic inside a single `requestAnimationFrame` callback triggered by the event listener, and ensure `ticking = false` strictly happens at the end of that specific callback.
