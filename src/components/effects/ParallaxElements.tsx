@@ -21,9 +21,11 @@ export function ParallaxElements({ variant = "mixed" }: ParallaxElementsProps) {
   useEffect(() => {
     setIsReducedMode(checkIsMobile() || (shouldReduceMotion ?? false));
     
-    const handleResize = () => setIsReducedMode(checkIsMobile() || (shouldReduceMotion ?? false));
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+    // ⚡ Bolt Optimization: Use matchMedia change listener instead of continuous resize event
+    const handleMediaQueryChange = () => setIsReducedMode(checkIsMobile() || (shouldReduceMotion ?? false));
+    const mqlMobile = window.matchMedia("(max-width: 767px)");
+    mqlMobile.addEventListener("change", handleMediaQueryChange);
+    return () => mqlMobile.removeEventListener("change", handleMediaQueryChange);
   }, [shouldReduceMotion]);
 
   const { scrollYProgress } = useScroll({

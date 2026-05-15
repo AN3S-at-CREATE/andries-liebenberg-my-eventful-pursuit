@@ -48,12 +48,14 @@ export function ParallaxStarfield() {
   useEffect(() => {
     setIsReducedMode(isMobile() || (shouldReduceMotion ?? false));
     
-    const handleResize = () => {
+    // ⚡ Bolt Optimization: Use matchMedia change listener instead of continuous resize event
+    const handleMediaQueryChange = () => {
       setIsReducedMode(isMobile() || (shouldReduceMotion ?? false));
     };
-    
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+
+    const mqlMobile = window.matchMedia("(max-width: 767px)");
+    mqlMobile.addEventListener("change", handleMediaQueryChange);
+    return () => mqlMobile.removeEventListener("change", handleMediaQueryChange);
   }, [shouldReduceMotion]);
 
   useEffect(() => {
