@@ -40,12 +40,21 @@ export function ParallaxStarfield() {
   useEffect(() => {
     setIsReducedMode(isMobile() || prefersReducedMotion());
     
-    const handleResize = () => {
+    // ⚡ Bolt Optimization: Use matchMedia change listener instead of continuous resize event
+    const handleMediaQueryChange = () => {
       setIsReducedMode(isMobile() || prefersReducedMotion());
     };
     
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+    const mqlMobile = window.matchMedia("(max-width: 767px)");
+    const mqlReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+    mqlMobile.addEventListener("change", handleMediaQueryChange);
+    mqlReducedMotion.addEventListener("change", handleMediaQueryChange);
+
+    return () => {
+      mqlMobile.removeEventListener("change", handleMediaQueryChange);
+      mqlReducedMotion.removeEventListener("change", handleMediaQueryChange);
+    };
   }, []);
 
   useEffect(() => {

@@ -21,9 +21,18 @@ export function ParallaxElements({ variant = "mixed" }: ParallaxElementsProps) {
   useEffect(() => {
     setIsReducedMode(checkReducedMode());
     
-    const handleResize = () => setIsReducedMode(checkReducedMode());
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+    // ⚡ Bolt Optimization: Use matchMedia change listener instead of continuous resize event
+    const handleMediaQueryChange = () => setIsReducedMode(checkReducedMode());
+    const mqlMobile = window.matchMedia("(max-width: 767px)");
+    const mqlReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+    mqlMobile.addEventListener("change", handleMediaQueryChange);
+    mqlReducedMotion.addEventListener("change", handleMediaQueryChange);
+
+    return () => {
+      mqlMobile.removeEventListener("change", handleMediaQueryChange);
+      mqlReducedMotion.removeEventListener("change", handleMediaQueryChange);
+    };
   }, []);
 
   const { scrollYProgress } = useScroll({

@@ -24,3 +24,7 @@
 ## 2025-08-14 - [Resize Event Layout Thrashing and Canvas Re-initialization]
 **Learning:** Synchronous and un-debounced window `resize` event listeners cause severe performance drops, especially when triggering heavy operations like HTML5 Canvas dimension recalculations, gradient recreation, and particle array re-initialization. This causes layout thrashing and massive Garbage Collection spikes during window resizing.
 **Action:** Always debounce window `resize` event listeners (e.g., using a `setTimeout` of 150ms) to prevent unnecessary heavy recalculations and re-renders until the resize action is complete.
+
+## 2024-05-15 - [Breakpoint Resizing Optimization]
+**Learning:** Using debounced `resize` event listeners to check media queries (like mobile breakpoints or reduced-motion) still introduces unnecessary overhead and state re-evaluations during window resizing. `matchMedia.addListener` (or `addEventListener('change')`) natively fires only when the breakpoint is crossed, completely eliminating continuous evaluation overhead.
+**Action:** Replace continuous `resize` listeners that check breakpoint conditions with discrete `matchMedia` `change` event listeners.
