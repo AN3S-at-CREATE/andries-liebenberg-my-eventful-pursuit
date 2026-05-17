@@ -1,3 +1,6 @@
 ## 2026-02-21 - Accessible Icon Buttons
 **Learning:** Icon-only buttons (like social links) require a dual strategy for full accessibility: `aria-label` provides programmatic context for screen readers, while a `Tooltip` offers visual context for sighted users on hover. Relying on one or the other leaves a gap in the user experience.
 **Action:** Always wrap icon-only buttons in a Tooltip component AND ensure the interactive element (button/link) has a descriptive aria-label.
+## 2024-03-20 - Adding Accessible Tooltips to Disabled Buttons with Naming Collisions
+**Learning:** When adding tooltips to components that already import `Tooltip` from charting libraries (like Recharts), an import alias must be used to avoid collision. Furthermore, wrapping disabled buttons directly in Shadcn's `<TooltipTrigger asChild>` prevents the tooltip from appearing because disabled elements don't fire pointer events.
+**Action:** Alias the third-party tooltip (e.g., `import { Tooltip as RechartsTooltip }`) and leave the Shadcn import exactly as `Tooltip`. For disabled elements, wrap the disabled element in a `<span>` with conditional tabIndex: `<span tabIndex={isDisabled ? 0 : -1}><Button disabled={isDisabled}>...</Button></span>`.
