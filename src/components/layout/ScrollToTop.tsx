@@ -9,27 +9,20 @@ export const ScrollToTop = () => {
   useEffect(() => {
     let ticking = false;
 
-    const toggleVisibility = () => {
-      // ⚡ Bolt Optimization: Debounce scroll events using requestAnimationFrame
-      // This prevents layout thrashing and limits executions to screen refresh rate (typically 60fps)
+    const onScroll = () => {
+      // ⚡ Bolt Optimization: Properly debounce scroll events using requestAnimationFrame
+      // Ensures layout calculations happen at most once per frame and prevents main thread blocking.
       if (!ticking) {
         window.requestAnimationFrame(() => {
           setIsVisible(window.scrollY > 300);
+          // Strictly reset ticking inside the callback to maintain the debounce
           ticking = false;
         });
         ticking = true;
       }
-      ticking = false;
     };
 
-    const onScroll = () => {
-      if (!ticking) {
-        window.requestAnimationFrame(toggleVisibility);
-        ticking = true;
-      }
-    };
-
-    // 🚀 Optimizer: Debounce scroll events using requestAnimationFrame and use passive listener
+    // 🚀 Optimizer: Use passive listener to avoid blocking scroll rendering
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
