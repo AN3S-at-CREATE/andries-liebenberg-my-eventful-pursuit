@@ -239,6 +239,9 @@ export const ContactForm = () => {
               rows={4}
               className="bg-muted/50 border-border/50 resize-none"
             />
+            <div className={`text-xs text-right mt-1 ${formData.message.length >= 2000 ? 'text-destructive' : 'text-muted-foreground'}`}>
+              {formData.message.length} / 2000
+            </div>
           </div>
 
           <div className="flex items-start space-x-3 pt-2">
