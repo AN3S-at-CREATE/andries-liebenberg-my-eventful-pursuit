@@ -9,22 +9,15 @@ export const ScrollToTop = () => {
   useEffect(() => {
     let ticking = false;
 
-    const toggleVisibility = () => {
+    const onScroll = () => {
       // ⚡ Bolt Optimization: Debounce scroll events using requestAnimationFrame
       // This prevents layout thrashing and limits executions to screen refresh rate (typically 60fps)
+      // Ensure ticking is reset strictly inside the callback to prevent skipped updates
       if (!ticking) {
         window.requestAnimationFrame(() => {
           setIsVisible(window.scrollY > 300);
           ticking = false;
         });
-        ticking = true;
-      }
-      ticking = false;
-    };
-
-    const onScroll = () => {
-      if (!ticking) {
-        window.requestAnimationFrame(toggleVisibility);
         ticking = true;
       }
     };

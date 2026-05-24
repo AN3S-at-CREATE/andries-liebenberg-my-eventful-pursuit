@@ -24,3 +24,6 @@
 ## 2025-08-14 - [Resize Event Layout Thrashing and Canvas Re-initialization]
 **Learning:** Synchronous and un-debounced window `resize` event listeners cause severe performance drops, especially when triggering heavy operations like HTML5 Canvas dimension recalculations, gradient recreation, and particle array re-initialization. This causes layout thrashing and massive Garbage Collection spikes during window resizing.
 **Action:** Always debounce window `resize` event listeners (e.g., using a `setTimeout` of 150ms) to prevent unnecessary heavy recalculations and re-renders until the resize action is complete.
+## 2024-05-15 - [Avoid Over-Nested rAF in Scroll Handlers]
+**Learning:** Found a specific anti-pattern in `ScrollToTop.tsx` where `requestAnimationFrame` was over-nested and the `ticking` flag was synchronously reset outside the callback, nullifying the performance benefits and preventing state updates.
+**Action:** Always ensure the `ticking` flag is reset strictly inside a single `requestAnimationFrame` callback.
