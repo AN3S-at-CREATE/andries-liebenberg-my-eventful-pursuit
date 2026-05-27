@@ -23,3 +23,7 @@
 **Bottleneck:** `ctx.createLinearGradient` was called on every frame in the `drawGrid` loop within `BackgroundFX.tsx`, causing high Garbage Collection pressure and performance drops.
 **Learning:** Recreating complex objects like `CanvasGradient` inside animation loops forces the engine to repeatedly allocate and discard memory.
 **Prevention:** Cache these objects outside the loop (e.g., in outer scope) and only recreate them during initialization or window resize events.
+## 2024-05-27 - Fix Scroll Debounce in ScrollToTop
+**Bottleneck:** The scroll event listener in `ScrollToTop.tsx` synchronously reset the `ticking` flag outside the `requestAnimationFrame` callback and over-nested the `requestAnimationFrame` call, nullifying the performance benefits of debouncing.
+**Learning:** To properly debounce events with `requestAnimationFrame`, the `ticking` flag must be reset strictly *inside* the asynchronous callback.
+**Prevention:** Ensure correct implementation of the requestAnimationFrame debounce pattern in event listeners.
