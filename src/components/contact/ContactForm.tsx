@@ -212,23 +212,34 @@ export const ContactForm = () => {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="goal" className="text-foreground">
-              What are you looking to achieve?
-            </Label>
+            <div className="flex justify-between items-center">
+              <Label htmlFor="goal" className="text-foreground">
+                What are you looking to achieve?
+              </Label>
+              <span className="text-xs text-muted-foreground">
+                {(formData.goal || "").length}/200
+              </span>
+            </div>
             <Input
               id="goal"
               name="goal"
               placeholder="e.g., Grow my business, Build a new product"
               value={formData.goal}
               onChange={handleChange}
+              maxLength={200}
               className="bg-muted/50 border-border/50"
             />
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="message" className="text-foreground">
-              Message <span className="text-secondary">*</span>
-            </Label>
+            <div className="flex justify-between items-center">
+              <Label htmlFor="message" className="text-foreground">
+                <span>Message <span className="text-secondary">*</span></span>
+              </Label>
+              <span className="text-xs text-muted-foreground">
+                {(formData.message || "").length}/2000
+              </span>
+            </div>
             <Textarea
               id="message"
               name="message"
@@ -236,6 +247,7 @@ export const ContactForm = () => {
               value={formData.message}
               onChange={handleChange}
               required
+              maxLength={2000}
               rows={4}
               className="bg-muted/50 border-border/50 resize-none"
             />
