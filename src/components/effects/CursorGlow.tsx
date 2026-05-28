@@ -34,9 +34,9 @@ export const CursorGlow = ({
     let ticking = false;
 
     const handleMouseMove = (e: MouseEvent) => {
+      // 🚀 Optimizer: Debounce mousemove events to prevent main thread blocking
       if (!ticking) {
         window.requestAnimationFrame(() => {
-          // 🚀 Optimizer: Debounce mousemove events to prevent main thread blocking
           const rect = container.getBoundingClientRect();
           const x = e.clientX - rect.left;
           const y = e.clientY - rect.top;
