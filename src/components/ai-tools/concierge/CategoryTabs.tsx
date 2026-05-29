@@ -40,7 +40,7 @@ export function CategoryTabs({
               : "text-muted-foreground hover:text-foreground hover:bg-muted/30"
           )}
         >
-          <Icon className="w-3.5 h-3.5" />
+          <Icon className="w-3.5 h-3.5" aria-hidden="true" />
           <span className="hidden sm:inline">{label}</span>
         </button>
       ))}

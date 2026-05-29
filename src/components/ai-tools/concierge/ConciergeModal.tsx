@@ -170,20 +170,31 @@ export function ConciergeModal({ trigger }: ConciergeModalProps) {
               onChange={(e) => setInputValue(e.target.value)}
               onKeyDown={handleKeyDown}
               placeholder="Ask me anything..."
+              aria-label="Type your message"
               disabled={isLoading || remainingMessages <= 0}
               className="flex-1 bg-muted/30 border-border/50 focus-visible:ring-primary"
             />
-            <Button
-              onClick={handleSend}
-              disabled={!inputValue.trim() || isLoading || remainingMessages <= 0}
-              className="bg-primary hover:bg-primary/90"
-            >
-              {isLoading ? (
-                <Loader2 className="w-4 h-4 animate-spin" />
-              ) : (
-                <Send className="w-4 h-4" />
-              )}
-            </Button>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <span tabIndex={(!inputValue.trim() || isLoading || remainingMessages <= 0) ? 0 : -1}>
+                  <Button
+                    onClick={handleSend}
+                    disabled={!inputValue.trim() || isLoading || remainingMessages <= 0}
+                    className="bg-primary hover:bg-primary/90"
+                    aria-label="Send message"
+                  >
+                    {isLoading ? (
+                      <Loader2 className="w-4 h-4 animate-spin" />
+                    ) : (
+                      <Send className="w-4 h-4" />
+                    )}
+                  </Button>
+                </span>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Send message</p>
+              </TooltipContent>
+            </Tooltip>
           </div>
           <p className="text-xs text-muted-foreground text-center">
             {remainingMessages > 0 ? (
