@@ -23,3 +23,8 @@
 **Bottleneck:** `ctx.createLinearGradient` was called on every frame in the `drawGrid` loop within `BackgroundFX.tsx`, causing high Garbage Collection pressure and performance drops.
 **Learning:** Recreating complex objects like `CanvasGradient` inside animation loops forces the engine to repeatedly allocate and discard memory.
 **Prevention:** Cache these objects outside the loop (e.g., in outer scope) and only recreate them during initialization or window resize events.
+
+## 2025-05-30 - Fix rAF Debouncing in ScrollToTop
+**Bottleneck:** `ScrollToTop` had over-nested `requestAnimationFrame` calls and was resetting the `ticking` flag synchronously outside the callback, completely nullifying the debouncing and causing performance degradation.
+**Learning:** When using `requestAnimationFrame` for debouncing, the `ticking` flag must only be reset to `false` asynchronously from inside the callback. Over-nesting `requestAnimationFrame` also leads to missed frames.
+**Prevention:** Avoid over-nesting `requestAnimationFrame` and ensure that state locks like `ticking` are correctly reset only when the deferred work completes.
