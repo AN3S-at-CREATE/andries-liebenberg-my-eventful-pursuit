@@ -11,6 +11,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/hooks/useAuth";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { Loader2, Lock, Mail, Eye, EyeOff, ShieldCheck } from "lucide-react";
 import { signUpSchema, signInSchema, AuthFormData } from "@/lib/auth-schemas";
 
