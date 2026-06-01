@@ -10,15 +10,7 @@ export const ScrollToTop = () => {
     let ticking = false;
 
     const toggleVisibility = () => {
-      // ⚡ Bolt Optimization: Debounce scroll events using requestAnimationFrame
-      // This prevents layout thrashing and limits executions to screen refresh rate (typically 60fps)
-      if (!ticking) {
-        window.requestAnimationFrame(() => {
-          setIsVisible(window.scrollY > 300);
-          ticking = false;
-        });
-        ticking = true;
-      }
+      setIsVisible(window.scrollY > 300);
       ticking = false;
     };
 
