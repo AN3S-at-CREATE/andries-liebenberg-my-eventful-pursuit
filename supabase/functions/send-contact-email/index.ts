@@ -206,9 +206,8 @@ const handler = async (req: Request): Promise<Response> => {
     // Confirmation email to user
     const confirmationHtml = `
       <div style="font-family: Inter, sans-serif; max-width: 600px; margin: 0 auto;">
-        <h1 style="color: #00d4ff;">Thank you, ${safeName}!</h1>
+        <h1 style="color: #00d4ff;">Thank you!</h1>
         <p>I've received your message and will get back to you within 24-48 hours.</p>
-        ${safeGoal ? `<p>I see you're interested in: <strong>${safeGoal}</strong>. I'm excited to discuss how I can help.</p>` : ""}
         <p>In the meantime, feel free to:</p>
         <ul>
           <li><a href="https://wa.me/27729749703" style="color: #00d4ff;">WhatsApp me directly</a> for urgent matters</li>
