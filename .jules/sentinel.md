@@ -23,3 +23,7 @@
 **Vulnerability:** The email validation regex `/^[^\s@]+@[^\s@]+\.[^\s@]+$/` in `send-contact-email` was too permissive and allowed comma-separated multiple emails. This could allow an attacker to send spam to arbitrary recipients by appending multiple emails in the input (Email Injection).
 **Learning:** Simple negated character class regexes for email validation often fail to enforce strict structure and can allow unexpected characters like commas, which are meaningful to email clients and APIs.
 **Prevention:** Always use strict, standard email validation regexes (e.g., `/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/`) or dedicated validation libraries to prevent injection attacks via email fields.
+## 2024-06-04 - Cross-Site Scripting (XSS) in ChartStyle Component
+**Vulnerability:** The `ChartStyle` component in `src/components/ui/chart.tsx` is vulnerable to XSS due to injecting an un-sanitized `id` property directly into a `<style>` tag using `dangerouslySetInnerHTML`.
+**Learning:** React's `<style dangerouslySetInnerHTML={...}>` bypasses standard HTML escaping. When interpolating variables like `id` into the raw HTML string, it can allow attackers to break out of the style tag and execute arbitrary scripts.
+**Prevention:** Avoid `dangerouslySetInnerHTML` when building standard text-based styles. Instead, pass the dynamically generated CSS string directly as `children` to the `<style>` tag, which allows React to safely handle `textContent` and escape any HTML tags.
