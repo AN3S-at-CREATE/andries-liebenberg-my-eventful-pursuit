@@ -1,3 +1,6 @@
 ## 2026-02-21 - Accessible Icon Buttons
 **Learning:** Icon-only buttons (like social links) require a dual strategy for full accessibility: `aria-label` provides programmatic context for screen readers, while a `Tooltip` offers visual context for sighted users on hover. Relying on one or the other leaves a gap in the user experience.
 **Action:** Always wrap icon-only buttons in a Tooltip component AND ensure the interactive element (button/link) has a descriptive aria-label.
+## 2026-02-21 - Redundant ARIA labels
+**Learning:** When adding accessibility attributes to icon-only buttons, check for existing visually hidden text (e.g., `<span className="sr-only">`). If a screen-reader-only element is already present, adding an `aria-label` to the parent button is redundant. However, if visual text within a button is hidden using responsive CSS (e.g., `hidden sm:inline`), the element loses its accessible name on those specific screen sizes. In these cases, a fallback `aria-label` on the parent element is necessary to ensure mobile accessibility.
+**Action:** Always verify if an element has an existing `sr-only` child before adding an `aria-label`. If visual text is hidden responsively, ensure a fallback `aria-label` is provided on the interactive parent element.
