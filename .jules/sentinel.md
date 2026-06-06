@@ -23,3 +23,7 @@
 **Vulnerability:** The email validation regex `/^[^\s@]+@[^\s@]+\.[^\s@]+$/` in `send-contact-email` was too permissive and allowed comma-separated multiple emails. This could allow an attacker to send spam to arbitrary recipients by appending multiple emails in the input (Email Injection).
 **Learning:** Simple negated character class regexes for email validation often fail to enforce strict structure and can allow unexpected characters like commas, which are meaningful to email clients and APIs.
 **Prevention:** Always use strict, standard email validation regexes (e.g., `/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/`) or dedicated validation libraries to prevent injection attacks via email fields.
+## 2025-02-21 - SSR XSS via style tag dangerouslySetInnerHTML
+**Vulnerability:** The `<style>` tag in `src/components/ui/chart.tsx` generated dynamic CSS strings and injected them using `dangerouslySetInnerHTML`. This creates a Server-Side Rendering (SSR) Cross-Site Scripting (XSS) vulnerability.
+**Learning:** React safely escapes content passed as `children` even within `<style>` tags. There is no need to use `dangerouslySetInnerHTML` for basic dynamic CSS injection in Shadcn UI components.
+**Prevention:** Avoid `dangerouslySetInnerHTML`. Always pass dynamic CSS strings as standard `children` to `<style>` tags to allow React to safely escape it as `textContent`.
