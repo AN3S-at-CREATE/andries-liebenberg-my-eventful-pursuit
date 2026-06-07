@@ -23,3 +23,7 @@
 **Vulnerability:** The email validation regex `/^[^\s@]+@[^\s@]+\.[^\s@]+$/` in `send-contact-email` was too permissive and allowed comma-separated multiple emails. This could allow an attacker to send spam to arbitrary recipients by appending multiple emails in the input (Email Injection).
 **Learning:** Simple negated character class regexes for email validation often fail to enforce strict structure and can allow unexpected characters like commas, which are meaningful to email clients and APIs.
 **Prevention:** Always use strict, standard email validation regexes (e.g., `/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/`) or dedicated validation libraries to prevent injection attacks via email fields.
+## 2026-06-07 - [Remove dangerouslySetInnerHTML from style tags]
+**Vulnerability:** XSS risk through SSR when rendering dynamic style blocks using dangerouslySetInnerHTML, which could allow CSS injection attacks.
+**Learning:** Using dangerouslySetInnerHTML inside <style> tags exposes applications to XSS in Server-Side Rendering setups. React can safely handle and escape content passed directly as children to <style>.
+**Prevention:** Do not use dangerouslySetInnerHTML for dynamic CSS. Pass the dynamically generated CSS string as standard children to the <style> tag so that React escapes it automatically.
