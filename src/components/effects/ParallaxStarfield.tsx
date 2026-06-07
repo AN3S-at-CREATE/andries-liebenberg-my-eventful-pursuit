@@ -18,11 +18,6 @@ const STAR_COLORS = {
   white: "rgb(255, 255, 255)",
 } as const;
 
-const isMobile = () => typeof window !== "undefined" && window.innerWidth < 768;
-const prefersReducedMotion = () =>
-  typeof window !== "undefined" &&
-  window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
 export function ParallaxStarfield() {
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -38,14 +33,25 @@ export function ParallaxStarfield() {
   const { scrollY } = useScroll();
 
   useEffect(() => {
-    setIsReducedMode(isMobile() || prefersReducedMotion());
-    
-    const handleResize = () => {
-      setIsReducedMode(isMobile() || prefersReducedMotion());
+    if (typeof window === "undefined") return;
+
+    // ⚡ Bolt Optimization: Use matchMedia change listeners instead of continuous resize events
+    const mqlMobile = window.matchMedia("(max-width: 767px)");
+    const mqlMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+    const updateMode = () => {
+      setIsReducedMode(mqlMobile.matches || mqlMotion.matches);
     };
-    
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+
+    updateMode();
+
+    mqlMobile.addEventListener("change", updateMode);
+    mqlMotion.addEventListener("change", updateMode);
+
+    return () => {
+      mqlMobile.removeEventListener("change", updateMode);
+      mqlMotion.removeEventListener("change", updateMode);
+    };
   }, []);
 
   useEffect(() => {

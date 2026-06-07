@@ -5,25 +5,30 @@ interface ParallaxElementsProps {
   variant?: "cyan" | "pink" | "mixed";
 }
 
-// Check if device is mobile or prefers reduced motion
-const checkReducedMode = () => {
-  if (typeof window === "undefined") return false;
-  return (
-    window.innerWidth < 768 ||
-    window.matchMedia("(prefers-reduced-motion: reduce)").matches
-  );
-};
-
 export function ParallaxElements({ variant = "mixed" }: ParallaxElementsProps) {
   const ref = useRef<HTMLDivElement>(null);
   const [isReducedMode, setIsReducedMode] = useState(false);
 
   useEffect(() => {
-    setIsReducedMode(checkReducedMode());
-    
-    const handleResize = () => setIsReducedMode(checkReducedMode());
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+    if (typeof window === "undefined") return;
+
+    // ⚡ Bolt Optimization: Use matchMedia change listeners instead of continuous resize events
+    const mqlMobile = window.matchMedia("(max-width: 767px)");
+    const mqlMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+    const updateMode = () => {
+      setIsReducedMode(mqlMobile.matches || mqlMotion.matches);
+    };
+
+    updateMode();
+
+    mqlMobile.addEventListener("change", updateMode);
+    mqlMotion.addEventListener("change", updateMode);
+
+    return () => {
+      mqlMobile.removeEventListener("change", updateMode);
+      mqlMotion.removeEventListener("change", updateMode);
+    };
   }, []);
 
   const { scrollYProgress } = useScroll({
