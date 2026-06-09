@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from "react";
-import { useScroll } from "framer-motion";
 
 interface Star {
   x: number;
@@ -32,10 +31,7 @@ export function ParallaxStarfield() {
     white: [],
   });
   const animationRef = useRef<number>();
-  const scrollYRef = useRef(0);
   const [isReducedMode, setIsReducedMode] = useState(false);
-
-  const { scrollY } = useScroll();
 
   useEffect(() => {
     setIsReducedMode(isMobile() || prefersReducedMotion());
@@ -47,13 +43,6 @@ export function ParallaxStarfield() {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
-
-  useEffect(() => {
-    const unsubscribe = scrollY.on("change", (latest) => {
-      scrollYRef.current = latest;
-    });
-    return () => unsubscribe();
-  }, [scrollY]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -104,6 +93,12 @@ export function ParallaxStarfield() {
     const frameInterval = 1000 / targetFPS;
 
     const animate = (currentTime: number) => {
+      // ⚡ Bolt Optimization: Pause animation if the tab is not visible to save battery/CPU
+      if (document.visibilityState === 'hidden') {
+        animationRef.current = requestAnimationFrame(animate);
+        return;
+      }
+
       if (currentTime - lastFrameTime < frameInterval) {
         animationRef.current = requestAnimationFrame(animate);
         return;
@@ -113,7 +108,8 @@ export function ParallaxStarfield() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
       const time = currentTime * 0.001;
-      const scrollOffset = scrollYRef.current;
+      // ⚡ Bolt Optimization: Use native window.scrollY directly instead of Framer Motion useScroll
+      const scrollOffset = window.scrollY;
       const canvasHeight = window.innerHeight * (isReducedMode ? 2 : 3);
 
       (Object.keys(starsRef.current) as (keyof typeof STAR_COLORS)[]).forEach(
