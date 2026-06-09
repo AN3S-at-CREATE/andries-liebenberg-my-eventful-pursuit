@@ -28,3 +28,7 @@
 **Bottleneck:** The scroll event listener in `ScrollToTop.tsx` reset the `ticking` flag synchronously outside the callback and over-nested `requestAnimationFrame` calls, which nullified the performance benefits of debouncing and led to unnecessary layout thrashing.
 **Learning:** When debouncing continuous events like `scroll` using `requestAnimationFrame` and a `ticking` flag, the flag must be reset to `false` strictly inside the asynchronous callback. Doing it synchronously outside or over-nesting the callbacks allows the event to fire multiple times per frame.
 **Prevention:** Ensure `ticking = false` is only executed inside the `requestAnimationFrame` callback and avoid double-queuing `requestAnimationFrame` when managing debounced state.
+## 2024-06-07 - [Bundle Size Reduction via Lazy Loading]
+**Bottleneck:** The `FloatingConciergeButton` component and its heavy dependencies (Radix UI Dialog, ScrollArea, Tooltip) were imported synchronously in `App.tsx`, blocking the main thread during initial load and increasing the main bundle size.
+**Learning:** Always pair React.lazy with ErrorBoundary + meaningful fallback for production floating components. Heavy, non-critical UI components like global floating modals and chatbots should not be part of the initial render block. Deferring their load reduces the initial JavaScript payload.
+**Prevention:** Always use `React.lazy()`, `ErrorBoundary`, and a sleek `<Suspense>` skeleton fallback for heavy global UI overlays that aren't strictly required for the First Contentful Paint.
