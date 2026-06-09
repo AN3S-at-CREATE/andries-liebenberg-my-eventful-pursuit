@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { motion, useSpring, useTransform } from "framer-motion";
+import { useSpring, useTransform, m } from "framer-motion";
 import { useIsMobile } from "@/hooks/use-mobile";
 
 interface GlobalCursorGlowProps {
@@ -75,7 +75,7 @@ export const GlobalCursorGlow = ({
 
   return (
     <div className="fixed inset-0 pointer-events-none z-50 overflow-hidden">
-      <motion.div
+      <m.div
         className={`absolute pointer-events-none rounded-full blur-[80px] ${getGlowColor()}`}
         style={{
           width: size,
@@ -87,7 +87,7 @@ export const GlobalCursorGlow = ({
         animate={{ opacity: isVisible ? intensity : 0 }}
         transition={{ duration: 0.3 }}
       />
-      <motion.div
+      <m.div
         className="absolute pointer-events-none rounded-full blur-[40px] bg-primary/20"
         style={{
           width: size * 0.4,
