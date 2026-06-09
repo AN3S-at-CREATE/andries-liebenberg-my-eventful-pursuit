@@ -3,11 +3,15 @@ import { getBackgroundFXStatus } from "@/lib/backgroundStatus";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { CheckCircle, XCircle, Palette, Sparkles } from "lucide-react";
+import { useReducedMotion } from "framer-motion";
 
 const Status = () => {
   const [isMounted, setIsMounted] = useState(false);
   const [tokens, setTokens] = useState({ primary: "", secondary: "" });
   const [motionEnabled, setMotionEnabled] = useState(true);
+
+  // 🚀 Optimizer: Standardized on useReducedMotion hook for dynamic accessibility preference tracking
+  const shouldReduceMotion = useReducedMotion();
 
   useEffect(() => {
     // Check BackgroundFX status
@@ -15,10 +19,7 @@ const Status = () => {
 
     // Check motion preference
     if (typeof window !== "undefined") {
-      const prefersReducedMotion = window.matchMedia(
-        "(prefers-reduced-motion: reduce)"
-      ).matches;
-      setMotionEnabled(!prefersReducedMotion);
+      setMotionEnabled(!(shouldReduceMotion ?? false));
     }
 
     // Read computed CSS variables
@@ -27,7 +28,7 @@ const Status = () => {
       primary: styles.getPropertyValue("--primary").trim(),
       secondary: styles.getPropertyValue("--secondary").trim(),
     });
-  }, []);
+  }, [shouldReduceMotion]);
 
   const StatusIndicator = ({ status }: { status: boolean }) =>
     status ? (
