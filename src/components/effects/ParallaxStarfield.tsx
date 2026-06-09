@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { useScroll, useReducedMotion } from "framer-motion";
 
 interface Star {
   x: number;
@@ -18,9 +19,6 @@ const STAR_COLORS = {
 } as const;
 
 const isMobile = () => typeof window !== "undefined" && window.innerWidth < 768;
-const prefersReducedMotion = () =>
-  typeof window !== "undefined" &&
-  window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 export function ParallaxStarfield() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -33,16 +31,20 @@ export function ParallaxStarfield() {
   const animationRef = useRef<number>();
   const [isReducedMode, setIsReducedMode] = useState(false);
 
+  const { scrollY } = useScroll();
+  // 🚀 Optimizer: Standardized on useReducedMotion hook for dynamic accessibility preference tracking
+  const shouldReduceMotion = useReducedMotion();
+
   useEffect(() => {
-    setIsReducedMode(isMobile() || prefersReducedMotion());
+    setIsReducedMode(isMobile() || (shouldReduceMotion ?? false));
     
     const handleResize = () => {
-      setIsReducedMode(isMobile() || prefersReducedMotion());
+      setIsReducedMode(isMobile() || (shouldReduceMotion ?? false));
     };
     
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
-  }, []);
+  }, [shouldReduceMotion]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
