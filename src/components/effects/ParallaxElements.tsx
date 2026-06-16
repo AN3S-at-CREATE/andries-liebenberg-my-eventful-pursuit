@@ -1,35 +1,30 @@
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion";
 import { useRef, useEffect, useState } from "react";
 
 interface ParallaxElementsProps {
   variant?: "cyan" | "pink" | "mixed";
 }
 
+// Check if device is mobile
+const checkIsMobile = () => {
+  if (typeof window === "undefined") return false;
+  return window.innerWidth < 768;
+};
+
 export function ParallaxElements({ variant = "mixed" }: ParallaxElementsProps) {
   const ref = useRef<HTMLDivElement>(null);
   const [isReducedMode, setIsReducedMode] = useState(false);
 
+  // 🚀 Optimizer: Standardized on useReducedMotion hook for dynamic accessibility preference tracking
+  const shouldReduceMotion = useReducedMotion();
+
   useEffect(() => {
-    if (typeof window === "undefined") return;
-
-    // ⚡ Bolt Optimization: Use matchMedia change listeners instead of continuous resize events
-    const mqlMobile = window.matchMedia("(max-width: 767px)");
-    const mqlMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
-
-    const updateMode = () => {
-      setIsReducedMode(mqlMobile.matches || mqlMotion.matches);
-    };
-
-    updateMode();
-
-    mqlMobile.addEventListener("change", updateMode);
-    mqlMotion.addEventListener("change", updateMode);
-
-    return () => {
-      mqlMobile.removeEventListener("change", updateMode);
-      mqlMotion.removeEventListener("change", updateMode);
-    };
-  }, []);
+    setIsReducedMode(checkIsMobile() || (shouldReduceMotion ?? false));
+    
+    const handleResize = () => setIsReducedMode(checkIsMobile() || (shouldReduceMotion ?? false));
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, [shouldReduceMotion]);
 
   const { scrollYProgress } = useScroll({
     target: ref,

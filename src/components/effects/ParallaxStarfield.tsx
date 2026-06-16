@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { useScroll } from "framer-motion";
+import { useScroll, useReducedMotion } from "framer-motion";
 
 interface Star {
   x: number;
@@ -18,6 +18,8 @@ const STAR_COLORS = {
   white: "rgb(255, 255, 255)",
 } as const;
 
+const isMobile = () => typeof window !== "undefined" && window.innerWidth < 768;
+
 export function ParallaxStarfield() {
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -31,28 +33,19 @@ export function ParallaxStarfield() {
   const [isReducedMode, setIsReducedMode] = useState(false);
 
   const { scrollY } = useScroll();
+  // 🚀 Optimizer: Standardized on useReducedMotion hook for dynamic accessibility preference tracking
+  const shouldReduceMotion = useReducedMotion();
 
   useEffect(() => {
-    if (typeof window === "undefined") return;
-
-    // ⚡ Bolt Optimization: Use matchMedia change listeners instead of continuous resize events
-    const mqlMobile = window.matchMedia("(max-width: 767px)");
-    const mqlMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
-
-    const updateMode = () => {
-      setIsReducedMode(mqlMobile.matches || mqlMotion.matches);
+    setIsReducedMode(isMobile() || (shouldReduceMotion ?? false));
+    
+    const handleResize = () => {
+      setIsReducedMode(isMobile() || (shouldReduceMotion ?? false));
     };
-
-    updateMode();
-
-    mqlMobile.addEventListener("change", updateMode);
-    mqlMotion.addEventListener("change", updateMode);
-
-    return () => {
-      mqlMobile.removeEventListener("change", updateMode);
-      mqlMotion.removeEventListener("change", updateMode);
-    };
-  }, []);
+    
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, [shouldReduceMotion]);
 
   useEffect(() => {
     const unsubscribe = scrollY.on("change", (latest) => {
