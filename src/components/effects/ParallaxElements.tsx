@@ -1,30 +1,30 @@
-import { useScroll, useTransform, m } from "framer-motion";
+import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion";
 import { useRef, useEffect, useState } from "react";
 
 interface ParallaxElementsProps {
   variant?: "cyan" | "pink" | "mixed";
 }
 
-// Check if device is mobile or prefers reduced motion
-const checkReducedMode = () => {
+// Check if device is mobile
+const checkIsMobile = () => {
   if (typeof window === "undefined") return false;
-  return (
-    window.innerWidth < 768 ||
-    window.matchMedia("(prefers-reduced-motion: reduce)").matches
-  );
+  return window.innerWidth < 768;
 };
 
 export function ParallaxElements({ variant = "mixed" }: ParallaxElementsProps) {
   const ref = useRef<HTMLDivElement>(null);
   const [isReducedMode, setIsReducedMode] = useState(false);
 
+  // 🚀 Optimizer: Standardized on useReducedMotion hook for dynamic accessibility preference tracking
+  const shouldReduceMotion = useReducedMotion();
+
   useEffect(() => {
-    setIsReducedMode(checkReducedMode());
+    setIsReducedMode(checkIsMobile() || (shouldReduceMotion ?? false));
     
-    const handleResize = () => setIsReducedMode(checkReducedMode());
+    const handleResize = () => setIsReducedMode(checkIsMobile() || (shouldReduceMotion ?? false));
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
-  }, []);
+  }, [shouldReduceMotion]);
 
   const { scrollYProgress } = useScroll({
     target: ref,
