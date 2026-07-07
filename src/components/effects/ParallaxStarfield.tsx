@@ -110,8 +110,8 @@ export function ParallaxStarfield() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
       const time = currentTime * 0.001;
-      // ⚡ Bolt Optimization: Use native window.scrollY directly instead of Framer Motion useScroll
-      const scrollOffset = window.scrollY;
+      // ⚡ Bolt Optimization: Use scrollYRef updated by passive listener to avoid layout thrashing
+      const scrollOffset = scrollYRef.current;
       const canvasHeight = window.innerHeight * (isReducedMode ? 2 : 3);
 
       (Object.keys(starsRef.current) as (keyof typeof STAR_COLORS)[]).forEach(
