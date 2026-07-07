@@ -97,9 +97,9 @@ export const companies: Company[] = [
     period: "2020 – Present"
   },
   {
-    id: "veralogix-group",
-    slug: "veralogix-group",
-    name: "Veralogix Group",
+    id: "odm-studio",
+    slug: "odm-studio",
+    name: "ODM Studio",
     sector: "Consulting/Strategy",
     description: "Strategic consulting firm providing business transformation and operational excellence services.",
     highlights: [
@@ -238,7 +238,7 @@ export const companyMetrics: CompanyMetric[] = [
     revenue: calculateIndicativeRange(88, "Tourism/Experiences"),
   },
   {
-    companyId: "veralogix-group",
+    companyId: "odm-studio",
     revenueGrowthPct: 50,
     clientsAcquired: 110,
     projectsCompleted: 80,
@@ -298,7 +298,7 @@ export const an3sKnowledge = {
 
   timeline: [
     { year: "2017", event: "Founded K AND D RESOURCES - Industrial B2B services" },
-    { year: "2018", event: "Launched Strydom Projects (Construction), Veralogix Group (Consulting), Prisma Entertainment (Events)" },
+    { year: "2018", event: "Launched Strydom Projects (Construction), ODM Studio (Consulting), Prisma Entertainment (Events)" },
     { year: "2019", event: "Expanded with 360 Vision Events, Maono Moja Events, Rubies and Pearls (Tourism)" },
     { year: "2020", event: "Added 360 Vision Events Cleaning, Adventure FreaksA (Tourism)" },
     { year: "2021", event: "Launched Bobby Verd (Retail/Apparel)" },

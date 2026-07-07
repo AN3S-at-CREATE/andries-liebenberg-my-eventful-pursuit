@@ -80,7 +80,7 @@ Contains 10 South African companies:
 4. Maono Moja Events - Events/Production
 5. K AND D RESOURCES - Industrial/B2B Services
 6. Adventure FreaksA - Tourism/Experiences
-7. Veralogix Group - Consulting/Strategy
+7. ODM Studio - Consulting/Strategy
 8. Bobby Verd - Retail/Apparel
 9. Rubies and Pearls - Tourism/Experiences
 10. Prisma Entertainment - Events/Production
