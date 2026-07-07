@@ -10,7 +10,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight, Building2, TrendingUp, Users, Star } from "lucide-react";
 import { Link } from "react-router-dom";
 import { MotionReveal, MotionStagger, MotionItem } from "@/components/motion/MotionReveal";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { useScroll, useTransform, m } from "framer-motion";
 
 const Index = () => {
   const heroRef = useRef<HTMLElement>(null);
@@ -34,7 +34,7 @@ const Index = () => {
         <ParallaxElements variant="mixed" />
         
         {/* Pink streak - right side */}
-        <motion.div
+        <m.div
           className="absolute top-1/4 right-0 w-px h-64 md:h-96 opacity-60 pointer-events-none"
           initial={{ opacity: 0, scaleY: 0 }}
           animate={{ opacity: 0.6, scaleY: 1 }}
@@ -44,7 +44,7 @@ const Index = () => {
             boxShadow: "0 0 20px 2px hsl(var(--secondary) / 0.4), 0 0 40px 4px hsl(var(--secondary) / 0.2)",
           }}
         />
-        <motion.div
+        <m.div
           className="absolute top-[45%] right-8 md:right-16 w-px h-32 md:h-48 opacity-40 pointer-events-none"
           initial={{ opacity: 0, scaleY: 0 }}
           animate={{ opacity: 0.4, scaleY: 1 }}
@@ -56,13 +56,13 @@ const Index = () => {
         />
         
         {/* Parallax background layer */}
-        <motion.div
+        <m.div
           className="absolute inset-0 bg-gradient-to-b from-primary/5 via-transparent to-transparent"
           style={{ y: backgroundY }}
         />
         
         {/* Content with parallax */}
-        <motion.div
+        <m.div
           className="container max-w-4xl mx-auto text-center relative z-10"
           style={{ y: contentY, opacity }}
         >
@@ -97,7 +97,7 @@ const Index = () => {
               </Button>
             </div>
           </MotionReveal>
-        </motion.div>
+        </m.div>
       </section>
 
       {/* Pink Accent Divider */}

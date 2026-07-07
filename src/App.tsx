@@ -1,4 +1,5 @@
 import { useState, useEffect, lazy, Suspense } from "react";
+import { LazyMotion, domAnimation } from "framer-motion";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -96,6 +97,7 @@ const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
+        <LazyMotion features={domAnimation}>
         <LoadingScreen isLoading={isLoading} />
         <ParallaxStarfield />
         <NebulaClouds />
@@ -154,6 +156,7 @@ const App = () => {
             </Suspense>
           </ErrorBoundary>
         </BrowserRouter>
+      </LazyMotion>
       </TooltipProvider>
     </QueryClientProvider>
   );
