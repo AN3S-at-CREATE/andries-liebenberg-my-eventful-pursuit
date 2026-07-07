@@ -95,9 +95,9 @@ export const companies: Company[] = [
     period: "2020 – Present"
   },
   {
-    id: "veralogix-group",
-    slug: "veralogix-group",
-    name: "Veralogix Group",
+    id: "odm-studio",
+    slug: "odm-studio",
+    name: "ODM Studio",
     sector: "Consulting/Strategy",
     description: "Strategic consulting firm providing business transformation and operational excellence services.",
     highlights: [

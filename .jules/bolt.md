@@ -24,7 +24,6 @@
 ## 2025-08-14 - [Resize Event Layout Thrashing and Canvas Re-initialization]
 **Learning:** Synchronous and un-debounced window `resize` event listeners cause severe performance drops, especially when triggering heavy operations like HTML5 Canvas dimension recalculations, gradient recreation, and particle array re-initialization. This causes layout thrashing and massive Garbage Collection spikes during window resizing.
 **Action:** Always debounce window `resize` event listeners (e.g., using a `setTimeout` of 150ms) to prevent unnecessary heavy recalculations and re-renders until the resize action is complete.
-
-## 2025-06-21 - [Framer Motion Bundle Size Bottleneck]
-**Learning:** Using `import { motion } from "framer-motion"` synchronously bundles the entire heavy framer-motion rendering engine into the main JavaScript payload, increasing the initial load time and bundle size significantly.
-**Action:** Used `import { m } from "framer-motion"` and wrapped the app in `<LazyMotion features={domAnimation}>` to code-split the heavy engine out of the critical path and lazily load it.
+## 2024-03-20 - Replace resize listeners with matchMedia for responsive state
+**Learning:** Polling viewport dimensions (`window.innerWidth`) or reduced motion preferences during continuous `resize` events is a performance anti-pattern. It causes rapid, redundant state updates and layout thrashing, even when debounced.
+**Action:** Always use `window.matchMedia().addEventListener("change", ...)` when checking for discrete responsive breakpoints or media features. This ensures the event listener fires only when the boundary is crossed, eliminating unnecessary re-renders.
