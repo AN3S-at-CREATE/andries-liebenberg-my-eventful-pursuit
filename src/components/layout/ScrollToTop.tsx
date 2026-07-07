@@ -9,11 +9,14 @@ export const ScrollToTop = () => {
   useEffect(() => {
     let ticking = false;
 
-    const toggleVisibility = () => {
-      if (window.scrollY > 300) {
-        setIsVisible(true);
-      } else {
-        setIsVisible(false);
+    const onScroll = () => {
+      // 🚀 Optimizer: Fixed early ticking reset and double rAF to correctly debounce scroll event
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          setIsVisible(window.scrollY > 300);
+          ticking = false;
+        });
+        ticking = true;
       }
       ticking = false;
     };
@@ -25,9 +28,9 @@ export const ScrollToTop = () => {
       }
     };
 
-    // 🚀 Optimizer: Use passive event listener and requestAnimationFrame to prevent scroll jank
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
+    // 🚀 Optimizer: Debounce scroll events using requestAnimationFrame and use passive listener
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   const scrollToTop = () => {

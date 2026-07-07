@@ -5,8 +5,23 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import { FloatingConciergeButton } from "./components/ai-tools/FloatingConciergeButton";
 import { PageTransition } from "./components/layout/PageTransition";
+import { ErrorBoundary } from "./components/layout/ErrorBoundary";
+
+// 🚀 Optimizer: Lazy load heavy concierge widget to reduce initial bundle size
+// This prevents Radix UI Dialog, ScrollArea, and Tooltip subtrees from blocking the main thread during FCP.
+const FloatingConciergeButton = lazy(() =>
+  import("./components/ai-tools/FloatingConciergeButton").then((module) => ({
+    default: module.FloatingConciergeButton,
+  }))
+);
+
+// Sleek skeleton fallback to prevent CLS while the concierge chunk loads
+const ConciergeSkeleton = () => (
+  <div className="fixed bottom-6 right-6 z-50">
+    <div className="h-14 w-14 rounded-full bg-secondary/20 animate-pulse border border-secondary/30 shadow-[0_0_15px_hsl(var(--secondary)/0.2)]" />
+  </div>
+);
 import { BackgroundFX } from "./components/background/BackgroundFX";
 import { ParallaxStarfield } from "./components/effects/ParallaxStarfield";
 import { NebulaClouds } from "./components/effects/NebulaClouds";
@@ -133,7 +148,11 @@ const App = () => {
               </Routes>
             </Suspense>
           </PageTransition>
-          <FloatingConciergeButton />
+          <ErrorBoundary>
+            <Suspense fallback={<ConciergeSkeleton />}>
+              <FloatingConciergeButton />
+            </Suspense>
+          </ErrorBoundary>
         </BrowserRouter>
       </TooltipProvider>
     </QueryClientProvider>

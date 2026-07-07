@@ -251,9 +251,9 @@ export const ContactForm = () => {
               className="mt-0.5"
             />
             <Label htmlFor="popiaConsent" className="text-sm text-muted-foreground leading-relaxed cursor-pointer">
-              I consent to AN3S collecting and processing my personal information in accordance with the{" "}
+              I consent to AN3S collecting and processing my personal information, including technical data (IP address, browser type) for security and fraud prevention, in accordance with the{" "}
               <span className="text-primary">Protection of Personal Information Act (POPIA)</span>. 
-              My data will only be used to respond to this inquiry and will not be shared with third parties.
+              My data will only be used to respond to this inquiry and for security purposes, and will not be shared with third parties.
             </Label>
           </div>
 

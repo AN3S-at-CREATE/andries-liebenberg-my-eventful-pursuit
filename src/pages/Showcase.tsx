@@ -92,7 +92,7 @@ const caseStudies = [
     period: "2019 – Present"
   },
   {
-    title: "Veralogix Group",
+    title: "ODM Studio",
     sector: "Consulting/Strategy",
     challenge: "Establish a strategic consulting firm that delivers measurable business transformation results.",
     solution: "Created data-driven methodologies combining operational optimization with digital transformation expertise.",

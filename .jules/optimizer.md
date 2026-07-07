@@ -19,8 +19,17 @@
    **Bottleneck:** Important above-the-fold images (like Navbar logos and Loading screen animations) were either using `loading="lazy"` and `decoding="async"` or had no explicit fetch priority. This delayed rendering of these critical elements, negatively impacting the Largest Contentful Paint (LCP) metric.
    **Learning:** The `loading="lazy"` attribute delays the loading of images until they are close to the viewport. However, applying it to images already in the initial viewport (above the fold) actually slows down their loading because the browser has to wait until the DOM layout is calculated to determine if they are in the viewport. `decoding="async"` also delays rendering to avoid blocking the main thread, which is bad for critical visual elements. Using React's camelCase `fetchPriority="high"` directly signals to the browser to prioritize the resource early in the load cycle, significantly improving LCP.
    **Prevention:** Never apply `loading="lazy"` or `decoding="async"` to images that are visible on initial page load (above-the-fold). Instead, use `fetchPriority="high"` and `decoding="sync"` for critical, high-priority images such as logos, hero images, or loading animations to protect LCP and ensure they render immediately.
+## 2025-03-09 - [Optimize BackgroundFX Performance]
+**Bottleneck:** `ctx.createLinearGradient` was called on every frame in the `drawGrid` loop within `BackgroundFX.tsx`, causing high Garbage Collection pressure and performance drops.
+**Learning:** Recreating complex objects like `CanvasGradient` inside animation loops forces the engine to repeatedly allocate and discard memory.
+**Prevention:** Cache these objects outside the loop (e.g., in outer scope) and only recreate them during initialization or window resize events.
 
-## 2025-10-24 - Synchronous Scroll Event Listeners
-   **Bottleneck:** The `scroll` event listener in `src/components/layout/ScrollToTop.tsx` was synchronously triggering React state updates on every scroll event. This can cause layout thrashing and high CPU usage during continuous scrolling.
-   **Learning:** The browser can fire scroll events much faster than the screen refresh rate (often 60Hz or higher). Handling each event synchronously blocks the main thread, leading to dropped frames. By utilizing `requestAnimationFrame`, we can debounce the state updates to match the browser's render cycle, and by marking the event listener as `{ passive: true }`, we ensure the browser's native scrolling is not blocked.
-   **Prevention:** Always debounce scroll-based logic using `requestAnimationFrame` and configure `scroll` event listeners with `{ passive: true }` to maintain optimal performance.
+## 2026-06-03 - Fix Debounced Event Ticking Reset
+**Bottleneck:** The scroll event listener in `ScrollToTop.tsx` reset the `ticking` flag synchronously outside the callback and over-nested `requestAnimationFrame` calls, which nullified the performance benefits of debouncing and led to unnecessary layout thrashing.
+**Learning:** When debouncing continuous events like `scroll` using `requestAnimationFrame` and a `ticking` flag, the flag must be reset to `false` strictly inside the asynchronous callback. Doing it synchronously outside or over-nesting the callbacks allows the event to fire multiple times per frame.
+**Prevention:** Ensure `ticking = false` is only executed inside the `requestAnimationFrame` callback and avoid double-queuing `requestAnimationFrame` when managing debounced state.
+
+## 2025-06-06 - [Standardize Reduced Motion Preference Detection]
+**Bottleneck:** The `ParallaxElements.tsx` and `ParallaxStarfield.tsx` components were using a one-time `window.matchMedia("(prefers-reduced-motion: reduce)")` check without a stored `MediaQueryList` and a `change` event listener. This caused the components to ignore live changes to the user's OS or browser motion preferences.
+**Learning:** Manual `matchMedia` queries only evaluate once upon execution unless accompanied by an active listener. When using Framer Motion, its native `useReducedMotion` hook automatically manages the listener and state updates internally.
+**Prevention:** Always use `useReducedMotion` from `framer-motion` when evaluating reduced motion preferences to ensure the application reacts dynamically to user accessibility settings without boilerplate listener logic.
