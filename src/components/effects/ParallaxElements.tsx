@@ -1,30 +1,30 @@
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion";
 import { useRef, useEffect, useState } from "react";
 
 interface ParallaxElementsProps {
   variant?: "cyan" | "pink" | "mixed";
 }
 
-// Check if device is mobile or prefers reduced motion
-const checkReducedMode = () => {
+// Check if device is mobile
+const checkIsMobile = () => {
   if (typeof window === "undefined") return false;
-  return (
-    window.innerWidth < 768 ||
-    window.matchMedia("(prefers-reduced-motion: reduce)").matches
-  );
+  return window.innerWidth < 768;
 };
 
 export function ParallaxElements({ variant = "mixed" }: ParallaxElementsProps) {
   const ref = useRef<HTMLDivElement>(null);
   const [isReducedMode, setIsReducedMode] = useState(false);
 
+  // 🚀 Optimizer: Standardized on useReducedMotion hook for dynamic accessibility preference tracking
+  const shouldReduceMotion = useReducedMotion();
+
   useEffect(() => {
-    setIsReducedMode(checkReducedMode());
+    setIsReducedMode(checkIsMobile() || (shouldReduceMotion ?? false));
     
-    const handleResize = () => setIsReducedMode(checkReducedMode());
+    const handleResize = () => setIsReducedMode(checkIsMobile() || (shouldReduceMotion ?? false));
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
-  }, []);
+  }, [shouldReduceMotion]);
 
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -48,7 +48,7 @@ export function ParallaxElements({ variant = "mixed" }: ParallaxElementsProps) {
       aria-hidden="true"
     >
       {/* Large blurred orb - top right */}
-      <motion.div
+      <m.div
         style={{ y: isReducedMode ? 0 : y1, willChange: "transform" }}
         className={`absolute -top-32 -right-32 rounded-full ${
           isReducedMode ? "w-64 h-64 blur-2xl" : "w-96 h-96 blur-3xl"
@@ -66,10 +66,10 @@ export function ParallaxElements({ variant = "mixed" }: ParallaxElementsProps) {
               : `0 0 120px 60px ${variant === "pink" ? pinkGlow : cyanGlow}`,
           }}
         />
-      </motion.div>
+      </m.div>
 
       {/* Medium orb - left side */}
-      <motion.div
+      <m.div
         style={{ y: isReducedMode ? 0 : y2, willChange: "transform" }}
         className={`absolute top-1/4 -left-24 rounded-full ${
           isReducedMode ? "w-48 h-48 blur-2xl" : "w-64 h-64 blur-3xl"
@@ -87,11 +87,11 @@ export function ParallaxElements({ variant = "mixed" }: ParallaxElementsProps) {
               : `0 0 100px 50px ${variant === "cyan" ? cyanGlow : pinkGlow}`,
           }}
         />
-      </motion.div>
+      </m.div>
 
       {/* Small accent orb - center right (hidden on mobile for performance) */}
       {!isReducedMode && (
-        <motion.div
+        <m.div
           style={{ y: y3, willChange: "transform" }}
           className="absolute top-1/2 right-16 w-48 h-48 rounded-full blur-2xl opacity-25"
           initial={{ opacity: 0 }}
@@ -105,12 +105,12 @@ export function ParallaxElements({ variant = "mixed" }: ParallaxElementsProps) {
               boxShadow: `0 0 80px 40px ${cyanGlow}`,
             }}
           />
-        </motion.div>
+        </m.div>
       )}
 
       {/* Bottom left glow (hidden on mobile for performance) */}
       {!isReducedMode && (
-        <motion.div
+        <m.div
           style={{ y: y4, willChange: "transform" }}
           className="absolute bottom-32 -left-16 w-72 h-72 rounded-full blur-3xl opacity-20"
           initial={{ opacity: 0 }}
@@ -124,13 +124,13 @@ export function ParallaxElements({ variant = "mixed" }: ParallaxElementsProps) {
               boxShadow: `0 0 100px 50px ${pinkGlow}`,
             }}
           />
-        </motion.div>
+        </m.div>
       )}
 
       {/* Floating grid lines (hidden on mobile) */}
       {!isReducedMode && (
         <>
-          <motion.div
+          <m.div
             style={{ y: y2 }}
             className="absolute top-20 left-1/4 w-px h-64 opacity-10"
           >
@@ -140,9 +140,9 @@ export function ParallaxElements({ variant = "mixed" }: ParallaxElementsProps) {
                 background: `linear-gradient(to bottom, transparent, ${cyanGlow}, transparent)`,
               }}
             />
-          </motion.div>
+          </m.div>
 
-          <motion.div
+          <m.div
             style={{ y: y1 }}
             className="absolute top-40 right-1/3 w-px h-48 opacity-10"
           >
@@ -152,7 +152,7 @@ export function ParallaxElements({ variant = "mixed" }: ParallaxElementsProps) {
                 background: `linear-gradient(to bottom, transparent, ${pinkGlow}, transparent)`,
               }}
             />
-          </motion.div>
+          </m.div>
         </>
       )}
     </div>

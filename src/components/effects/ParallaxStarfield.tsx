@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { useScroll } from "framer-motion";
+import { useScroll, useReducedMotion } from "framer-motion";
 
 interface Star {
   x: number;
@@ -19,9 +19,6 @@ const STAR_COLORS = {
 } as const;
 
 const isMobile = () => typeof window !== "undefined" && window.innerWidth < 768;
-const prefersReducedMotion = () =>
-  typeof window !== "undefined" &&
-  window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 export function ParallaxStarfield() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -32,28 +29,22 @@ export function ParallaxStarfield() {
     white: [],
   });
   const animationRef = useRef<number>();
-  const scrollYRef = useRef(0);
   const [isReducedMode, setIsReducedMode] = useState(false);
 
   const { scrollY } = useScroll();
+  // 🚀 Optimizer: Standardized on useReducedMotion hook for dynamic accessibility preference tracking
+  const shouldReduceMotion = useReducedMotion();
 
   useEffect(() => {
-    setIsReducedMode(isMobile() || prefersReducedMotion());
+    setIsReducedMode(isMobile() || (shouldReduceMotion ?? false));
     
     const handleResize = () => {
-      setIsReducedMode(isMobile() || prefersReducedMotion());
+      setIsReducedMode(isMobile() || (shouldReduceMotion ?? false));
     };
     
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
-  useEffect(() => {
-    const unsubscribe = scrollY.on("change", (latest) => {
-      scrollYRef.current = latest;
-    });
-    return () => unsubscribe();
-  }, [scrollY]);
+  }, [shouldReduceMotion]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -104,6 +95,12 @@ export function ParallaxStarfield() {
     const frameInterval = 1000 / targetFPS;
 
     const animate = (currentTime: number) => {
+      // ⚡ Bolt Optimization: Pause animation if the tab is not visible to save battery/CPU
+      if (document.visibilityState === 'hidden') {
+        animationRef.current = requestAnimationFrame(animate);
+        return;
+      }
+
       if (currentTime - lastFrameTime < frameInterval) {
         animationRef.current = requestAnimationFrame(animate);
         return;
@@ -113,6 +110,7 @@ export function ParallaxStarfield() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
       const time = currentTime * 0.001;
+      // ⚡ Bolt Optimization: Use scrollYRef updated by passive listener to avoid layout thrashing
       const scrollOffset = scrollYRef.current;
       const canvasHeight = window.innerHeight * (isReducedMode ? 2 : 3);
 
@@ -161,7 +159,8 @@ export function ParallaxStarfield() {
             }
           });
         }
-      );
+      });
+    });
 
       animationRef.current = requestAnimationFrame(animate);
     };

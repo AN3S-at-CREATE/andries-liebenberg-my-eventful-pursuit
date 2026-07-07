@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { motion, useSpring, useTransform } from "framer-motion";
+import { useSpring, useTransform, m } from "framer-motion";
 
 interface CursorGlowProps {
   containerRef: React.RefObject<HTMLElement>;
@@ -77,7 +77,7 @@ export const CursorGlow = ({
   return (
     <>
       {/* Primary glow */}
-      <motion.div
+      <m.div
         ref={glowRef}
         className={`absolute pointer-events-none rounded-full blur-[80px] z-20 ${getGlowColor()}`}
         style={{
@@ -93,7 +93,7 @@ export const CursorGlow = ({
       />
 
       {/* Secondary smaller glow for more intensity at center */}
-      <motion.div
+      <m.div
         className="absolute pointer-events-none rounded-full blur-[40px] bg-primary/20 z-20"
         style={{
           width: size * 0.4,

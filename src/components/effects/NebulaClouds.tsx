@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 
 export function NebulaClouds() {
   return (
@@ -7,7 +7,7 @@ export function NebulaClouds() {
       aria-hidden="true"
     >
       {/* Primary cyan nebula - top left */}
-      <motion.div
+      <m.div
         className="absolute -top-1/4 -left-1/4 w-[800px] h-[800px] rounded-full opacity-[0.08]"
         style={{
           background: "radial-gradient(ellipse at center, hsl(var(--primary)) 0%, transparent 70%)",
@@ -26,7 +26,7 @@ export function NebulaClouds() {
       />
 
       {/* Secondary pink nebula - bottom right */}
-      <motion.div
+      <m.div
         className="absolute -bottom-1/4 -right-1/4 w-[700px] h-[700px] rounded-full opacity-[0.07]"
         style={{
           background: "radial-gradient(ellipse at center, hsl(var(--secondary)) 0%, transparent 70%)",
@@ -46,7 +46,7 @@ export function NebulaClouds() {
       />
 
       {/* Smaller cyan accent - center right */}
-      <motion.div
+      <m.div
         className="absolute top-1/3 right-0 w-[500px] h-[500px] rounded-full opacity-[0.05]"
         style={{
           background: "radial-gradient(ellipse at center, hsl(var(--primary)) 0%, transparent 65%)",
@@ -66,7 +66,7 @@ export function NebulaClouds() {
       />
 
       {/* Small pink accent - left side */}
-      <motion.div
+      <m.div
         className="absolute top-2/3 -left-20 w-[400px] h-[400px] rounded-full opacity-[0.06]"
         style={{
           background: "radial-gradient(ellipse at center, hsl(var(--secondary)) 0%, transparent 60%)",
@@ -86,7 +86,7 @@ export function NebulaClouds() {
       />
 
       {/* Mixed gradient nebula - center top */}
-      <motion.div
+      <m.div
         className="absolute top-0 left-1/3 w-[600px] h-[600px] rounded-full opacity-[0.04]"
         style={{
           background: "radial-gradient(ellipse at 30% 40%, hsl(var(--primary)) 0%, hsl(var(--secondary)) 50%, transparent 70%)",
@@ -106,7 +106,7 @@ export function NebulaClouds() {
       />
 
       {/* Subtle bottom gradient overlay */}
-      <motion.div
+      <m.div
         className="absolute bottom-0 left-0 right-0 h-[500px] opacity-[0.03]"
         style={{
           background: "linear-gradient(to top, hsl(var(--secondary)), transparent)",
