@@ -97,7 +97,7 @@ const Expertise = () => {
                     </h3>
                     <p className="text-muted-foreground mb-4">{area.description}</p>
                     <div className={`inline-flex items-center gap-2 text-sm font-medium ${area.accent === "cyan" ? "text-primary" : "text-secondary"}`}>
-                      Learn more
+                      Learn more about {area.title}
                       <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
                     </div>
                   </Card>
