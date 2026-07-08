@@ -27,7 +27,14 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <Seo
+        title="Andries Liebenberg | Business Growth & AI Systems"
+        description="AN3S is Andries Liebenberg's brand hub for business growth systems, experimental marketing, and AI automation — based in South Africa, built for global scale."
+        path="/"
+      />
       <Navbar />
+      <main>
+      
       
       {/* Hero Section with Parallax */}
       <section ref={heroRef} className="relative py-24 px-4 overflow-hidden">
