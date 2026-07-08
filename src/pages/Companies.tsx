@@ -68,6 +68,7 @@ const Companies = () => {
 
       {/* Divider */}
       <div className="divider-pink h-px w-full" />
+      </main>
 
       <Footer />
       <ScrollToTop />
