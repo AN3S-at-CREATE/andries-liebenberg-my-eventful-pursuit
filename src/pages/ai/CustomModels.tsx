@@ -4,6 +4,8 @@ import { ScrollToTop } from "@/components/layout/ScrollToTop";
 import { MotionReveal } from "@/components/motion/MotionReveal";
 import { ParallaxElements } from "@/components/effects/ParallaxElements";
 import { Card } from "@/components/ui/card";
+import { Seo } from "@/components/seo/Seo";
+import { breadcrumb } from "@/lib/breadcrumb";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
@@ -12,6 +14,16 @@ import { Settings, Target, BarChart3, Cpu, ArrowRight } from "lucide-react";
 const CustomModels = () => {
   return (
     <div className="min-h-screen bg-background">
+      <Seo
+        title="Custom AI Models | AN3S"
+        description="Specialized, proprietary AI models built for personalized marketing weighting, precision targeting, and deep analysis."
+        path="/ai/custom-models"
+        jsonLd={breadcrumb([
+          { name: "Home", path: "/" },
+          { name: "AI Tools & Projects", path: "/ai" },
+          { name: "Custom AI Models", path: "/ai/custom-models" },
+        ])}
+      />
       <Navbar />
       
       <section className="relative py-24 px-4 overflow-hidden">

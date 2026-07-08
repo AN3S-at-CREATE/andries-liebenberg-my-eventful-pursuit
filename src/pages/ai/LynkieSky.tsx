@@ -4,6 +4,8 @@ import { ScrollToTop } from "@/components/layout/ScrollToTop";
 import { MotionReveal } from "@/components/motion/MotionReveal";
 import { ParallaxElements } from "@/components/effects/ParallaxElements";
 import { Card } from "@/components/ui/card";
+import { Seo } from "@/components/seo/Seo";
+import { breadcrumb } from "@/lib/breadcrumb";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
@@ -12,6 +14,16 @@ import { Sparkles, Cloud, BarChart3, Zap, ArrowRight } from "lucide-react";
 const LynkieSky = () => {
   return (
     <div className="min-h-screen bg-background">
+      <Seo
+        title="Lynkie Sky | AN3S"
+        description="Innovative tool integrating cloud capabilities with advanced marketing analytics."
+        path="/ai/lynkie-sky"
+        jsonLd={breadcrumb([
+          { name: "Home", path: "/" },
+          { name: "AI Tools & Projects", path: "/ai" },
+          { name: "Lynkie Sky", path: "/ai/lynkie-sky" },
+        ])}
+      />
       <Navbar />
       
       <section className="relative py-24 px-4 overflow-hidden">
