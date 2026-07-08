@@ -48,8 +48,13 @@ const aiTools = [
 const AI = () => {
   return (
     <div className="min-h-screen bg-background">
+      <Seo
+        title="AI Tools & Projects | Andries Liebenberg (AN3S)"
+        description="Cutting-edge AI tools and projects by Andries Liebenberg — EventPulse, Lynkie Sky, NeuroLogix, and custom models for events and marketing operations."
+        path="/ai"
+      />
       <Navbar />
-      
+      <main>
       <section className="relative py-24 px-4 overflow-hidden">
         <ParallaxElements variant="pink" />
         <div className="container max-w-6xl mx-auto relative z-10">
