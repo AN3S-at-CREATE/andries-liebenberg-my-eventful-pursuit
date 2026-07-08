@@ -57,8 +57,13 @@ const expertiseAreas = [
 const Expertise = () => {
   return (
     <div className="min-h-screen bg-background">
+      <Seo
+        title="Areas of Expertise | Andries Liebenberg (AN3S)"
+        description="20+ years across events, marketing, sales, development, business growth, and mentorship — measurable, cross-industry expertise from Andries Liebenberg."
+        path="/expertise"
+      />
       <Navbar />
-      
+      <main>
       <section className="relative py-24 px-4 overflow-hidden">
         <ParallaxElements variant="cyan" />
         <div className="container max-w-6xl mx-auto relative z-10">
