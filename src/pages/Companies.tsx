@@ -9,6 +9,7 @@ import { Badge } from "@/components/ui/badge";
 import { MessageCircle } from "lucide-react";
 import { MotionReveal } from "@/components/motion/MotionReveal";
 import { Seo } from "@/components/seo/Seo";
+import { breadcrumb } from "@/lib/breadcrumb";
 
 const Companies = () => {
   return (
