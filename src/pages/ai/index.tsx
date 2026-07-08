@@ -53,6 +53,10 @@ const AI = () => {
         title="AI Tools & Projects | Andries Liebenberg (AN3S)"
         description="Cutting-edge AI tools and projects by Andries Liebenberg — EventPulse, Lynkie Sky, NeuroLogix, and custom models for events and marketing operations."
         path="/ai"
+        jsonLd={breadcrumb([
+          { name: "Home", path: "/" },
+          { name: "AI Tools & Projects", path: "/ai" },
+        ])}
       />
       <Navbar />
       <main>
