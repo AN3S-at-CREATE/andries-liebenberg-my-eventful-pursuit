@@ -7,6 +7,7 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Link } from "react-router-dom";
 import { ArrowRight, Calendar, TrendingUp, DollarSign, Code, Briefcase, GraduationCap } from "lucide-react";
+import { Seo } from "@/components/seo/Seo";
 
 const expertiseAreas = [
   {
@@ -56,8 +57,13 @@ const expertiseAreas = [
 const Expertise = () => {
   return (
     <div className="min-h-screen bg-background">
+      <Seo
+        title="Areas of Expertise | Andries Liebenberg (AN3S)"
+        description="20+ years across events, marketing, sales, development, business growth, and mentorship — measurable, cross-industry expertise from Andries Liebenberg."
+        path="/expertise"
+      />
       <Navbar />
-      
+      <main>
       <section className="relative py-24 px-4 overflow-hidden">
         <ParallaxElements variant="cyan" />
         <div className="container max-w-6xl mx-auto relative z-10">
@@ -91,7 +97,7 @@ const Expertise = () => {
                     </h3>
                     <p className="text-muted-foreground mb-4">{area.description}</p>
                     <div className={`inline-flex items-center gap-2 text-sm font-medium ${area.accent === "cyan" ? "text-primary" : "text-secondary"}`}>
-                      Learn more
+                      Learn more about {area.title}
                       <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
                     </div>
                   </Card>
@@ -104,6 +110,7 @@ const Expertise = () => {
           <div className="divider-pink mt-12" />
         </div>
       </section>
+      </main>
 
       <Footer />
       <ScrollToTop />

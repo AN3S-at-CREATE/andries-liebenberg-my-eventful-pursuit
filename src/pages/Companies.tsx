@@ -8,11 +8,18 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { MessageCircle } from "lucide-react";
 import { MotionReveal } from "@/components/motion/MotionReveal";
+import { Seo } from "@/components/seo/Seo";
 
 const Companies = () => {
   return (
     <div className="min-h-screen bg-background">
+      <Seo
+        title="Companies Built | Andries Liebenberg (AN3S)"
+        description="Explore the 10+ companies Andries Liebenberg has built across events, consulting, retail, and industrial sectors in South Africa — with real metrics."
+        path="/companies"
+      />
       <Navbar />
+      <main>
 
       {/* Hero */}
       <section className="relative py-16 px-4 border-b border-secondary/30 overflow-hidden">
@@ -61,6 +68,7 @@ const Companies = () => {
 
       {/* Divider */}
       <div className="divider-pink h-px w-full" />
+      </main>
 
       <Footer />
       <ScrollToTop />

@@ -11,6 +11,7 @@ import { ArrowRight, Building2, TrendingUp, Users, Star } from "lucide-react";
 import { Link } from "react-router-dom";
 import { MotionReveal, MotionStagger, MotionItem } from "@/components/motion/MotionReveal";
 import { useScroll, useTransform, m } from "framer-motion";
+import { Seo } from "@/components/seo/Seo";
 
 const Index = () => {
   const heroRef = useRef<HTMLElement>(null);
@@ -26,7 +27,14 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <Seo
+        title="Andries Liebenberg | Business Growth & AI Systems"
+        description="AN3S is Andries Liebenberg's brand hub for business growth systems, experimental marketing, and AI automation — based in South Africa, built for global scale."
+        path="/"
+      />
       <Navbar />
+      <main>
+      
       
       {/* Hero Section with Parallax */}
       <section ref={heroRef} className="relative py-24 px-4 overflow-hidden">
@@ -178,6 +186,7 @@ const Index = () => {
         </div>
       </section>
 
+      </main>
       <Footer />
       <ScrollToTop />
     </div>

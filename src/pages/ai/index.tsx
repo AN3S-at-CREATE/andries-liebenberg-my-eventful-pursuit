@@ -8,6 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { ArrowRight, Brain, Sparkles, Zap, Settings } from "lucide-react";
+import { Seo } from "@/components/seo/Seo";
 
 const aiTools = [
   {
@@ -47,8 +48,13 @@ const aiTools = [
 const AI = () => {
   return (
     <div className="min-h-screen bg-background">
+      <Seo
+        title="AI Tools & Projects | Andries Liebenberg (AN3S)"
+        description="Cutting-edge AI tools and projects by Andries Liebenberg — EventPulse, Lynkie Sky, NeuroLogix, and custom models for events and marketing operations."
+        path="/ai"
+      />
       <Navbar />
-      
+      <main>
       <section className="relative py-24 px-4 overflow-hidden">
         <ParallaxElements variant="pink" />
         <div className="container max-w-6xl mx-auto relative z-10">
@@ -87,7 +93,7 @@ const AI = () => {
                     </h3>
                     <p className="text-muted-foreground mb-4">{tool.description}</p>
                     <div className={`inline-flex items-center gap-2 text-sm font-medium ${tool.accent === "cyan" ? "text-primary" : "text-secondary"}`}>
-                      Learn more
+                      Learn more about {tool.title}
                       <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
                     </div>
                   </Card>
@@ -117,6 +123,7 @@ const AI = () => {
           </MotionReveal>
         </div>
       </section>
+      </main>
 
       <Footer />
       <ScrollToTop />
