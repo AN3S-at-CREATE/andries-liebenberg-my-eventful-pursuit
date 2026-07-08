@@ -48,7 +48,7 @@ export const Navbar = () => {
           {/* 🚀 Optimizer: Removed loading="lazy" and added fetchPriority="high" for critical above-the-fold logo to protect LCP */}
           <img 
             src={logo} 
-            alt="AN3S" 
+            alt="AN3S Brand Logo — Andries Liebenberg" 
             className="h-10 w-auto transition-all duration-300 hover:scale-110 hover:drop-shadow-[0_0_12px_hsl(var(--secondary))]" 
             fetchPriority="high"
             decoding="sync"
