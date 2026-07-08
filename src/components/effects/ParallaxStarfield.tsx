@@ -36,6 +36,15 @@ export function ParallaxStarfield() {
   // 🚀 Optimizer: Standardized on useReducedMotion hook for dynamic accessibility preference tracking
   const shouldReduceMotion = useReducedMotion();
 
+  // ⚡ Bolt Optimization: mirror scroll position into a ref via passive listener to avoid layout thrashing in the rAF loop
+  useEffect(() => {
+    scrollYRef.current = scrollY.get();
+    const unsubscribe = scrollY.on("change", (v) => {
+      scrollYRef.current = v;
+    });
+    return () => unsubscribe();
+  }, [scrollY]);
+
   useEffect(() => {
     setIsReducedMode(isMobile() || (shouldReduceMotion ?? false));
     
