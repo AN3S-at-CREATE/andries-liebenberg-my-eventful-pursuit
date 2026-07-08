@@ -29,6 +29,7 @@ export function ParallaxStarfield() {
     white: [],
   });
   const animationRef = useRef<number>();
+  const scrollYRef = useRef(0);
   const [isReducedMode, setIsReducedMode] = useState(false);
 
   const { scrollY } = useScroll();
