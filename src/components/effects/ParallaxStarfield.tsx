@@ -161,7 +161,6 @@ export function ParallaxStarfield() {
           });
         }
       });
-    });
 
       animationRef.current = requestAnimationFrame(animate);
     };
