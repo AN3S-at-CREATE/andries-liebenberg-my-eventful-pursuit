@@ -11,6 +11,7 @@ import { ArrowRight, Building2, TrendingUp, Users, Star } from "lucide-react";
 import { Link } from "react-router-dom";
 import { MotionReveal, MotionStagger, MotionItem } from "@/components/motion/MotionReveal";
 import { useScroll, useTransform, m } from "framer-motion";
+import { Seo } from "@/components/seo/Seo";
 
 const Index = () => {
   const heroRef = useRef<HTMLElement>(null);
