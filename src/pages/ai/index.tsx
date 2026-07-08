@@ -93,7 +93,7 @@ const AI = () => {
                     </h3>
                     <p className="text-muted-foreground mb-4">{tool.description}</p>
                     <div className={`inline-flex items-center gap-2 text-sm font-medium ${tool.accent === "cyan" ? "text-primary" : "text-secondary"}`}>
-                      Learn more
+                      Learn more about {tool.title}
                       <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
                     </div>
                   </Card>
