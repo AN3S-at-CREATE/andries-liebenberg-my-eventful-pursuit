@@ -1,4 +1,4 @@
-import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion";
+import { motion as m, useScroll, useTransform, useReducedMotion } from "framer-motion";
 import { useRef, useEffect, useState } from "react";
 
 interface ParallaxElementsProps {
