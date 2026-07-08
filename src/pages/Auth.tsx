@@ -46,24 +46,19 @@ const Auth = () => {
     try {
       if (isSignUp) {
         const { error } = await signUp(data.email, data.password);
-        if (error) {
-          if (error.message.includes("already registered")) {
-            toast({
-              title: "Account exists",
-              description: "This email is already registered. Please sign in instead.",
-              variant: "destructive",
-            });
-          } else {
-            toast({
-              title: "Sign up failed",
-              description: error.message,
-              variant: "destructive",
-            });
-          }
-        } else {
+        if (error && !error.message.includes("already registered")) {
           toast({
-            title: "Account created",
-            description: "Check your email to verify your account, then sign in.",
+            title: "Sign up failed",
+            description: error.message,
+            variant: "destructive",
+          });
+        } else {
+          // Show the same generic message whether or not the email exists,
+          // so attackers cannot enumerate registered (admin) accounts.
+          toast({
+            title: "Check your email",
+            description:
+              "If this email can be registered, you'll receive a verification link. If you already have an account, sign in instead.",
           });
           setIsSignUp(false);
           reset();
