@@ -13,7 +13,13 @@ import { Seo } from "@/components/seo/Seo";
 const Companies = () => {
   return (
     <div className="min-h-screen bg-background">
+      <Seo
+        title="Companies Built | Andries Liebenberg (AN3S)"
+        description="Explore the 10+ companies Andries Liebenberg has built across events, consulting, retail, and industrial sectors in South Africa — with real metrics."
+        path="/companies"
+      />
       <Navbar />
+      <main>
 
       {/* Hero */}
       <section className="relative py-16 px-4 border-b border-secondary/30 overflow-hidden">
