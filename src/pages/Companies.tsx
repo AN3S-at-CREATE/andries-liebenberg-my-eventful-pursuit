@@ -9,6 +9,7 @@ import { Badge } from "@/components/ui/badge";
 import { MessageCircle } from "lucide-react";
 import { MotionReveal } from "@/components/motion/MotionReveal";
 import { Seo } from "@/components/seo/Seo";
+import { breadcrumb } from "@/lib/breadcrumb";
 
 const Companies = () => {
   return (
@@ -17,6 +18,10 @@ const Companies = () => {
         title="Companies Built | Andries Liebenberg (AN3S)"
         description="Explore the 10+ companies Andries Liebenberg has built across events, consulting, retail, and industrial sectors in South Africa — with real metrics."
         path="/companies"
+        jsonLd={breadcrumb([
+          { name: "Home", path: "/" },
+          { name: "Companies", path: "/companies" },
+        ])}
       />
       <Navbar />
       <main>

@@ -27,11 +27,27 @@
     {
       "@context": "https://schema.org",
       "@type": "Person",
+      "@id": "https://an3s.info/#andries",
       "name": "Andries Liebenberg",
       "alternateName": "AN3S",
       "url": "https://an3s.info/",
+      "image": "https://storage.googleapis.com/gpt-engineer-file-uploads/ctbaYOudDvNTfrKMncA18y3ZXDZ2/social-images/social-1767581646029-Share image.png",
       "jobTitle": "Business Growth & AI Systems Builder",
-      "worksFor": { "@type": "Organization", "name": "AN3S" },
+      "worksFor": { "@id": "https://an3s.info/#org" },
+      "address": { "@type": "PostalAddress", "addressCountry": "ZA" },
+      "sameAs": [ "https://twitter.com/an3s_create" ]
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "@id": "https://an3s.info/#org",
+      "name": "AN3S",
+      "alternateName": "AN3S — Andries Liebenberg",
+      "url": "https://an3s.info/",
+      "logo": "https://storage.googleapis.com/gpt-engineer-file-uploads/ctbaYOudDvNTfrKMncA18y3ZXDZ2/social-images/social-1767581646029-Share image.png",
+      "founder": { "@id": "https://an3s.info/#andries" },
       "address": { "@type": "PostalAddress", "addressCountry": "ZA" },
       "sameAs": [ "https://twitter.com/an3s_create" ]
     }
@@ -40,10 +56,13 @@
     {
       "@context": "https://schema.org",
       "@type": "WebSite",
+      "@id": "https://an3s.info/#website",
       "name": "AN3S — Andries Liebenberg",
-      "url": "https://an3s.info/"
+      "url": "https://an3s.info/",
+      "publisher": { "@id": "https://an3s.info/#org" }
     }
     </script>
+
 </head>
   <body>
     <div id="root"></div>
