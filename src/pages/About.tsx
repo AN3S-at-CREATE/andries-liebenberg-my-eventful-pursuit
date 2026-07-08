@@ -40,6 +40,10 @@ const About = () => {
         description="Meet Andries Liebenberg (AN3S): 20+ years building companies across events, marketing, sales, and AI systems in South Africa with measurable, proven results."
         path="/about"
         ogType="profile"
+        jsonLd={breadcrumb([
+          { name: "Home", path: "/" },
+          { name: "About", path: "/about" },
+        ])}
       />
       <Navbar />
       <main>
