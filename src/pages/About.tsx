@@ -35,8 +35,14 @@ const About = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <Seo
+        title="About Andries Liebenberg | AN3S"
+        description="Meet Andries Liebenberg (AN3S): 20+ years building companies across events, marketing, sales, and AI systems in South Africa with measurable, proven results."
+        path="/about"
+        ogType="profile"
+      />
       <Navbar />
-      
+      <main>
       {/* Hero Section */}
       <section className="relative py-24 px-4 overflow-hidden">
         <ParallaxElements variant="mixed" />
