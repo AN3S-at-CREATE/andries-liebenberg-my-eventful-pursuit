@@ -62,6 +62,10 @@ const Expertise = () => {
         title="Areas of Expertise | Andries Liebenberg (AN3S)"
         description="20+ years across events, marketing, sales, development, business growth, and mentorship — measurable, cross-industry expertise from Andries Liebenberg."
         path="/expertise"
+        jsonLd={breadcrumb([
+          { name: "Home", path: "/" },
+          { name: "Expertise", path: "/expertise" },
+        ])}
       />
       <Navbar />
       <main>
