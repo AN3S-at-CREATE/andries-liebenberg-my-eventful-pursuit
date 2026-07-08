@@ -4,12 +4,24 @@ import { ScrollToTop } from "@/components/layout/ScrollToTop";
 import { MotionReveal } from "@/components/motion/MotionReveal";
 import { ParallaxElements } from "@/components/effects/ParallaxElements";
 import { Card } from "@/components/ui/card";
+import { Seo } from "@/components/seo/Seo";
+import { breadcrumb } from "@/lib/breadcrumb";
 import { Badge } from "@/components/ui/badge";
 import { GraduationCap, Mic, Award, Heart } from "lucide-react";
 
 const Mentorship = () => {
   return (
     <div className="min-h-screen bg-background">
+      <Seo
+        title="Mentorship & Industry Leadership | AN3S"
+        description="Nurturing the next generation of event and marketing professionals through mentorship, lecturing, and industry impact."
+        path="/expertise/mentorship"
+        jsonLd={breadcrumb([
+          { name: "Home", path: "/" },
+          { name: "Expertise", path: "/expertise" },
+          { name: "Mentorship", path: "/expertise/mentorship" },
+        ])}
+      />
       <Navbar />
       
       <section className="relative py-24 px-4 overflow-hidden">
