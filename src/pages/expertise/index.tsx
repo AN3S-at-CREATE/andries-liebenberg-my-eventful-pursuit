@@ -7,6 +7,7 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Link } from "react-router-dom";
 import { ArrowRight, Calendar, TrendingUp, DollarSign, Code, Briefcase, GraduationCap } from "lucide-react";
+import { Seo } from "@/components/seo/Seo";
 
 const expertiseAreas = [
   {
