@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { MessageCircle } from "lucide-react";
 import { MotionReveal } from "@/components/motion/MotionReveal";
+import { Seo } from "@/components/seo/Seo";
 
 const Companies = () => {
   return (
