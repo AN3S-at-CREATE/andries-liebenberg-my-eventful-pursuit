@@ -110,6 +110,7 @@ const Expertise = () => {
           <div className="divider-pink mt-12" />
         </div>
       </section>
+      </main>
 
       <Footer />
       <ScrollToTop />
