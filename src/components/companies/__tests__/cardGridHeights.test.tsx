@@ -2,6 +2,7 @@ import { describe, it, expect } from "vitest";
 import { render } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import { LazyMotion, domAnimation } from "framer-motion";
+import { TooltipProvider } from "@/components/ui/tooltip";
 import { CompaniesPreview } from "@/components/companies/CompaniesPreview";
 import { CompanyCard } from "@/components/companies/CompanyCard";
 import { companies } from "@/data/companies";
