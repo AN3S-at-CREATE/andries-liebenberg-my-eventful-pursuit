@@ -75,7 +75,7 @@ export const CompanyGrid = () => {
             const metrics = metricsMap.get(company.id);
             if (!metrics) return null;
             return (
-              <MotionItem key={company.id}>
+              <MotionItem key={company.id} className="h-full">
                 <CompanyCard company={company} metrics={metrics} />
               </MotionItem>
             );
