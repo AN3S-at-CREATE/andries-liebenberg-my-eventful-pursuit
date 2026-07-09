@@ -21,7 +21,9 @@ import { getMetricsByCompanyId } from "@/data/companyMetrics";
 function renderWithProviders(ui: React.ReactElement) {
   return render(
     <LazyMotion features={domAnimation}>
-      <MemoryRouter>{ui}</MemoryRouter>
+      <MemoryRouter>
+        <TooltipProvider>{ui}</TooltipProvider>
+      </MemoryRouter>
     </LazyMotion>,
   );
 }
