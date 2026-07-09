@@ -241,6 +241,7 @@ export function BackgroundFX() {
     <>
       <canvas
         ref={canvasRef}
+        aria-hidden="true"
         className="fixed inset-0 -z-10 pointer-events-none"
         style={{ background: "hsl(223, 24%, 6%)" }}
       />

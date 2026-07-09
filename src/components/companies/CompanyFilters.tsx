@@ -27,7 +27,7 @@ export const CompanyFilters = ({
       <div className="flex items-center gap-2">
         <span className="text-sm text-muted-foreground">Sort by:</span>
         <Select value={sortBy} onValueChange={(v) => onSortChange(v as SortOption)}>
-          <SelectTrigger className="w-[160px] bg-card/50 border-border/50">
+          <SelectTrigger aria-label="Sort companies by" className="w-[160px] bg-card/50 border-border/50">
             <SelectValue />
           </SelectTrigger>
           <SelectContent>
@@ -42,7 +42,7 @@ export const CompanyFilters = ({
       <div className="flex items-center gap-2">
         <span className="text-sm text-muted-foreground">Sector:</span>
         <Select value={filterBy} onValueChange={(v) => onFilterChange(v as FilterOption)}>
-          <SelectTrigger className="w-[180px] bg-card/50 border-border/50">
+          <SelectTrigger aria-label="Filter companies by sector" className="w-[180px] bg-card/50 border-border/50">
             <SelectValue />
           </SelectTrigger>
           <SelectContent>

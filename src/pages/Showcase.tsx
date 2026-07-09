@@ -129,6 +129,7 @@ const Showcase = () => {
     <div className="min-h-screen bg-background">
       <Navbar />
       
+      <main>
       {/* Hero Section */}
       <section className="relative py-24 px-4 overflow-hidden">
         <ParallaxElements variant="cyan" />
@@ -365,6 +366,7 @@ const Showcase = () => {
           </MotionReveal>
         </div>
       </section>
+      </main>
 
       <Footer />
       <ScrollToTop />
