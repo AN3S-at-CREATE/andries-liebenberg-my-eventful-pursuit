@@ -41,6 +41,9 @@ describe("company card grid – equal height contract", () => {
       expect(wrapper).not.toBeNull();
       expect(wrapper).toHaveClass("h-full");
 
+      // The link between the stretched grid item and card must also fill height.
+      expect(link).toHaveClass("h-full");
+
       // The card element inside the link must fill that stretched height.
       const card = link.querySelector(":scope > *");
       expect(card).not.toBeNull();
@@ -56,6 +59,8 @@ describe("company card grid – equal height contract", () => {
     );
 
     const card = container.querySelector("a.group.block > *");
+    const link = container.querySelector("a.group.block");
+    expect(link).toHaveClass("h-full");
     expect(card).toHaveClass("h-full");
   });
 });
