@@ -176,20 +176,26 @@ export function ConciergeModal({ trigger }: ConciergeModalProps) {
             />
             <Tooltip>
               <TooltipTrigger asChild>
-                <span tabIndex={(!inputValue.trim() || isLoading || remainingMessages <= 0) ? 0 : -1}>
-                  <Button
-                    onClick={handleSend}
-                    disabled={!inputValue.trim() || isLoading || remainingMessages <= 0}
-                    className="bg-primary hover:bg-primary/90"
-                    aria-label="Send message"
-                  >
-                    {isLoading ? (
-                      <Loader2 className="w-4 h-4 animate-spin" />
-                    ) : (
-                      <Send className="w-4 h-4" />
-                    )}
-                  </Button>
-                </span>
+                <Button
+                  onClick={(e) => {
+                    if (!inputValue.trim() || isLoading || remainingMessages <= 0) {
+                      e.preventDefault();
+                      return;
+                    }
+                    handleSend();
+                  }}
+                  aria-disabled={!inputValue.trim() || isLoading || remainingMessages <= 0}
+                  className={`bg-primary hover:bg-primary/90 ${
+                    (!inputValue.trim() || isLoading || remainingMessages <= 0) ? "opacity-50 cursor-not-allowed" : ""
+                  }`}
+                  aria-label="Send message"
+                >
+                  {isLoading ? (
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                  ) : (
+                    <Send className="w-4 h-4" />
+                  )}
+                </Button>
               </TooltipTrigger>
               <TooltipContent>
                 <p>Send message</p>

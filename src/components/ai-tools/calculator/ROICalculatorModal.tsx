@@ -245,18 +245,24 @@ export function ROICalculatorModal({ trigger, initialValues, autoOpen, onAutoOpe
 
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <span tabIndex={isExporting ? 0 : -1}>
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      onClick={handleExportPDF}
-                      disabled={isExporting}
-                      className="h-8 w-8 text-muted-foreground hover:text-primary"
-                      aria-label="Export as PDF"
-                    >
-                      <Download className={`w-4 h-4 ${isExporting ? "animate-spin" : ""}`} />
-                    </Button>
-                  </span>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={(e) => {
+                      if (isExporting) {
+                        e.preventDefault();
+                        return;
+                      }
+                      handleExportPDF();
+                    }}
+                    aria-disabled={isExporting}
+                    className={`h-8 w-8 text-muted-foreground hover:text-primary ${
+                      isExporting ? "opacity-50 cursor-not-allowed" : ""
+                    }`}
+                    aria-label="Export as PDF"
+                  >
+                    <Download className={`w-4 h-4 ${isExporting ? "animate-spin" : ""}`} />
+                  </Button>
                 </TooltipTrigger>
                 <TooltipContent>
                   <p>Export as PDF</p>

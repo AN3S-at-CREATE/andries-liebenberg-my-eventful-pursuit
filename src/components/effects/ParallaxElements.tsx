@@ -22,8 +22,8 @@ export function ParallaxElements({ variant = "mixed" }: ParallaxElementsProps) {
     setIsReducedMode(checkIsMobile() || (shouldReduceMotion ?? false));
     
     // ⚡ Bolt Optimization: Use matchMedia change listener instead of continuous resize event
-    const handleMediaQueryChange = () => setIsReducedMode(checkIsMobile() || (shouldReduceMotion ?? false));
     const mqlMobile = window.matchMedia("(max-width: 767px)");
+    const handleMediaQueryChange = (e: MediaQueryListEvent) => setIsReducedMode(e.matches || (shouldReduceMotion ?? false));
     mqlMobile.addEventListener("change", handleMediaQueryChange);
     return () => mqlMobile.removeEventListener("change", handleMediaQueryChange);
   }, [shouldReduceMotion]);

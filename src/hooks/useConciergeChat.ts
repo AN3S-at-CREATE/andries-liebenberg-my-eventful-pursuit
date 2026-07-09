@@ -49,7 +49,7 @@ export function useConciergeChat() {
       }
 
       const userMessage: ChatMessage = {
-        id: `user-${crypto.randomUUID()}`,
+        id: `user-${typeof crypto !== 'undefined' && crypto.randomUUID ? crypto.randomUUID() : Math.random().toString(36).substring(2, 11)}`,
         role: "user",
         content: content.trim(),
         timestamp: new Date(),
@@ -80,7 +80,7 @@ export function useConciergeChat() {
         }
 
         const assistantMessage: ChatMessage = {
-          id: `assistant-${crypto.randomUUID()}`,
+          id: `assistant-${typeof crypto !== 'undefined' && crypto.randomUUID ? crypto.randomUUID() : Math.random().toString(36).substring(2, 11)}`,
           role: "assistant",
           content: data.message,
           timestamp: new Date(),

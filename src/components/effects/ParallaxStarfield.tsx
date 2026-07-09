@@ -49,11 +49,10 @@ export function ParallaxStarfield() {
     setIsReducedMode(isMobile() || (shouldReduceMotion ?? false));
     
     // ⚡ Bolt Optimization: Use matchMedia change listener instead of continuous resize event
-    const handleMediaQueryChange = () => {
-      setIsReducedMode(isMobile() || (shouldReduceMotion ?? false));
-    };
-
     const mqlMobile = window.matchMedia("(max-width: 767px)");
+    const handleMediaQueryChange = (e: MediaQueryListEvent) => {
+      setIsReducedMode(e.matches || (shouldReduceMotion ?? false));
+    };
     mqlMobile.addEventListener("change", handleMediaQueryChange);
     return () => mqlMobile.removeEventListener("change", handleMediaQueryChange);
   }, [shouldReduceMotion]);
