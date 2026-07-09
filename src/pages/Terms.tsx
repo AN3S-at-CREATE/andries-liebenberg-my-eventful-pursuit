@@ -5,10 +5,16 @@ import { MotionReveal } from "@/components/motion/MotionReveal";
 import { ParallaxElements } from "@/components/effects/ParallaxElements";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
+import { Seo } from "@/components/seo/Seo";
 
 const Terms = () => {
   return (
     <div className="min-h-screen bg-background">
+      <Seo
+        title="Terms of Service | AN3S — Andries Liebenberg"
+        description="The terms and conditions governing your use of the AN3S website and services provided by Andries Liebenberg."
+        path="/terms"
+      />
       <Navbar />
       
       <section className="relative py-24 px-4 overflow-hidden">
