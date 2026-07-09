@@ -5,10 +5,16 @@ import { MotionReveal } from "@/components/motion/MotionReveal";
 import { ParallaxElements } from "@/components/effects/ParallaxElements";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
+import { Seo } from "@/components/seo/Seo";
 
 const Privacy = () => {
   return (
     <div className="min-h-screen bg-background">
+      <Seo
+        title="Privacy Policy | AN3S — Andries Liebenberg"
+        description="How AN3S (Andries Liebenberg) collects, uses, and protects your personal information in line with South Africa's POPIA requirements."
+        path="/privacy"
+      />
       <Navbar />
       
       <section className="relative py-24 px-4 overflow-hidden">
