@@ -100,7 +100,6 @@ export function ParallaxStarfield() {
         });
       }
     };
-
     let lastFrameTime = 0;
     const targetFPS = isReducedMode ? 30 : 60;
     const frameInterval = 1000 / targetFPS;
