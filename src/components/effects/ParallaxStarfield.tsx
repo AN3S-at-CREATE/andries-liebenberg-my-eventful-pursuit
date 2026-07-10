@@ -124,6 +124,7 @@ export function ParallaxStarfield() {
       const scrollOffset = scrollYRef.current;
       const canvasHeight = window.innerHeight * (isReducedMode ? 2 : 3);
 
+      // Batch draw calls by color to optimize performance
       (Object.keys(starsRef.current) as (keyof typeof STAR_COLORS)[]).forEach(
         (color) => {
           const stars = starsRef.current[color];
