@@ -1,4 +1,6 @@
 import { Navbar } from "@/components/layout/Navbar";
+import { Seo } from "@/components/seo/Seo";
+import { breadcrumb } from "@/lib/breadcrumb";
 import { Footer } from "@/components/layout/Footer";
 import { ScrollToTop } from "@/components/layout/ScrollToTop";
 import { MotionReveal, MotionStagger, MotionItem } from "@/components/motion/MotionReveal";
@@ -34,8 +36,18 @@ const About = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <Seo
+        title="About Andries Liebenberg | AN3S"
+        description="Meet Andries Liebenberg (AN3S): 20+ years building companies across events, marketing, sales, and AI systems in South Africa with measurable, proven results."
+        path="/about"
+        ogType="profile"
+        jsonLd={breadcrumb([
+          { name: "Home", path: "/" },
+          { name: "About", path: "/about" },
+        ])}
+      />
       <Navbar />
-      
+      <main>
       {/* Hero Section */}
       <section className="relative py-24 px-4 overflow-hidden">
         <ParallaxElements variant="mixed" />
@@ -299,6 +311,7 @@ const About = () => {
           </MotionReveal>
         </div>
       </section>
+      </main>
 
       <Footer />
       <ScrollToTop />

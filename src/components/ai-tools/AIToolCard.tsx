@@ -26,7 +26,7 @@ export function AIToolCard({
   return (
     <div
       className={cn(
-        "group relative rounded-xl p-6 transition-all duration-300",
+        "group relative flex flex-col h-full rounded-xl p-6 transition-all duration-300",
         "hover:-translate-y-1",
         accentColor === "primary" ? "glass-cyan" : "glass-pink",
         accentColor === "primary"
@@ -36,38 +36,43 @@ export function AIToolCard({
       )}
       onClick={isClickable ? onClick : undefined}
     >
-      {/* Icon */}
-      <div
-        className={cn(
-          "w-12 h-12 rounded-lg flex items-center justify-center mb-4 transition-transform group-hover:scale-110",
-          accentColor === "primary"
-            ? "bg-primary/10 text-primary"
-            : "bg-secondary/10 text-secondary"
-        )}
-      >
-        <Icon className="w-6 h-6" />
-      </div>
+      {/* Main content area — grows to match the tallest card */}
+      <div className="flex-1">
+        {/* Icon */}
+        <div
+          className={cn(
+            "w-12 h-12 rounded-lg flex items-center justify-center mb-4 transition-transform group-hover:scale-110",
+            accentColor === "primary"
+              ? "bg-primary/10 text-primary"
+              : "bg-secondary/10 text-secondary"
+          )}
+        >
+          <Icon className="w-6 h-6" />
+        </div>
 
-      {/* Title & Badge */}
-      <div className="flex items-start justify-between gap-2 mb-2">
-        <h3 className="font-heading font-semibold text-lg text-foreground">
+        {/* Title */}
+        <h3 className="font-heading font-semibold text-lg text-foreground mb-2">
           {title}
         </h3>
-        <Badge
-          variant={status === "available" ? "glow-cyan" : "glow-pink"}
-          className="text-xs shrink-0"
-        >
-          {status === "available" ? "Available" : "Coming Soon"}
-        </Badge>
+
+        {/* Description */}
+        <p className="text-sm text-muted-foreground leading-relaxed mb-4">
+          {description}
+        </p>
       </div>
 
-      {/* Description */}
-      <p className="text-sm text-muted-foreground leading-relaxed mb-4">
-        {description}
-      </p>
-
-      {/* Children (e.g., trigger button) */}
-      {children}
+      {/* Footer — status badge and actions align at the bottom */}
+      <div className="mt-auto flex flex-col gap-3">
+        <div className="flex justify-end">
+          <Badge
+            variant={status === "available" ? "glow-cyan" : "glow-pink"}
+            className="text-xs shrink-0"
+          >
+            {status === "available" ? "Available" : "Coming Soon"}
+          </Badge>
+        </div>
+        {children}
+      </div>
 
       {/* Glow effect on hover */}
       <div

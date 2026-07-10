@@ -64,9 +64,23 @@ export function BackgroundFX() {
     const cyanColor = "rgb(13, 229, 255)";
     const pinkColor = "rgb(255, 26, 140)";
 
+    let horizonGradient: CanvasGradient | null = null;
+    let bottomGradient: CanvasGradient | null = null;
+
     const resizeCanvas = () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
+
+      const horizonY = canvas.height * 0.65;
+      horizonGradient = ctx.createLinearGradient(0, horizonY - 60, 0, horizonY + 60);
+      horizonGradient.addColorStop(0, "rgba(13, 229, 255, 0)");
+      horizonGradient.addColorStop(0.5, "rgba(13, 229, 255, 0.08)");
+      horizonGradient.addColorStop(1, "rgba(13, 229, 255, 0)");
+
+      bottomGradient = ctx.createLinearGradient(0, canvas.height - 150, 0, canvas.height);
+      bottomGradient.addColorStop(0, "rgba(255, 26, 140, 0)");
+      bottomGradient.addColorStop(0.5, "rgba(255, 26, 140, 0.04)");
+      bottomGradient.addColorStop(1, "rgba(255, 26, 140, 0.02)");
     };
 
     const initParticles = () => {
@@ -117,19 +131,15 @@ export function BackgroundFX() {
         ctx.stroke();
       }
 
-      const horizonGradient = ctx.createLinearGradient(0, horizonY - 60, 0, horizonY + 60);
-      horizonGradient.addColorStop(0, "rgba(13, 229, 255, 0)");
-      horizonGradient.addColorStop(0.5, "rgba(13, 229, 255, 0.08)");
-      horizonGradient.addColorStop(1, "rgba(13, 229, 255, 0)");
-      ctx.fillStyle = horizonGradient;
-      ctx.fillRect(0, horizonY - 60, canvas.width, 120);
+      if (horizonGradient) {
+        ctx.fillStyle = horizonGradient;
+        ctx.fillRect(0, horizonY - 60, canvas.width, 120);
+      }
 
-      const bottomGradient = ctx.createLinearGradient(0, canvas.height - 150, 0, canvas.height);
-      bottomGradient.addColorStop(0, "rgba(255, 26, 140, 0)");
-      bottomGradient.addColorStop(0.5, "rgba(255, 26, 140, 0.04)");
-      bottomGradient.addColorStop(1, "rgba(255, 26, 140, 0.02)");
-      ctx.fillStyle = bottomGradient;
-      ctx.fillRect(0, canvas.height - 150, canvas.width, 150);
+      if (bottomGradient) {
+        ctx.fillStyle = bottomGradient;
+        ctx.fillRect(0, canvas.height - 150, canvas.width, 150);
+      }
     };
 
     const drawParticles = () => {
@@ -205,9 +215,14 @@ export function BackgroundFX() {
     initParticles();
     animate();
 
+    let resizeTimeout: ReturnType<typeof setTimeout>;
     const handleResize = () => {
-      resizeCanvas();
-      initParticles();
+      clearTimeout(resizeTimeout);
+      // ⚡ Bolt Optimization: Debounce resize events to prevent layout thrashing and GC spikes
+      resizeTimeout = setTimeout(() => {
+        resizeCanvas();
+        initParticles();
+      }, 150);
     };
 
     window.addEventListener("resize", handleResize);
@@ -217,6 +232,7 @@ export function BackgroundFX() {
       if (animationRef.current) {
         cancelAnimationFrame(animationRef.current);
       }
+      clearTimeout(resizeTimeout);
       window.removeEventListener("resize", handleResize);
     };
   }, []);
@@ -225,6 +241,7 @@ export function BackgroundFX() {
     <>
       <canvas
         ref={canvasRef}
+        aria-hidden="true"
         className="fixed inset-0 -z-10 pointer-events-none"
         style={{ background: "hsl(223, 24%, 6%)" }}
       />

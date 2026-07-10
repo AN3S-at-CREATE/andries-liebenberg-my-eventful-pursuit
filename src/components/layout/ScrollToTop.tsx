@@ -9,25 +9,23 @@ export const ScrollToTop = () => {
   useEffect(() => {
     let ticking = false;
 
-    const toggleVisibility = () => {
+    const onScroll = () => {
+      // 🚀 Optimizer: Debounce scroll events using requestAnimationFrame
+      // This prevents layout thrashing and limits executions to screen refresh rate (typically 60fps)
       if (!ticking) {
+        // ⚡ Bolt Optimization: Fixed flawed rAF debouncing to ensure flag is only reset async
+        // and eliminate double-nested requestAnimationFrame calls
         window.requestAnimationFrame(() => {
-          // Optimization: Debounce scroll events using requestAnimationFrame
-          // to prevent layout thrashing and high CPU usage from continuous scrolling.
-          if (window.scrollY > 300) {
-            setIsVisible(true);
-          } else {
-            setIsVisible(false);
-          }
+          setIsVisible(window.scrollY > 300);
           ticking = false;
         });
         ticking = true;
       }
     };
 
-    // Optimization: Use passive listener to improve scroll performance
-    window.addEventListener("scroll", toggleVisibility, { passive: true });
-    return () => window.removeEventListener("scroll", toggleVisibility);
+    // 🚀 Optimizer: Debounce scroll events using requestAnimationFrame and use passive listener
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   const scrollToTop = () => {

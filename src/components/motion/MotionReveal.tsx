@@ -1,4 +1,4 @@
-import { motion, type Variants, type Transition } from "framer-motion";
+import { type Variants, type Transition, m } from "framer-motion";
 import { ReactNode } from "react";
 
 // Consistent motion timing across the site
@@ -39,7 +39,7 @@ export function MotionReveal({
   const offset = directionOffsets[direction];
   
   return (
-    <motion.div
+    <m.div
       initial={{ opacity: 0, ...offset }}
       whileInView={{ opacity: 1, x: 0, y: 0 }}
       viewport={{ once: true, margin: "-80px" }}
@@ -47,7 +47,7 @@ export function MotionReveal({
       className={className}
     >
       {children}
-    </motion.div>
+    </m.div>
   );
 }
 
@@ -63,7 +63,7 @@ export function MotionStagger({
   staggerDelay = MOTION_CONFIG.staggerDelay 
 }: MotionStaggerProps) {
   return (
-    <motion.div
+    <m.div
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, margin: "-80px" }}
@@ -78,7 +78,7 @@ export function MotionStagger({
       className={className}
     >
       {children}
-    </motion.div>
+    </m.div>
   );
 }
 
@@ -101,9 +101,9 @@ const itemVariants: Variants = {
 
 export function MotionItem({ children, className = "" }: MotionItemProps) {
   return (
-    <motion.div variants={itemVariants} className={className}>
+    <m.div variants={itemVariants} className={className}>
       {children}
-    </motion.div>
+    </m.div>
   );
 }
 
@@ -115,7 +115,7 @@ interface MotionScaleProps {
 
 export function MotionScale({ children, className = "", delay = 0 }: MotionScaleProps) {
   return (
-    <motion.div
+    <m.div
       initial={{ opacity: 0, scale: 0.9 }}
       whileInView={{ opacity: 1, scale: 1 }}
       viewport={{ once: true, margin: "-80px" }}
@@ -123,7 +123,7 @@ export function MotionScale({ children, className = "", delay = 0 }: MotionScale
       className={className}
     >
       {children}
-    </motion.div>
+    </m.div>
   );
 }
 
@@ -150,7 +150,7 @@ export function MotionHover({
   };
 
   return (
-    <motion.div
+    <m.div
       className={className}
       whileHover={{
         y: lift ? MOTION_CONFIG.hoverLift : 0,
@@ -167,7 +167,7 @@ export function MotionHover({
       }}
     >
       {children}
-    </motion.div>
+    </m.div>
   );
 }
 

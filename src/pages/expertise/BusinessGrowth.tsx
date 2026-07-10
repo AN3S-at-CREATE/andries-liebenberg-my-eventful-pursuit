@@ -4,12 +4,24 @@ import { ScrollToTop } from "@/components/layout/ScrollToTop";
 import { MotionReveal } from "@/components/motion/MotionReveal";
 import { ParallaxElements } from "@/components/effects/ParallaxElements";
 import { Card } from "@/components/ui/card";
+import { Seo } from "@/components/seo/Seo";
+import { breadcrumb } from "@/lib/breadcrumb";
 import { Badge } from "@/components/ui/badge";
 import { Target, Globe, DollarSign, Cog } from "lucide-react";
 
 const BusinessGrowth = () => {
   return (
     <div className="min-h-screen bg-background">
+      <Seo
+        title="Business Growth Strategies | AN3S"
+        description="Driving organizational scaling and market penetration across Africa and internationally through strategic planning and operational efficiency."
+        path="/expertise/business-growth"
+        jsonLd={breadcrumb([
+          { name: "Home", path: "/" },
+          { name: "Expertise", path: "/expertise" },
+          { name: "Business Growth", path: "/expertise/business-growth" },
+        ])}
+      />
       <Navbar />
       
       <section className="relative py-24 px-4 overflow-hidden">

@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { AnimatePresence, useReducedMotion, m } from "framer-motion";
 import loadingGif from "@/assets/loading-screen.gif";
 import logo from "@/assets/logo.svg";
 
@@ -41,7 +41,7 @@ export function LoadingScreen({ isLoading }: LoadingScreenProps) {
   return (
     <AnimatePresence>
       {isLoading ? (
-        <motion.div
+        <m.div
           key="initial-loader"
           initial={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -52,7 +52,7 @@ export function LoadingScreen({ isLoading }: LoadingScreenProps) {
           role="status"
         >
           <div className="absolute inset-0 overflow-hidden">
-            <motion.div
+            <m.div
               className="absolute top-1/3 left-1/4 h-96 w-96 rounded-full bg-primary/20 blur-[120px]"
               animate={
                 shouldReduceMotion
@@ -64,7 +64,7 @@ export function LoadingScreen({ isLoading }: LoadingScreenProps) {
               }
               transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
             />
-            <motion.div
+            <m.div
               className="absolute right-1/4 bottom-1/3 h-80 w-80 rounded-full bg-secondary/20 blur-[100px]"
               animate={
                 shouldReduceMotion
@@ -79,13 +79,13 @@ export function LoadingScreen({ isLoading }: LoadingScreenProps) {
           </div>
 
           <div className="relative flex flex-col items-center gap-8">
-            <motion.div
+            <m.div
               className="relative"
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               transition={{ duration: 0.45, ease: "easeOut" }}
             >
-              <motion.div
+              <m.div
                 className="absolute inset-0 rounded-full blur-2xl"
                 style={{
                   background:
@@ -130,10 +130,10 @@ export function LoadingScreen({ isLoading }: LoadingScreenProps) {
                 />
                 </>
               )}
-            </motion.div>
+            </m.div>
 
             <div className="h-1 w-56 overflow-hidden rounded-full bg-muted/30">
-              <motion.div
+              <m.div
                 className="h-full rounded-full"
                 style={{
                   background:
@@ -152,7 +152,7 @@ export function LoadingScreen({ isLoading }: LoadingScreenProps) {
               />
             </div>
 
-            <motion.p
+            <m.p
               className="text-sm text-muted-foreground"
               key={statusMessage}
               initial={{ opacity: 0, y: 4 }}
@@ -161,10 +161,10 @@ export function LoadingScreen({ isLoading }: LoadingScreenProps) {
               transition={{ duration: 0.2 }}
             >
               {statusMessage}
-            </motion.p>
+            </m.p>
           </div>
 
-          <motion.div
+          <m.div
             className="absolute right-0 bottom-0 left-0 h-px"
             style={{
               background:
@@ -173,7 +173,7 @@ export function LoadingScreen({ isLoading }: LoadingScreenProps) {
             animate={shouldReduceMotion ? undefined : { opacity: [0.3, 0.8, 0.3] }}
             transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
           />
-        </motion.div>
+        </m.div>
       ) : null}
     </AnimatePresence>
   );

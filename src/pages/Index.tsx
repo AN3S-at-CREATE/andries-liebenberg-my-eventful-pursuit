@@ -2,15 +2,18 @@ import { useRef } from "react";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { ScrollToTop } from "@/components/layout/ScrollToTop";
+import { Suspense, lazy } from "react";
 import { CompaniesPreview } from "@/components/companies/CompaniesPreview";
-import { AIToolsSection } from "@/components/ai-tools/AIToolsSection";
+// 🚀 Optimizer: Lazily loading AIToolsSection to code-split the heavy 'recharts' dependency, reducing the initial Index page bundle size
+const AIToolsSection = lazy(() => import("@/components/ai-tools/AIToolsSection").then(module => ({ default: module.AIToolsSection })));
 import { ContactForm } from "@/components/contact/ContactForm";
 import { ParallaxElements } from "@/components/effects/ParallaxElements";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Building2, TrendingUp, Users, Star } from "lucide-react";
 import { Link } from "react-router-dom";
 import { MotionReveal, MotionStagger, MotionItem } from "@/components/motion/MotionReveal";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { useScroll, useTransform, m } from "framer-motion";
+import { Seo } from "@/components/seo/Seo";
 
 const Index = () => {
   const heroRef = useRef<HTMLElement>(null);
@@ -26,7 +29,14 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <Seo
+        title="Andries Liebenberg | Business Growth & AI Systems"
+        description="AN3S is Andries Liebenberg's brand hub for business growth systems, experimental marketing, and AI automation — based in South Africa, built for global scale."
+        path="/"
+      />
       <Navbar />
+      <main>
+      
       
       {/* Hero Section with Parallax */}
       <section ref={heroRef} className="relative py-24 px-4 overflow-hidden">
@@ -34,7 +44,7 @@ const Index = () => {
         <ParallaxElements variant="mixed" />
         
         {/* Pink streak - right side */}
-        <motion.div
+        <m.div
           className="absolute top-1/4 right-0 w-px h-64 md:h-96 opacity-60 pointer-events-none"
           initial={{ opacity: 0, scaleY: 0 }}
           animate={{ opacity: 0.6, scaleY: 1 }}
@@ -44,7 +54,7 @@ const Index = () => {
             boxShadow: "0 0 20px 2px hsl(var(--secondary) / 0.4), 0 0 40px 4px hsl(var(--secondary) / 0.2)",
           }}
         />
-        <motion.div
+        <m.div
           className="absolute top-[45%] right-8 md:right-16 w-px h-32 md:h-48 opacity-40 pointer-events-none"
           initial={{ opacity: 0, scaleY: 0 }}
           animate={{ opacity: 0.4, scaleY: 1 }}
@@ -56,13 +66,13 @@ const Index = () => {
         />
         
         {/* Parallax background layer */}
-        <motion.div
+        <m.div
           className="absolute inset-0 bg-gradient-to-b from-primary/5 via-transparent to-transparent"
           style={{ y: backgroundY }}
         />
         
         {/* Content with parallax */}
-        <motion.div
+        <m.div
           className="container max-w-4xl mx-auto text-center relative z-10"
           style={{ y: contentY, opacity }}
         >
@@ -97,7 +107,7 @@ const Index = () => {
               </Button>
             </div>
           </MotionReveal>
-        </motion.div>
+        </m.div>
       </section>
 
       {/* Pink Accent Divider */}
@@ -151,7 +161,9 @@ const Index = () => {
       <div className="divider-cyan h-px w-full" />
 
       {/* AI Tools Section */}
-      <AIToolsSection />
+      <Suspense fallback={<div className="h-[600px] flex items-center justify-center text-muted-foreground">Loading AI Tools...</div>}>
+        <AIToolsSection />
+      </Suspense>
 
       {/* Pink Accent Divider */}
       <div className="divider-pink h-px w-full" />
@@ -178,6 +190,7 @@ const Index = () => {
         </div>
       </section>
 
+      </main>
       <Footer />
       <ScrollToTop />
     </div>

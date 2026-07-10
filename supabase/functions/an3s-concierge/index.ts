@@ -72,7 +72,7 @@ Deno.serve(async (req) => {
         );
       }
 
-      const { role, content } = msg as Record<string, unknown>;
+      const { role, content } = msg as unknown as Record<string, unknown>;
 
       if (role !== "user" && role !== "assistant") {
         return new Response(

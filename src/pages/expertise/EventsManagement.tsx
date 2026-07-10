@@ -4,12 +4,24 @@ import { ScrollToTop } from "@/components/layout/ScrollToTop";
 import { MotionReveal } from "@/components/motion/MotionReveal";
 import { ParallaxElements } from "@/components/effects/ParallaxElements";
 import { Card } from "@/components/ui/card";
+import { Seo } from "@/components/seo/Seo";
+import { breadcrumb } from "@/lib/breadcrumb";
 import { Badge } from "@/components/ui/badge";
 import { Calendar, DollarSign, Lightbulb, Users, Leaf, Globe } from "lucide-react";
 
 const EventsManagement = () => {
   return (
     <div className="min-h-screen bg-background">
+      <Seo
+        title="Events Management | AN3S"
+        description="Over 20 years and 2,246+ successful events — end-to-end event management, technical production, and VVIP protocol expertise."
+        path="/expertise/events-management"
+        jsonLd={breadcrumb([
+          { name: "Home", path: "/" },
+          { name: "Expertise", path: "/expertise" },
+          { name: "Events Management", path: "/expertise/events-management" },
+        ])}
+      />
       <Navbar />
       
       <section className="relative py-24 px-4 overflow-hidden">

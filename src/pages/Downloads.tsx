@@ -37,6 +37,7 @@ const Downloads = () => {
     <div className="min-h-screen bg-background">
       <Navbar />
       
+      <main>
       <section className="relative py-24 px-4 overflow-hidden">
         <ParallaxElements variant="pink" />
         <div className="container max-w-4xl mx-auto relative z-10">
@@ -110,6 +111,7 @@ const Downloads = () => {
           </MotionReveal>
         </div>
       </section>
+      </main>
 
       <Footer />
       <ScrollToTop />
