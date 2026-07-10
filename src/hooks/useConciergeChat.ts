@@ -48,8 +48,9 @@ export function useConciergeChat() {
         return;
       }
 
+      // Sentinel: Prevent potential ID collisions and enumeration risks by using crypto.randomUUID()
       const userMessage: ChatMessage = {
-        id: `user-${typeof crypto !== 'undefined' && crypto.randomUUID ? crypto.randomUUID() : Math.random().toString(36).substring(2, 11)}`,
+        id: `user-${crypto.randomUUID()}`,
         role: "user",
         content: content.trim(),
         timestamp: new Date(),
@@ -79,8 +80,9 @@ export function useConciergeChat() {
           throw new Error(fnError.message || "Failed to get response");
         }
 
+        // Sentinel: Prevent potential ID collisions and enumeration risks by using crypto.randomUUID()
         const assistantMessage: ChatMessage = {
-          id: `assistant-${typeof crypto !== 'undefined' && crypto.randomUUID ? crypto.randomUUID() : Math.random().toString(36).substring(2, 11)}`,
+          id: `assistant-${crypto.randomUUID()}`,
           role: "assistant",
           content: data.message,
           timestamp: new Date(),
