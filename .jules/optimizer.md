@@ -33,3 +33,8 @@
 **Bottleneck:** The `ParallaxElements.tsx` and `ParallaxStarfield.tsx` components were using a one-time `window.matchMedia("(prefers-reduced-motion: reduce)")` check without a stored `MediaQueryList` and a `change` event listener. This caused the components to ignore live changes to the user's OS or browser motion preferences.
 **Learning:** Manual `matchMedia` queries only evaluate once upon execution unless accompanied by an active listener. When using Framer Motion, its native `useReducedMotion` hook automatically manages the listener and state updates internally.
 **Prevention:** Always use `useReducedMotion` from `framer-motion` when evaluating reduced motion preferences to ensure the application reacts dynamically to user accessibility settings without boilerplate listener logic.
+
+## 2025-02-19 - Unoptimized Scroll Event Listeners
+   **Bottleneck:** The `ScrollToTop` component attached a synchronous `scroll` event listener to the window without debouncing or requestAnimationFrame. This can cause layout thrashing and high CPU usage during continuous scrolling, negatively impacting performance and user experience.
+   **Learning:** The `scroll` event can fire at a high rate (e.g., 60 times per second). Updating state synchronously within the event handler can force the browser to recalculate styles and layout multiple times per frame.
+   **Prevention:** Always debounce synchronous `scroll` event listeners using `window.requestAnimationFrame()`. Additionally, use the `{ passive: true }` option for the event listener to tell the browser the listener won't call `preventDefault()`, allowing it to optimize scrolling.
