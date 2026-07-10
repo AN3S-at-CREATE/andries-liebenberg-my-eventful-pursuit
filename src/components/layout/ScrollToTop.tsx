@@ -10,18 +10,18 @@ export const ScrollToTop = () => {
     let ticking = false;
 
     const onScroll = () => {
-      // 🚀 Optimizer: Fixed early ticking reset and double rAF to correctly debounce scroll event
+      // 🚀 Optimizer: Debounce scroll events using requestAnimationFrame
+      // This prevents layout thrashing and limits executions to screen refresh rate (typically 60fps)
       if (!ticking) {
+        // ⚡ Bolt Optimization: Fixed flawed rAF debouncing to ensure flag is only reset async
+        // and eliminate double-nested requestAnimationFrame calls
         window.requestAnimationFrame(() => {
           setIsVisible(window.scrollY > 300);
           ticking = false;
         });
         ticking = true;
       }
-      ticking = false;
     };
-
-
 
     // 🚀 Optimizer: Debounce scroll events using requestAnimationFrame and use passive listener
     window.addEventListener("scroll", onScroll, { passive: true });

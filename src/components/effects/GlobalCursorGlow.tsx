@@ -31,9 +31,9 @@ export const GlobalCursorGlow = ({
     let ticking = false;
 
     const handleMouseMove = (e: MouseEvent) => {
+      // 🚀 Optimizer: Debounce mousemove events to prevent main thread blocking
       if (!ticking) {
         window.requestAnimationFrame(() => {
-          // 🚀 Optimizer: Debounce mousemove events to prevent main thread blocking
           mouseX.set(e.clientX);
           mouseY.set(e.clientY);
           if (!isVisible) setIsVisible(true);

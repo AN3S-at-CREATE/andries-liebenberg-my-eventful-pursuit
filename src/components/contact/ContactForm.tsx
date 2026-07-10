@@ -12,7 +12,7 @@ import { z } from "zod";
 
 const contactSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters").max(100, "Name is too long"),
-  email: z.string().email("Please enter a valid email address").max(100, "Email is too long"),
+  email: z.string().regex(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, "Please enter a valid email address").max(100, "Email is too long"),
   company: z.string().max(100, "Company name is too long").optional(),
   industry: z.string().max(100, "Industry name is too long").optional(),
   goal: z.string().max(200, "Goal description is too long").optional(),
@@ -162,6 +162,7 @@ export const ContactForm = () => {
                 value={formData.name}
                 onChange={handleChange}
                 required
+                maxLength={100}
                 className="bg-muted/50 border-border/50"
               />
             </div>
@@ -177,6 +178,7 @@ export const ContactForm = () => {
                 value={formData.email}
                 onChange={handleChange}
                 required
+                maxLength={100}
                 className="bg-muted/50 border-border/50"
               />
             </div>
@@ -193,6 +195,7 @@ export const ContactForm = () => {
                 placeholder="Your company name"
                 value={formData.company}
                 onChange={handleChange}
+                maxLength={100}
                 className="bg-muted/50 border-border/50"
               />
             </div>
@@ -206,6 +209,7 @@ export const ContactForm = () => {
                 placeholder="e.g., Events, Retail, Tech"
                 value={formData.industry}
                 onChange={handleChange}
+                maxLength={100}
                 className="bg-muted/50 border-border/50"
               />
             </div>
@@ -221,14 +225,24 @@ export const ContactForm = () => {
               placeholder="e.g., Grow my business, Build a new product"
               value={formData.goal}
               onChange={handleChange}
+              maxLength={200}
               className="bg-muted/50 border-border/50"
             />
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="message" className="text-foreground">
-              Message <span className="text-secondary">*</span>
-            </Label>
+            <div className="flex justify-between items-end">
+              <Label htmlFor="message" className="text-foreground">
+                Message <span className="text-secondary">*</span>
+              </Label>
+              <span
+                id="message-character-count"
+                className="text-xs text-muted-foreground"
+                aria-live="polite"
+              >
+                {formData.message.length} / 2000
+              </span>
+            </div>
             <Textarea
               id="message"
               name="message"
@@ -236,7 +250,9 @@ export const ContactForm = () => {
               value={formData.message}
               onChange={handleChange}
               required
+              maxLength={2000}
               rows={4}
+              aria-describedby="message-character-count"
               className="bg-muted/50 border-border/50 resize-none"
             />
           </div>
