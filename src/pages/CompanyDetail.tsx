@@ -11,6 +11,8 @@ import { companies, getCompanyBySlug } from "@/data/companies";
 import { getMetricsByCompanyId } from "@/data/companyMetrics";
 import { formatZARRange, formatPercentage, formatNumber } from "@/lib/formatters";
 import { ArrowLeft, ArrowRight, MessageCircle, Mail, MapPin, Calendar, CheckCircle } from "lucide-react";
+import { Seo } from "@/components/seo/Seo";
+import { breadcrumb } from "@/lib/breadcrumb";
 
 const CompanyDetail = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -42,7 +44,18 @@ const CompanyDetail = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <Seo
+        title={`${company.name} | AN3S Companies`}
+        description={company.description}
+        path={`/companies/${company.slug}`}
+        jsonLd={breadcrumb([
+          { name: "Home", path: "/" },
+          { name: "Companies", path: "/companies" },
+          { name: company.name, path: `/companies/${company.slug}` },
+        ])}
+      />
       <Navbar />
+
 
       {/* Header */}
       <section className="relative py-12 px-4 border-b border-border/50 overflow-hidden">

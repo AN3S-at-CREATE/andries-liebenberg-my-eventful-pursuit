@@ -92,7 +92,7 @@ const caseStudies = [
     period: "2019 – Present"
   },
   {
-    title: "Veralogix Group",
+    title: "ODM Studio",
     sector: "Consulting/Strategy",
     challenge: "Establish a strategic consulting firm that delivers measurable business transformation results.",
     solution: "Created data-driven methodologies combining operational optimization with digital transformation expertise.",
@@ -129,6 +129,7 @@ const Showcase = () => {
     <div className="min-h-screen bg-background">
       <Navbar />
       
+      <main>
       {/* Hero Section */}
       <section className="relative py-24 px-4 overflow-hidden">
         <ParallaxElements variant="cyan" />
@@ -365,6 +366,7 @@ const Showcase = () => {
           </MotionReveal>
         </div>
       </section>
+      </main>
 
       <Footer />
       <ScrollToTop />

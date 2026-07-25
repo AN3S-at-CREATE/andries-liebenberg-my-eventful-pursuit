@@ -10,7 +10,31 @@
    **Learning:** `ctx.fillRect()` is significantly faster than `ctx.arc()` for small shapes because it skips the path construction step. For particles smaller than 1.5px, the visual difference between a square and a circle is negligible.
    **Prevention:** When building particle systems on Canvas, prefer `fillRect` for small particles (< 2px) to reduce draw call overhead.
 
-## 2026-02-24 - Canvas Compositing and Render Loop Optimization
-   **Bottleneck:** `BackgroundFX` component (z-index: -10) was filling the canvas with an opaque color (`ctx.fillRect`), obscuring underlying `ParallaxStarfield` and `NebulaClouds` components while still paying their rendering cost. Additionally, it allocated new strings for color/opacity in every frame of the render loop.
-   **Learning:** Opaque background layers at higher z-indices prevent underlying layers from being seen, wasting GPU resources. Constructing strings (like `rgba()`) inside a render loop triggers frequent Garbage Collection.
-   **Prevention:** Use `ctx.clearRect` for transparent overlays to reveal underlying layers. Batch draw calls by color to minimize state changes (`fillStyle`), and use `ctx.globalAlpha` instead of string manipulation for opacity changes.
+## 2025-10-24 - Unoptimized Image Tags
+   **Bottleneck:** Missing explicit `width` and `height` attributes on `<img>` tags, leading to Cumulative Layout Shift (CLS), and missing `loading="lazy"` on below-the-fold images causing unnecessary early network requests.
+   **Learning:** Browsers cannot reserve space for images without explicit dimensions, which causes layout shifts as the image loads. Deferring off-screen image loading with `loading="lazy"` speeds up initial page load and saves bandwidth.
+   **Prevention:** Always declare `width` and `height` attributes on all `<img>` tags (matching their CSS aspect ratio) and apply `loading="lazy"` for below-the-fold images. Use `decoding="async"` for non-critical images to avoid blocking the main thread.
+
+## 2025-02-19 - Critical Image Prioritization
+   **Bottleneck:** Important above-the-fold images (like Navbar logos and Loading screen animations) were either using `loading="lazy"` and `decoding="async"` or had no explicit fetch priority. This delayed rendering of these critical elements, negatively impacting the Largest Contentful Paint (LCP) metric.
+   **Learning:** The `loading="lazy"` attribute delays the loading of images until they are close to the viewport. However, applying it to images already in the initial viewport (above the fold) actually slows down their loading because the browser has to wait until the DOM layout is calculated to determine if they are in the viewport. `decoding="async"` also delays rendering to avoid blocking the main thread, which is bad for critical visual elements. Using React's camelCase `fetchPriority="high"` directly signals to the browser to prioritize the resource early in the load cycle, significantly improving LCP.
+   **Prevention:** Never apply `loading="lazy"` or `decoding="async"` to images that are visible on initial page load (above-the-fold). Instead, use `fetchPriority="high"` and `decoding="sync"` for critical, high-priority images such as logos, hero images, or loading animations to protect LCP and ensure they render immediately.
+## 2025-03-09 - [Optimize BackgroundFX Performance]
+**Bottleneck:** `ctx.createLinearGradient` was called on every frame in the `drawGrid` loop within `BackgroundFX.tsx`, causing high Garbage Collection pressure and performance drops.
+**Learning:** Recreating complex objects like `CanvasGradient` inside animation loops forces the engine to repeatedly allocate and discard memory.
+**Prevention:** Cache these objects outside the loop (e.g., in outer scope) and only recreate them during initialization or window resize events.
+
+## 2026-06-03 - Fix Debounced Event Ticking Reset
+**Bottleneck:** The scroll event listener in `ScrollToTop.tsx` reset the `ticking` flag synchronously outside the callback and over-nested `requestAnimationFrame` calls, which nullified the performance benefits of debouncing and led to unnecessary layout thrashing.
+**Learning:** When debouncing continuous events like `scroll` using `requestAnimationFrame` and a `ticking` flag, the flag must be reset to `false` strictly inside the asynchronous callback. Doing it synchronously outside or over-nesting the callbacks allows the event to fire multiple times per frame.
+**Prevention:** Ensure `ticking = false` is only executed inside the `requestAnimationFrame` callback and avoid double-queuing `requestAnimationFrame` when managing debounced state.
+
+## 2025-06-06 - [Standardize Reduced Motion Preference Detection]
+**Bottleneck:** The `ParallaxElements.tsx` and `ParallaxStarfield.tsx` components were using a one-time `window.matchMedia("(prefers-reduced-motion: reduce)")` check without a stored `MediaQueryList` and a `change` event listener. This caused the components to ignore live changes to the user's OS or browser motion preferences.
+**Learning:** Manual `matchMedia` queries only evaluate once upon execution unless accompanied by an active listener. When using Framer Motion, its native `useReducedMotion` hook automatically manages the listener and state updates internally.
+**Prevention:** Always use `useReducedMotion` from `framer-motion` when evaluating reduced motion preferences to ensure the application reacts dynamically to user accessibility settings without boilerplate listener logic.
+
+## 2025-02-19 - Unoptimized Scroll Event Listeners
+   **Bottleneck:** The `ScrollToTop` component attached a synchronous `scroll` event listener to the window without debouncing or requestAnimationFrame. This can cause layout thrashing and high CPU usage during continuous scrolling, negatively impacting performance and user experience.
+   **Learning:** The `scroll` event can fire at a high rate (e.g., 60 times per second). Updating state synchronously within the event handler can force the browser to recalculate styles and layout multiple times per frame.
+   **Prevention:** Always debounce synchronous `scroll` event listeners using `window.requestAnimationFrame()`. Additionally, use the `{ passive: true }` option for the event listener to tell the browser the listener won't call `preventDefault()`, allowing it to optimize scrolling.

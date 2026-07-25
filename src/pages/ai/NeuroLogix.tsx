@@ -4,6 +4,8 @@ import { ScrollToTop } from "@/components/layout/ScrollToTop";
 import { MotionReveal } from "@/components/motion/MotionReveal";
 import { ParallaxElements } from "@/components/effects/ParallaxElements";
 import { Card } from "@/components/ui/card";
+import { Seo } from "@/components/seo/Seo";
+import { breadcrumb } from "@/lib/breadcrumb";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
@@ -12,6 +14,16 @@ import { Brain, Users, Shield, Workflow, ArrowRight } from "lucide-react";
 const NeuroLogix = () => {
   return (
     <div className="min-h-screen bg-background">
+      <Seo
+        title="NeuroLogix AI | AN3S"
+        description="AI-driven network offering personalized guidance, workflow automation, and strategic growth support."
+        path="/ai/neurologix"
+        jsonLd={breadcrumb([
+          { name: "Home", path: "/" },
+          { name: "AI Tools & Projects", path: "/ai" },
+          { name: "NeuroLogix AI", path: "/ai/neurologix" },
+        ])}
+      />
       <Navbar />
       
       <section className="relative py-24 px-4 overflow-hidden">

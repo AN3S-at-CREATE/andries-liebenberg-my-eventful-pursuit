@@ -84,7 +84,7 @@ export const companyMetrics: CompanyMetric[] = [
     revenue: calculateIndicativeRange(88, "Tourism/Experiences"), // R5,600,000 – R8,400,000
   },
   {
-    companyId: "veralogix-group",
+    companyId: "odm-studio",
     revenueGrowthPct: 50,
     clientsAcquired: 110,
     projectsCompleted: 80,
@@ -118,5 +118,9 @@ export const companyMetrics: CompanyMetric[] = [
   },
 ];
 
+const companyMetricsMap = new Map<string, CompanyMetric>(
+  companyMetrics.map(metric => [metric.companyId, metric])
+);
+
 export const getMetricsByCompanyId = (companyId: string): CompanyMetric | undefined =>
-  companyMetrics.find((m) => m.companyId === companyId);
+  companyMetricsMap.get(companyId);

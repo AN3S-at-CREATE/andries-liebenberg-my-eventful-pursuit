@@ -5,10 +5,16 @@ import { MotionReveal } from "@/components/motion/MotionReveal";
 import { ParallaxElements } from "@/components/effects/ParallaxElements";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
+import { Seo } from "@/components/seo/Seo";
 
 const CookiePolicy = () => {
   return (
     <div className="min-h-screen bg-background">
+      <Seo
+        title="Cookie Policy | AN3S — Andries Liebenberg"
+        description="Learn how AN3S uses cookies and similar technologies, why we use them, and how you can manage your cookie preferences."
+        path="/cookie-policy"
+      />
       <Navbar />
       
       <section className="relative py-24 px-4 overflow-hidden">
