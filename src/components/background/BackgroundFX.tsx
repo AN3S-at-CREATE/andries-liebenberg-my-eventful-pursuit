@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import { setBackgroundFXMounted } from "@/lib/backgroundStatus";
 
+// Optimized particle interface - color is now an enum/type key, not a full string
 interface Particle {
   x: number;
   y: number;
@@ -8,13 +9,17 @@ interface Particle {
   vy: number;
   size: number;
   opacity: number;
-  color: string;
+  colorType: "cyan" | "pink";
 }
 
 export function BackgroundFX() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const animationRef = useRef<number>();
-  const particlesRef = useRef<Particle[]>([]);
+  // Group particles by color for batch rendering
+  const particlesRef = useRef<{ cyan: Particle[]; pink: Particle[] }>({
+    cyan: [],
+    pink: [],
+  });
 
   useEffect(() => {
     setBackgroundFXMounted(true);
@@ -85,17 +90,18 @@ export function BackgroundFX() {
 
     const initParticles = () => {
       const particleCount = Math.floor((canvas.width * canvas.height) / 20000);
-      particlesRef.current = [];
+      particlesRef.current = { cyan: [], pink: [] };
 
       for (let i = 0; i < particleCount; i++) {
-        particlesRef.current.push({
+        const colorType = Math.random() > 0.4 ? "cyan" : "pink";
+        particlesRef.current[colorType].push({
           x: Math.random() * canvas.width,
           y: Math.random() * canvas.height,
           vx: (Math.random() - 0.5) * 0.4,
           vy: (Math.random() - 0.5) * 0.4,
           size: Math.random() * 2.5 + 0.5,
           opacity: Math.random() * 0.6 + 0.15,
-          color: Math.random() > 0.4 ? cyanColor : pinkColor,
+          colorType,
         });
       }
 
@@ -148,10 +154,7 @@ export function BackgroundFX() {
         particle.x += particle.vx;
         particle.y += particle.vy;
 
-        if (particle.x < 0) particle.x = canvas.width;
-        if (particle.x > canvas.width) particle.x = 0;
-        if (particle.y < 0) particle.y = canvas.height;
-        if (particle.y > canvas.height) particle.y = 0;
+        ctx.fillStyle = COLORS[colorType];
 
         if (particle.color !== lastColor) {
           ctx.fillStyle = particle.color;
@@ -197,8 +200,8 @@ export function BackgroundFX() {
     };
 
     const animate = () => {
-      ctx.fillStyle = "hsl(223, 24%, 6%)";
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      // Clear canvas instead of filling with opaque color to reveal underlying layers
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
 
       drawGrid();
       drawParticles();
@@ -243,7 +246,7 @@ export function BackgroundFX() {
         ref={canvasRef}
         aria-hidden="true"
         className="fixed inset-0 -z-10 pointer-events-none"
-        style={{ background: "hsl(223, 24%, 6%)" }}
+        style={{ background: "transparent" }}
       />
       
       {/* Cyan neon streak from left */}
