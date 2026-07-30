@@ -57,9 +57,9 @@ export function AIToolsSection() {
             </div>
           </MotionReveal>
 
-          <MotionStagger className="grid md:grid-cols-3 gap-6">
+          <MotionStagger className="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
             {/* AI Growth Diagnostic Wizard */}
-            <MotionItem>
+            <MotionItem className="h-full">
               <AIToolCard
                 icon={ClipboardList}
                 title="Growth Diagnostic"
@@ -70,7 +70,7 @@ export function AIToolsSection() {
             </MotionItem>
 
             {/* Ask AN3S Concierge - AVAILABLE */}
-            <MotionItem>
+            <MotionItem className="h-full">
               <AIToolCard
                 icon={MessageSquareText}
                 title="Ask AN3S Concierge"
@@ -94,7 +94,7 @@ export function AIToolsSection() {
             </MotionItem>
 
             {/* ROI Calculator - AVAILABLE */}
-            <MotionItem>
+            <MotionItem className="h-full">
               <AIToolCard
                 icon={Calculator}
                 title="ROI Calculator"

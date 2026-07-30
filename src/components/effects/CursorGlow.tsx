@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { motion, useSpring, useTransform } from "framer-motion";
+import { useSpring, useTransform, m } from "framer-motion";
 
 interface CursorGlowProps {
   containerRef: React.RefObject<HTMLElement>;
@@ -31,18 +31,27 @@ export const CursorGlow = ({
     const container = containerRef.current;
     if (!container) return;
 
+    let ticking = false;
+
     const handleMouseMove = (e: MouseEvent) => {
-      const rect = container.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      mouseX.set(x);
-      mouseY.set(y);
+      // 🚀 Optimizer: Debounce mousemove events to prevent main thread blocking
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const rect = container.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+          mouseX.set(x);
+          mouseY.set(y);
+          ticking = false;
+        });
+        ticking = true;
+      }
     };
 
     const handleMouseEnter = () => setIsHovering(true);
     const handleMouseLeave = () => setIsHovering(false);
 
-    container.addEventListener("mousemove", handleMouseMove);
+    container.addEventListener("mousemove", handleMouseMove, { passive: true });
     container.addEventListener("mouseenter", handleMouseEnter);
     container.addEventListener("mouseleave", handleMouseLeave);
 
@@ -68,7 +77,7 @@ export const CursorGlow = ({
   return (
     <>
       {/* Primary glow */}
-      <motion.div
+      <m.div
         ref={glowRef}
         className={`absolute pointer-events-none rounded-full blur-[80px] z-20 ${getGlowColor()}`}
         style={{
@@ -84,7 +93,7 @@ export const CursorGlow = ({
       />
 
       {/* Secondary smaller glow for more intensity at center */}
-      <motion.div
+      <m.div
         className="absolute pointer-events-none rounded-full blur-[40px] bg-primary/20 z-20"
         style={{
           width: size * 0.4,

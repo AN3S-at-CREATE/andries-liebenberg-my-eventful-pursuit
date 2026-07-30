@@ -1,0 +1,28 @@
+# AN3S — Andries Liebenberg
+
+> AN3S is Andries Liebenberg's brand hub for business growth systems, experimental marketing, and AI automation — based in South Africa, built for global scale.
+
+## Pages
+
+- [Home](/): Overview of Andries Liebenberg's work, metrics, and AI growth tools.
+- [About](/about): Andries Liebenberg's background, journey, and 20+ years of experience.
+- [Expertise](/expertise): Cross-industry expertise in events, marketing, sales, development, business growth, and mentorship.
+- [AI Tools & Projects](/ai): AI solutions including EventPulse, Lynkie Sky, NeuroLogix, and custom models.
+- [Companies](/companies): The 10+ companies Andries has built across multiple sectors.
+- [Showcase](/showcase): Featured projects and outcomes.
+- [Contact](/contact): Get in touch to discuss growth and AI work.
+
+## Expertise
+
+- [Events Management](/expertise/events-management): 20+ years orchestrating large-scale events.
+- [Marketing](/expertise/marketing): Data-driven marketing strategies.
+- [Sales](/expertise/sales): Revenue and sales-growth methodologies.
+- [Development](/expertise/development): Full-stack development with AI and cloud.
+- [Business Growth](/expertise/business-growth): Strategic planning and expansion.
+- [Mentorship](/expertise/mentorship): Nurturing next-generation professionals.
+
+## Optional
+
+- [Privacy Policy](/privacy): How data is handled (POPIA-aligned).
+- [Terms](/terms): Terms of use.
+- [Cookie Policy](/cookie-policy): Cookie usage details.

@@ -5,3 +5,25 @@
 ## 2026-02-21 - [Canvas Allocation Bottleneck]
 **Learning:** Constructing new color strings (e.g. `rgba(r,g,b,a)`) for every entity in a render loop causes massive Garbage Collection pressure.
 **Action:** Use `ctx.globalAlpha` for opacity changes and keep `ctx.fillStyle` constant. Batch draw calls by color to minimize state changes.
+
+## 2025-06-21 - Canvas State Management Overhead
+**Learning:** In HTML5 Canvas render loops, state changes like `ctx.fillStyle` are extremely expensive. Changing `fillStyle` ~200 times per frame causes massive GC churn and CPU overhead. Additionally, dynamically concatenating colors (`color + opacity + ")"`) for `rgba` compounds this issue.
+**Action:** Always sort objects by style during initialization. In the draw loop, track the applied state (`lastColor`) and update the context only when it actually changes. Use `ctx.globalAlpha` combined with static color strings instead of dynamic string concatenation for variable opacity.
+
+## 2025-03-11 - O(N) Array .find() in Sort Comparators
+**Learning:** During array sorting in `CompanyGrid.tsx`, using an O(N) function like `getMetricsByCompanyId` (which uses `.find()`) inside the comparator creates an O(M * N log N) performance bottleneck.
+**Action:** Precompute a `Map` of necessary lookup data in O(M) time before sorting. Use the Map for O(1) lookups inside the sort comparator. Always wrap derived sorted/filtered arrays in `useMemo` to prevent unnecessary re-computations on re-renders.
+
+## 2026-04-17 - [Scroll Event Layout Thrashing]
+**Learning:** Synchronous `scroll` event listeners can cause significant layout thrashing and high CPU usage during continuous scrolling. It can block the browser's native scrolling.
+**Action:** Always debounce synchronous `scroll` event listeners using `window.requestAnimationFrame()` and mark the event listener with `{ passive: true }` to prevent blocking the main thread and the browser's native scrolling.
+## 2024-03-24 - Main Thread Blocking from mousemove Events
+**Learning:** High-frequency native events like `mousemove` can easily block the main thread and cause layout thrashing if they trigger synchronous DOM reads (like `getBoundingClientRect()`) or complex state updates on every event firing. This is particularly problematic for users with high-polling-rate mice.
+**Action:** Always wrap high-frequency native event listeners (like `mousemove` or `scroll`) in `window.requestAnimationFrame()` using a `ticking` boolean flag to throttle execution to the display refresh rate (typically 60Hz).
+
+## 2025-08-14 - [Resize Event Layout Thrashing and Canvas Re-initialization]
+**Learning:** Synchronous and un-debounced window `resize` event listeners cause severe performance drops, especially when triggering heavy operations like HTML5 Canvas dimension recalculations, gradient recreation, and particle array re-initialization. This causes layout thrashing and massive Garbage Collection spikes during window resizing.
+**Action:** Always debounce window `resize` event listeners (e.g., using a `setTimeout` of 150ms) to prevent unnecessary heavy recalculations and re-renders until the resize action is complete.
+## 2024-03-20 - Replace resize listeners with matchMedia for responsive state
+**Learning:** Polling viewport dimensions (`window.innerWidth`) or reduced motion preferences during continuous `resize` events is a performance anti-pattern. It causes rapid, redundant state updates and layout thrashing, even when debounced.
+**Action:** Always use `window.matchMedia().addEventListener("change", ...)` when checking for discrete responsive breakpoints or media features. This ensures the event listener fires only when the boundary is crossed, eliminating unnecessary re-renders.

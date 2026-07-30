@@ -65,15 +65,27 @@ export function BackgroundFX() {
       console.error("Failed to create noise pattern", e);
     }
 
-    // Colors from design system (without alpha)
-    const COLORS = {
-      cyan: "rgb(13, 229, 255)",
-      pink: "rgb(255, 26, 140)",
-    };
+    // Colors from design system
+    const cyanColor = "rgb(13, 229, 255)";
+    const pinkColor = "rgb(255, 26, 140)";
+
+    let horizonGradient: CanvasGradient | null = null;
+    let bottomGradient: CanvasGradient | null = null;
 
     const resizeCanvas = () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
+
+      const horizonY = canvas.height * 0.65;
+      horizonGradient = ctx.createLinearGradient(0, horizonY - 60, 0, horizonY + 60);
+      horizonGradient.addColorStop(0, "rgba(13, 229, 255, 0)");
+      horizonGradient.addColorStop(0.5, "rgba(13, 229, 255, 0.08)");
+      horizonGradient.addColorStop(1, "rgba(13, 229, 255, 0)");
+
+      bottomGradient = ctx.createLinearGradient(0, canvas.height - 150, 0, canvas.height);
+      bottomGradient.addColorStop(0, "rgba(255, 26, 140, 0)");
+      bottomGradient.addColorStop(0.5, "rgba(255, 26, 140, 0.04)");
+      bottomGradient.addColorStop(1, "rgba(255, 26, 140, 0.02)");
     };
 
     const initParticles = () => {
@@ -92,6 +104,9 @@ export function BackgroundFX() {
           colorType,
         });
       }
+
+      // Sort particles by color to enable batched rendering in the draw loop
+      particlesRef.current.sort((a, b) => a.color.localeCompare(b.color));
     };
 
     const drawGrid = () => {
@@ -122,59 +137,52 @@ export function BackgroundFX() {
         ctx.stroke();
       }
 
-      const horizonGradient = ctx.createLinearGradient(0, horizonY - 60, 0, horizonY + 60);
-      horizonGradient.addColorStop(0, "rgba(13, 229, 255, 0)");
-      horizonGradient.addColorStop(0.5, "rgba(13, 229, 255, 0.08)");
-      horizonGradient.addColorStop(1, "rgba(13, 229, 255, 0)");
-      ctx.fillStyle = horizonGradient;
-      ctx.fillRect(0, horizonY - 60, canvas.width, 120);
+      if (horizonGradient) {
+        ctx.fillStyle = horizonGradient;
+        ctx.fillRect(0, horizonY - 60, canvas.width, 120);
+      }
 
-      const bottomGradient = ctx.createLinearGradient(0, canvas.height - 150, 0, canvas.height);
-      bottomGradient.addColorStop(0, "rgba(255, 26, 140, 0)");
-      bottomGradient.addColorStop(0.5, "rgba(255, 26, 140, 0.04)");
-      bottomGradient.addColorStop(1, "rgba(255, 26, 140, 0.02)");
-      ctx.fillStyle = bottomGradient;
-      ctx.fillRect(0, canvas.height - 150, canvas.width, 150);
+      if (bottomGradient) {
+        ctx.fillStyle = bottomGradient;
+        ctx.fillRect(0, canvas.height - 150, canvas.width, 150);
+      }
     };
 
     const drawParticles = () => {
-      // Draw by color group to minimize state changes
-      (["cyan", "pink"] as const).forEach(colorType => {
-        const particles = particlesRef.current[colorType];
-        if (!particles.length) return;
+      let lastColor = "";
+      particlesRef.current.forEach((particle) => {
+        particle.x += particle.vx;
+        particle.y += particle.vy;
 
         ctx.fillStyle = COLORS[colorType];
 
-        particles.forEach((particle) => {
-          particle.x += particle.vx;
-          particle.y += particle.vy;
+        if (particle.color !== lastColor) {
+          ctx.fillStyle = particle.color;
+          lastColor = particle.color;
+        }
 
-          if (particle.x < 0) particle.x = canvas.width;
-          if (particle.x > canvas.width) particle.x = 0;
-          if (particle.y < 0) particle.y = canvas.height;
-          if (particle.y > canvas.height) particle.y = 0;
+        ctx.globalAlpha = particle.opacity;
 
-          // Optimization: Use globalAlpha instead of string concatenation
-          ctx.globalAlpha = particle.opacity;
-
-          if (particle.size < 1.5) {
-             // Optimization: Use fillRect for small particles
-             ctx.fillRect(particle.x, particle.y, particle.size * 2, particle.size * 2);
-          } else {
-             ctx.beginPath();
-             ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
-             ctx.fill();
-          }
-
-          // Glow effect
-          ctx.globalAlpha = particle.opacity * 0.15;
+        if (particle.size < 1.5) {
+          ctx.fillRect(
+            particle.x - particle.size,
+            particle.y - particle.size,
+            particle.size * 2,
+            particle.size * 2
+          );
+        } else {
           ctx.beginPath();
-          ctx.arc(particle.x, particle.y, particle.size * 4, 0, Math.PI * 2);
+          ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
           ctx.fill();
-        });
+        }
+
+        ctx.globalAlpha = particle.opacity * 0.15;
+        ctx.beginPath();
+        ctx.arc(particle.x, particle.y, particle.size * 4, 0, Math.PI * 2);
+        ctx.fill();
       });
 
-      // Reset globalAlpha
+      // Reset globalAlpha to prevent side effects on subsequent rendering layers
       ctx.globalAlpha = 1.0;
     };
 
@@ -210,9 +218,14 @@ export function BackgroundFX() {
     initParticles();
     animate();
 
+    let resizeTimeout: ReturnType<typeof setTimeout>;
     const handleResize = () => {
-      resizeCanvas();
-      initParticles();
+      clearTimeout(resizeTimeout);
+      // ⚡ Bolt Optimization: Debounce resize events to prevent layout thrashing and GC spikes
+      resizeTimeout = setTimeout(() => {
+        resizeCanvas();
+        initParticles();
+      }, 150);
     };
 
     window.addEventListener("resize", handleResize);
@@ -222,6 +235,7 @@ export function BackgroundFX() {
       if (animationRef.current) {
         cancelAnimationFrame(animationRef.current);
       }
+      clearTimeout(resizeTimeout);
       window.removeEventListener("resize", handleResize);
     };
   }, []);
@@ -230,6 +244,7 @@ export function BackgroundFX() {
     <>
       <canvas
         ref={canvasRef}
+        aria-hidden="true"
         className="fixed inset-0 -z-10 pointer-events-none"
         style={{ background: "transparent" }}
       />

@@ -4,12 +4,24 @@ import { ScrollToTop } from "@/components/layout/ScrollToTop";
 import { MotionReveal } from "@/components/motion/MotionReveal";
 import { ParallaxElements } from "@/components/effects/ParallaxElements";
 import { Card } from "@/components/ui/card";
+import { Seo } from "@/components/seo/Seo";
+import { breadcrumb } from "@/lib/breadcrumb";
 import { Badge } from "@/components/ui/badge";
 import { Code, Cloud, Brain, Layers } from "lucide-react";
 
 const Development = () => {
   return (
     <div className="min-h-screen bg-background">
+      <Seo
+        title="Technical Development | AN3S"
+        description="Bridging marketing and event strategy with technical execution — coding, cloud computing, and AI integration."
+        path="/expertise/development"
+        jsonLd={breadcrumb([
+          { name: "Home", path: "/" },
+          { name: "Expertise", path: "/expertise" },
+          { name: "Development", path: "/expertise/development" },
+        ])}
+      />
       <Navbar />
       
       <section className="relative py-24 px-4 overflow-hidden">

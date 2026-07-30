@@ -7,6 +7,11 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { MessageSquareText, Send, Loader2, Trash2 } from "lucide-react";
@@ -77,14 +82,22 @@ export function ConciergeModal({ trigger }: ConciergeModalProps) {
               Ask AN3S Concierge
             </DialogTitle>
             {messages.length > 0 && (
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={clearChat}
-                className="h-8 w-8 text-muted-foreground hover:text-foreground"
-              >
-                <Trash2 className="w-4 h-4" />
-              </Button>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={clearChat}
+                    className="h-8 w-8 text-muted-foreground hover:text-foreground"
+                    aria-label="Clear chat history"
+                  >
+                    <Trash2 className="w-4 h-4" />
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Clear chat history</p>
+                </TooltipContent>
+              </Tooltip>
             )}
           </div>
         </DialogHeader>
@@ -157,20 +170,37 @@ export function ConciergeModal({ trigger }: ConciergeModalProps) {
               onChange={(e) => setInputValue(e.target.value)}
               onKeyDown={handleKeyDown}
               placeholder="Ask me anything..."
+              aria-label="Type your message"
               disabled={isLoading || remainingMessages <= 0}
               className="flex-1 bg-muted/30 border-border/50 focus-visible:ring-primary"
             />
-            <Button
-              onClick={handleSend}
-              disabled={!inputValue.trim() || isLoading || remainingMessages <= 0}
-              className="bg-primary hover:bg-primary/90"
-            >
-              {isLoading ? (
-                <Loader2 className="w-4 h-4 animate-spin" />
-              ) : (
-                <Send className="w-4 h-4" />
-              )}
-            </Button>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  onClick={(e) => {
+                    if (!inputValue.trim() || isLoading || remainingMessages <= 0) {
+                      e.preventDefault();
+                      return;
+                    }
+                    handleSend();
+                  }}
+                  aria-disabled={!inputValue.trim() || isLoading || remainingMessages <= 0}
+                  className={`bg-primary hover:bg-primary/90 ${
+                    (!inputValue.trim() || isLoading || remainingMessages <= 0) ? "opacity-50 cursor-not-allowed" : ""
+                  }`}
+                  aria-label="Send message"
+                >
+                  {isLoading ? (
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                  ) : (
+                    <Send className="w-4 h-4" />
+                  )}
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Send message</p>
+              </TooltipContent>
+            </Tooltip>
           </div>
           <p className="text-xs text-muted-foreground text-center">
             {remainingMessages > 0 ? (
