@@ -12,6 +12,13 @@ dist
 dist-ssr
 *.local
 
+# This project uses npm. Keep package-lock.json only — competing lockfiles
+# confuse VS Code and can resolve dependencies differently.
+bun.lockb
+bun.lock
+pnpm-lock.yaml
+yarn.lock
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
