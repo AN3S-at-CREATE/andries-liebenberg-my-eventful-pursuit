@@ -110,20 +110,15 @@ Before making any changes, verify against the protected content registry.
 
 ---
 
-## 7. Theme Token Blocks (`src/index.css`)
+## 7. Theme Tokens (AN3S design system)
 
-✅ **Both blocks exist:**
+✅ **Generated, not hand-written.** Since 2026-10-07 the theme comes from the AN3S design system's web export in `src/design-system/` (`tokens.css` + `shadcn.css`, imported by `src/index.css`; Tailwind through `tailwind-preset.js`). Never edit those files; change the design system and run `npm run ds:sync` (rules in `AGENTS.md`, "Design system").
 
-| Block | Lines | Status |
-|-------|-------|--------|
-| `:root` | 5-40 | ✅ Present (AN3S cyberpink neon theme) |
-| `.dark` | 41-76 | ✅ Present (identical to :root - dark-first design) |
-
-**Key Design Tokens:**
-- `--primary`: `186 100% 53%` (neon cyan)
-- `--secondary`: `331 100% 55%` (cyber pink)
-- `--background`: `223 24% 6%` (dark graphite)
-- `--foreground`: `0 0% 100%` (white)
+**Role mapping (pink leads):**
+- `--primary` → `pink-glow` (words and fills); glows and edges use the saturated `pink`
+- `--secondary` → `cyan-glow`; glows and edges use the saturated `cyan`
+- `--background` → `deep-space`, `--foreground` → `ink`
+- `--border` → `line`, `--input` → `line-strong`, `--ring` → `focus` (cyan)
 
 ---
 

@@ -36,7 +36,7 @@ const Privacy = () => {
           <div className="divider-primary mb-12" />
 
           <MotionReveal delay={0.1}>
-            <Card className="glass border-l-4 border-l-primary p-8 mb-8" glow="primary">
+            <Card className="glass border-l-4 border-l-pink p-8 mb-8" glow="primary">
               <h2 className="font-heading text-2xl font-bold text-foreground mb-4">
                 <span className="text-primary">1.</span> Information We Collect
               </h2>
@@ -49,7 +49,7 @@ const Privacy = () => {
           </MotionReveal>
 
           <MotionReveal delay={0.2}>
-            <Card className="glass border-l-4 border-l-secondary p-8 mb-8" glow="secondary">
+            <Card className="glass border-l-4 border-l-cyan p-8 mb-8" glow="secondary">
               <h2 className="font-heading text-2xl font-bold text-foreground mb-4">
                 <span className="text-secondary">2.</span> How We Use Your Information
               </h2>
@@ -64,7 +64,7 @@ const Privacy = () => {
           <div className="divider-secondary mb-8" />
 
           <MotionReveal delay={0.3}>
-            <Card className="glass border-l-4 border-l-primary p-8 mb-8" glow="primary">
+            <Card className="glass border-l-4 border-l-pink p-8 mb-8" glow="primary">
               <h2 className="font-heading text-2xl font-bold text-foreground mb-4">
                 <span className="text-primary">3.</span> POPIA Compliance
               </h2>
@@ -76,7 +76,7 @@ const Privacy = () => {
           </MotionReveal>
 
           <MotionReveal delay={0.4}>
-            <Card className="glass border-l-4 border-l-secondary p-8" glow="secondary">
+            <Card className="glass border-l-4 border-l-cyan p-8" glow="secondary">
               <h2 className="font-heading text-2xl font-bold text-foreground mb-4">
                 <span className="text-secondary">4.</span> Contact Us
               </h2>

@@ -44,7 +44,7 @@ const Development = () => {
 
           <div className="grid md:grid-cols-2 gap-8">
             <MotionReveal delay={0.1}>
-              <Card interactive glow="primary" className="glass-primary p-8 border-l-4 border-l-primary">
+              <Card interactive glow="primary" className="glass-primary p-8 border-l-4 border-l-pink">
                 <Layers className="h-10 w-10 text-primary mb-4" />
                 <h3 className="font-heading text-xl font-bold text-foreground mb-3">Bridging the <span className="text-primary">Gap</span></h3>
                 <p className="text-muted-foreground">
@@ -54,7 +54,7 @@ const Development = () => {
             </MotionReveal>
 
             <MotionReveal delay={0.2}>
-              <Card interactive glow="secondary" className="glass-secondary p-8 border-l-4 border-l-secondary">
+              <Card interactive glow="secondary" className="glass-secondary p-8 border-l-4 border-l-cyan">
                 <Code className="h-10 w-10 text-secondary mb-4" />
                 <h3 className="font-heading text-xl font-bold text-foreground mb-3">Coding <span className="text-secondary">Skills</span></h3>
                 <p className="text-muted-foreground">
@@ -64,7 +64,7 @@ const Development = () => {
             </MotionReveal>
 
             <MotionReveal delay={0.3}>
-              <Card interactive glow="secondary" className="glass-secondary p-8 border-l-4 border-l-secondary">
+              <Card interactive glow="secondary" className="glass-secondary p-8 border-l-4 border-l-cyan">
                 <Cloud className="h-10 w-10 text-secondary mb-4" />
                 <h3 className="font-heading text-xl font-bold text-foreground mb-3">Cloud <span className="text-secondary">Computing</span></h3>
                 <p className="text-muted-foreground">
@@ -74,7 +74,7 @@ const Development = () => {
             </MotionReveal>
 
             <MotionReveal delay={0.4}>
-              <Card interactive glow="primary" className="glass-primary p-8 border-l-4 border-l-primary">
+              <Card interactive glow="primary" className="glass-primary p-8 border-l-4 border-l-pink">
                 <Brain className="h-10 w-10 text-primary mb-4" />
                 <h3 className="font-heading text-xl font-bold text-foreground mb-3">AI <span className="text-primary">Integration</span></h3>
                 <p className="text-muted-foreground">

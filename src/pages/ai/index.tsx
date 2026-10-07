@@ -85,7 +85,7 @@ const AI = () => {
                   <Card 
                     interactive
                     glow={tool.accent === "primary" ? "primary" : "secondary"}
-                    className={`${tool.accent === "primary" ? "glass-primary border-l-4 border-l-primary" : "glass-secondary border-l-4 border-l-secondary"} p-8 h-full group`}
+                    className={`${tool.accent === "primary" ? "glass-primary border-l-4 border-l-pink" : "glass-secondary border-l-4 border-l-cyan"} p-8 h-full group`}
                   >
                     <div className="flex items-start justify-between mb-4">
                       <tool.icon className={`h-10 w-10 ${tool.accent === "primary" ? "text-primary" : "text-secondary"} group-hover:scale-110 transition-transform`} />

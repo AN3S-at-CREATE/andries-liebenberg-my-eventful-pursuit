@@ -12,3 +12,4 @@
 
 - 2026-10-07: `src/App.css` (unused Vite starter styles with hard-coded colours) deleted.
 - 2026-10-07: `BackgroundFX.tsx` runtime bugs (`.sort`/`.forEach` on an object, undefined `COLORS`/`colorType`) removed by the rebuild.
+- 2026-10-07: `IMPLEMENTATION_AUDIT.md` §7 described the old hand-written `:root`/`.dark` theme (cyan primary, pink secondary); rewritten to point at the design-system export.

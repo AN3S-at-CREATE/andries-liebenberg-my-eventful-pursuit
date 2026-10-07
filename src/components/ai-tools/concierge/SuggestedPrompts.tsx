@@ -57,7 +57,7 @@ export function SuggestedPrompts({
             variant="outline"
             size="sm"
             onClick={() => onSelectPrompt(prompt)}
-            className="text-xs bg-muted/30 border-border/50 hover:bg-primary/20 hover:border-primary/50 hover:text-primary transition-all"
+            className="text-xs bg-muted/30 border-border/50 hover:bg-primary/20 hover:border-pink/50 hover:text-primary transition-all"
           >
             {prompt}
           </Button>

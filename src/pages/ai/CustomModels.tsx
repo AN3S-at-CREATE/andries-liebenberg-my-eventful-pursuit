@@ -46,7 +46,7 @@ const CustomModels = () => {
 
           <div className="grid md:grid-cols-2 gap-8 mb-12">
             <MotionReveal delay={0.1}>
-              <Card className="glass-secondary border-l-4 border-l-secondary p-8 group" interactive glow="secondary">
+              <Card className="glass-secondary border-l-4 border-l-cyan p-8 group" interactive glow="secondary">
                 <Settings className="h-10 w-10 text-secondary mb-4 transition-transform duration-300 group-hover:scale-110" />
                 <h3 className="font-heading text-xl font-bold text-foreground mb-3 group-hover:text-secondary transition-colors">oh-dcft-v3.1-claude</h3>
                 <p className="text-muted-foreground">
@@ -56,7 +56,7 @@ const CustomModels = () => {
             </MotionReveal>
 
             <MotionReveal delay={0.2}>
-              <Card className="glass-primary border-l-4 border-l-primary p-8 group" interactive glow="primary">
+              <Card className="glass-primary border-l-4 border-l-pink p-8 group" interactive glow="primary">
                 <Target className="h-10 w-10 text-primary mb-4 transition-transform duration-300 group-hover:scale-110" />
                 <h3 className="font-heading text-xl font-bold text-foreground mb-3 group-hover:text-primary transition-colors">Precision Targeting</h3>
                 <p className="text-muted-foreground">
@@ -66,7 +66,7 @@ const CustomModels = () => {
             </MotionReveal>
 
             <MotionReveal delay={0.3}>
-              <Card className="glass-primary border-l-4 border-l-primary p-8 group" interactive glow="primary">
+              <Card className="glass-primary border-l-4 border-l-pink p-8 group" interactive glow="primary">
                 <BarChart3 className="h-10 w-10 text-primary mb-4 transition-transform duration-300 group-hover:scale-110" />
                 <h3 className="font-heading text-xl font-bold text-foreground mb-3 group-hover:text-primary transition-colors">Marketing Optimization</h3>
                 <p className="text-muted-foreground">
@@ -76,7 +76,7 @@ const CustomModels = () => {
             </MotionReveal>
 
             <MotionReveal delay={0.4}>
-              <Card className="glass-secondary border-l-4 border-l-secondary p-8 group" interactive glow="secondary">
+              <Card className="glass-secondary border-l-4 border-l-cyan p-8 group" interactive glow="secondary">
                 <Cpu className="h-10 w-10 text-secondary mb-4 transition-transform duration-300 group-hover:scale-110" />
                 <h3 className="font-heading text-xl font-bold text-foreground mb-3 group-hover:text-secondary transition-colors">Custom Development</h3>
                 <p className="text-muted-foreground">

@@ -2,7 +2,7 @@ import type { Config } from "tailwindcss";
 import tailwindcssAnimate from "tailwindcss-animate";
 // The AN3S design system is the only source of truth for colours, fonts, radii, glows and
 // gradients. They all arrive through this generated preset (src/design-system/README.md);
-// don't add colors, fontFamily, borderRadius or fontSize here.
+// don't add colors, fontFamily, borderRadius, fontSize, boxShadow or backgroundImage here.
 import an3s from "./src/design-system/tailwind-preset.js";
 
 export default {

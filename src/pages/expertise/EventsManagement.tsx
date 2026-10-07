@@ -44,7 +44,7 @@ const EventsManagement = () => {
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             <MotionReveal delay={0.1}>
-              <Card interactive glow="primary" className="glass-primary p-8 border-t-2 border-t-primary">
+              <Card interactive glow="primary" className="glass-primary p-8 border-t-2 border-t-pink">
                 <Calendar className="h-10 w-10 text-primary mb-4" />
                 <h3 className="font-heading text-xl font-bold text-foreground mb-3">Extensive <span className="text-primary">Experience</span></h3>
                 <p className="text-muted-foreground">
@@ -54,7 +54,7 @@ const EventsManagement = () => {
             </MotionReveal>
 
             <MotionReveal delay={0.2}>
-              <Card interactive glow="secondary" className="glass-secondary p-8 border-t-2 border-t-secondary">
+              <Card interactive glow="secondary" className="glass-secondary p-8 border-t-2 border-t-cyan">
                 <DollarSign className="h-10 w-10 text-secondary mb-4" />
                 <h3 className="font-heading text-xl font-bold text-foreground mb-3">Budget <span className="text-secondary">Management</span></h3>
                 <p className="text-muted-foreground">
@@ -64,7 +64,7 @@ const EventsManagement = () => {
             </MotionReveal>
 
             <MotionReveal delay={0.3}>
-              <Card interactive glow="primary" className="glass-primary p-8 border-t-2 border-t-primary">
+              <Card interactive glow="primary" className="glass-primary p-8 border-t-2 border-t-pink">
                 <Lightbulb className="h-10 w-10 text-primary mb-4" />
                 <h3 className="font-heading text-xl font-bold text-foreground mb-3">Technical <span className="text-primary">Production</span></h3>
                 <p className="text-muted-foreground">
@@ -74,7 +74,7 @@ const EventsManagement = () => {
             </MotionReveal>
 
             <MotionReveal delay={0.4}>
-              <Card interactive glow="secondary" className="glass-secondary p-8 border-t-2 border-t-secondary">
+              <Card interactive glow="secondary" className="glass-secondary p-8 border-t-2 border-t-cyan">
                 <Users className="h-10 w-10 text-secondary mb-4" />
                 <h3 className="font-heading text-xl font-bold text-foreground mb-3">High-Profile <span className="text-secondary">Clients</span></h3>
                 <p className="text-muted-foreground">
@@ -84,7 +84,7 @@ const EventsManagement = () => {
             </MotionReveal>
 
             <MotionReveal delay={0.5}>
-              <Card interactive glow="primary" className="glass-primary p-8 border-t-2 border-t-primary">
+              <Card interactive glow="primary" className="glass-primary p-8 border-t-2 border-t-pink">
                 <Leaf className="h-10 w-10 text-primary mb-4" />
                 <h3 className="font-heading text-xl font-bold text-foreground mb-3">Sustainable <span className="text-primary">Practices</span></h3>
                 <p className="text-muted-foreground">
@@ -94,7 +94,7 @@ const EventsManagement = () => {
             </MotionReveal>
 
             <MotionReveal delay={0.6}>
-              <Card interactive glow="secondary" className="glass-secondary p-8 border-t-2 border-t-secondary">
+              <Card interactive glow="secondary" className="glass-secondary p-8 border-t-2 border-t-cyan">
                 <Globe className="h-10 w-10 text-secondary mb-4" />
                 <h3 className="font-heading text-xl font-bold text-foreground mb-3">VVIP <span className="text-secondary">Protocol</span></h3>
                 <p className="text-muted-foreground">

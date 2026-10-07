@@ -89,21 +89,21 @@ const About = () => {
 
           {/* Current Roles */}
           <MotionReveal delay={0.2}>
-            <Card className="glass p-8 mb-12 border-l-4 border-l-primary">
+            <Card className="glass p-8 mb-12 border-l-4 border-l-pink">
               <h2 className="font-heading text-2xl font-bold text-foreground mb-6 flex items-center gap-3">
                 <Briefcase className="h-6 w-6 text-primary" />
                 Current <span className="text-secondary">Roles</span>
               </h2>
               <div className="grid md:grid-cols-2 gap-6">
                 <div className="flex items-start gap-4 group">
-                  <div className="w-3 h-3 rounded-full bg-primary mt-2 flex-shrink-0 group-hover:shadow-[0_0_10px_hsl(var(--primary))] transition-shadow" />
+                  <div className="w-3 h-3 rounded-full bg-primary mt-2 flex-shrink-0 group-hover:shadow-[0_0_10px_hsl(var(--pink-hsl))] transition-shadow" />
                   <div>
                     <h3 className="font-semibold text-foreground group-hover:text-primary transition-colors">CMO and Events Manager</h3>
                     <p className="text-muted-foreground">Maono Moja Events — East African expansion</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-4 group">
-                  <div className="w-3 h-3 rounded-full bg-secondary mt-2 flex-shrink-0 group-hover:shadow-[0_0_10px_hsl(var(--secondary))] transition-shadow" />
+                  <div className="w-3 h-3 rounded-full bg-secondary mt-2 flex-shrink-0 group-hover:shadow-[0_0_10px_hsl(var(--cyan-hsl))] transition-shadow" />
                   <div>
                     <h3 className="font-semibold text-foreground group-hover:text-secondary transition-colors">Head of Marketing and Events</h3>
                     <p className="text-muted-foreground">360 Vision Events Group — South Africa</p>
@@ -115,7 +115,7 @@ const About = () => {
 
           {/* Heritage Section */}
           <MotionReveal delay={0.3}>
-            <Card className="glass-secondary p-8 mb-12 border-r-4 border-r-secondary">
+            <Card className="glass-secondary p-8 mb-12 border-r-4 border-r-cyan">
               <div className="flex flex-col md:flex-row items-center gap-6">
                 <Heart className="h-16 w-16 text-secondary flex-shrink-0 animate-pulse" />
                 <div>
@@ -142,7 +142,7 @@ const About = () => {
               Career <span className="text-primary">Time</span><span className="text-secondary">line</span>
             </h2>
             <div className="relative">
-              <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-0.5 bg-gradient-to-b from-primary via-secondary to-primary hidden md:block" />
+              <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-0.5 bg-gradient-to-b from-pink via-cyan to-pink hidden md:block" />
               <div className="space-y-8">
                 {timeline.map((item, index) => (
                   <MotionReveal key={item.year} delay={0.1 * index}>
@@ -169,21 +169,21 @@ const About = () => {
           {/* Key Strengths */}
           <MotionStagger className="grid md:grid-cols-3 gap-6">
             <MotionItem>
-              <Card interactive glow="primary" className="glass-primary p-6 text-center h-full border-t-2 border-t-primary">
+              <Card interactive glow="primary" className="glass-primary p-6 text-center h-full border-t-2 border-t-pink">
                 <Target className="h-10 w-10 text-primary mx-auto mb-4" />
                 <h3 className="font-heading text-lg font-bold text-foreground mb-2">Leadership</h3>
                 <p className="text-sm text-muted-foreground">Strategic planning and creative problem-solving that drives results.</p>
               </Card>
             </MotionItem>
             <MotionItem>
-              <Card interactive glow="secondary" className="glass-secondary p-6 text-center h-full border-t-2 border-t-secondary">
+              <Card interactive glow="secondary" className="glass-secondary p-6 text-center h-full border-t-2 border-t-cyan">
                 <Users className="h-10 w-10 text-secondary mx-auto mb-4" />
                 <h3 className="font-heading text-lg font-bold text-foreground mb-2">Client-Centric</h3>
                 <p className="text-sm text-muted-foreground">Ensuring every project exceeds expectations with personalized approaches.</p>
               </Card>
             </MotionItem>
             <MotionItem>
-              <Card interactive glow="primary" className="glass-primary p-6 text-center h-full border-t-2 border-t-primary">
+              <Card interactive glow="primary" className="glass-primary p-6 text-center h-full border-t-2 border-t-pink">
                 <GraduationCap className="h-10 w-10 text-primary mx-auto mb-4" />
                 <h3 className="font-heading text-lg font-bold text-foreground mb-2">Mentorship</h3>
                 <p className="text-sm text-muted-foreground">Deep commitment to community engagement and developing future leaders.</p>
@@ -220,7 +220,7 @@ const About = () => {
 
           {/* Testimonial */}
           <MotionReveal delay={0.7}>
-            <Card className="glass mt-16 p-8 border-l-4 border-l-primary border-r-4 border-r-secondary">
+            <Card className="glass mt-16 p-8 border-l-4 border-l-pink border-r-4 border-r-cyan">
               <Quote className="h-10 w-10 text-secondary/50 mb-4" />
               <blockquote className="text-lg text-muted-foreground italic mb-4">
                 "Andries has been more than a colleague; he has been an <span className="text-primary not-italic font-medium">inspiration</span>, a <span className="text-secondary not-italic font-medium">leader</span>, and a driving force behind the success. His strategic vision and innovative approach have consistently delivered outstanding results, making him an invaluable asset. Any organization would be fortunate to have Andries on their team."
@@ -231,7 +231,7 @@ const About = () => {
 
           {/* Mentorship Section */}
           <MotionReveal delay={0.8}>
-            <Card className="glass-primary mt-12 p-8 border-b-4 border-b-primary">
+            <Card className="glass-primary mt-12 p-8 border-b-4 border-b-pink">
               <div className="flex flex-col md:flex-row items-center gap-6">
                 <Award className="h-16 w-16 text-primary flex-shrink-0" />
                 <div>

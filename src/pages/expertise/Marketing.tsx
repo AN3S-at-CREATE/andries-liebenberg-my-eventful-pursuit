@@ -45,25 +45,25 @@ const Marketing = () => {
           {/* Stats */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-16">
             <MotionReveal delay={0.1}>
-              <Card interactive glow="primary" className="glass-primary p-6 text-center border-t-2 border-t-primary">
+              <Card interactive glow="primary" className="glass-primary p-6 text-center border-t-2 border-t-pink">
                 <div className="text-3xl font-bold text-primary mb-2">+30%</div>
                 <p className="text-sm text-muted-foreground">Event Attendance</p>
               </Card>
             </MotionReveal>
             <MotionReveal delay={0.2}>
-              <Card interactive glow="secondary" className="glass-secondary p-6 text-center border-t-2 border-t-secondary">
+              <Card interactive glow="secondary" className="glass-secondary p-6 text-center border-t-2 border-t-cyan">
                 <div className="text-3xl font-bold text-secondary mb-2">+45%</div>
                 <p className="text-sm text-muted-foreground">Social Engagement</p>
               </Card>
             </MotionReveal>
             <MotionReveal delay={0.3}>
-              <Card interactive glow="primary" className="glass-primary p-6 text-center border-t-2 border-t-primary">
+              <Card interactive glow="primary" className="glass-primary p-6 text-center border-t-2 border-t-pink">
                 <div className="text-3xl font-bold text-primary mb-2">100+</div>
                 <p className="text-sm text-muted-foreground">Marketing Tools</p>
               </Card>
             </MotionReveal>
             <MotionReveal delay={0.4}>
-              <Card interactive glow="secondary" className="glass-secondary p-6 text-center border-t-2 border-t-secondary">
+              <Card interactive glow="secondary" className="glass-secondary p-6 text-center border-t-2 border-t-cyan">
                 <div className="text-3xl font-bold text-secondary mb-2">20+</div>
                 <p className="text-sm text-muted-foreground">Years Experience</p>
               </Card>
@@ -75,7 +75,7 @@ const Marketing = () => {
 
           <div className="grid md:grid-cols-2 gap-8">
             <MotionReveal delay={0.2}>
-              <Card interactive glow="primary" className="glass-primary p-8 border-l-4 border-l-primary">
+              <Card interactive glow="primary" className="glass-primary p-8 border-l-4 border-l-pink">
                 <TrendingUp className="h-10 w-10 text-primary mb-4" />
                 <h3 className="font-heading text-xl font-bold text-foreground mb-3">Executive <span className="text-primary">Leadership</span></h3>
                 <p className="text-muted-foreground">
@@ -85,7 +85,7 @@ const Marketing = () => {
             </MotionReveal>
 
             <MotionReveal delay={0.3}>
-              <Card interactive glow="secondary" className="glass-secondary p-8 border-l-4 border-l-secondary">
+              <Card interactive glow="secondary" className="glass-secondary p-8 border-l-4 border-l-cyan">
                 <BarChart3 className="h-10 w-10 text-secondary mb-4" />
                 <h3 className="font-heading text-xl font-bold text-foreground mb-3">Proven <span className="text-secondary">Results</span></h3>
                 <p className="text-muted-foreground">
@@ -95,7 +95,7 @@ const Marketing = () => {
             </MotionReveal>
 
             <MotionReveal delay={0.4}>
-              <Card interactive glow="primary" className="glass-primary p-8 border-l-4 border-l-primary">
+              <Card interactive glow="primary" className="glass-primary p-8 border-l-4 border-l-pink">
                 <Share2 className="h-10 w-10 text-primary mb-4" />
                 <h3 className="font-heading text-xl font-bold text-foreground mb-3">Digital <span className="text-primary">Expertise</span></h3>
                 <p className="text-muted-foreground">
@@ -105,7 +105,7 @@ const Marketing = () => {
             </MotionReveal>
 
             <MotionReveal delay={0.5}>
-              <Card interactive glow="secondary" className="glass-secondary p-8 border-l-4 border-l-secondary">
+              <Card interactive glow="secondary" className="glass-secondary p-8 border-l-4 border-l-cyan">
                 <Users className="h-10 w-10 text-secondary mb-4" />
                 <h3 className="font-heading text-xl font-bold text-foreground mb-3">Brand <span className="text-secondary">Development</span></h3>
                 <p className="text-muted-foreground">

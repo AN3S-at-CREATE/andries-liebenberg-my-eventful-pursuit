@@ -63,7 +63,7 @@ export function ConciergeModal({ trigger }: ConciergeModalProps) {
         {trigger || (
           <Button
             variant="outline"
-            className="gap-2 border-secondary/50 text-secondary hover:bg-secondary/10 hover:border-secondary"
+            className="gap-2 border-cyan/50 text-secondary hover:bg-secondary/10 hover:border-cyan"
           >
             <MessageSquareText className="w-4 h-4" />
             Ask AN3S Concierge
@@ -172,7 +172,7 @@ export function ConciergeModal({ trigger }: ConciergeModalProps) {
               placeholder="Ask me anything..."
               aria-label="Type your message"
               disabled={isLoading || remainingMessages <= 0}
-              className="flex-1 bg-muted/30 border-border/50 focus-visible:ring-primary"
+              className="flex-1 bg-muted/30 border-border/50 focus-visible:ring-ring"
             />
             <Tooltip>
               <TooltipTrigger asChild>

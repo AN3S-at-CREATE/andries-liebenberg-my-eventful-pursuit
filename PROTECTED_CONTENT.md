@@ -180,7 +180,7 @@ The AN3S design system ([AN3S-CREATE/an3s-design-system](https://github.com/AN3S
 |------|-----------|-------------|
 | Vendored web export | `src/design-system/` | Generated copy: tokens.css, shadcn.css, tailwind-preset.js, tokens.ts, assets, manifest.json. Never edit; re-sync |
 | Sync script | `scripts/sync-design-system.mjs` | Copies the design system's `dist/web/` in (`npm run ds:sync`) |
-| Guard | `scripts/check-design-system.mjs` | Fails on drift or hard-coded colours/fonts (`npm run check:ds`) |
+| Guard | `scripts/check-design-system.mjs` | Fails on drift, hard-coded colours/fonts, role-tinted edges and glows, or redeclared design-system variables (`npm run check:ds`) |
 | CI check | `.github/workflows/design-system.yml` | Runs the guard on every pull request |
 | Logo | `src/design-system/assets/an3s-wordmark.png` | Used by Navbar, Footer and LoadingScreen (replaced `src/assets/logo.svg`, which is kept but unused) |
 

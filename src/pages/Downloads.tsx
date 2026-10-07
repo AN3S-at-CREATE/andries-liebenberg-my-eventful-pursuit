@@ -62,7 +62,7 @@ const Downloads = () => {
                 <Card 
                   interactive 
                   glow={item.accent === "primary" ? "primary" : "secondary"} 
-                  className={`${item.accent === "primary" ? "glass-primary border-l-4 border-l-primary" : "glass-secondary border-l-4 border-l-secondary"} p-6 flex items-center justify-between`}
+                  className={`${item.accent === "primary" ? "glass-primary border-l-4 border-l-pink" : "glass-secondary border-l-4 border-l-cyan"} p-6 flex items-center justify-between`}
                 >
                   <div className="flex items-center gap-4">
                     <div className={`p-3 rounded-lg ${item.accent === "primary" ? "bg-primary/20" : "bg-secondary/20"}`}>
@@ -92,7 +92,7 @@ const Downloads = () => {
           <div className="divider-primary mt-12 mb-8" />
 
           <MotionReveal delay={0.5}>
-            <Card className="glass-secondary mt-12 p-8 text-center border-b-4 border-b-secondary">
+            <Card className="glass-secondary mt-12 p-8 text-center border-b-4 border-b-cyan">
               <h3 className="font-heading text-xl font-bold text-foreground mb-3">
                 Need <span className="text-primary">specific</span> <span className="text-secondary">materials</span>?
               </h3>

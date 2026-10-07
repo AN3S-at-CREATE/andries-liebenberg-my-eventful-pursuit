@@ -94,7 +94,7 @@ const Status = () => {
             <CardContent className="space-y-4">
               <div className="p-3 rounded-lg bg-muted/30">
                 <div className="flex items-center justify-between mb-2">
-                  <span className="text-foreground">Primary (Neon Cyan)</span>
+                  <span className="text-foreground">Primary (pink-glow)</span>
                   <code className="text-sm text-primary font-mono">
                     {tokens.primary || "loading..."}
                   </code>
@@ -105,14 +105,14 @@ const Status = () => {
                     backgroundColor: tokens.primary
                       ? `hsl(${tokens.primary})`
                       : "transparent",
-                    boxShadow: `0 0 20px hsl(${tokens.primary} / 0.5)`,
+                    boxShadow: "0 0 20px hsl(var(--pink-hsl) / 0.5)",
                   }}
                 />
               </div>
 
               <div className="p-3 rounded-lg bg-muted/30">
                 <div className="flex items-center justify-between mb-2">
-                  <span className="text-foreground">Secondary (Cyber Pink)</span>
+                  <span className="text-foreground">Secondary (cyan-glow)</span>
                   <code className="text-sm text-secondary font-mono">
                     {tokens.secondary || "loading..."}
                   </code>
@@ -123,7 +123,7 @@ const Status = () => {
                     backgroundColor: tokens.secondary
                       ? `hsl(${tokens.secondary})`
                       : "transparent",
-                    boxShadow: `0 0 20px hsl(${tokens.secondary} / 0.5)`,
+                    boxShadow: "0 0 20px hsl(var(--cyan-hsl) / 0.5)",
                   }}
                 />
               </div>
@@ -137,11 +137,11 @@ const Status = () => {
             </CardHeader>
             <CardContent>
               <div className="grid grid-cols-2 gap-4">
-                <div className="p-4 rounded-lg bg-card/50 border border-primary/30 animate-border-glow text-center">
-                  <span className="text-sm text-primary">Cyan Glow</span>
+                <div className="p-4 rounded-lg bg-card/50 border border-pink/30 animate-border-glow text-center">
+                  <span className="text-sm text-primary">Primary glow (pink)</span>
                 </div>
-                <div className="p-4 rounded-lg bg-card/50 border border-secondary/30 animate-border-glow-secondary text-center">
-                  <span className="text-sm text-secondary">Pink Glow</span>
+                <div className="p-4 rounded-lg bg-card/50 border border-cyan/30 animate-border-glow-secondary text-center">
+                  <span className="text-sm text-secondary">Secondary glow (cyan)</span>
                 </div>
               </div>
             </CardContent>

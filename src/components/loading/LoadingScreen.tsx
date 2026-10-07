@@ -90,7 +90,7 @@ export function LoadingScreen({ isLoading }: LoadingScreenProps) {
                 className="absolute inset-0 rounded-full blur-2xl"
                 style={{
                   background:
-                    "radial-gradient(circle, hsl(var(--primary) / 0.4) 0%, hsl(var(--secondary) / 0.3) 50%, transparent 70%)",
+                    "radial-gradient(circle, hsl(var(--pink-hsl) / 0.4) 0%, hsl(var(--cyan-hsl) / 0.3) 50%, transparent 70%)",
                 }}
                 animate={
                   shouldReduceMotion
@@ -138,7 +138,7 @@ export function LoadingScreen({ isLoading }: LoadingScreenProps) {
                 className="h-full rounded-full"
                 style={{
                   background:
-                    "linear-gradient(90deg, hsl(var(--primary)), hsl(var(--secondary)), hsl(var(--primary)))",
+                    "linear-gradient(90deg, hsl(var(--pink-hsl)), hsl(var(--cyan-hsl)), hsl(var(--pink-hsl)))",
                   backgroundSize: "200% 100%",
                 }}
                 initial={{ width: "15%" }}
@@ -169,7 +169,7 @@ export function LoadingScreen({ isLoading }: LoadingScreenProps) {
             className="absolute right-0 bottom-0 left-0 h-px"
             style={{
               background:
-                "linear-gradient(90deg, transparent, hsl(var(--primary) / 0.5), hsl(var(--secondary) / 0.5), transparent)",
+                "linear-gradient(90deg, transparent, hsl(var(--pink-hsl) / 0.5), hsl(var(--cyan-hsl) / 0.5), transparent)",
             }}
             animate={shouldReduceMotion ? undefined : { opacity: [0.3, 0.8, 0.3] }}
             transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}

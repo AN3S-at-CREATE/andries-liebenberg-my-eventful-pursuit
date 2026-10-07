@@ -94,7 +94,7 @@ const Expertise = () => {
                   <Card 
                     interactive 
                     glow={area.accent === "primary" ? "primary" : "secondary"} 
-                    className={`${area.accent === "primary" ? "glass-primary border-t-2 border-t-primary" : "glass-secondary border-t-2 border-t-secondary"} p-8 h-full group`}
+                    className={`${area.accent === "primary" ? "glass-primary border-t-2 border-t-pink" : "glass-secondary border-t-2 border-t-cyan"} p-8 h-full group`}
                   >
                     <area.icon className={`h-10 w-10 mb-4 ${area.accent === "primary" ? "text-primary" : "text-secondary"} group-hover:scale-110 transition-transform`} />
                     <h3 className={`font-heading text-xl font-bold text-foreground mb-3 ${area.accent === "primary" ? "group-hover:text-primary" : "group-hover:text-secondary"} transition-colors`}>

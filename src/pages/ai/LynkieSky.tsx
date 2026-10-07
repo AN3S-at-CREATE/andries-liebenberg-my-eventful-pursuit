@@ -46,7 +46,7 @@ const LynkieSky = () => {
 
           <div className="grid md:grid-cols-3 gap-8 mb-12">
             <MotionReveal delay={0.1}>
-              <Card className="glass-secondary border-l-4 border-l-secondary p-8 text-center group" interactive glow="secondary">
+              <Card className="glass-secondary border-l-4 border-l-cyan p-8 text-center group" interactive glow="secondary">
                 <Cloud className="h-10 w-10 text-secondary mx-auto mb-4 transition-transform duration-300 group-hover:scale-110" />
                 <h3 className="font-heading text-lg font-bold text-foreground mb-2 group-hover:text-secondary transition-colors">Cloud Integration</h3>
                 <p className="text-sm text-muted-foreground">Seamless connection to major cloud platforms for data processing.</p>
@@ -54,7 +54,7 @@ const LynkieSky = () => {
             </MotionReveal>
 
             <MotionReveal delay={0.2}>
-              <Card className="glass-primary border-l-4 border-l-primary p-8 text-center group" interactive glow="primary">
+              <Card className="glass-primary border-l-4 border-l-pink p-8 text-center group" interactive glow="primary">
                 <BarChart3 className="h-10 w-10 text-primary mx-auto mb-4 transition-transform duration-300 group-hover:scale-110" />
                 <h3 className="font-heading text-lg font-bold text-foreground mb-2 group-hover:text-primary transition-colors">Marketing Analytics</h3>
                 <p className="text-sm text-muted-foreground">Advanced analytics for campaign performance and ROI tracking.</p>
@@ -62,7 +62,7 @@ const LynkieSky = () => {
             </MotionReveal>
 
             <MotionReveal delay={0.3}>
-              <Card className="glass-secondary border-l-4 border-l-secondary p-8 text-center group" interactive glow="secondary">
+              <Card className="glass-secondary border-l-4 border-l-cyan p-8 text-center group" interactive glow="secondary">
                 <Zap className="h-10 w-10 text-secondary mx-auto mb-4 transition-transform duration-300 group-hover:scale-110" />
                 <h3 className="font-heading text-lg font-bold text-foreground mb-2 group-hover:text-secondary transition-colors">Real-time Processing</h3>
                 <p className="text-sm text-muted-foreground">Instant insights from your marketing data streams.</p>
@@ -74,7 +74,7 @@ const LynkieSky = () => {
           <div className="divider-primary mb-12" />
 
           <MotionReveal delay={0.4}>
-            <Card className="glass border-l-4 border-l-secondary border-r-4 border-r-primary p-8 text-center max-w-2xl mx-auto" glow="both">
+            <Card className="glass border-l-4 border-l-cyan border-r-4 border-r-pink p-8 text-center max-w-2xl mx-auto" glow="both">
               <Sparkles className="h-12 w-12 text-secondary mx-auto mb-4" />
               <h3 className="font-heading text-xl font-bold text-foreground mb-3">
                 Be the <span className="text-primary">First</span> to <span className="text-secondary">Know</span>

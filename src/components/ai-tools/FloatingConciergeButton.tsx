@@ -78,7 +78,7 @@ export const FloatingConciergeButton = forwardRef<HTMLDivElement>((_, ref) => {
         "absolute bottom-16 right-0 transition-all duration-300 pointer-events-none",
         isHovered && !isOpen ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"
       )}>
-        <div className="relative bg-card border border-border/50 rounded-lg p-4 shadow-lg shadow-secondary/10 w-[280px]">
+        <div className="relative bg-card border border-border/50 rounded-lg p-4 shadow-lg shadow-cyan/10 w-[280px]">
           <div className="absolute -bottom-2 right-6 w-4 h-4 bg-card border-r border-b border-border/50 rotate-45" />
           <p className="text-sm text-foreground font-medium mb-1">
             Ask AN3S Concierge
@@ -97,7 +97,7 @@ export const FloatingConciergeButton = forwardRef<HTMLDivElement>((_, ref) => {
         <Button
           size="lg"
           onClick={handleOpenChat}
-          className="relative h-14 w-14 rounded-full bg-secondary hover:bg-secondary/90 text-secondary-foreground shadow-lg shadow-secondary/25 transition-all duration-300 hover:scale-110 hover:drop-shadow-[0_0_15px_hsl(var(--secondary))]"
+          className="relative h-14 w-14 rounded-full bg-secondary hover:bg-secondary/90 text-secondary-foreground shadow-lg shadow-cyan/25 transition-all duration-300 hover:scale-110 hover:drop-shadow-[0_0_15px_hsl(var(--cyan-hsl))]"
         >
           <MessageSquareText className="h-6 w-6" />
           <span className="sr-only">Ask AN3S Concierge</span>
@@ -201,7 +201,7 @@ export const FloatingConciergeButton = forwardRef<HTMLDivElement>((_, ref) => {
                 placeholder="Ask me anything..."
                 aria-label="Type your message"
                 disabled={isLoading || remainingMessages <= 0}
-                className="flex-1 bg-muted/30 border-border/50 focus-visible:ring-primary"
+                className="flex-1 bg-muted/30 border-border/50 focus-visible:ring-ring"
               />
               <Tooltip>
                 <TooltipTrigger asChild>

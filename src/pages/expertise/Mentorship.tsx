@@ -44,7 +44,7 @@ const Mentorship = () => {
 
           <div className="grid md:grid-cols-2 gap-8">
             <MotionReveal delay={0.1}>
-              <Card interactive glow="primary" className="glass-primary p-8 border-l-4 border-l-primary">
+              <Card interactive glow="primary" className="glass-primary p-8 border-l-4 border-l-pink">
                 <GraduationCap className="h-10 w-10 text-primary mb-4" />
                 <h3 className="font-heading text-xl font-bold text-foreground mb-3">Nurturing <span className="text-primary">Talent</span></h3>
                 <p className="text-muted-foreground">
@@ -54,7 +54,7 @@ const Mentorship = () => {
             </MotionReveal>
 
             <MotionReveal delay={0.2}>
-              <Card interactive glow="secondary" className="glass-secondary p-8 border-l-4 border-l-secondary">
+              <Card interactive glow="secondary" className="glass-secondary p-8 border-l-4 border-l-cyan">
                 <Mic className="h-10 w-10 text-secondary mb-4" />
                 <h3 className="font-heading text-xl font-bold text-foreground mb-3">Active <span className="text-secondary">Lecturer</span></h3>
                 <p className="text-muted-foreground">
@@ -64,7 +64,7 @@ const Mentorship = () => {
             </MotionReveal>
 
             <MotionReveal delay={0.3}>
-              <Card interactive glow="secondary" className="glass-secondary p-8 border-l-4 border-l-secondary">
+              <Card interactive glow="secondary" className="glass-secondary p-8 border-l-4 border-l-cyan">
                 <Award className="h-10 w-10 text-secondary mb-4" />
                 <h3 className="font-heading text-xl font-bold text-foreground mb-3">Industry <span className="text-secondary">Impact</span></h3>
                 <p className="text-muted-foreground">
@@ -74,7 +74,7 @@ const Mentorship = () => {
             </MotionReveal>
 
             <MotionReveal delay={0.4}>
-              <Card interactive glow="primary" className="glass-primary p-8 border-l-4 border-l-primary">
+              <Card interactive glow="primary" className="glass-primary p-8 border-l-4 border-l-pink">
                 <Heart className="h-10 w-10 text-primary mb-4" />
                 <h3 className="font-heading text-xl font-bold text-foreground mb-3">Core <span className="text-primary">Values</span></h3>
                 <p className="text-muted-foreground">

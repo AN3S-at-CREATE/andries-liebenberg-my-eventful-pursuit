@@ -208,7 +208,7 @@ export function ROICalculatorModal({ trigger, initialValues, autoOpen, onAutoOpe
         {trigger || (
           <Button
             variant="outline"
-            className="gap-2 border-primary/50 text-primary hover:bg-primary/10 hover:border-primary"
+            className="gap-2 border-pink/50 text-primary hover:bg-primary/10 hover:border-pink"
           >
             <Calculator className="w-4 h-4" />
             ROI Calculator
@@ -470,7 +470,7 @@ export function ROICalculatorModal({ trigger, initialValues, autoOpen, onAutoOpe
           </div>
 
           {/* CTA */}
-          <div className="bg-secondary/10 border border-secondary/30 rounded-lg p-4 text-center">
+          <div className="bg-secondary/10 border border-cyan/30 rounded-lg p-4 text-center">
             <p className="text-sm text-muted-foreground mb-3">
               Want help achieving these growth targets?
             </p>

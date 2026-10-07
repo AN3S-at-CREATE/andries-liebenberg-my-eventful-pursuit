@@ -50,8 +50,8 @@ const Index = () => {
           animate={{ opacity: 0.6, scaleY: 1 }}
           transition={{ duration: 1, delay: 0.5, ease: "easeOut" }}
           style={{
-            background: "linear-gradient(to bottom, transparent, hsl(var(--secondary) / 0.8), hsl(var(--secondary) / 0.4), transparent)",
-            boxShadow: "0 0 20px 2px hsl(var(--secondary) / 0.4), 0 0 40px 4px hsl(var(--secondary) / 0.2)",
+            background: "linear-gradient(to bottom, transparent, hsl(var(--cyan-hsl) / 0.8), hsl(var(--cyan-hsl) / 0.4), transparent)",
+            boxShadow: "0 0 20px 2px hsl(var(--cyan-hsl) / 0.4), 0 0 40px 4px hsl(var(--cyan-hsl) / 0.2)",
           }}
         />
         <m.div
@@ -60,8 +60,8 @@ const Index = () => {
           animate={{ opacity: 0.4, scaleY: 1 }}
           transition={{ duration: 0.8, delay: 0.7, ease: "easeOut" }}
           style={{
-            background: "linear-gradient(to bottom, transparent, hsl(var(--secondary) / 0.6), transparent)",
-            boxShadow: "0 0 15px 1px hsl(var(--secondary) / 0.3)",
+            background: "linear-gradient(to bottom, transparent, hsl(var(--cyan-hsl) / 0.6), transparent)",
+            boxShadow: "0 0 15px 1px hsl(var(--cyan-hsl) / 0.3)",
           }}
         />
         
@@ -89,7 +89,7 @@ const Index = () => {
           </MotionReveal>
           <MotionReveal delay={0.3}>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button asChild size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground transition-shadow duration-300 hover:shadow-[0_0_20px_hsl(var(--primary)/0.5)]">
+              <Button asChild size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground transition-shadow duration-300 hover:shadow-[0_0_20px_hsl(var(--pink-hsl)/0.5)]">
                 <Link to="/companies" className="inline-flex items-center gap-2">
                   <Building2 className="h-5 w-5" />
                   View Companies
@@ -120,7 +120,7 @@ const Index = () => {
             <MotionItem>
               <div className="group text-center p-4 rounded-lg transition-all duration-300 hover:scale-105 hover:bg-primary/5 border-glow-primary-hover cursor-default">
                 <div className="flex items-center justify-center gap-2 text-primary mb-2">
-                  <Building2 className="h-6 w-6 transition-all duration-300 group-hover:drop-shadow-[0_0_8px_hsl(var(--primary))]" />
+                  <Building2 className="h-6 w-6 transition-all duration-300 group-hover:drop-shadow-[0_0_8px_hsl(var(--pink-hsl))]" />
                   <span className="font-heading text-3xl font-bold">10</span>
                 </div>
                 <p className="text-sm text-muted-foreground">Companies Built</p>
@@ -138,7 +138,7 @@ const Index = () => {
             <MotionItem>
               <div className="group text-center p-4 rounded-lg transition-all duration-300 hover:scale-105 hover:bg-secondary/5 border-glow-secondary-hover cursor-default">
                 <div className="flex items-center justify-center gap-2 text-secondary mb-2">
-                  <TrendingUp className="h-6 w-6 transition-all duration-300 group-hover:drop-shadow-[0_0_8px_hsl(var(--secondary))]" />
+                  <TrendingUp className="h-6 w-6 transition-all duration-300 group-hover:drop-shadow-[0_0_8px_hsl(var(--cyan-hsl))]" />
                   <span className="font-heading text-3xl font-bold glow-text-secondary">47%</span>
                 </div>
                 <p className="text-sm text-muted-foreground">Avg. Growth</p>
@@ -147,7 +147,7 @@ const Index = () => {
             <MotionItem>
               <div className="group text-center p-4 rounded-lg transition-all duration-300 hover:scale-105 hover:bg-primary/5 border-glow-primary-hover cursor-default">
                 <div className="flex items-center justify-center gap-2 text-primary mb-2">
-                  <Star className="h-6 w-6 transition-all duration-300 group-hover:drop-shadow-[0_0_8px_hsl(var(--primary))]" />
+                  <Star className="h-6 w-6 transition-all duration-300 group-hover:drop-shadow-[0_0_8px_hsl(var(--pink-hsl))]" />
                   <span className="font-heading text-3xl font-bold">96%</span>
                 </div>
                 <p className="text-sm text-muted-foreground">Avg. Satisfaction</p>

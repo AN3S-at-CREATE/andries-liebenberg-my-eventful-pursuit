@@ -27,7 +27,7 @@ const Companies = () => {
       <main>
 
       {/* Hero */}
-      <section className="relative py-16 px-4 border-b border-secondary/30 overflow-hidden">
+      <section className="relative py-16 px-4 border-b border-cyan/30 overflow-hidden">
         <ParallaxElements variant="primary" />
         <div className="container max-w-6xl mx-auto relative z-10">
           <MotionReveal>

@@ -87,7 +87,7 @@ export const EventGallery = () => {
         {galleryImages.map((image, index) => (
           <div
             key={index}
-            className="relative group cursor-pointer overflow-hidden rounded-xl aspect-video focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+            className="relative group cursor-pointer overflow-hidden rounded-xl aspect-video focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
             onClick={() => openLightbox(index)}
             onKeyDown={(e) => {
               if (e.key === "Enter" || e.key === " ") {
@@ -119,7 +119,7 @@ export const EventGallery = () => {
             {/* Glow border on hover */}
             <div className={`absolute inset-0 border-2 rounded-xl transition-all duration-300 ${
               hoveredIndex === index 
-                ? 'border-primary shadow-[0_0_20px_hsl(var(--primary)/0.5)]' 
+                ? 'border-pink shadow-[0_0_20px_hsl(var(--pink-hsl)/0.5)]' 
                 : 'border-transparent'
             }`} />
             

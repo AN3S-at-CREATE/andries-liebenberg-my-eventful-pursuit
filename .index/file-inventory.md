@@ -9,11 +9,11 @@ Paths relative to the repository root.
 | `AGENTS.md` | Rules for agents: "Design system" section (only source of truth, never edit `src/design-system/`, no hard-coded colours/fonts, role names), then Cursor Cloud notes (pnpm advice predates the switch to `package-lock.json`) | Active |
 | `PROTECTED_CONTENT.md` | Additive-only registry of routes, sections, data, AI tools, edge functions, hooks, contact info; §10 design system | Active |
 | `index.html` | Page shell, SEO meta, JSON-LD; loads Montserrat from the design system's Google Fonts URL | Active |
-| `tailwind.config.ts` | `presets: [an3s]` (design-system preset owns colours, fonts, radii, shadows, type sizes); keeps container, keyframes and animations (glows in `--pink-hsl` / `--cyan-hsl`) | Active |
+| `tailwind.config.ts` | `presets: [an3s]` (design-system preset owns colours, fonts, radii, shadows, gradients, type sizes; the guard parses `theme` / `theme.extend` to keep them out); keeps container, keyframes and animations (glows in `--pink-hsl` / `--cyan-hsl`) | Active |
 | `package.json` | Scripts incl. `check:ds`, `ds:sync`, `build` (prebuild regenerates `public/sitemap.xml`), `test` (vitest), `lint` | Active |
 | `package-lock.json` | The lockfile on `main` (no `pnpm-lock.yaml`); install with `npm ci` | Active |
 | `scripts/sync-design-system.mjs` | Copies the design system's `dist/web/` into `src/design-system/` (`--from`, `$AN3S_DESIGN_SYSTEM`, or `../Design Sytsem AN3S`) | Active |
-| `scripts/check-design-system.mjs` | Guard: vendored files match `manifest.json` (LF-normalised sha256), fonts and preset wired, no hex/rgb/hsl literals, stock Tailwind colours, arbitrary colours or font-family declarations; `ds-allow:` comment for justified exceptions | Active |
+| `scripts/check-design-system.mjs` | Guard: vendored files match `manifest.json` (LF-normalised sha256); `index.html` loads only the design-system fonts (any font host checked); `tailwind.config.ts` loads the preset and its `theme`/`theme.extend` (parsed structurally: spreads, computed and shorthand keys) don't redefine owned keys; code (`index.html`, `tailwind.config.ts`, `src/**`, comments ignored) has no hex/rgb/hsl literals, named colours, stock Tailwind colours, arbitrary colours, font families/shorthands/`@font-face`/font URLs, role-tinted edges or glows, or redeclared design-system variables; `ds-allow:` comment for justified exceptions | Active |
 | `scripts/generate-sitemap.ts` | Writes `public/sitemap.xml` before dev/build | Active |
 | `.github/workflows/design-system.yml` | Runs the guard on pull requests and pushes to `main` (Node 20, no install) | Active |
 | `.gitignore` | Includes `.agents/` (local analysis memory) | Active |
@@ -41,6 +41,6 @@ Paths relative to the repository root.
 | `src/components/layout/` | Navbar, Footer (design-system wordmark), PageTransition, ScrollToTop, ErrorBoundary | Active |
 | `src/components/motion/MotionReveal.tsx` | Scroll reveals; `MotionHover` glow `primary`/`secondary`/`both` from `tokens.ts` shadows | Active |
 | `src/components/ai-tools/`, `companies/`, `contact/`, `showcase/`, `loading/`, `seo/` | Feature components (Concierge, ROI calculator with token chart colours, company cards and metrics, contact form, gallery, loading screen with the wordmark, SEO) | Active |
-| `src/components/ui/` | shadcn primitives; `card.tsx` variants `glass`, `glass-primary`, `glass-secondary` and glow `primary`/`secondary`/`both`; `badge.tsx` `glow-primary/secondary`; `button.tsx` `glow`/`glow-secondary`; `toast.tsx` danger tokens; `chart.tsx` has one `ds-allow` | Active |
+| `src/components/ui/` | shadcn primitives; `card.tsx` variants `glass`, `glass-primary`, `glass-secondary` and glow `primary`/`secondary`/`both` (hover shadow; `compoundVariants` light an interactive card's edge in the glow's hue, pink for none/both); `badge.tsx` `glow-primary/secondary`; `button.tsx` `glow`/`glow-secondary`; `toast.tsx` danger tokens; `chart.tsx` has one `ds-allow` | Active |
 | `src/data/` | companies, companyMetrics, an3sKnowledge (protected datasets) | Active |
 | `src/assets/` | `loading-screen.gif`, showcase photos; `logo.svg` (unused since 2026-10-07) | Active |

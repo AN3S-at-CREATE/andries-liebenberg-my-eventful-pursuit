@@ -44,7 +44,7 @@ const BusinessGrowth = () => {
 
           <div className="grid md:grid-cols-2 gap-8">
             <MotionReveal delay={0.1}>
-              <Card interactive glow="primary" className="glass-primary p-8 border-t-2 border-t-primary">
+              <Card interactive glow="primary" className="glass-primary p-8 border-t-2 border-t-pink">
                 <Target className="h-10 w-10 text-primary mb-4" />
                 <h3 className="font-heading text-xl font-bold text-foreground mb-3">Strategic <span className="text-primary">Planning</span></h3>
                 <p className="text-muted-foreground">
@@ -54,7 +54,7 @@ const BusinessGrowth = () => {
             </MotionReveal>
 
             <MotionReveal delay={0.2}>
-              <Card interactive glow="secondary" className="glass-secondary p-8 border-t-2 border-t-secondary">
+              <Card interactive glow="secondary" className="glass-secondary p-8 border-t-2 border-t-cyan">
                 <Globe className="h-10 w-10 text-secondary mb-4" />
                 <h3 className="font-heading text-xl font-bold text-foreground mb-3">Geographic <span className="text-secondary">Expansion</span></h3>
                 <p className="text-muted-foreground">
@@ -64,7 +64,7 @@ const BusinessGrowth = () => {
             </MotionReveal>
 
             <MotionReveal delay={0.3}>
-              <Card interactive glow="secondary" className="glass-secondary p-8 border-t-2 border-t-secondary">
+              <Card interactive glow="secondary" className="glass-secondary p-8 border-t-2 border-t-cyan">
                 <DollarSign className="h-10 w-10 text-secondary mb-4" />
                 <h3 className="font-heading text-xl font-bold text-foreground mb-3">Financial <span className="text-secondary">Planning</span></h3>
                 <p className="text-muted-foreground">
@@ -74,7 +74,7 @@ const BusinessGrowth = () => {
             </MotionReveal>
 
             <MotionReveal delay={0.4}>
-              <Card interactive glow="primary" className="glass-primary p-8 border-t-2 border-t-primary">
+              <Card interactive glow="primary" className="glass-primary p-8 border-t-2 border-t-pink">
                 <Cog className="h-10 w-10 text-primary mb-4" />
                 <h3 className="font-heading text-xl font-bold text-foreground mb-3">Operational <span className="text-primary">Efficiency</span></h3>
                 <p className="text-muted-foreground">

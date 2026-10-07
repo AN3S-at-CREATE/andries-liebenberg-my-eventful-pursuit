@@ -46,7 +46,7 @@ const EventPulse = () => {
 
           {/* Key Metric */}
           <MotionReveal delay={0.1}>
-            <Card className="glass-primary border-t-2 border-t-primary p-8 text-center max-w-md mx-auto mb-12" glow="primary">
+            <Card className="glass-primary border-t-2 border-t-pink p-8 text-center max-w-md mx-auto mb-12" glow="primary">
               <div className="text-5xl font-bold text-primary glow-text-primary mb-2">36%</div>
               <p className="text-lg text-muted-foreground">Efficiency Improvement</p>
             </Card>
@@ -57,7 +57,7 @@ const EventPulse = () => {
 
           <div className="grid md:grid-cols-3 gap-8 mb-12">
             <MotionReveal delay={0.2}>
-              <Card className="glass-primary border-l-4 border-l-primary p-8 text-center group" interactive glow="primary">
+              <Card className="glass-primary border-l-4 border-l-pink p-8 text-center group" interactive glow="primary">
                 <Calendar className="h-10 w-10 text-primary mx-auto mb-4 transition-transform duration-300 group-hover:scale-110" />
                 <h3 className="font-heading text-lg font-bold text-foreground mb-2 group-hover:text-primary transition-colors">Intelligent Scheduling</h3>
                 <p className="text-sm text-muted-foreground">AI-powered calendar optimization for seamless event coordination.</p>
@@ -65,7 +65,7 @@ const EventPulse = () => {
             </MotionReveal>
 
             <MotionReveal delay={0.3}>
-              <Card className="glass-secondary border-l-4 border-l-secondary p-8 text-center group" interactive glow="secondary">
+              <Card className="glass-secondary border-l-4 border-l-cyan p-8 text-center group" interactive glow="secondary">
                 <BarChart3 className="h-10 w-10 text-secondary mx-auto mb-4 transition-transform duration-300 group-hover:scale-110" />
                 <h3 className="font-heading text-lg font-bold text-foreground mb-2 group-hover:text-secondary transition-colors">Predictive Analytics</h3>
                 <p className="text-sm text-muted-foreground">Forecast attendance, budget needs, and resource allocation.</p>
@@ -73,7 +73,7 @@ const EventPulse = () => {
             </MotionReveal>
 
             <MotionReveal delay={0.4}>
-              <Card className="glass-primary border-l-4 border-l-primary p-8 text-center group" interactive glow="primary">
+              <Card className="glass-primary border-l-4 border-l-pink p-8 text-center group" interactive glow="primary">
                 <Clock className="h-10 w-10 text-primary mx-auto mb-4 transition-transform duration-300 group-hover:scale-110" />
                 <h3 className="font-heading text-lg font-bold text-foreground mb-2 group-hover:text-primary transition-colors">Real-time Insights</h3>
                 <p className="text-sm text-muted-foreground">Live dashboards for event performance monitoring.</p>

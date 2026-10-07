@@ -15,7 +15,7 @@ const cardVariants = cva(
         "glass-secondary": "bg-card/70 backdrop-blur-xl border-cyan/35",
       },
       interactive: {
-        true: "hover:-translate-y-1 hover:scale-[1.02] hover:shadow-glow-pink hover:border-pink/60 cursor-pointer active:translate-y-0 active:scale-100",
+        true: "hover:-translate-y-1 hover:scale-[1.02] cursor-pointer active:translate-y-0 active:scale-100",
         false: "",
       },
       glow: {
@@ -25,6 +25,14 @@ const cardVariants = cva(
         both: "hover:shadow-[0_0_14px_hsl(var(--pink-hsl)/0.35),0_0_40px_hsl(var(--cyan-hsl)/0.15)]",
       },
     },
+    // Interactive cards also light their edge, in the glow's hue; pink leads when there's no glow
+    // role or both. Static cards keep their edge.
+    compoundVariants: [
+      { interactive: true, glow: "none", class: "hover:shadow-glow-pink hover:border-pink/60" },
+      { interactive: true, glow: "primary", class: "hover:border-pink/60" },
+      { interactive: true, glow: "secondary", class: "hover:border-cyan/60" },
+      { interactive: true, glow: "both", class: "hover:border-pink/60" },
+    ],
     defaultVariants: {
       variant: "default",
       interactive: false,

@@ -83,7 +83,7 @@ export function AIToolsSection() {
                     <Button
                       variant="outline"
                       size="sm"
-                      className="w-full border-secondary/50 text-secondary hover:bg-secondary/10 hover:border-secondary transition-shadow duration-300 hover:shadow-[0_0_15px_hsl(var(--secondary)/0.4)]"
+                      className="w-full border-cyan/50 text-secondary hover:bg-secondary/10 hover:border-cyan transition-shadow duration-300 hover:shadow-[0_0_15px_hsl(var(--cyan-hsl)/0.4)]"
                     >
                       <MessageSquareText className="w-4 h-4 mr-2" />
                       Start Chat
@@ -110,7 +110,7 @@ export function AIToolsSection() {
                     <Button
                       variant="outline"
                       size="sm"
-                      className="w-full border-primary/50 text-primary hover:bg-primary/10 hover:border-primary"
+                      className="w-full border-pink/50 text-primary hover:bg-primary/10 hover:border-pink"
                     >
                       <Calculator className="w-4 h-4 mr-2" />
                       Calculate ROI

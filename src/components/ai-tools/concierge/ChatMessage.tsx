@@ -39,7 +39,7 @@ export function ChatMessage({ message, isLatest }: ChatMessageProps) {
         className={cn(
           "max-w-[80%] rounded-xl px-4 py-3",
           isUser
-            ? "bg-primary/10 border border-primary/30 text-foreground"
+            ? "bg-primary/10 border border-pink/30 text-foreground"
             : "bg-muted/50 border border-border/50 text-foreground"
         )}
       >

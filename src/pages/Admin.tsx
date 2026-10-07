@@ -63,7 +63,7 @@ interface ContactSubmission {
 }
 
 const statusColors: Record<string, string> = {
-  new: "bg-primary/20 text-primary border-primary/30",
+  new: "bg-primary/20 text-primary border-pink/30",
   read: "bg-muted text-muted-foreground border-muted",
   replied: "bg-success/20 text-success border-success/30",
   archived: "bg-destructive/20 text-destructive border-destructive/30",
@@ -262,7 +262,7 @@ const Admin = () => {
               <CardTitle className="text-2xl">{stats.total}</CardTitle>
             </CardHeader>
           </Card>
-          <Card className="bg-card/50 backdrop-blur-sm border-primary/20">
+          <Card className="bg-card/50 backdrop-blur-sm border-pink/20">
             <CardHeader className="pb-2">
               <CardDescription>New</CardDescription>
               <CardTitle className="text-2xl text-primary">{stats.new}</CardTitle>

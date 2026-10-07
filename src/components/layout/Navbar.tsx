@@ -43,14 +43,14 @@ export const Navbar = () => {
   const closeMenu = () => setIsOpen(false);
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-secondary/30 bg-background/80 backdrop-blur-md">
+    <header className="sticky top-0 z-50 w-full border-b border-cyan/30 bg-background/80 backdrop-blur-md">
       <div className="container flex h-16 items-center justify-between">
         <Link to="/" className="flex items-center gap-2">
           {/* 🚀 Optimizer: Removed loading="lazy" and added fetchPriority="high" for critical above-the-fold logo to protect LCP */}
           <img 
             src={logo} 
             alt="AN3S Brand Logo — Andries Liebenberg" 
-            className="h-10 w-auto transition-all duration-300 hover:scale-110 hover:drop-shadow-[0_0_12px_hsl(var(--secondary))]" 
+            className="h-10 w-auto transition-all duration-300 hover:scale-110 hover:drop-shadow-[0_0_12px_hsl(var(--cyan-hsl))]" 
             fetchPriority="high"
             decoding="sync"
             width="118"
@@ -71,7 +71,7 @@ export const Navbar = () => {
               Expertise
               <ChevronDown className="h-3 w-3" />
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="start" className="bg-background border-secondary/30">
+            <DropdownMenuContent align="start" className="bg-background border-cyan/30">
               <DropdownMenuItem asChild>
                 <Link to="/expertise" className="flex items-center gap-2 cursor-pointer hover:text-primary">
                   <Rocket className="h-4 w-4 text-primary" />
@@ -93,7 +93,7 @@ export const Navbar = () => {
               AI
               <ChevronDown className="h-3 w-3" />
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="start" className="bg-background border-primary/30">
+            <DropdownMenuContent align="start" className="bg-background border-pink/30">
               <DropdownMenuItem asChild>
                 <Link to="/ai" className="flex items-center gap-2 cursor-pointer hover:text-secondary">
                   <Brain className="h-4 w-4 text-secondary" />
@@ -179,10 +179,10 @@ export const Navbar = () => {
                 <span className="sr-only">Open menu</span>
               </Button>
             </SheetTrigger>
-            <SheetContent side="right" className="w-80 bg-background border-secondary/30">
+            <SheetContent side="right" className="w-80 bg-background border-cyan/30">
               <div className="flex flex-col h-full">
                 {/* Header */}
-                <div className="flex items-center justify-between pb-6 border-b border-secondary/30">
+                <div className="flex items-center justify-between pb-6 border-b border-cyan/30">
                   {/* 🚀 Optimizer: Removed loading="lazy" and added fetchPriority="high" for critical above-the-fold logo to protect LCP */}
                   <img
                     src={logo}
@@ -234,7 +234,7 @@ export const Navbar = () => {
                       </Link>
                     ))}
                   </div>
-                  <div className="px-3 py-2 border-t border-secondary/30">
+                  <div className="px-3 py-2 border-t border-cyan/30">
                     <p className="text-xs text-secondary mb-2">AI</p>
                     <Link
                       to="/ai"
@@ -289,7 +289,7 @@ export const Navbar = () => {
                 </nav>
 
                 {/* Social Links */}
-                <div className="py-6 border-t border-primary/30">
+                <div className="py-6 border-t border-pink/30">
                   <p className="text-xs text-secondary mb-4 px-3">Connect</p>
                   <div className="flex items-center gap-4 px-3">
                     <Tooltip>
@@ -328,7 +328,7 @@ export const Navbar = () => {
                 </div>
 
                 {/* WhatsApp CTA */}
-                <div className="pt-4 border-t border-secondary/30">
+                <div className="pt-4 border-t border-cyan/30">
                   <Button asChild variant="glow-secondary" className="w-full">
                     <a
                       href="https://wa.me/27729749703"

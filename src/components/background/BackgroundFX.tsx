@@ -115,13 +115,13 @@ export function BackgroundFX() {
       {/* Pink smoke low on the left */}
       <div
         aria-hidden="true"
-        className="fixed -bottom-48 -left-48 h-[640px] w-[560px] rounded-full bg-pink blur-[160px] pointer-events-none -z-10 animate-pulse-slow"
+        className="fixed -bottom-48 -left-48 h-[640px] w-[560px] rounded-full bg-pink opacity-20 blur-[160px] pointer-events-none -z-10 animate-pulse-slow"
       />
 
       {/* Blue smoke on the right */}
       <div
         aria-hidden="true"
-        className="fixed top-1/4 -right-48 h-[560px] w-[480px] rounded-full bg-blue blur-[150px] pointer-events-none -z-10 animate-pulse-slow"
+        className="fixed top-1/4 -right-48 h-[560px] w-[480px] rounded-full bg-blue opacity-20 blur-[150px] pointer-events-none -z-10 animate-pulse-slow"
         style={{ animationDelay: "1s" }}
       />
     </>

@@ -153,7 +153,7 @@ const Showcase = () => {
           <MotionStagger className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-16">
             {stats.map((stat, index) => (
               <MotionItem key={index}>
-                <Card interactive glow={index % 2 === 0 ? "primary" : "secondary"} className={`${index % 2 === 0 ? "glass-primary border-t-2 border-t-primary" : "glass-secondary border-t-2 border-t-secondary"} p-6 text-center`}>
+                <Card interactive glow={index % 2 === 0 ? "primary" : "secondary"} className={`${index % 2 === 0 ? "glass-primary border-t-2 border-t-pink" : "glass-secondary border-t-2 border-t-cyan"} p-6 text-center`}>
                   <stat.icon className={`h-8 w-8 mx-auto mb-3 ${index % 2 === 0 ? "text-primary" : "text-secondary"}`} />
                   <div className={`text-2xl md:text-3xl font-bold ${index % 2 === 0 ? "text-primary" : "text-secondary"}`}>{stat.value}</div>
                   <div className="text-sm text-muted-foreground">{stat.label}</div>
@@ -192,7 +192,7 @@ const Showcase = () => {
       <section className="py-16 px-4">
         <div className="container max-w-6xl mx-auto">
           <MotionReveal delay={0.2}>
-            <Card className="glass p-8 md:p-12 text-center border-l-4 border-l-primary border-r-4 border-r-secondary">
+            <Card className="glass p-8 md:p-12 text-center border-l-4 border-l-pink border-r-4 border-r-cyan">
               <Image className="h-16 w-16 text-secondary mx-auto mb-6" />
               <h3 className="font-heading text-2xl font-bold text-foreground mb-4">
                 Full <span className="text-primary">Live</span> <span className="text-secondary">Portfolio</span>
@@ -239,7 +239,7 @@ const Showcase = () => {
           <MotionStagger className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {eventPortfolio.map((event, index) => (
               <MotionItem key={index}>
-                <Card interactive glow={event.variant === 'primary' ? 'primary' : 'secondary'} className={`${event.variant === 'primary' ? 'glass-primary border-t-2 border-t-primary' : 'glass-secondary border-t-2 border-t-secondary'} p-6 h-full`}>
+                <Card interactive glow={event.variant === 'primary' ? 'primary' : 'secondary'} className={`${event.variant === 'primary' ? 'glass-primary border-t-2 border-t-pink' : 'glass-secondary border-t-2 border-t-cyan'} p-6 h-full`}>
                   <div className="flex items-start gap-4 mb-4">
                     <div className={`p-3 rounded-lg ${event.variant === 'primary' ? 'bg-primary/20' : 'bg-secondary/20'}`}>
                       <event.icon className={`h-6 w-6 ${event.variant === 'primary' ? 'text-primary' : 'text-secondary'}`} />
@@ -299,7 +299,7 @@ const Showcase = () => {
           <MotionStagger className="grid md:grid-cols-2 gap-8">
             {caseStudies.map((study, index) => (
               <MotionItem key={index}>
-                <Card interactive glow={index % 2 === 0 ? "primary" : "secondary"} className={`${index % 2 === 0 ? "glass-primary border-l-4 border-l-primary" : "glass-secondary border-l-4 border-l-secondary"} p-8 h-full`}>
+                <Card interactive glow={index % 2 === 0 ? "primary" : "secondary"} className={`${index % 2 === 0 ? "glass-primary border-l-4 border-l-pink" : "glass-secondary border-l-4 border-l-cyan"} p-8 h-full`}>
                   <div className="flex items-center justify-between mb-4">
                     <h3 className="font-heading text-xl font-bold text-foreground">{study.title}</h3>
                     <Badge variant={index % 2 === 0 ? "glow-primary" : "glow-secondary"}>{study.sector}</Badge>
@@ -347,7 +347,7 @@ const Showcase = () => {
           <div className="divider-primary mb-12" />
 
           <MotionReveal>
-            <Card className="glass-secondary p-8 md:p-12 text-center border-b-4 border-b-secondary">
+            <Card className="glass-secondary p-8 md:p-12 text-center border-b-4 border-b-cyan">
               <h2 className="font-heading text-2xl md:text-3xl font-bold text-foreground mb-4">
                 Ready to Create Something <span className="text-primary glow-text-primary">Spec</span><span className="text-secondary glow-text-secondary">tacular</span>?
               </h2>

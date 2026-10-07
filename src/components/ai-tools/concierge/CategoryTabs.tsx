@@ -34,9 +34,9 @@ export function CategoryTabs({
           aria-label={label}
           onClick={() => onCategoryChange(key)}
           className={cn(
-            "flex-1 flex items-center justify-center gap-1.5 px-3 py-2.5 text-xs font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary",
+            "flex-1 flex items-center justify-center gap-1.5 px-3 py-2.5 text-xs font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
             activeCategory === key
-              ? "text-primary border-b-2 border-primary bg-primary/5"
+              ? "text-primary border-b-2 border-pink bg-primary/5"
               : "text-muted-foreground hover:text-foreground hover:bg-muted/30"
           )}
         >
