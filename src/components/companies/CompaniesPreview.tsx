@@ -37,7 +37,7 @@ export const CompaniesPreview = () => {
 
         <MotionReveal delay={0.4}>
           <div className="text-center">
-            <Button asChild variant="outline" size="lg" className="border-primary/50 hover:bg-primary/10 hover:text-primary border-glow-hover">
+            <Button asChild variant="outline" size="lg" className="border-primary/50 hover:bg-primary/10 hover:text-primary border-glow-primary-hover">
               <Link to="/companies" className="inline-flex items-center gap-2">
                 See All Companies
                 <ArrowRight className="h-4 w-4" />

@@ -25,13 +25,13 @@ const Mentorship = () => {
       <Navbar />
       
       <section className="relative py-24 px-4 overflow-hidden">
-        <ParallaxElements variant="pink" />
+        <ParallaxElements variant="secondary" />
         <div className="container max-w-6xl mx-auto relative z-10">
           <MotionReveal>
             <div className="text-center mb-16">
-              <Badge variant="glow-cyan" className="mb-4">Expertise</Badge>
+              <Badge variant="glow-primary" className="mb-4">Expertise</Badge>
               <h1 className="font-heading text-4xl md:text-6xl font-bold text-foreground mb-6">
-                <span className="text-primary glow-text-cyan">Mentorship</span> & <span className="text-secondary glow-text-pink">Industry Leadership</span>
+                <span className="text-primary glow-text-primary">Mentorship</span> & <span className="text-secondary glow-text-secondary">Industry Leadership</span>
               </h1>
               <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto">
                 Deeply committed to nurturing the <span className="text-primary">next generation</span> of <span className="text-secondary">event and marketing professionals</span>.
@@ -40,11 +40,11 @@ const Mentorship = () => {
           </MotionReveal>
 
           {/* Divider */}
-          <div className="divider-pink mb-12" />
+          <div className="divider-secondary mb-12" />
 
           <div className="grid md:grid-cols-2 gap-8">
             <MotionReveal delay={0.1}>
-              <Card interactive glow="cyan" className="glass-cyan p-8 border-l-4 border-l-primary">
+              <Card interactive glow="primary" className="glass-primary p-8 border-l-4 border-l-primary">
                 <GraduationCap className="h-10 w-10 text-primary mb-4" />
                 <h3 className="font-heading text-xl font-bold text-foreground mb-3">Nurturing <span className="text-primary">Talent</span></h3>
                 <p className="text-muted-foreground">
@@ -54,7 +54,7 @@ const Mentorship = () => {
             </MotionReveal>
 
             <MotionReveal delay={0.2}>
-              <Card interactive glow="pink" className="glass-pink p-8 border-l-4 border-l-secondary">
+              <Card interactive glow="secondary" className="glass-secondary p-8 border-l-4 border-l-secondary">
                 <Mic className="h-10 w-10 text-secondary mb-4" />
                 <h3 className="font-heading text-xl font-bold text-foreground mb-3">Active <span className="text-secondary">Lecturer</span></h3>
                 <p className="text-muted-foreground">
@@ -64,7 +64,7 @@ const Mentorship = () => {
             </MotionReveal>
 
             <MotionReveal delay={0.3}>
-              <Card interactive glow="pink" className="glass-pink p-8 border-l-4 border-l-secondary">
+              <Card interactive glow="secondary" className="glass-secondary p-8 border-l-4 border-l-secondary">
                 <Award className="h-10 w-10 text-secondary mb-4" />
                 <h3 className="font-heading text-xl font-bold text-foreground mb-3">Industry <span className="text-secondary">Impact</span></h3>
                 <p className="text-muted-foreground">
@@ -74,7 +74,7 @@ const Mentorship = () => {
             </MotionReveal>
 
             <MotionReveal delay={0.4}>
-              <Card interactive glow="cyan" className="glass-cyan p-8 border-l-4 border-l-primary">
+              <Card interactive glow="primary" className="glass-primary p-8 border-l-4 border-l-primary">
                 <Heart className="h-10 w-10 text-primary mb-4" />
                 <h3 className="font-heading text-xl font-bold text-foreground mb-3">Core <span className="text-primary">Values</span></h3>
                 <p className="text-muted-foreground">
@@ -85,7 +85,7 @@ const Mentorship = () => {
           </div>
 
           {/* Divider */}
-          <div className="divider-cyan mt-12" />
+          <div className="divider-primary mt-12" />
         </div>
       </section>
 

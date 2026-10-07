@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
 import { Calculator, TrendingUp, Clock, Target, Phone, Link, Download, Check } from "lucide-react";
 import { formatZAR, formatPercentage } from "@/lib/formatters";
+import { color as ds } from "@/design-system/tokens";
 import { toast } from "sonner";
 import {
   AreaChart,
@@ -132,7 +133,7 @@ export function ROICalculatorModal({ trigger, initialValues, autoOpen, onAutoOpe
 
       // Capture the results section
       const canvas = await html2canvas(resultsRef.current, {
-        backgroundColor: "#0d0f14",
+        backgroundColor: ds["deep-space"],
         scale: 2,
       });
 
@@ -429,8 +430,8 @@ export function ROICalculatorModal({ trigger, initialValues, autoOpen, onAutoOpe
                   <AreaChart data={calculations.projections}>
                     <defs>
                       <linearGradient id="revenueGradient" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor="hsl(186, 100%, 53%)" stopOpacity={0.3} />
-                        <stop offset="95%" stopColor="hsl(186, 100%, 53%)" stopOpacity={0} />
+                        <stop offset="5%" stopColor={ds.pink} stopOpacity={0.3} />
+                        <stop offset="95%" stopColor={ds.pink} stopOpacity={0} />
                       </linearGradient>
                     </defs>
                     <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" opacity={0.3} />
@@ -449,7 +450,7 @@ export function ROICalculatorModal({ trigger, initialValues, autoOpen, onAutoOpe
                       contentStyle={{
                         backgroundColor: 'hsl(var(--card))',
                         border: '1px solid hsl(var(--border))',
-                        borderRadius: '8px',
+                        borderRadius: 'var(--radius-md)',
                       }}
                       labelStyle={{ color: 'hsl(var(--foreground))' }}
                       formatter={(value: number) => [formatZAR(value), 'Revenue']}
@@ -458,7 +459,7 @@ export function ROICalculatorModal({ trigger, initialValues, autoOpen, onAutoOpe
                     <Area
                       type="monotone"
                       dataKey="revenue"
-                      stroke="hsl(186, 100%, 53%)"
+                      stroke={ds.pink}
                       strokeWidth={2}
                       fill="url(#revenueGradient)"
                     />

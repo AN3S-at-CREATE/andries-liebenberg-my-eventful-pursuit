@@ -27,13 +27,13 @@ const NeuroLogix = () => {
       <Navbar />
       
       <section className="relative py-24 px-4 overflow-hidden">
-        <ParallaxElements variant="cyan" />
+        <ParallaxElements variant="primary" />
         <div className="container max-w-6xl mx-auto relative z-10">
           <MotionReveal>
             <div className="text-center mb-16">
-              <Badge variant="glow-cyan" className="mb-4">AI Network</Badge>
+              <Badge variant="glow-primary" className="mb-4">AI Network</Badge>
               <h1 className="font-heading text-4xl md:text-6xl font-bold text-foreground mb-6">
-                <span className="text-primary glow-text-cyan">Neuro</span><span className="text-secondary glow-text-pink">Logix</span> AI
+                <span className="text-primary glow-text-primary">Neuro</span><span className="text-secondary glow-text-secondary">Logix</span> AI
               </h1>
               <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto">
                 AI-driven network offering <span className="text-primary">personalized guidance</span>, <span className="text-secondary">workflow automation</span>, and strategic growth support.
@@ -42,11 +42,11 @@ const NeuroLogix = () => {
           </MotionReveal>
 
           {/* Divider */}
-          <div className="divider-cyan mb-12" />
+          <div className="divider-primary mb-12" />
 
           <div className="grid md:grid-cols-2 gap-8 mb-12">
             <MotionReveal delay={0.1}>
-              <Card className="glass-cyan border-l-4 border-l-primary p-8 group" interactive glow="cyan">
+              <Card className="glass-primary border-l-4 border-l-primary p-8 group" interactive glow="primary">
                 <Brain className="h-10 w-10 text-primary mb-4 transition-transform duration-300 group-hover:scale-110" />
                 <h3 className="font-heading text-xl font-bold text-foreground mb-3 group-hover:text-primary transition-colors">Personalized Guidance</h3>
                 <p className="text-muted-foreground">
@@ -56,7 +56,7 @@ const NeuroLogix = () => {
             </MotionReveal>
 
             <MotionReveal delay={0.2}>
-              <Card className="glass-pink border-l-4 border-l-secondary p-8 group" interactive glow="pink">
+              <Card className="glass-secondary border-l-4 border-l-secondary p-8 group" interactive glow="secondary">
                 <Workflow className="h-10 w-10 text-secondary mb-4 transition-transform duration-300 group-hover:scale-110" />
                 <h3 className="font-heading text-xl font-bold text-foreground mb-3 group-hover:text-secondary transition-colors">Workflow Automation</h3>
                 <p className="text-muted-foreground">
@@ -66,7 +66,7 @@ const NeuroLogix = () => {
             </MotionReveal>
 
             <MotionReveal delay={0.3}>
-              <Card className="glass-pink border-l-4 border-l-secondary p-8 group" interactive glow="pink">
+              <Card className="glass-secondary border-l-4 border-l-secondary p-8 group" interactive glow="secondary">
                 <Users className="h-10 w-10 text-secondary mb-4 transition-transform duration-300 group-hover:scale-110" />
                 <h3 className="font-heading text-xl font-bold text-foreground mb-3 group-hover:text-secondary transition-colors">Business Integration</h3>
                 <p className="text-muted-foreground">
@@ -76,7 +76,7 @@ const NeuroLogix = () => {
             </MotionReveal>
 
             <MotionReveal delay={0.4}>
-              <Card className="glass-cyan border-l-4 border-l-primary p-8 group" interactive glow="cyan">
+              <Card className="glass-primary border-l-4 border-l-primary p-8 group" interactive glow="primary">
                 <Shield className="h-10 w-10 text-primary mb-4 transition-transform duration-300 group-hover:scale-110" />
                 <h3 className="font-heading text-xl font-bold text-foreground mb-3 group-hover:text-primary transition-colors">Privacy & Compliance</h3>
                 <p className="text-muted-foreground">
@@ -87,7 +87,7 @@ const NeuroLogix = () => {
           </div>
 
           {/* Divider */}
-          <div className="divider-pink mb-12" />
+          <div className="divider-secondary mb-12" />
 
           <MotionReveal delay={0.5}>
             <div className="text-center flex flex-wrap gap-4 justify-center">
@@ -97,7 +97,7 @@ const NeuroLogix = () => {
                   <ArrowRight className="h-4 w-4" />
                 </Link>
               </Button>
-              <Button asChild size="lg" variant="glow-pink">
+              <Button asChild size="lg" variant="glow-secondary">
                 <Link to="/ai" className="inline-flex items-center gap-2">
                   View All Tools
                 </Link>

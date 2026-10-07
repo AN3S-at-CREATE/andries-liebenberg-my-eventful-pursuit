@@ -1,7 +1,12 @@
 import type { Config } from "tailwindcss";
 import tailwindcssAnimate from "tailwindcss-animate";
+// The AN3S design system is the only source of truth for colours, fonts, radii, glows and
+// gradients. They all arrive through this generated preset (src/design-system/README.md);
+// don't add colors, fontFamily, borderRadius or fontSize here.
+import an3s from "./src/design-system/tailwind-preset.js";
 
 export default {
+  presets: [an3s],
   darkMode: ["class"],
   content: ["./pages/**/*.{ts,tsx}", "./components/**/*.{ts,tsx}", "./app/**/*.{ts,tsx}", "./src/**/*.{ts,tsx}"],
   prefix: "",
@@ -14,67 +19,7 @@ export default {
       },
     },
     extend: {
-      fontFamily: {
-        sans: ["Inter", "system-ui", "sans-serif"],
-        heading: ["Space Grotesk", "system-ui", "sans-serif"],
-      },
-      colors: {
-        border: "hsl(var(--border))",
-        input: "hsl(var(--input))",
-        ring: "hsl(var(--ring))",
-        background: "hsl(var(--background))",
-        foreground: "hsl(var(--foreground))",
-        primary: {
-          DEFAULT: "hsl(var(--primary))",
-          foreground: "hsl(var(--primary-foreground))",
-        },
-        secondary: {
-          DEFAULT: "hsl(var(--secondary))",
-          foreground: "hsl(var(--secondary-foreground))",
-        },
-        destructive: {
-          DEFAULT: "hsl(var(--destructive))",
-          foreground: "hsl(var(--destructive-foreground))",
-        },
-        muted: {
-          DEFAULT: "hsl(var(--muted))",
-          foreground: "hsl(var(--muted-foreground))",
-        },
-        accent: {
-          DEFAULT: "hsl(var(--accent))",
-          foreground: "hsl(var(--accent-foreground))",
-        },
-        popover: {
-          DEFAULT: "hsl(var(--popover))",
-          foreground: "hsl(var(--popover-foreground))",
-        },
-        card: {
-          DEFAULT: "hsl(var(--card))",
-          foreground: "hsl(var(--card-foreground))",
-        },
-        sidebar: {
-          DEFAULT: "hsl(var(--sidebar-background))",
-          foreground: "hsl(var(--sidebar-foreground))",
-          primary: "hsl(var(--sidebar-primary))",
-          "primary-foreground": "hsl(var(--sidebar-primary-foreground))",
-          accent: "hsl(var(--sidebar-accent))",
-          "accent-foreground": "hsl(var(--sidebar-accent-foreground))",
-          border: "hsl(var(--sidebar-border))",
-          ring: "hsl(var(--sidebar-ring))",
-        },
-        chart: {
-          "1": "hsl(var(--chart-1))",
-          "2": "hsl(var(--chart-2))",
-          "3": "hsl(var(--chart-3))",
-          "4": "hsl(var(--chart-4))",
-          "5": "hsl(var(--chart-5))",
-        },
-      },
-      borderRadius: {
-        lg: "var(--radius)",
-        md: "calc(var(--radius) - 2px)",
-        sm: "calc(var(--radius) - 4px)",
-      },
+      // Motion only. Glows use the design system's saturated hues: primary = pink, secondary = cyan.
       keyframes: {
         "accordion-down": {
           from: { height: "0" },
@@ -89,38 +34,38 @@ export default {
           to: { opacity: "1", transform: "translateY(0)" },
         },
         "glow-pulse": {
-          "0%, 100%": { boxShadow: "0 0 20px hsl(var(--primary) / 0.3)" },
-          "50%": { boxShadow: "0 0 40px hsl(var(--primary) / 0.5)" },
+          "0%, 100%": { boxShadow: "0 0 20px hsl(var(--pink-hsl) / 0.3)" },
+          "50%": { boxShadow: "0 0 40px hsl(var(--pink-hsl) / 0.5)" },
         },
-        "glow-pulse-pink": {
-          "0%, 100%": { boxShadow: "0 0 20px hsl(var(--secondary) / 0.3)" },
-          "50%": { boxShadow: "0 0 40px hsl(var(--secondary) / 0.5)" },
+        "glow-pulse-secondary": {
+          "0%, 100%": { boxShadow: "0 0 20px hsl(var(--cyan-hsl) / 0.3)" },
+          "50%": { boxShadow: "0 0 40px hsl(var(--cyan-hsl) / 0.5)" },
         },
         "border-glow": {
-          "0%, 100%": { 
-            boxShadow: "0 0 5px hsl(var(--primary) / 0.4), 0 0 20px hsl(var(--primary) / 0.2), 0 0 35px hsl(var(--primary) / 0.1), inset 0 0 10px hsl(var(--primary) / 0.1)" 
+          "0%, 100%": {
+            boxShadow: "0 0 5px hsl(var(--pink-hsl) / 0.4), 0 0 20px hsl(var(--pink-hsl) / 0.2), 0 0 35px hsl(var(--pink-hsl) / 0.1), inset 0 0 10px hsl(var(--pink-hsl) / 0.1)",
           },
-          "50%": { 
-            boxShadow: "0 0 10px hsl(var(--primary) / 0.6), 0 0 30px hsl(var(--primary) / 0.4), 0 0 50px hsl(var(--primary) / 0.2), inset 0 0 15px hsl(var(--primary) / 0.15)" 
+          "50%": {
+            boxShadow: "0 0 10px hsl(var(--pink-hsl) / 0.6), 0 0 30px hsl(var(--pink-hsl) / 0.4), 0 0 50px hsl(var(--pink-hsl) / 0.2), inset 0 0 15px hsl(var(--pink-hsl) / 0.15)",
           },
         },
-        "border-glow-pink": {
-          "0%, 100%": { 
-            boxShadow: "0 0 5px hsl(var(--secondary) / 0.4), 0 0 20px hsl(var(--secondary) / 0.2), 0 0 35px hsl(var(--secondary) / 0.1), inset 0 0 10px hsl(var(--secondary) / 0.1)" 
+        "border-glow-secondary": {
+          "0%, 100%": {
+            boxShadow: "0 0 5px hsl(var(--cyan-hsl) / 0.4), 0 0 20px hsl(var(--cyan-hsl) / 0.2), 0 0 35px hsl(var(--cyan-hsl) / 0.1), inset 0 0 10px hsl(var(--cyan-hsl) / 0.1)",
           },
-          "50%": { 
-            boxShadow: "0 0 10px hsl(var(--secondary) / 0.6), 0 0 30px hsl(var(--secondary) / 0.4), 0 0 50px hsl(var(--secondary) / 0.2), inset 0 0 15px hsl(var(--secondary) / 0.15)" 
+          "50%": {
+            boxShadow: "0 0 10px hsl(var(--cyan-hsl) / 0.6), 0 0 30px hsl(var(--cyan-hsl) / 0.4), 0 0 50px hsl(var(--cyan-hsl) / 0.2), inset 0 0 15px hsl(var(--cyan-hsl) / 0.15)",
           },
         },
         "border-glow-dual": {
-          "0%, 100%": { 
-            boxShadow: "0 0 5px hsl(var(--primary) / 0.4), 0 0 20px hsl(var(--primary) / 0.2), 0 0 35px hsl(var(--secondary) / 0.1)" 
+          "0%, 100%": {
+            boxShadow: "0 0 5px hsl(var(--pink-hsl) / 0.4), 0 0 20px hsl(var(--pink-hsl) / 0.2), 0 0 35px hsl(var(--cyan-hsl) / 0.1)",
           },
-          "50%": { 
-            boxShadow: "0 0 10px hsl(var(--secondary) / 0.5), 0 0 30px hsl(var(--secondary) / 0.3), 0 0 50px hsl(var(--primary) / 0.2)" 
+          "50%": {
+            boxShadow: "0 0 10px hsl(var(--cyan-hsl) / 0.5), 0 0 30px hsl(var(--cyan-hsl) / 0.3), 0 0 50px hsl(var(--pink-hsl) / 0.2)",
           },
         },
-        "lift": {
+        lift: {
           from: { transform: "translateY(0)" },
           to: { transform: "translateY(-4px)" },
         },
@@ -138,11 +83,11 @@ export default {
         },
         // Attention pulse for chat button - visible but smooth
         "attention-pulse": {
-          "0%, 100%": { 
+          "0%, 100%": {
             transform: "scale(1)",
             opacity: "0.4",
           },
-          "50%": { 
+          "50%": {
             transform: "scale(1.15)",
             opacity: "0.7",
           },
@@ -160,18 +105,18 @@ export default {
 
         // Ambient cinematic motion (very slow, subtle)
         "glow-pulse": "glow-pulse 16s ease-in-out infinite",
-        "glow-pulse-pink": "glow-pulse-pink 16s ease-in-out infinite",
+        "glow-pulse-secondary": "glow-pulse-secondary 16s ease-in-out infinite",
         "border-glow": "border-glow 18s ease-in-out infinite",
-        "border-glow-pink": "border-glow-pink 18s ease-in-out infinite",
+        "border-glow-secondary": "border-glow-secondary 18s ease-in-out infinite",
         "border-glow-dual": "border-glow-dual 20s ease-in-out infinite",
-        "lift": "lift 0.2s ease-out forwards",
+        lift: "lift 0.2s ease-out forwards",
         "glow-breathe": "glow-breathe 18s ease-in-out infinite",
         "neon-flicker": "neon-flicker 2s linear infinite",
         "pulse-slow": "pulse-slow 16s ease-in-out infinite",
-        
+
         // Attention animation for chat button (visible, controlled)
         "attention-pulse": "attention-pulse 4s ease-in-out infinite",
-        
+
         // Calmer skeleton loading
         "skeleton-pulse": "skeleton-pulse 2.5s ease-in-out infinite",
       },

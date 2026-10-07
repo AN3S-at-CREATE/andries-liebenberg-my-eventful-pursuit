@@ -18,13 +18,13 @@ const CookiePolicy = () => {
       <Navbar />
       
       <section className="relative py-24 px-4 overflow-hidden">
-        <ParallaxElements variant="cyan" />
+        <ParallaxElements variant="primary" />
         <div className="container max-w-4xl mx-auto relative z-10">
           <MotionReveal>
             <div className="text-center mb-12">
-              <Badge variant="glow-cyan" className="mb-4">Legal</Badge>
+              <Badge variant="glow-primary" className="mb-4">Legal</Badge>
               <h1 className="font-heading text-4xl md:text-5xl font-bold text-foreground mb-4">
-                <span className="text-primary glow-text-cyan">Cookie</span> <span className="text-secondary glow-text-pink">Policy</span>
+                <span className="text-primary glow-text-primary">Cookie</span> <span className="text-secondary glow-text-secondary">Policy</span>
               </h1>
               <p className="text-muted-foreground">
                 Last updated: <span className="text-primary">January 2025</span>
@@ -33,10 +33,10 @@ const CookiePolicy = () => {
           </MotionReveal>
 
           {/* Divider */}
-          <div className="divider-cyan mb-12" />
+          <div className="divider-primary mb-12" />
 
           <MotionReveal delay={0.1}>
-            <Card className="glass border-l-4 border-l-primary p-8 mb-8" glow="cyan">
+            <Card className="glass border-l-4 border-l-primary p-8 mb-8" glow="primary">
               <h2 className="font-heading text-2xl font-bold text-foreground mb-4">
                 <span className="text-primary">1.</span> What Are Cookies
               </h2>
@@ -48,7 +48,7 @@ const CookiePolicy = () => {
           </MotionReveal>
 
           <MotionReveal delay={0.2}>
-            <Card className="glass border-l-4 border-l-secondary p-8 mb-8" glow="pink">
+            <Card className="glass border-l-4 border-l-secondary p-8 mb-8" glow="secondary">
               <h2 className="font-heading text-2xl font-bold text-foreground mb-4">
                 <span className="text-secondary">2.</span> Types of Cookies We Use
               </h2>
@@ -61,10 +61,10 @@ const CookiePolicy = () => {
           </MotionReveal>
 
           {/* Divider */}
-          <div className="divider-pink mb-8" />
+          <div className="divider-secondary mb-8" />
 
           <MotionReveal delay={0.3}>
-            <Card className="glass border-l-4 border-l-primary p-8 mb-8" glow="cyan">
+            <Card className="glass border-l-4 border-l-primary p-8 mb-8" glow="primary">
               <h2 className="font-heading text-2xl font-bold text-foreground mb-4">
                 <span className="text-primary">3.</span> Managing Cookies
               </h2>
@@ -76,7 +76,7 @@ const CookiePolicy = () => {
           </MotionReveal>
 
           <MotionReveal delay={0.4}>
-            <Card className="glass border-l-4 border-l-secondary p-8" glow="pink">
+            <Card className="glass border-l-4 border-l-secondary p-8" glow="secondary">
               <h2 className="font-heading text-2xl font-bold text-foreground mb-4">
                 <span className="text-secondary">4.</span> Contact
               </h2>

@@ -17,7 +17,7 @@ const aiTools = [
     description: "Proprietary platform streamlining event planning with intelligent scheduling and predictive analytics. Improves efficiency by 36%.",
     icon: Zap,
     href: "/ai/eventpulse",
-    accent: "cyan" as const,
+    accent: "primary" as const,
     status: "Live",
   },
   {
@@ -25,7 +25,7 @@ const aiTools = [
     description: "Launching April 2025 - Innovative tool integrating cloud capabilities with advanced marketing analytics.",
     icon: Sparkles,
     href: "/ai/lynkie-sky",
-    accent: "pink" as const,
+    accent: "secondary" as const,
     status: "Coming Soon",
   },
   {
@@ -33,7 +33,7 @@ const aiTools = [
     description: "AI-driven network offering personalized guidance, workflow automation, and strategic growth support with privacy compliance.",
     icon: Brain,
     href: "/ai/neurologix",
-    accent: "cyan" as const,
+    accent: "primary" as const,
     status: "Live",
   },
   {
@@ -41,7 +41,7 @@ const aiTools = [
     description: "Specialized AI models like oh-dcft-v3.1-claude for personalized marketing weighting and analysis.",
     icon: Settings,
     href: "/ai/custom-models",
-    accent: "pink" as const,
+    accent: "secondary" as const,
     status: "Enterprise",
   },
 ];
@@ -61,13 +61,13 @@ const AI = () => {
       <Navbar />
       <main>
       <section className="relative py-24 px-4 overflow-hidden">
-        <ParallaxElements variant="pink" />
+        <ParallaxElements variant="secondary" />
         <div className="container max-w-6xl mx-auto relative z-10">
           <MotionReveal>
             <div className="text-center mb-16">
-              <Badge variant="glow-cyan" className="mb-4">AI Innovation</Badge>
+              <Badge variant="glow-primary" className="mb-4">AI Innovation</Badge>
               <h1 className="font-heading text-4xl md:text-6xl font-bold text-foreground mb-6">
-                <span className="text-primary glow-text-cyan">AI</span> Tools & <span className="text-secondary glow-text-pink">Projects</span>
+                <span className="text-primary glow-text-primary">AI</span> Tools & <span className="text-secondary glow-text-secondary">Projects</span>
               </h1>
               <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto">
                 I develop <span className="text-primary">cutting-edge AI solutions</span> that revolutionize <span className="text-secondary">events</span> and <span className="text-primary">marketing</span> operations.
@@ -76,7 +76,7 @@ const AI = () => {
           </MotionReveal>
 
           {/* Divider */}
-          <div className="divider-pink mb-12" />
+          <div className="divider-secondary mb-12" />
 
           <MotionStagger className="grid md:grid-cols-2 gap-8">
             {aiTools.map((tool) => (
@@ -84,20 +84,20 @@ const AI = () => {
                 <Link to={tool.href}>
                   <Card 
                     interactive
-                    glow={tool.accent === "cyan" ? "cyan" : "pink"}
-                    className={`${tool.accent === "cyan" ? "glass-cyan border-l-4 border-l-primary" : "glass-pink border-l-4 border-l-secondary"} p-8 h-full group`}
+                    glow={tool.accent === "primary" ? "primary" : "secondary"}
+                    className={`${tool.accent === "primary" ? "glass-primary border-l-4 border-l-primary" : "glass-secondary border-l-4 border-l-secondary"} p-8 h-full group`}
                   >
                     <div className="flex items-start justify-between mb-4">
-                      <tool.icon className={`h-10 w-10 ${tool.accent === "cyan" ? "text-primary" : "text-secondary"} group-hover:scale-110 transition-transform`} />
-                      <Badge variant={tool.status === "Live" ? "glow-cyan" : tool.status === "Coming Soon" ? "glow-pink" : "secondary"}>
+                      <tool.icon className={`h-10 w-10 ${tool.accent === "primary" ? "text-primary" : "text-secondary"} group-hover:scale-110 transition-transform`} />
+                      <Badge variant={tool.status === "Live" ? "glow-primary" : tool.status === "Coming Soon" ? "glow-secondary" : "secondary"}>
                         {tool.status}
                       </Badge>
                     </div>
-                    <h3 className={`font-heading text-xl font-bold text-foreground mb-3 ${tool.accent === "cyan" ? "group-hover:text-primary" : "group-hover:text-secondary"} transition-colors`}>
+                    <h3 className={`font-heading text-xl font-bold text-foreground mb-3 ${tool.accent === "primary" ? "group-hover:text-primary" : "group-hover:text-secondary"} transition-colors`}>
                       {tool.title}
                     </h3>
                     <p className="text-muted-foreground mb-4">{tool.description}</p>
-                    <div className={`inline-flex items-center gap-2 text-sm font-medium ${tool.accent === "cyan" ? "text-primary" : "text-secondary"}`}>
+                    <div className={`inline-flex items-center gap-2 text-sm font-medium ${tool.accent === "primary" ? "text-primary" : "text-secondary"}`}>
                       Learn more about {tool.title}
                       <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
                     </div>
@@ -108,7 +108,7 @@ const AI = () => {
           </MotionStagger>
 
           {/* Divider */}
-          <div className="divider-cyan mt-12 mb-8" />
+          <div className="divider-primary mt-12 mb-8" />
 
           <MotionReveal delay={0.4}>
             <div className="text-center flex flex-wrap justify-center gap-4">
@@ -118,7 +118,7 @@ const AI = () => {
                   <ArrowRight className="h-4 w-4" />
                 </Link>
               </Button>
-              <Button asChild size="lg" variant="glow-pink">
+              <Button asChild size="lg" variant="glow-secondary">
                 <Link to="/expertise" className="inline-flex items-center gap-2">
                   View Expertise
                   <ArrowRight className="h-4 w-4" />

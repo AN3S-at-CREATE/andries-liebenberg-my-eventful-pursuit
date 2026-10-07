@@ -28,13 +28,13 @@ const Companies = () => {
 
       {/* Hero */}
       <section className="relative py-16 px-4 border-b border-secondary/30 overflow-hidden">
-        <ParallaxElements variant="cyan" />
+        <ParallaxElements variant="primary" />
         <div className="container max-w-6xl mx-auto relative z-10">
           <MotionReveal>
             <div className="text-center mb-8">
-              <Badge variant="glow-pink" className="mb-4">Portfolio</Badge>
+              <Badge variant="glow-secondary" className="mb-4">Portfolio</Badge>
               <h1 className="font-heading text-4xl md:text-5xl font-bold text-foreground mb-4">
-                Companies <span className="text-primary glow-text-cyan">I</span> <span className="text-secondary glow-text-pink">Built</span>
+                Companies <span className="text-primary glow-text-primary">I</span> <span className="text-secondary glow-text-secondary">Built</span>
               </h1>
               <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
                 I don't just talk growth — I've shipped it. <span className="text-primary font-semibold">10 companies</span> with real metrics and proven execution across <span className="text-secondary">events</span>, <span className="text-primary">consulting</span>, <span className="text-secondary">retail</span>, and <span className="text-primary">industrial</span> sectors.
@@ -45,7 +45,7 @@ const Companies = () => {
           <MotionReveal delay={0.2}>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <PerformanceBriefModal />
-              <Button asChild variant="glow-pink">
+              <Button asChild variant="glow-secondary">
                 <a
                   href="https://wa.me/27729749703"
                   target="_blank"
@@ -62,7 +62,7 @@ const Companies = () => {
       </section>
 
       {/* Divider */}
-      <div className="divider-cyan h-px w-full" />
+      <div className="divider-primary h-px w-full" />
 
       {/* Company Grid */}
       <section className="py-12 px-4">
@@ -72,7 +72,7 @@ const Companies = () => {
       </section>
 
       {/* Divider */}
-      <div className="divider-pink h-px w-full" />
+      <div className="divider-secondary h-px w-full" />
       </main>
 
       <Footer />

@@ -27,13 +27,13 @@ const LynkieSky = () => {
       <Navbar />
       
       <section className="relative py-24 px-4 overflow-hidden">
-        <ParallaxElements variant="pink" />
+        <ParallaxElements variant="secondary" />
         <div className="container max-w-6xl mx-auto relative z-10">
           <MotionReveal>
             <div className="text-center mb-16">
-              <Badge variant="glow-pink" className="mb-4">Coming April 2025</Badge>
+              <Badge variant="glow-secondary" className="mb-4">Coming April 2025</Badge>
               <h1 className="font-heading text-4xl md:text-6xl font-bold text-foreground mb-6">
-                <span className="text-secondary glow-text-pink">Lynkie</span> <span className="text-primary glow-text-cyan">Sky</span>
+                <span className="text-secondary glow-text-secondary">Lynkie</span> <span className="text-primary glow-text-primary">Sky</span>
               </h1>
               <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto">
                 Innovative tool integrating <span className="text-primary">cloud capabilities</span> with <span className="text-secondary">advanced marketing analytics</span>.
@@ -42,11 +42,11 @@ const LynkieSky = () => {
           </MotionReveal>
 
           {/* Divider */}
-          <div className="divider-pink mb-12" />
+          <div className="divider-secondary mb-12" />
 
           <div className="grid md:grid-cols-3 gap-8 mb-12">
             <MotionReveal delay={0.1}>
-              <Card className="glass-pink border-l-4 border-l-secondary p-8 text-center group" interactive glow="pink">
+              <Card className="glass-secondary border-l-4 border-l-secondary p-8 text-center group" interactive glow="secondary">
                 <Cloud className="h-10 w-10 text-secondary mx-auto mb-4 transition-transform duration-300 group-hover:scale-110" />
                 <h3 className="font-heading text-lg font-bold text-foreground mb-2 group-hover:text-secondary transition-colors">Cloud Integration</h3>
                 <p className="text-sm text-muted-foreground">Seamless connection to major cloud platforms for data processing.</p>
@@ -54,7 +54,7 @@ const LynkieSky = () => {
             </MotionReveal>
 
             <MotionReveal delay={0.2}>
-              <Card className="glass-cyan border-l-4 border-l-primary p-8 text-center group" interactive glow="cyan">
+              <Card className="glass-primary border-l-4 border-l-primary p-8 text-center group" interactive glow="primary">
                 <BarChart3 className="h-10 w-10 text-primary mx-auto mb-4 transition-transform duration-300 group-hover:scale-110" />
                 <h3 className="font-heading text-lg font-bold text-foreground mb-2 group-hover:text-primary transition-colors">Marketing Analytics</h3>
                 <p className="text-sm text-muted-foreground">Advanced analytics for campaign performance and ROI tracking.</p>
@@ -62,7 +62,7 @@ const LynkieSky = () => {
             </MotionReveal>
 
             <MotionReveal delay={0.3}>
-              <Card className="glass-pink border-l-4 border-l-secondary p-8 text-center group" interactive glow="pink">
+              <Card className="glass-secondary border-l-4 border-l-secondary p-8 text-center group" interactive glow="secondary">
                 <Zap className="h-10 w-10 text-secondary mx-auto mb-4 transition-transform duration-300 group-hover:scale-110" />
                 <h3 className="font-heading text-lg font-bold text-foreground mb-2 group-hover:text-secondary transition-colors">Real-time Processing</h3>
                 <p className="text-sm text-muted-foreground">Instant insights from your marketing data streams.</p>
@@ -71,7 +71,7 @@ const LynkieSky = () => {
           </div>
 
           {/* Divider */}
-          <div className="divider-cyan mb-12" />
+          <div className="divider-primary mb-12" />
 
           <MotionReveal delay={0.4}>
             <Card className="glass border-l-4 border-l-secondary border-r-4 border-r-primary p-8 text-center max-w-2xl mx-auto" glow="both">
@@ -83,7 +83,7 @@ const LynkieSky = () => {
                 Join the waitlist to get <span className="text-primary">early access</span> when Lynkie Sky launches in <span className="text-secondary">April 2025</span>.
               </p>
               <div className="flex flex-wrap gap-4 justify-center">
-                <Button asChild size="lg" variant="glow-pink">
+                <Button asChild size="lg" variant="glow-secondary">
                   <Link to="/contact" className="inline-flex items-center gap-2">
                     Join Waitlist
                     <ArrowRight className="h-4 w-4" />

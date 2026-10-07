@@ -79,7 +79,7 @@ const Index = () => {
           <MotionReveal delay={0}>
             <h1 className="font-heading text-4xl md:text-6xl font-bold text-foreground mb-6">
               I don't just talk growth —{" "}
-              <span className="text-primary glow-text-cyan">I've shipped it.</span>
+              <span className="text-primary glow-text-primary">I've shipped it.</span>
             </h1>
           </MotionReveal>
           <MotionReveal delay={0.15}>
@@ -96,7 +96,7 @@ const Index = () => {
                   <ArrowRight className="h-4 w-4" />
                 </Link>
               </Button>
-              <Button asChild variant="glow-pink" size="lg">
+              <Button asChild variant="glow-secondary" size="lg">
                 <a
                   href="https://wa.me/27729749703"
                   target="_blank"
@@ -111,14 +111,14 @@ const Index = () => {
       </section>
 
       {/* Pink Accent Divider */}
-      <div className="divider-pink h-px w-full" />
+      <div className="divider-secondary h-px w-full" />
 
       {/* Stats Section */}
       <section className="py-16 px-4 bg-muted/20">
         <div className="container max-w-4xl mx-auto">
           <MotionStagger className="grid grid-cols-2 md:grid-cols-4 gap-8">
             <MotionItem>
-              <div className="group text-center p-4 rounded-lg transition-all duration-300 hover:scale-105 hover:bg-primary/5 border-glow-hover cursor-default">
+              <div className="group text-center p-4 rounded-lg transition-all duration-300 hover:scale-105 hover:bg-primary/5 border-glow-primary-hover cursor-default">
                 <div className="flex items-center justify-center gap-2 text-primary mb-2">
                   <Building2 className="h-6 w-6 transition-all duration-300 group-hover:drop-shadow-[0_0_8px_hsl(var(--primary))]" />
                   <span className="font-heading text-3xl font-bold">10</span>
@@ -127,7 +127,7 @@ const Index = () => {
               </div>
             </MotionItem>
             <MotionItem>
-              <div className="group text-center p-4 rounded-lg transition-all duration-300 hover:scale-105 hover:bg-secondary/5 border-glow-pink-hover cursor-default">
+              <div className="group text-center p-4 rounded-lg transition-all duration-300 hover:scale-105 hover:bg-secondary/5 border-glow-secondary-hover cursor-default">
                 <div className="flex items-center justify-center gap-2 text-foreground mb-2">
                   <Users className="h-6 w-6 transition-all duration-300 group-hover:drop-shadow-[0_0_8px_hsl(var(--foreground))]" />
                   <span className="font-heading text-3xl font-bold">1,020+</span>
@@ -136,16 +136,16 @@ const Index = () => {
               </div>
             </MotionItem>
             <MotionItem>
-              <div className="group text-center p-4 rounded-lg transition-all duration-300 hover:scale-105 hover:bg-secondary/5 border-glow-pink-hover cursor-default">
+              <div className="group text-center p-4 rounded-lg transition-all duration-300 hover:scale-105 hover:bg-secondary/5 border-glow-secondary-hover cursor-default">
                 <div className="flex items-center justify-center gap-2 text-secondary mb-2">
                   <TrendingUp className="h-6 w-6 transition-all duration-300 group-hover:drop-shadow-[0_0_8px_hsl(var(--secondary))]" />
-                  <span className="font-heading text-3xl font-bold glow-text-pink">47%</span>
+                  <span className="font-heading text-3xl font-bold glow-text-secondary">47%</span>
                 </div>
                 <p className="text-sm text-muted-foreground">Avg. Growth</p>
               </div>
             </MotionItem>
             <MotionItem>
-              <div className="group text-center p-4 rounded-lg transition-all duration-300 hover:scale-105 hover:bg-primary/5 border-glow-hover cursor-default">
+              <div className="group text-center p-4 rounded-lg transition-all duration-300 hover:scale-105 hover:bg-primary/5 border-glow-primary-hover cursor-default">
                 <div className="flex items-center justify-center gap-2 text-primary mb-2">
                   <Star className="h-6 w-6 transition-all duration-300 group-hover:drop-shadow-[0_0_8px_hsl(var(--primary))]" />
                   <span className="font-heading text-3xl font-bold">96%</span>
@@ -158,7 +158,7 @@ const Index = () => {
       </section>
 
       {/* Cyan Divider */}
-      <div className="divider-cyan h-px w-full" />
+      <div className="divider-primary h-px w-full" />
 
       {/* AI Tools Section */}
       <Suspense fallback={<div className="h-[600px] flex items-center justify-center text-muted-foreground">Loading AI Tools...</div>}>
@@ -166,7 +166,7 @@ const Index = () => {
       </Suspense>
 
       {/* Pink Accent Divider */}
-      <div className="divider-pink h-px w-full" />
+      <div className="divider-secondary h-px w-full" />
 
       {/* Companies Preview */}
       <CompaniesPreview />

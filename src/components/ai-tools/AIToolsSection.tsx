@@ -43,7 +43,7 @@ export function AIToolsSection() {
     <section className="py-20 px-4">
       <div className="container max-w-5xl mx-auto">
         {/* Glass container for the section */}
-        <div className="rounded-2xl bg-card/20 backdrop-blur-xl border border-foreground/5 p-8 md:p-12 shadow-[0_8px_32px_0_rgba(0,0,0,0.3),inset_0_1px_0_0_rgba(255,255,255,0.05)]">
+        <div className="rounded-2xl bg-card/60 backdrop-blur-xl border border-border p-8 md:p-12">
           {/* Header */}
           <MotionReveal>
             <div className="text-center mb-12">

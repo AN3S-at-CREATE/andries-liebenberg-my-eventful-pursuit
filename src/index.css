@@ -1,91 +1,25 @@
+/* The AN3S design system is the only source of truth for this site's colours, fonts, radii, glows
+   and gradients. Its tokens and its mapping onto the shadcn/ui roles are generated into
+   src/design-system/ (pink leads, cyan answers); change the design system and re-sync instead of
+   defining values here. Run `node scripts/check-design-system.mjs` before committing. */
+@import "./design-system/tokens.css";
+@import "./design-system/shadcn.css";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
 @layer base {
   html {
     scroll-behavior: smooth;
   }
-  :root {
-    --background: 223 24% 6%;
-    --foreground: 0 0% 100%;
-    --card: 226 28% 15%;
-    --card-foreground: 0 0% 100%;
-    --popover: 226 28% 15%;
-    --popover-foreground: 0 0% 100%;
-    --primary: 186 100% 53%;
-    --primary-foreground: 223 24% 6%;
-    --secondary: 331 100% 55%;
-    --secondary-foreground: 223 24% 6%;
-    --muted: 225 18% 12%;
-    --muted-foreground: 0 0% 78%;
-    --accent: 331 100% 55%;
-    --accent-foreground: 223 24% 6%;
-    --border: 0 0% 100% / 10%;
-    --input: 0 0% 100% / 15%;
-    --ring: 186 100% 53%;
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 0 0% 100%;
-    --chart-1: 186 100% 53%;
-    --chart-2: 331 100% 55%;
-    --chart-3: 232 100% 52%;
-    --chart-4: 265 100% 50%;
-    --chart-5: 0 0% 100%;
-    --sidebar-background: 226 28% 15%;
-    --sidebar: 226 28% 15%;
-    --sidebar-foreground: 0 0% 100%;
-    --sidebar-primary: 186 100% 53%;
-    --sidebar-primary-foreground: 223 24% 6%;
-    --sidebar-accent: 225 18% 12%;
-    --sidebar-accent-foreground: 0 0% 100%;
-    --sidebar-border: 0 0% 100% / 10%;
-    --sidebar-ring: 186 100% 53%;
-    --radius: 1rem;
-  }
-  .dark {
-    --background: 223 24% 6%;
-    --foreground: 0 0% 100%;
-    --card: 226 28% 15%;
-    --card-foreground: 0 0% 100%;
-    --popover: 226 28% 15%;
-    --popover-foreground: 0 0% 100%;
-    --primary: 186 100% 53%;
-    --primary-foreground: 223 24% 6%;
-    --secondary: 331 100% 55%;
-    --secondary-foreground: 223 24% 6%;
-    --muted: 225 18% 12%;
-    --muted-foreground: 0 0% 78%;
-    --accent: 331 100% 55%;
-    --accent-foreground: 223 24% 6%;
-    --border: 0 0% 100% / 10%;
-    --input: 0 0% 100% / 15%;
-    --ring: 186 100% 53%;
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 0 0% 100%;
-    --chart-1: 186 100% 53%;
-    --chart-2: 331 100% 55%;
-    --chart-3: 232 100% 52%;
-    --chart-4: 265 100% 50%;
-    --chart-5: 0 0% 100%;
-    --sidebar-background: 226 28% 15%;
-    --sidebar: 226 28% 15%;
-    --sidebar-foreground: 0 0% 100%;
-    --sidebar-primary: 186 100% 53%;
-    --sidebar-primary-foreground: 223 24% 6%;
-    --sidebar-accent: 225 18% 12%;
-    --sidebar-accent-foreground: 0 0% 100%;
-    --sidebar-border: 0 0% 100% / 10%;
-    --sidebar-ring: 186 100% 53%;
-    --radius: 1rem;
-  }
-}
-@layer base {
   * {
     @apply border-border;
   }
   body {
     @apply bg-background text-foreground font-sans;
   }
-  
+
   /* Respect user's motion preferences */
   @media (prefers-reduced-motion: reduce) {
     *,
@@ -99,114 +33,90 @@
   }
 }
 
+/* Neon helpers, named by role. Glows, edges and rules use the design system's saturated hues
+   (primary = pink, secondary = cyan); words and fills use the glow tints through the roles. */
 @layer utilities {
-  /* Glow utilities using design tokens */
-  .glow-cyan {
-    box-shadow: 0 0 20px hsl(var(--primary) / 0.4);
+  .glow-primary {
+    box-shadow: var(--glow-pink);
   }
-  .glow-pink {
-    box-shadow: 0 0 20px hsl(var(--secondary) / 0.4);
+  .glow-secondary {
+    box-shadow: var(--glow-cyan);
   }
-  .glow-cyan-intense {
-    box-shadow: 0 0 30px hsl(var(--primary) / 0.6), 0 0 60px hsl(var(--primary) / 0.3);
+  .glow-primary-intense {
+    box-shadow: 0 0 30px hsl(var(--pink-hsl) / 0.6), 0 0 60px hsl(var(--pink-hsl) / 0.3);
   }
-  .glow-pink-intense {
-    box-shadow: 0 0 30px hsl(var(--secondary) / 0.6), 0 0 60px hsl(var(--secondary) / 0.3);
-  }
-
-  /* Text glow effects */
-  .glow-text-cyan {
-    text-shadow: 0 0 10px hsl(var(--primary) / 0.5), 0 0 20px hsl(var(--primary) / 0.3);
-  }
-  .glow-text-pink {
-    text-shadow: 0 0 10px hsl(var(--secondary) / 0.5), 0 0 20px hsl(var(--secondary) / 0.3);
+  .glow-secondary-intense {
+    box-shadow: 0 0 30px hsl(var(--cyan-hsl) / 0.6), 0 0 60px hsl(var(--cyan-hsl) / 0.3);
   }
 
-  /* Border glow on hover */
-  .border-glow-hover:hover {
-    box-shadow: 0 0 15px hsl(var(--primary) / 0.4), 0 0 30px hsl(var(--primary) / 0.2);
+  /* Highlighted words: a light core (the glow tint) with a saturated bloom. */
+  .glow-text-primary {
+    text-shadow: 0 0 10px hsl(var(--pink-hsl) / 0.5), 0 0 20px hsl(var(--pink-hsl) / 0.3);
   }
-  .border-glow-pink-hover:hover {
-    box-shadow: 0 0 15px hsl(var(--secondary) / 0.4), 0 0 30px hsl(var(--secondary) / 0.2);
+  .glow-text-secondary {
+    text-shadow: 0 0 10px hsl(var(--cyan-hsl) / 0.5), 0 0 20px hsl(var(--cyan-hsl) / 0.3);
   }
 
-  /* Section divider with gradient glow */
+  .border-glow-primary-hover:hover {
+    box-shadow: var(--glow-pink);
+  }
+  .border-glow-secondary-hover:hover {
+    box-shadow: var(--glow-cyan);
+  }
+
+  /* Rules carry the brand's light: gradient-neon, pink first. */
   .divider-glow {
-    background: linear-gradient(
-      90deg,
-      transparent,
-      hsl(var(--primary) / 0.5),
-      hsl(var(--secondary) / 0.5),
-      transparent
-    );
+    background: var(--gradient-neon);
   }
-  
-  /* Pink accent divider */
-  .divider-pink {
+  .divider-primary {
     background: linear-gradient(
       90deg,
       transparent 5%,
-      hsl(var(--secondary) / 0.4) 25%,
-      hsl(var(--secondary) / 0.6) 50%,
-      hsl(var(--secondary) / 0.4) 75%,
+      hsl(var(--pink-hsl) / 0.4) 25%,
+      hsl(var(--pink-hsl) / 0.6) 50%,
+      hsl(var(--pink-hsl) / 0.4) 75%,
       transparent 95%
     );
   }
-  
-  /* Cyan accent divider */
-  .divider-cyan {
+  .divider-secondary {
     background: linear-gradient(
       90deg,
       transparent 5%,
-      hsl(var(--primary) / 0.4) 25%,
-      hsl(var(--primary) / 0.6) 50%,
-      hsl(var(--primary) / 0.4) 75%,
+      hsl(var(--cyan-hsl) / 0.4) 25%,
+      hsl(var(--cyan-hsl) / 0.6) 50%,
+      hsl(var(--cyan-hsl) / 0.4) 75%,
       transparent 95%
     );
   }
 
-  /* Glass card utilities */
+  /* Panels: the panel fill over the night sky, set apart by a neon edge, never a drop shadow. */
   .glass {
-    background: hsl(var(--card) / 0.4);
+    background: hsl(var(--panel-hsl) / 0.72);
     backdrop-filter: blur(16px);
-    border: 1px solid hsl(var(--foreground) / 0.1);
-    box-shadow: 0 8px 32px 0 rgba(0,0,0,0.3), 
-                inset 0 1px 0 0 hsl(var(--foreground) / 0.05);
+    border: 1px solid var(--line);
   }
-  
-  .glass-cyan {
-    background: hsl(var(--primary) / 0.05);
+  .glass-primary {
+    background: hsl(var(--panel-hsl) / 0.72);
     backdrop-filter: blur(16px);
-    border: 1px solid hsl(var(--primary) / 0.2);
-    box-shadow: 0 8px 32px 0 hsl(var(--primary) / 0.1),
-                inset 0 1px 0 0 hsl(var(--primary) / 0.1);
+    border: 1px solid hsl(var(--pink-hsl) / 0.35);
   }
-  
-  .glass-pink {
-    background: hsl(var(--secondary) / 0.05);
+  .glass-secondary {
+    background: hsl(var(--panel-hsl) / 0.72);
     backdrop-filter: blur(16px);
-    border: 1px solid hsl(var(--secondary) / 0.2);
-    box-shadow: 0 8px 32px 0 hsl(var(--secondary) / 0.1),
-                inset 0 1px 0 0 hsl(var(--secondary) / 0.1);
+    border: 1px solid hsl(var(--cyan-hsl) / 0.35);
   }
-  
-  /* Badge glow variants */
-  .badge-glow-cyan {
-    box-shadow: 0 0 8px hsl(var(--primary) / 0.4);
+
+  .badge-glow-primary {
+    box-shadow: 0 0 8px hsl(var(--pink-hsl) / 0.4);
   }
-  
-  .badge-glow-pink {
-    box-shadow: 0 0 8px hsl(var(--secondary) / 0.4);
+  .badge-glow-secondary {
+    box-shadow: 0 0 8px hsl(var(--cyan-hsl) / 0.4);
   }
-  
-  /* Button glow on hover */
-  .btn-glow-cyan:hover {
-    box-shadow: 0 0 25px hsl(var(--primary) / 0.5),
-                0 4px 20px -4px hsl(var(--primary) / 0.4);
+
+  .btn-glow-primary:hover {
+    box-shadow: var(--glow-pink);
   }
-  
-  .btn-glow-pink:hover {
-    box-shadow: 0 0 25px hsl(var(--secondary) / 0.5),
-                0 4px 20px -4px hsl(var(--secondary) / 0.4);
+  .btn-glow-secondary:hover {
+    box-shadow: var(--glow-cyan);
   }
 }

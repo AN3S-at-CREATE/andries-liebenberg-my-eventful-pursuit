@@ -3,7 +3,7 @@ import { useSpring, useTransform, m } from "framer-motion";
 import { useIsMobile } from "@/hooks/use-mobile";
 
 interface GlobalCursorGlowProps {
-  color?: "cyan" | "pink" | "mixed";
+  color?: "primary" | "secondary" | "mixed";
   size?: number;
   intensity?: number;
 }
@@ -59,13 +59,13 @@ export const GlobalCursorGlow = ({
 
   const getGlowColor = () => {
     switch (color) {
-      case "cyan":
-        return "bg-primary/30";
-      case "pink":
-        return "bg-secondary/30";
+      case "primary":
+        return "bg-pink/30";
+      case "secondary":
+        return "bg-cyan/30";
       case "mixed":
       default:
-        return "bg-gradient-radial from-primary/25 via-secondary/15 to-transparent";
+        return "bg-gradient-radial from-pink/25 via-cyan/15 to-transparent";
     }
   };
 
@@ -88,7 +88,7 @@ export const GlobalCursorGlow = ({
         transition={{ duration: 0.3 }}
       />
       <m.div
-        className="absolute pointer-events-none rounded-full blur-[40px] bg-primary/20"
+        className="absolute pointer-events-none rounded-full blur-[40px] bg-pink/20"
         style={{
           width: size * 0.4,
           height: size * 0.4,

@@ -2,7 +2,8 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Building2, Github, Linkedin, MessageCircle, Mail, Menu, ChevronDown, Calendar, Megaphone, TrendingUp, Code, Rocket, Users, Zap, Plane, Brain, Wrench } from "lucide-react";
-import logo from "@/assets/logo.svg";
+// The wordmark comes from the AN3S design system (src/design-system/assets).
+import logo from "@/design-system/assets/an3s-wordmark.png";
 import {
   Sheet,
   SheetContent,
@@ -52,7 +53,7 @@ export const Navbar = () => {
             className="h-10 w-auto transition-all duration-300 hover:scale-110 hover:drop-shadow-[0_0_12px_hsl(var(--secondary))]" 
             fetchPriority="high"
             decoding="sync"
-            width="160"
+            width="118"
             height="40"
             // Removed loading="lazy" and decoding="async" for faster LCP on above-the-fold logo
           />
@@ -189,7 +190,7 @@ export const Navbar = () => {
                     className="h-10 w-auto"
                     fetchPriority="high"
                     decoding="sync"
-                    width="160"
+                    width="118"
                     height="40"
                     // Removed loading="lazy" and decoding="async" for faster LCP
                   />
@@ -328,7 +329,7 @@ export const Navbar = () => {
 
                 {/* WhatsApp CTA */}
                 <div className="pt-4 border-t border-secondary/30">
-                  <Button asChild variant="glow-pink" className="w-full">
+                  <Button asChild variant="glow-secondary" className="w-full">
                     <a
                       href="https://wa.me/27729749703"
                       target="_blank"

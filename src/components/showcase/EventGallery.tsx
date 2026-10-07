@@ -127,7 +127,7 @@ export const EventGallery = () => {
             <div className={`absolute inset-0 p-4 flex flex-col justify-end transition-all duration-300 ${
               hoveredIndex === index ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
             }`}>
-              <Badge variant="glow-cyan" className="w-fit mb-2">{image.category}</Badge>
+              <Badge variant="glow-primary" className="w-fit mb-2">{image.category}</Badge>
               <h3 className="font-heading text-lg font-bold text-foreground">{image.title}</h3>
               <p className="text-sm text-muted-foreground line-clamp-2">{image.description}</p>
             </div>
@@ -213,7 +213,7 @@ export const EventGallery = () => {
               {/* Info bar */}
               <div className="p-6 border-t border-border/50">
                 <div className="flex items-center gap-3 mb-2">
-                  <Badge variant="glow-cyan">{galleryImages[selectedIndex].category}</Badge>
+                  <Badge variant="glow-primary">{galleryImages[selectedIndex].category}</Badge>
                   <span className="text-sm text-muted-foreground">
                     {selectedIndex + 1} / {galleryImages.length}
                   </span>

@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useScroll, useReducedMotion } from "framer-motion";
+import { color as ds } from "@/design-system/tokens";
 
 interface Star {
   x: number;
@@ -7,15 +8,16 @@ interface Star {
   size: number;
   opacity: number;
   speed: number;
-  color: "cyan" | "pink" | "white";
+  color: "pink" | "cyan" | "ink";
   twinkleSpeed: number;
   twinkleOffset: number;
 }
 
+// Star colours from the design system: mostly ink-white, with pink leading cyan.
 const STAR_COLORS = {
-  cyan: "rgb(13, 229, 255)",
-  pink: "rgb(255, 26, 140)",
-  white: "rgb(255, 255, 255)",
+  pink: ds.pink,
+  cyan: ds.cyan,
+  ink: ds.ink,
 } as const;
 
 const isMobile = () => typeof window !== "undefined" && window.innerWidth < 768;
@@ -24,9 +26,9 @@ export function ParallaxStarfield() {
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const starsRef = useRef<Record<keyof typeof STAR_COLORS, Star[]>>({
-    cyan: [],
     pink: [],
-    white: [],
+    cyan: [],
+    ink: [],
   });
   const animationRef = useRef<number>();
   const scrollYRef = useRef(0);
@@ -79,14 +81,14 @@ export function ParallaxStarfield() {
         (window.innerWidth * window.innerHeight) / baseDensity
       );
 
-      starsRef.current = { cyan: [], pink: [], white: [] };
+      starsRef.current = { pink: [], cyan: [], ink: [] };
 
       for (let i = 0; i < starCount; i++) {
         const colorRand = Math.random();
-        let color: "cyan" | "pink" | "white";
-        if (colorRand < 0.15) color = "cyan";
-        else if (colorRand < 0.25) color = "pink";
-        else color = "white";
+        let color: "pink" | "cyan" | "ink";
+        if (colorRand < 0.15) color = "pink";
+        else if (colorRand < 0.25) color = "cyan";
+        else color = "ink";
 
         starsRef.current[color].push({
           x: Math.random() * window.innerWidth,
@@ -161,7 +163,7 @@ export function ParallaxStarfield() {
                 ctx.fill();
               }
 
-              if (!isReducedMode && star.size > 1 && color !== "white") {
+              if (!isReducedMode && star.size > 1 && color !== "ink") {
                 ctx.globalAlpha = finalOpacity * 0.15;
                 ctx.beginPath();
                 ctx.arc(star.x, viewportY, star.size * 3, 0, Math.PI * 2);

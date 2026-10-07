@@ -1,12 +1,13 @@
 import { Github, Linkedin, Mail, Phone } from "lucide-react";
 import { Link } from "react-router-dom";
-import logo from "@/assets/logo.svg";
+// The wordmark comes from the AN3S design system (src/design-system/assets).
+import logo from "@/design-system/assets/an3s-wordmark.png";
 
 export const Footer = () => {
   return (
     <footer className="border-t border-secondary/30 bg-muted/30">
       {/* Pink accent divider at top */}
-      <div className="divider-pink" />
+      <div className="divider-secondary" />
       
       <div className="container py-12">
         <div className="grid gap-8 md:grid-cols-4">
@@ -15,7 +16,7 @@ export const Footer = () => {
               <img
                 src={logo}
                 alt="AN3S Logo"
-                width="200"
+                width="142"
                 height="48"
                 loading="lazy"
                 decoding="async"

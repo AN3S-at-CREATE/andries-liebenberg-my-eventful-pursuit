@@ -9,19 +9,20 @@ const cardVariants = cva(
     variants: {
       variant: {
         default: "bg-card",
-        glass: "bg-card/40 backdrop-blur-xl border-foreground/10 shadow-[0_8px_32px_0_rgba(0,0,0,0.3),inset_0_1px_0_0_rgba(255,255,255,0.05)]",
-        "glass-cyan": "bg-primary/5 backdrop-blur-xl border-primary/20 shadow-[0_8px_32px_0_hsl(var(--primary)/0.1),inset_0_1px_0_0_hsl(var(--primary)/0.1)]",
-        "glass-pink": "bg-secondary/5 backdrop-blur-xl border-secondary/20 shadow-[0_8px_32px_0_hsl(var(--secondary)/0.1),inset_0_1px_0_0_hsl(var(--secondary)/0.1)]",
+        // Panels over the night sky: panel fill and a neon edge; light, never drop shadows.
+        glass: "bg-card/70 backdrop-blur-xl border-border",
+        "glass-primary": "bg-card/70 backdrop-blur-xl border-pink/35",
+        "glass-secondary": "bg-card/70 backdrop-blur-xl border-cyan/35",
       },
       interactive: {
-        true: "hover:-translate-y-1 hover:scale-[1.02] hover:shadow-[0_12px_40px_-10px_hsl(var(--primary)/0.4)] hover:border-primary/40 cursor-pointer active:translate-y-0 active:scale-100",
+        true: "hover:-translate-y-1 hover:scale-[1.02] hover:shadow-glow-pink hover:border-pink/60 cursor-pointer active:translate-y-0 active:scale-100",
         false: "",
       },
       glow: {
         none: "",
-        cyan: "hover:shadow-[0_0_40px_-8px_hsl(var(--primary)/0.5),0_8px_30px_-10px_hsl(var(--primary)/0.3)]",
-        pink: "hover:shadow-[0_0_40px_-8px_hsl(var(--secondary)/0.5),0_8px_30px_-10px_hsl(var(--secondary)/0.3)]",
-        both: "hover:shadow-[0_0_40px_-8px_hsl(var(--primary)/0.4),0_0_30px_-5px_hsl(var(--secondary)/0.3)]",
+        primary: "hover:shadow-glow-pink",
+        secondary: "hover:shadow-glow-cyan",
+        both: "hover:shadow-[0_0_14px_hsl(var(--pink-hsl)/0.35),0_0_40px_hsl(var(--cyan-hsl)/0.15)]",
       },
     },
     defaultVariants: {

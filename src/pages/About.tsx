@@ -54,11 +54,11 @@ const About = () => {
         <div className="container max-w-6xl mx-auto">
           <MotionReveal>
             <div className="text-center mb-16">
-              <Badge variant="glow-pink" className="mb-4">Architect of Experiences, Driver of Growth</Badge>
+              <Badge variant="glow-secondary" className="mb-4">Architect of Experiences, Driver of Growth</Badge>
               <h1 className="font-heading text-4xl md:text-6xl font-bold text-foreground mb-6">
                 Andries Johannes{" "}
-                <span className="text-primary glow-text-cyan">Lieben</span>
-                <span className="text-secondary glow-text-pink">berg</span>
+                <span className="text-primary glow-text-primary">Lieben</span>
+                <span className="text-secondary glow-text-secondary">berg</span>
               </h1>
               <p className="text-lg md:text-xl text-muted-foreground max-w-4xl mx-auto mb-6">
                 For over two decades, my professional life has been a dynamic exploration at the intersection of <span className="text-primary">creativity</span>, <span className="text-secondary">strategy</span>, and <span className="text-primary">execution</span>. I've navigated the complex worlds of Marketing, Events Management, Sales, Technical Development, and Strategic Business Growth.
@@ -73,7 +73,7 @@ const About = () => {
           <MotionStagger className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-16">
             {careerHighlights.map((stat) => (
               <MotionItem key={stat.label}>
-                <Card interactive glow={stat.color === "primary" ? "cyan" : "pink"} className={stat.color === "primary" ? "glass-cyan p-6 text-center" : "glass-pink p-6 text-center"}>
+                <Card interactive glow={stat.color === "primary" ? "primary" : "secondary"} className={stat.color === "primary" ? "glass-primary p-6 text-center" : "glass-secondary p-6 text-center"}>
                   <stat.icon className={`h-8 w-8 mx-auto mb-2 ${stat.color === "primary" ? "text-primary" : "text-secondary"}`} />
                   <div className={`text-3xl md:text-4xl font-bold mb-2 ${stat.color === "primary" ? "text-primary" : "text-secondary"}`}>
                     {stat.value}
@@ -85,7 +85,7 @@ const About = () => {
           </MotionStagger>
 
           {/* Divider */}
-          <div className="divider-cyan mb-12" />
+          <div className="divider-primary mb-12" />
 
           {/* Current Roles */}
           <MotionReveal delay={0.2}>
@@ -115,7 +115,7 @@ const About = () => {
 
           {/* Heritage Section */}
           <MotionReveal delay={0.3}>
-            <Card className="glass-pink p-8 mb-12 border-r-4 border-r-secondary">
+            <Card className="glass-secondary p-8 mb-12 border-r-4 border-r-secondary">
               <div className="flex flex-col md:flex-row items-center gap-6">
                 <Heart className="h-16 w-16 text-secondary flex-shrink-0 animate-pulse" />
                 <div>
@@ -134,7 +134,7 @@ const About = () => {
           </MotionReveal>
 
           {/* Divider */}
-          <div className="divider-pink mb-12" />
+          <div className="divider-secondary mb-12" />
 
           {/* Career Timeline */}
           <MotionReveal delay={0.4}>
@@ -148,7 +148,7 @@ const About = () => {
                   <MotionReveal key={item.year} delay={0.1 * index}>
                     <div className={`flex flex-col md:flex-row items-center gap-4 ${index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"}`}>
                       <Card className={`glass p-6 md:w-5/12 ${index % 2 === 0 ? "md:text-right" : "md:text-left"}`}>
-                        <Badge variant={index % 2 === 0 ? "glow-cyan" : "glow-pink"} className="mb-2">{item.year}</Badge>
+                        <Badge variant={index % 2 === 0 ? "glow-primary" : "glow-secondary"} className="mb-2">{item.year}</Badge>
                         <h3 className="font-heading text-xl font-bold text-foreground mb-2">{item.title}</h3>
                         <p className="text-sm text-muted-foreground">{item.description}</p>
                       </Card>
@@ -164,26 +164,26 @@ const About = () => {
           </MotionReveal>
 
           {/* Divider */}
-          <div className="divider-cyan mt-16 mb-8" />
+          <div className="divider-primary mt-16 mb-8" />
 
           {/* Key Strengths */}
           <MotionStagger className="grid md:grid-cols-3 gap-6">
             <MotionItem>
-              <Card interactive glow="cyan" className="glass-cyan p-6 text-center h-full border-t-2 border-t-primary">
+              <Card interactive glow="primary" className="glass-primary p-6 text-center h-full border-t-2 border-t-primary">
                 <Target className="h-10 w-10 text-primary mx-auto mb-4" />
                 <h3 className="font-heading text-lg font-bold text-foreground mb-2">Leadership</h3>
                 <p className="text-sm text-muted-foreground">Strategic planning and creative problem-solving that drives results.</p>
               </Card>
             </MotionItem>
             <MotionItem>
-              <Card interactive glow="pink" className="glass-pink p-6 text-center h-full border-t-2 border-t-secondary">
+              <Card interactive glow="secondary" className="glass-secondary p-6 text-center h-full border-t-2 border-t-secondary">
                 <Users className="h-10 w-10 text-secondary mx-auto mb-4" />
                 <h3 className="font-heading text-lg font-bold text-foreground mb-2">Client-Centric</h3>
                 <p className="text-sm text-muted-foreground">Ensuring every project exceeds expectations with personalized approaches.</p>
               </Card>
             </MotionItem>
             <MotionItem>
-              <Card interactive glow="cyan" className="glass-cyan p-6 text-center h-full border-t-2 border-t-primary">
+              <Card interactive glow="primary" className="glass-primary p-6 text-center h-full border-t-2 border-t-primary">
                 <GraduationCap className="h-10 w-10 text-primary mx-auto mb-4" />
                 <h3 className="font-heading text-lg font-bold text-foreground mb-2">Mentorship</h3>
                 <p className="text-sm text-muted-foreground">Deep commitment to community engagement and developing future leaders.</p>
@@ -192,7 +192,7 @@ const About = () => {
           </MotionStagger>
 
           {/* Divider */}
-          <div className="divider-pink mt-16 mb-8" />
+          <div className="divider-secondary mt-16 mb-8" />
 
           {/* Achievements Grid */}
           <MotionReveal>
@@ -203,7 +203,7 @@ const About = () => {
           <MotionStagger className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {achievements.map((section, index) => (
               <MotionItem key={section.category}>
-                <Card interactive glow={index % 2 === 0 ? "cyan" : "pink"} className={index % 2 === 0 ? "glass-cyan p-6 h-full" : "glass-pink p-6 h-full"}>
+                <Card interactive glow={index % 2 === 0 ? "primary" : "secondary"} className={index % 2 === 0 ? "glass-primary p-6 h-full" : "glass-secondary p-6 h-full"}>
                   <h3 className="font-heading text-lg font-bold text-foreground mb-4">{section.category}</h3>
                   <ul className="space-y-2">
                     {section.items.map((item, i) => (
@@ -231,7 +231,7 @@ const About = () => {
 
           {/* Mentorship Section */}
           <MotionReveal delay={0.8}>
-            <Card className="glass-cyan mt-12 p-8 border-b-4 border-b-primary">
+            <Card className="glass-primary mt-12 p-8 border-b-4 border-b-primary">
               <div className="flex flex-col md:flex-row items-center gap-6">
                 <Award className="h-16 w-16 text-primary flex-shrink-0" />
                 <div>
@@ -250,7 +250,7 @@ const About = () => {
           </MotionReveal>
 
           {/* Divider */}
-          <div className="divider-pink mt-12 mb-8" />
+          <div className="divider-secondary mt-12 mb-8" />
 
           {/* Vision for Future */}
           <MotionReveal>
@@ -262,25 +262,25 @@ const About = () => {
           </MotionReveal>
           <MotionStagger className="grid md:grid-cols-4 gap-4 mb-8">
             <MotionItem>
-              <Card interactive glow="cyan" className="glass p-4 text-center">
+              <Card interactive glow="primary" className="glass p-4 text-center">
                 <Lightbulb className="h-6 w-6 text-primary mx-auto mb-2" />
                 <p className="text-sm text-muted-foreground">Interactive Content</p>
               </Card>
             </MotionItem>
             <MotionItem>
-              <Card interactive glow="pink" className="glass p-4 text-center">
+              <Card interactive glow="secondary" className="glass p-4 text-center">
                 <Lightbulb className="h-6 w-6 text-secondary mx-auto mb-2" />
                 <p className="text-sm text-muted-foreground">Augmented Reality</p>
               </Card>
             </MotionItem>
             <MotionItem>
-              <Card interactive glow="cyan" className="glass p-4 text-center">
+              <Card interactive glow="primary" className="glass p-4 text-center">
                 <Lightbulb className="h-6 w-6 text-primary mx-auto mb-2" />
                 <p className="text-sm text-muted-foreground">AI Personalization</p>
               </Card>
             </MotionItem>
             <MotionItem>
-              <Card interactive glow="pink" className="glass p-4 text-center">
+              <Card interactive glow="secondary" className="glass p-4 text-center">
                 <Lightbulb className="h-6 w-6 text-secondary mx-auto mb-2" />
                 <p className="text-sm text-muted-foreground">Gamification</p>
               </Card>
@@ -301,7 +301,7 @@ const About = () => {
                   <ArrowRight className="h-4 w-4" />
                 </Link>
               </Button>
-              <Button asChild size="lg" variant="glow-pink">
+              <Button asChild size="lg" variant="glow-secondary">
                 <Link to="/contact" className="inline-flex items-center gap-2">
                   Get in Touch
                   <ArrowRight className="h-4 w-4" />

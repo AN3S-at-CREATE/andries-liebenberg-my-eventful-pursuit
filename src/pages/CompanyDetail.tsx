@@ -59,7 +59,7 @@ const CompanyDetail = () => {
 
       {/* Header */}
       <section className="relative py-12 px-4 border-b border-border/50 overflow-hidden">
-        <ParallaxElements variant="cyan" />
+        <ParallaxElements variant="primary" />
         <div className="container max-w-4xl mx-auto relative z-10">
           <Link
             to="/companies"

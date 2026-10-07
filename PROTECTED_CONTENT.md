@@ -154,7 +154,7 @@ Contains 10 South African companies:
 |------|---------|
 | `src/lib/formatters.ts` | ZAR currency formatting, percentages, numbers |
 | `src/lib/utils.ts` | Tailwind class merge utilities |
-| `src/index.css` | AN3S theme tokens (cyberpink neon) |
+| `src/index.css` | Imports the AN3S design-system tokens and their shadcn role mapping; role-named neon helpers (`glow-primary`, `glass-secondary`…). Theme values moved to `src/design-system/` on 2026-10-07 (see §10) |
 
 ---
 
@@ -169,6 +169,20 @@ Contains 10 South African companies:
 - **Website:** https://an3s.info
 - **Location:** South Africa
 - **Business Hours:** Mon - Fri: 08:00 - 17:00 SAST
+
+---
+
+## 10. Design System (DO NOT DELETE)
+
+The AN3S design system ([AN3S-CREATE/an3s-design-system](https://github.com/AN3S-CREATE/an3s-design-system)) is the only source of truth for colours, fonts, radii, glows, gradients, the logo and icons (rules in `AGENTS.md`, "Design system").
+
+| Item | File Path | Description |
+|------|-----------|-------------|
+| Vendored web export | `src/design-system/` | Generated copy: tokens.css, shadcn.css, tailwind-preset.js, tokens.ts, assets, manifest.json. Never edit; re-sync |
+| Sync script | `scripts/sync-design-system.mjs` | Copies the design system's `dist/web/` in (`npm run ds:sync`) |
+| Guard | `scripts/check-design-system.mjs` | Fails on drift or hard-coded colours/fonts (`npm run check:ds`) |
+| CI check | `.github/workflows/design-system.yml` | Runs the guard on every pull request |
+| Logo | `src/design-system/assets/an3s-wordmark.png` | Used by Navbar, Footer and LoadingScreen (replaced `src/assets/logo.svg`, which is kept but unused) |
 
 ---
 

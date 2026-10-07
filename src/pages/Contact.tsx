@@ -21,9 +21,9 @@ const Contact = () => {
         <ParallaxElements variant="mixed" />
         {/* Hero Section */}
         <div className="text-center mb-12 relative z-10">
-          <Badge variant="glow-pink" className="mb-4">Connect</Badge>
+          <Badge variant="glow-secondary" className="mb-4">Connect</Badge>
           <h1 className="font-heading text-4xl md:text-5xl font-bold text-foreground mb-4">
-            Get in <span className="text-primary glow-text-cyan">Touch</span>
+            Get in <span className="text-primary glow-text-primary">Touch</span>
           </h1>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
             Ready to discuss your next project or explore partnership opportunities? 
@@ -32,7 +32,7 @@ const Contact = () => {
         </div>
 
         {/* Divider */}
-        <div className="divider-cyan mb-12" />
+        <div className="divider-primary mb-12" />
 
         <div className="grid lg:grid-cols-2 gap-12">
           {/* Contact Form */}
@@ -43,7 +43,7 @@ const Contact = () => {
           {/* Contact Details & Map */}
           <div className="space-y-6">
             {/* Contact Information Cards */}
-            <Card className="glass-cyan border-l-4 border-l-primary">
+            <Card className="glass-primary border-l-4 border-l-primary">
               <CardContent className="p-6">
                 <h3 className="font-heading text-xl font-semibold text-foreground mb-6">
                   Contact <span className="text-primary">Information</span>
@@ -151,7 +151,7 @@ const Contact = () => {
             </Card>
 
             {/* Map */}
-            <Card className="glass-pink border-r-4 border-r-secondary overflow-hidden">
+            <Card className="glass-secondary border-r-4 border-r-secondary overflow-hidden">
               <CardContent className="p-0">
                 <div className="aspect-video w-full">
                   <iframe
@@ -199,7 +199,7 @@ const Contact = () => {
         </div>
 
         {/* Divider */}
-        <div className="divider-pink mt-12" />
+        <div className="divider-secondary mt-12" />
       </main>
 
       <Footer />

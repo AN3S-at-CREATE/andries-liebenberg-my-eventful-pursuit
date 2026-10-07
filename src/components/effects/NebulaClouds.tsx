@@ -16,7 +16,7 @@ export function NebulaClouds() {
       <m.div
         className="absolute -top-1/4 -left-1/4 w-[800px] h-[800px] rounded-full opacity-[0.08]"
         style={{
-          background: "radial-gradient(ellipse at center, hsl(var(--primary)) 0%, transparent 70%)",
+          background: "radial-gradient(ellipse at center, hsl(var(--pink-hsl)) 0%, transparent 70%)",
           filter: "blur(80px)",
         }}
         animate={shouldReduceMotion ? undefined : {
@@ -35,7 +35,7 @@ export function NebulaClouds() {
       <m.div
         className="absolute -bottom-1/4 -right-1/4 w-[700px] h-[700px] rounded-full opacity-[0.07]"
         style={{
-          background: "radial-gradient(ellipse at center, hsl(var(--secondary)) 0%, transparent 70%)",
+          background: "radial-gradient(ellipse at center, hsl(var(--blue-hsl)) 0%, transparent 70%)",
           filter: "blur(90px)",
         }}
         animate={shouldReduceMotion ? undefined : {
@@ -58,7 +58,7 @@ export function NebulaClouds() {
           <m.div
             className="absolute top-1/3 right-0 w-[500px] h-[500px] rounded-full opacity-[0.05]"
             style={{
-              background: "radial-gradient(ellipse at center, hsl(var(--primary)) 0%, transparent 65%)",
+              background: "radial-gradient(ellipse at center, hsl(var(--pink-hsl)) 0%, transparent 65%)",
               filter: "blur(70px)",
             }}
             animate={shouldReduceMotion ? undefined : {
@@ -78,7 +78,7 @@ export function NebulaClouds() {
           <m.div
             className="absolute top-2/3 -left-20 w-[400px] h-[400px] rounded-full opacity-[0.06]"
             style={{
-              background: "radial-gradient(ellipse at center, hsl(var(--secondary)) 0%, transparent 60%)",
+              background: "radial-gradient(ellipse at center, hsl(var(--blue-hsl)) 0%, transparent 60%)",
               filter: "blur(60px)",
             }}
             animate={shouldReduceMotion ? undefined : {
@@ -98,7 +98,7 @@ export function NebulaClouds() {
           <m.div
             className="absolute top-0 left-1/3 w-[600px] h-[600px] rounded-full opacity-[0.04]"
             style={{
-              background: "radial-gradient(ellipse at 30% 40%, hsl(var(--primary)) 0%, hsl(var(--secondary)) 50%, transparent 70%)",
+              background: "radial-gradient(ellipse at 30% 40%, hsl(var(--pink-hsl)) 0%, hsl(var(--blue-hsl)) 50%, transparent 70%)",
               filter: "blur(100px)",
             }}
             animate={shouldReduceMotion ? undefined : {
@@ -120,7 +120,7 @@ export function NebulaClouds() {
       <m.div
         className="absolute bottom-0 left-0 right-0 h-[500px] opacity-[0.03]"
         style={{
-          background: "linear-gradient(to top, hsl(var(--secondary)), transparent)",
+          background: "linear-gradient(to top, hsl(var(--blue-hsl)), transparent)",
           filter: "blur(40px)",
         }}
         animate={shouldReduceMotion ? undefined : {

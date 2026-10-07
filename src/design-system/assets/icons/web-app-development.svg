@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-4 -4 56 56" width="56" height="56" role="img" aria-label="Web &amp; App Development">
+  <title>Web &amp; App Development</title>
+  <defs>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="1.4" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <g fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" filter="url(#glow)">
+    <path d="M16 14L7 24l9 10" stroke="#fb49b6"/>
+    <path d="M28.5 10l-9 28" stroke="#48e1fd"/>
+    <path d="M32 14l9 10-9 10" stroke="#48e1fd"/>
+  </g>
+</svg>

@@ -1,7 +1,8 @@
 import { useEffect, useMemo, useState } from "react";
 import { AnimatePresence, useReducedMotion, m } from "framer-motion";
 import loadingGif from "@/assets/loading-screen.gif";
-import logo from "@/assets/logo.svg";
+// The wordmark comes from the AN3S design system (src/design-system/assets).
+import logo from "@/design-system/assets/an3s-wordmark.png";
 
 interface LoadingScreenProps {
   isLoading: boolean;

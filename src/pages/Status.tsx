@@ -140,7 +140,7 @@ const Status = () => {
                 <div className="p-4 rounded-lg bg-card/50 border border-primary/30 animate-border-glow text-center">
                   <span className="text-sm text-primary">Cyan Glow</span>
                 </div>
-                <div className="p-4 rounded-lg bg-card/50 border border-secondary/30 animate-border-glow-pink text-center">
+                <div className="p-4 rounded-lg bg-card/50 border border-secondary/30 animate-border-glow-secondary text-center">
                   <span className="text-sm text-secondary">Pink Glow</span>
                 </div>
               </div>
@@ -160,17 +160,17 @@ const Status = () => {
                 <div className="glass p-4 rounded-lg text-center">
                   <span className="text-sm text-muted-foreground">.glass</span>
                 </div>
-                <div className="glass-cyan p-4 rounded-lg text-center">
-                  <span className="text-sm text-primary">.glass-cyan</span>
+                <div className="glass-primary p-4 rounded-lg text-center">
+                  <span className="text-sm text-primary">.glass-primary</span>
                 </div>
-                <div className="glass-pink p-4 rounded-lg text-center">
-                  <span className="text-sm text-secondary">.glass-pink</span>
+                <div className="glass-secondary p-4 rounded-lg text-center">
+                  <span className="text-sm text-secondary">.glass-secondary</span>
                 </div>
               </div>
               
               <div className="flex flex-wrap gap-3 pt-2">
-                <Badge variant="glow-cyan">glow-cyan</Badge>
-                <Badge variant="glow-pink">glow-pink</Badge>
+                <Badge variant="glow-primary">glow-primary</Badge>
+                <Badge variant="glow-secondary">glow-secondary</Badge>
                 <Badge variant="default">default</Badge>
                 <Badge variant="secondary">secondary</Badge>
               </div>

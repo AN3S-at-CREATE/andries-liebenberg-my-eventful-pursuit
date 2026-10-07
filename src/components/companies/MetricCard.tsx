@@ -6,15 +6,15 @@ interface MetricCardProps {
   value: string;
   basis?: "doc" | "model";
   showBadge?: boolean;
-  glowColor?: "cyan" | "pink";
+  glowColor?: "primary" | "secondary";
 }
 
-export const MetricCard = ({ label, value, basis, showBadge = false, glowColor = "cyan" }: MetricCardProps) => {
+export const MetricCard = ({ label, value, basis, showBadge = false, glowColor = "primary" }: MetricCardProps) => {
   return (
     <Card 
       interactive 
       glow={glowColor} 
-      className={glowColor === "pink" ? "glass-pink" : "glass-cyan"}
+      className={glowColor === "secondary" ? "glass-secondary" : "glass-primary"}
     >
       <CardHeader className="pb-2">
         <p className="text-sm text-muted-foreground">{label}</p>

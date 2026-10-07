@@ -29,3 +29,6 @@ yarn.lock
 *.njsproj
 *.sln
 *.sw?
+
+# Agent working state (REPO_ANALYSIS_MEMORY.md, per the global analysis protocol)
+.agents/

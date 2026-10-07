@@ -16,7 +16,7 @@ interface CompanyCardProps {
 export const CompanyCard = memo(({ company, metrics }: CompanyCardProps) => {
   return (
     <Link to={`/companies/${company.slug}`} className="group block h-full">
-      <Card interactive glow="cyan" className="bg-card/50 backdrop-blur-sm border-border/50 h-full">
+      <Card interactive glow="primary" className="bg-card/50 backdrop-blur-sm border-border/50 h-full">
         <CardHeader className="pb-3">
           <div className="flex items-start justify-between gap-2">
             <div className="space-y-2">
@@ -55,7 +55,7 @@ export const CompanyCard = memo(({ company, metrics }: CompanyCardProps) => {
             <div className="text-center">
               <div className="flex items-center justify-center gap-1 text-secondary">
                 <Star className="h-4 w-4 drop-shadow-[0_0_4px_hsl(var(--secondary)/0.6)]" />
-                <span className="font-heading font-bold glow-text-pink">{formatPercentage(metrics.customerSatisfactionPct)}</span>
+                <span className="font-heading font-bold glow-text-secondary">{formatPercentage(metrics.customerSatisfactionPct)}</span>
               </div>
               <p className="text-xs text-muted-foreground">Satisfaction</p>
             </div>

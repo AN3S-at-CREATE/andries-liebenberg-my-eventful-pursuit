@@ -1,5 +1,16 @@
 # AGENTS.md
 
+## Design system (applies to every agent and editor, including Lovable)
+
+The **AN3S design system** ([AN3S-CREATE/an3s-design-system](https://github.com/AN3S-CREATE/an3s-design-system), published as a Claude Design System) is the **only source of truth** for this site's colours, fonts, radii, glows, gradients, logo and icons. Its brand book (`project/README.md` there) sets the rules: pink leads and cyan answers, deep-space grounds, Montserrat, light instead of drop shadows.
+
+- `src/design-system/` is a generated copy of the design system's web export. **Never edit it.** Change the design system, run `node tools/export.mjs` there, then `npm run ds:sync` here (`--from <path>` if the design-system checkout isn't at `../Design Sytsem AN3S`).
+- Use the tokens, never raw values: Tailwind classes from the preset (`bg-background`, `text-primary`, `border-pink/35`, `shadow-glow-pink`, `bg-gradient-glow`, `font-sans`), CSS variables (`var(--deep-space)`, `hsl(var(--pink-hsl) / 0.4)`), or `@/design-system/tokens` in code that can't read CSS (charts, canvas). Stock Tailwind colours (`gray-*`, `green-*`, `white`, `black`…), hex/rgb/hsl literals, arbitrary colour values and font-family declarations are not allowed.
+- Roles: `primary` = pink (the glow tint `pink-glow` for words and fills), `secondary` = cyan (`cyan-glow`); glows, edges and charts use the saturated `pink`, `cyan`, `blue`, `violet`. Helpers and component options are named by role (`glow-primary`, `glass-secondary`, `glow="primary"`), not by colour.
+- Status: `destructive` = the design system's `danger`, `success` = `success`; always with a word or an icon.
+- Something missing? Add it to the design system first, then sync. Don't define it here.
+- Before committing, run `npm run check:ds`. CI (`.github/workflows/design-system.yml`) runs the same check on every pull request; a justified exception carries a `ds-allow: <reason>` comment on or above the line.
+
 ## Cursor Cloud specific instructions
 
 This repo is a single **Vite + React + TypeScript** SPA (the AN3S / Andries Liebenberg portfolio site) backed by a **hosted** Supabase project. There is no monorepo and no local backend to run for normal frontend development.
