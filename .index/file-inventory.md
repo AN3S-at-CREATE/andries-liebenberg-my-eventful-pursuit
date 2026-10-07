@@ -23,7 +23,7 @@ Paths relative to the repository root.
 | Path | Purpose | Status |
 | --- | --- | --- |
 | `src/design-system/tokens.css` | Every token as a CSS custom property, `-hsl` channel copies, `-channels`/`-alpha` for translucent colours, `.type-*` classes | Generated |
-| `src/design-system/shadcn.css` | shadcn roles → tokens: primary pink-glow, secondary cyan-glow, accent nebula, destructive danger, success, border line, input line-strong, ring focus, charts | Generated |
+| `src/design-system/shadcn.css` | shadcn roles → tokens: primary pink-glow, secondary cyan-glow, accent nebula, destructive danger, border line, input line-strong, ring focus, charts (no success role: the preset's `success` colours use the `success`/`on-success` tokens directly) | Generated |
 | `src/design-system/tailwind-preset.js` | Palette = tokens + roles only (`white`/`black` = `ink`/`void`), fonts, radii, glow shadows (stock drop shadows = none), gradients, type sizes, `space-*`, sizes | Generated |
 | `src/design-system/tokens.ts` | Typed values (`color`, `shadow`, `gradient`, …, `googleFontsHref`) for charts and canvas | Generated |
 | `src/design-system/assets/` | `an3s-wordmark.png` (used as the logo), `an3s-wordmark-on-space.png`, `icons/*.svg` (8 service icons) | Generated |

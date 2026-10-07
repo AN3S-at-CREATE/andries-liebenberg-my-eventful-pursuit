@@ -31,8 +31,8 @@ export default {
       "danger": "hsl(var(--danger-hsl) / <alpha-value>)",
       "on-danger": "hsl(var(--on-danger-hsl) / <alpha-value>)",
       "success": {
-        "DEFAULT": "hsl(var(--success) / <alpha-value>)",
-        "foreground": "hsl(var(--success-foreground) / <alpha-value>)"
+        "DEFAULT": "hsl(var(--success-hsl) / <alpha-value>)",
+        "foreground": "hsl(var(--on-success-hsl) / <alpha-value>)"
       },
       "on-success": "hsl(var(--on-success-hsl) / <alpha-value>)",
       "border": "hsl(var(--border-channels) / calc(<alpha-value> * var(--border-alpha)))",

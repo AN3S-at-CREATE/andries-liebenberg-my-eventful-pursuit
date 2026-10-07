@@ -16,8 +16,6 @@
   --accent-foreground: var(--ink-hsl);
   --destructive: var(--danger-hsl);
   --destructive-foreground: var(--on-danger-hsl);
-  --success: var(--success-hsl);
-  --success-foreground: var(--on-success-hsl);
   --border: var(--line-hsl);
   --border-channels: var(--line-channels);
   --border-alpha: var(--line-alpha);

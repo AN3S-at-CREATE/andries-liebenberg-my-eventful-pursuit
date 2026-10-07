@@ -16,7 +16,7 @@ an3s-design-system (separate repo)          this repo
    code needing raw values  import { color, shadow } from "@/design-system/tokens" <+
 ```
 
-- Colour roles (from the design system's exporter): `primary` = pink-glow, `secondary` = cyan-glow, `accent` = nebula, `muted`/`card`/`popover` = panel, `border` = line, `input` = line-strong, `ring` = focus (cyan), `destructive` = danger, `success` = success, charts pink/cyan/blue/violet/ink.
+- Colour roles (from the design system's exporter): `primary` = pink-glow, `secondary` = cyan-glow, `accent` = nebula, `muted`/`card`/`popover` = panel, `border` = line, `input` = line-strong, `ring` = focus (cyan), `destructive` = danger, charts pink/cyan/blue/violet/ink; `success` classes use the `success`/`on-success` tokens directly (a role named `success` would overwrite the token's variable).
 - Translucent colours (line, line-strong) also export `-channels` and `-alpha`, so Tailwind opacity modifiers (`border-border/50`) multiply instead of producing invalid CSS.
 - Stock Tailwind palettes and drop shadows are gone: the preset replaces `theme.colors` and maps `shadow-sm…2xl` to none (depth comes from `shadow-glow-*`).
 - The guard (`scripts/check-design-system.mjs`) enforces it locally and in CI.
