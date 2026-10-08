@@ -27,13 +27,13 @@ const CustomModels = () => {
       <Navbar />
       
       <section className="relative py-24 px-4 overflow-hidden">
-        <ParallaxElements variant="pink" />
+        <ParallaxElements variant="secondary" />
         <div className="container max-w-6xl mx-auto relative z-10">
           <MotionReveal>
             <div className="text-center mb-16">
-              <Badge variant="glow-pink" className="mb-4">Enterprise</Badge>
+              <Badge variant="glow-secondary" className="mb-4">Enterprise</Badge>
               <h1 className="font-heading text-4xl md:text-6xl font-bold text-foreground mb-6">
-                <span className="text-primary glow-text-cyan">Custom</span> <span className="text-secondary glow-text-pink">AI Models</span>
+                <span className="text-primary glow-text-primary">Custom</span> <span className="text-secondary glow-text-secondary">AI Models</span>
               </h1>
               <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto">
                 Specialized AI models developed for <span className="text-primary">personalized marketing</span> weighting and <span className="text-secondary">deep analysis</span>.
@@ -42,11 +42,11 @@ const CustomModels = () => {
           </MotionReveal>
 
           {/* Divider */}
-          <div className="divider-pink mb-12" />
+          <div className="divider-secondary mb-12" />
 
           <div className="grid md:grid-cols-2 gap-8 mb-12">
             <MotionReveal delay={0.1}>
-              <Card className="glass-pink border-l-4 border-l-secondary p-8 group" interactive glow="pink">
+              <Card className="glass-secondary border-l-4 border-l-cyan p-8 group" interactive glow="secondary">
                 <Settings className="h-10 w-10 text-secondary mb-4 transition-transform duration-300 group-hover:scale-110" />
                 <h3 className="font-heading text-xl font-bold text-foreground mb-3 group-hover:text-secondary transition-colors">oh-dcft-v3.1-claude</h3>
                 <p className="text-muted-foreground">
@@ -56,7 +56,7 @@ const CustomModels = () => {
             </MotionReveal>
 
             <MotionReveal delay={0.2}>
-              <Card className="glass-cyan border-l-4 border-l-primary p-8 group" interactive glow="cyan">
+              <Card className="glass-primary border-l-4 border-l-pink p-8 group" interactive glow="primary">
                 <Target className="h-10 w-10 text-primary mb-4 transition-transform duration-300 group-hover:scale-110" />
                 <h3 className="font-heading text-xl font-bold text-foreground mb-3 group-hover:text-primary transition-colors">Precision Targeting</h3>
                 <p className="text-muted-foreground">
@@ -66,7 +66,7 @@ const CustomModels = () => {
             </MotionReveal>
 
             <MotionReveal delay={0.3}>
-              <Card className="glass-cyan border-l-4 border-l-primary p-8 group" interactive glow="cyan">
+              <Card className="glass-primary border-l-4 border-l-pink p-8 group" interactive glow="primary">
                 <BarChart3 className="h-10 w-10 text-primary mb-4 transition-transform duration-300 group-hover:scale-110" />
                 <h3 className="font-heading text-xl font-bold text-foreground mb-3 group-hover:text-primary transition-colors">Marketing Optimization</h3>
                 <p className="text-muted-foreground">
@@ -76,7 +76,7 @@ const CustomModels = () => {
             </MotionReveal>
 
             <MotionReveal delay={0.4}>
-              <Card className="glass-pink border-l-4 border-l-secondary p-8 group" interactive glow="pink">
+              <Card className="glass-secondary border-l-4 border-l-cyan p-8 group" interactive glow="secondary">
                 <Cpu className="h-10 w-10 text-secondary mb-4 transition-transform duration-300 group-hover:scale-110" />
                 <h3 className="font-heading text-xl font-bold text-foreground mb-3 group-hover:text-secondary transition-colors">Custom Development</h3>
                 <p className="text-muted-foreground">
@@ -87,11 +87,11 @@ const CustomModels = () => {
           </div>
 
           {/* Divider */}
-          <div className="divider-cyan mb-12" />
+          <div className="divider-primary mb-12" />
 
           <MotionReveal delay={0.5}>
             <div className="text-center flex flex-wrap gap-4 justify-center">
-              <Button asChild size="lg" variant="glow-pink">
+              <Button asChild size="lg" variant="glow-secondary">
                 <Link to="/contact" className="inline-flex items-center gap-2">
                   Discuss Custom Solutions
                   <ArrowRight className="h-4 w-4" />

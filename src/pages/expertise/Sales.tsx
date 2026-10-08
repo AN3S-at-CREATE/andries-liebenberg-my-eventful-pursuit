@@ -25,13 +25,13 @@ const Sales = () => {
       <Navbar />
       
       <section className="relative py-24 px-4 overflow-hidden">
-        <ParallaxElements variant="cyan" />
+        <ParallaxElements variant="primary" />
         <div className="container max-w-6xl mx-auto relative z-10">
           <MotionReveal>
             <div className="text-center mb-16">
-              <Badge variant="glow-pink" className="mb-4">Expertise</Badge>
+              <Badge variant="glow-secondary" className="mb-4">Expertise</Badge>
               <h1 className="font-heading text-4xl md:text-6xl font-bold text-foreground mb-6">
-                Sales <span className="text-primary glow-text-cyan">Excel</span><span className="text-secondary glow-text-pink">lence</span>
+                Sales <span className="text-primary glow-text-primary">Excel</span><span className="text-secondary glow-text-secondary">lence</span>
               </h1>
               <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto">
                 Consistently exceeded <span className="text-primary">sales targets</span> with <span className="text-secondary">strategic methodologies</span> and client-focused approach.
@@ -40,11 +40,11 @@ const Sales = () => {
           </MotionReveal>
 
           {/* Divider */}
-          <div className="divider-cyan mb-12" />
+          <div className="divider-primary mb-12" />
 
           <div className="grid md:grid-cols-2 gap-8">
             <MotionReveal delay={0.1}>
-              <Card interactive glow="cyan" className="glass-cyan p-8 border-t-2 border-t-primary">
+              <Card interactive glow="primary" className="glass-primary p-8 border-t-2 border-t-pink">
                 <DollarSign className="h-10 w-10 text-primary mb-4" />
                 <h3 className="font-heading text-xl font-bold text-foreground mb-3">Revenue <span className="text-primary">Generation</span></h3>
                 <p className="text-muted-foreground">
@@ -54,7 +54,7 @@ const Sales = () => {
             </MotionReveal>
 
             <MotionReveal delay={0.2}>
-              <Card interactive glow="pink" className="glass-pink p-8 border-t-2 border-t-secondary">
+              <Card interactive glow="secondary" className="glass-secondary p-8 border-t-2 border-t-cyan">
                 <Target className="h-10 w-10 text-secondary mb-4" />
                 <h3 className="font-heading text-xl font-bold text-foreground mb-3">Sales <span className="text-secondary">Methodologies</span></h3>
                 <p className="text-muted-foreground">
@@ -64,7 +64,7 @@ const Sales = () => {
             </MotionReveal>
 
             <MotionReveal delay={0.3}>
-              <Card interactive glow="pink" className="glass-pink p-8 border-t-2 border-t-secondary">
+              <Card interactive glow="secondary" className="glass-secondary p-8 border-t-2 border-t-cyan">
                 <TrendingUp className="h-10 w-10 text-secondary mb-4" />
                 <h3 className="font-heading text-xl font-bold text-foreground mb-3">Proven <span className="text-secondary">Success</span></h3>
                 <p className="text-muted-foreground">
@@ -74,7 +74,7 @@ const Sales = () => {
             </MotionReveal>
 
             <MotionReveal delay={0.4}>
-              <Card interactive glow="cyan" className="glass-cyan p-8 border-t-2 border-t-primary">
+              <Card interactive glow="primary" className="glass-primary p-8 border-t-2 border-t-pink">
                 <Users className="h-10 w-10 text-primary mb-4" />
                 <h3 className="font-heading text-xl font-bold text-foreground mb-3">CRM <span className="text-primary">Expertise</span></h3>
                 <p className="text-muted-foreground">
@@ -85,7 +85,7 @@ const Sales = () => {
           </div>
 
           {/* Divider */}
-          <div className="divider-pink mt-12" />
+          <div className="divider-secondary mt-12" />
         </div>
       </section>
 

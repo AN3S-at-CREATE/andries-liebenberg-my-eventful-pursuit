@@ -21,9 +21,9 @@ const Contact = () => {
         <ParallaxElements variant="mixed" />
         {/* Hero Section */}
         <div className="text-center mb-12 relative z-10">
-          <Badge variant="glow-pink" className="mb-4">Connect</Badge>
+          <Badge variant="glow-secondary" className="mb-4">Connect</Badge>
           <h1 className="font-heading text-4xl md:text-5xl font-bold text-foreground mb-4">
-            Get in <span className="text-primary glow-text-cyan">Touch</span>
+            Get in <span className="text-primary glow-text-primary">Touch</span>
           </h1>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
             Ready to discuss your next project or explore partnership opportunities? 
@@ -32,7 +32,7 @@ const Contact = () => {
         </div>
 
         {/* Divider */}
-        <div className="divider-cyan mb-12" />
+        <div className="divider-primary mb-12" />
 
         <div className="grid lg:grid-cols-2 gap-12">
           {/* Contact Form */}
@@ -43,7 +43,7 @@ const Contact = () => {
           {/* Contact Details & Map */}
           <div className="space-y-6">
             {/* Contact Information Cards */}
-            <Card className="glass-cyan border-l-4 border-l-primary">
+            <Card className="glass-primary border-l-4 border-l-pink">
               <CardContent className="p-6">
                 <h3 className="font-heading text-xl font-semibold text-foreground mb-6">
                   Contact <span className="text-primary">Information</span>
@@ -109,7 +109,7 @@ const Contact = () => {
                 </div>
 
                 {/* Social Links */}
-                <div className="mt-6 pt-6 border-t border-primary/30">
+                <div className="mt-6 pt-6 border-t border-pink/30">
                   <p className="text-sm text-secondary mb-3">Connect with me</p>
                   <div className="flex gap-3">
                     <Tooltip>
@@ -118,7 +118,7 @@ const Contact = () => {
                           href="https://github.com/AN3S-CREATE"
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="p-2 rounded-lg bg-primary/10 text-primary hover:bg-primary/20 hover:shadow-[0_0_10px_hsl(var(--primary)/0.3)] transition-all"
+                          className="p-2 rounded-lg bg-primary/10 text-primary hover:bg-primary/20 hover:shadow-[0_0_10px_hsl(var(--pink-hsl)/0.3)] transition-all"
                           aria-label="GitHub Profile"
                         >
                           <Github className="h-5 w-5" />
@@ -135,7 +135,7 @@ const Contact = () => {
                           href="https://www.linkedin.com/in/andriesliebenberg-an3s"
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="p-2 rounded-lg bg-secondary/10 text-secondary hover:bg-secondary/20 hover:shadow-[0_0_10px_hsl(var(--secondary)/0.3)] transition-all"
+                          className="p-2 rounded-lg bg-secondary/10 text-secondary hover:bg-secondary/20 hover:shadow-[0_0_10px_hsl(var(--cyan-hsl)/0.3)] transition-all"
                           aria-label="LinkedIn Profile"
                         >
                           <Linkedin className="h-5 w-5" />
@@ -151,7 +151,7 @@ const Contact = () => {
             </Card>
 
             {/* Map */}
-            <Card className="glass-pink border-r-4 border-r-secondary overflow-hidden">
+            <Card className="glass-secondary border-r-4 border-r-cyan overflow-hidden">
               <CardContent className="p-0">
                 <div className="aspect-video w-full">
                   <iframe
@@ -170,7 +170,7 @@ const Contact = () => {
             </Card>
 
             {/* Quick Links */}
-            <Card className="glass border-t-2 border-t-primary border-b-2 border-b-secondary">
+            <Card className="glass border-t-2 border-t-pink border-b-2 border-b-cyan">
               <CardContent className="p-6">
                 <h3 className="font-heading text-xl font-semibold text-foreground mb-4">
                   Quick <span className="text-secondary">Links</span>
@@ -199,7 +199,7 @@ const Contact = () => {
         </div>
 
         {/* Divider */}
-        <div className="divider-pink mt-12" />
+        <div className="divider-secondary mt-12" />
       </main>
 
       <Footer />

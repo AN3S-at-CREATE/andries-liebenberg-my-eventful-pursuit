@@ -1,0 +1,24 @@
+name: Design system
+
+# The AN3S design system is the only source of truth for this site's colours, fonts, radii,
+# glows, gradients, logo and icons. This fails a pull request that edits the vendored copy in
+# src/design-system/ by hand, hard-codes a colour or font, puts a role tint on an edge or glow,
+# or redeclares a design-system variable (see AGENTS.md, "Design system").
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    name: Design system is the only source of truth
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: node scripts/check-design-system.mjs

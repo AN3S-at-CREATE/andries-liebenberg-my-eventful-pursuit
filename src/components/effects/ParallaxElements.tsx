@@ -2,7 +2,7 @@ import { motion as m, useScroll, useTransform, useReducedMotion } from "framer-m
 import { useRef, useEffect, useState } from "react";
 
 interface ParallaxElementsProps {
-  variant?: "cyan" | "pink" | "mixed";
+  variant?: "primary" | "secondary" | "mixed";
 }
 
 // Check if device is mobile
@@ -40,8 +40,9 @@ export function ParallaxElements({ variant = "mixed" }: ParallaxElementsProps) {
   const y3 = useTransform(scrollYProgress, [0, 1], [0, -200 * multiplier]);
   const y4 = useTransform(scrollYProgress, [0, 1], [0, -120 * multiplier]);
 
-  const cyanGlow = "hsl(var(--primary) / 0.15)";
-  const pinkGlow = "hsl(var(--secondary) / 0.15)";
+  // Design-system hues: primary = pink, secondary = cyan.
+  const primaryGlow = "hsl(var(--pink-hsl) / 0.15)";
+  const secondaryGlow = "hsl(var(--cyan-hsl) / 0.15)";
 
   return (
     <div
@@ -62,10 +63,10 @@ export function ParallaxElements({ variant = "mixed" }: ParallaxElementsProps) {
         <div
           className="w-full h-full rounded-full"
           style={{
-            background: variant === "pink" ? pinkGlow : cyanGlow,
+            background: variant === "secondary" ? secondaryGlow : primaryGlow,
             boxShadow: isReducedMode 
               ? undefined 
-              : `0 0 120px 60px ${variant === "pink" ? pinkGlow : cyanGlow}`,
+              : `0 0 120px 60px ${variant === "secondary" ? secondaryGlow : primaryGlow}`,
           }}
         />
       </m.div>
@@ -83,10 +84,10 @@ export function ParallaxElements({ variant = "mixed" }: ParallaxElementsProps) {
         <div
           className="w-full h-full rounded-full"
           style={{
-            background: variant === "cyan" ? cyanGlow : pinkGlow,
+            background: variant === "primary" ? primaryGlow : secondaryGlow,
             boxShadow: isReducedMode 
               ? undefined 
-              : `0 0 100px 50px ${variant === "cyan" ? cyanGlow : pinkGlow}`,
+              : `0 0 100px 50px ${variant === "primary" ? primaryGlow : secondaryGlow}`,
           }}
         />
       </m.div>
@@ -103,8 +104,8 @@ export function ParallaxElements({ variant = "mixed" }: ParallaxElementsProps) {
           <div
             className="w-full h-full rounded-full"
             style={{
-              background: cyanGlow,
-              boxShadow: `0 0 80px 40px ${cyanGlow}`,
+              background: primaryGlow,
+              boxShadow: `0 0 80px 40px ${primaryGlow}`,
             }}
           />
         </m.div>
@@ -122,8 +123,8 @@ export function ParallaxElements({ variant = "mixed" }: ParallaxElementsProps) {
           <div
             className="w-full h-full rounded-full"
             style={{
-              background: pinkGlow,
-              boxShadow: `0 0 100px 50px ${pinkGlow}`,
+              background: secondaryGlow,
+              boxShadow: `0 0 100px 50px ${secondaryGlow}`,
             }}
           />
         </m.div>
@@ -139,7 +140,7 @@ export function ParallaxElements({ variant = "mixed" }: ParallaxElementsProps) {
             <div
               className="w-full h-full"
               style={{
-                background: `linear-gradient(to bottom, transparent, ${cyanGlow}, transparent)`,
+                background: `linear-gradient(to bottom, transparent, ${primaryGlow}, transparent)`,
               }}
             />
           </m.div>
@@ -151,7 +152,7 @@ export function ParallaxElements({ variant = "mixed" }: ParallaxElementsProps) {
             <div
               className="w-full h-full"
               style={{
-                background: `linear-gradient(to bottom, transparent, ${pinkGlow}, transparent)`,
+                background: `linear-gradient(to bottom, transparent, ${secondaryGlow}, transparent)`,
               }}
             />
           </m.div>

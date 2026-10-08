@@ -43,7 +43,7 @@ export function AIToolsSection() {
     <section className="py-20 px-4">
       <div className="container max-w-5xl mx-auto">
         {/* Glass container for the section */}
-        <div className="rounded-2xl bg-card/20 backdrop-blur-xl border border-foreground/5 p-8 md:p-12 shadow-[0_8px_32px_0_rgba(0,0,0,0.3),inset_0_1px_0_0_rgba(255,255,255,0.05)]">
+        <div className="rounded-2xl bg-card/60 backdrop-blur-xl border border-border p-8 md:p-12">
           {/* Header */}
           <MotionReveal>
             <div className="text-center mb-12">
@@ -83,7 +83,7 @@ export function AIToolsSection() {
                     <Button
                       variant="outline"
                       size="sm"
-                      className="w-full border-secondary/50 text-secondary hover:bg-secondary/10 hover:border-secondary transition-shadow duration-300 hover:shadow-[0_0_15px_hsl(var(--secondary)/0.4)]"
+                      className="w-full border-cyan/50 text-secondary hover:bg-secondary/10 hover:border-cyan transition-shadow duration-300 hover:shadow-[0_0_15px_hsl(var(--cyan-hsl)/0.4)]"
                     >
                       <MessageSquareText className="w-4 h-4 mr-2" />
                       Start Chat
@@ -110,7 +110,7 @@ export function AIToolsSection() {
                     <Button
                       variant="outline"
                       size="sm"
-                      className="w-full border-primary/50 text-primary hover:bg-primary/10 hover:border-primary"
+                      className="w-full border-pink/50 text-primary hover:bg-primary/10 hover:border-pink"
                     >
                       <Calculator className="w-4 h-4 mr-2" />
                       Calculate ROI

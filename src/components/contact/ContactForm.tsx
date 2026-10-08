@@ -102,7 +102,7 @@ export const ContactForm = () => {
 
   if (isSubmitted) {
     return (
-      <Card variant="glass" className="border-primary/20">
+      <Card variant="glass" className="border-pink/20">
         <CardContent className="pt-8 pb-8 text-center">
           <CheckCircle className="h-16 w-16 text-primary mx-auto mb-4" />
           <h3 className="font-heading text-2xl font-bold text-foreground mb-2">
@@ -141,7 +141,7 @@ export const ContactForm = () => {
   }
 
   return (
-    <Card variant="glass" className="border-primary/20">
+    <Card variant="glass" className="border-pink/20">
       <CardHeader>
         <CardTitle className="font-heading text-2xl text-foreground">Get in Touch</CardTitle>
         <CardDescription className="text-muted-foreground">

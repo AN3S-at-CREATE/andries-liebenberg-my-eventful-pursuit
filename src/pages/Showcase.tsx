@@ -33,7 +33,7 @@ const eventPortfolio = [
     metrics: { attendees: "5,000+", budget: "R12M+", duration: "5 days" },
     highlights: ["Multi-venue coordination", "VVIP protocol management", "International delegates"],
     icon: Globe,
-    variant: "cyan" as const
+    variant: "primary" as const
   },
   {
     name: "Transnet Corporate Events",
@@ -42,7 +42,7 @@ const eventPortfolio = [
     metrics: { events: "15+", budget: "R8M+", satisfaction: "98%" },
     highlights: ["Executive conferences", "Award ceremonies", "Team building experiences"],
     icon: Building2,
-    variant: "pink" as const
+    variant: "secondary" as const
   },
   {
     name: "ABSA Leadership Summit",
@@ -51,7 +51,7 @@ const eventPortfolio = [
     metrics: { attendees: "800+", budget: "R5M+", duration: "3 days" },
     highlights: ["Keynote productions", "Interactive workshops", "Gala dinner"],
     icon: Briefcase,
-    variant: "cyan" as const
+    variant: "primary" as const
   },
   {
     name: "SASOL Innovation Expo",
@@ -60,7 +60,7 @@ const eventPortfolio = [
     metrics: { exhibitors: "120+", visitors: "3,000+", budget: "R7M+" },
     highlights: ["Technical staging", "Interactive displays", "VIP tours"],
     icon: Zap,
-    variant: "pink" as const
+    variant: "secondary" as const
   },
   {
     name: "Nedbank Stakeholder Conference",
@@ -69,7 +69,7 @@ const eventPortfolio = [
     metrics: { attendees: "1,200+", hybrid: "2,500+", budget: "R4M+" },
     highlights: ["Hybrid event technology", "Live broadcasting", "Q&A management"],
     icon: TrendingUp,
-    variant: "cyan" as const
+    variant: "primary" as const
   },
   {
     name: "Liberty Life Gala Awards",
@@ -78,7 +78,7 @@ const eventPortfolio = [
     metrics: { guests: "600+", awards: "45+", budget: "R3M+" },
     highlights: ["Red carpet production", "Live entertainment", "Stage design"],
     icon: Award,
-    variant: "pink" as const
+    variant: "secondary" as const
   }
 ];
 
@@ -132,13 +132,13 @@ const Showcase = () => {
       <main>
       {/* Hero Section */}
       <section className="relative py-24 px-4 overflow-hidden">
-        <ParallaxElements variant="cyan" />
+        <ParallaxElements variant="primary" />
         <div className="container max-w-6xl mx-auto">
           <MotionReveal>
             <div className="text-center mb-16">
-              <Badge variant="glow-pink" className="mb-4">Portfolio</Badge>
+              <Badge variant="glow-secondary" className="mb-4">Portfolio</Badge>
               <h1 className="font-heading text-4xl md:text-6xl font-bold text-foreground mb-6">
-                Live <span className="text-primary glow-text-cyan">Show</span><span className="text-secondary glow-text-pink">case</span>
+                Live <span className="text-primary glow-text-primary">Show</span><span className="text-secondary glow-text-secondary">case</span>
               </h1>
               <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto">
                 Selected highlights from <span className="text-primary">spectacular events</span> and <span className="text-secondary">transformative business projects</span> across South Africa and internationally.
@@ -147,13 +147,13 @@ const Showcase = () => {
           </MotionReveal>
 
           {/* Divider */}
-          <div className="divider-cyan mb-12" />
+          <div className="divider-primary mb-12" />
 
           {/* Stats Bar */}
           <MotionStagger className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-16">
             {stats.map((stat, index) => (
               <MotionItem key={index}>
-                <Card interactive glow={index % 2 === 0 ? "cyan" : "pink"} className={`${index % 2 === 0 ? "glass-cyan border-t-2 border-t-primary" : "glass-pink border-t-2 border-t-secondary"} p-6 text-center`}>
+                <Card interactive glow={index % 2 === 0 ? "primary" : "secondary"} className={`${index % 2 === 0 ? "glass-primary border-t-2 border-t-pink" : "glass-secondary border-t-2 border-t-cyan"} p-6 text-center`}>
                   <stat.icon className={`h-8 w-8 mx-auto mb-3 ${index % 2 === 0 ? "text-primary" : "text-secondary"}`} />
                   <div className={`text-2xl md:text-3xl font-bold ${index % 2 === 0 ? "text-primary" : "text-secondary"}`}>{stat.value}</div>
                   <div className="text-sm text-muted-foreground">{stat.label}</div>
@@ -169,9 +169,9 @@ const Showcase = () => {
         <div className="container max-w-6xl mx-auto">
           <MotionReveal>
             <div className="text-center mb-12">
-              <Badge variant="glow-cyan" className="mb-4">Photo Gallery</Badge>
+              <Badge variant="glow-primary" className="mb-4">Photo Gallery</Badge>
               <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-4">
-                Event <span className="text-primary glow-text-cyan">High</span><span className="text-secondary glow-text-pink">lights</span>
+                Event <span className="text-primary glow-text-primary">High</span><span className="text-secondary glow-text-secondary">lights</span>
               </h2>
               <p className="text-muted-foreground max-w-2xl mx-auto">
                 Visual showcase of our <span className="text-primary">spectacular event productions</span>. Click any image to explore.
@@ -180,7 +180,7 @@ const Showcase = () => {
           </MotionReveal>
 
           {/* Divider */}
-          <div className="divider-pink mb-8" />
+          <div className="divider-secondary mb-8" />
 
           <MotionReveal delay={0.2}>
             <EventGallery />
@@ -192,7 +192,7 @@ const Showcase = () => {
       <section className="py-16 px-4">
         <div className="container max-w-6xl mx-auto">
           <MotionReveal delay={0.2}>
-            <Card className="glass p-8 md:p-12 text-center border-l-4 border-l-primary border-r-4 border-r-secondary">
+            <Card className="glass p-8 md:p-12 text-center border-l-4 border-l-pink border-r-4 border-r-cyan">
               <Image className="h-16 w-16 text-secondary mx-auto mb-6" />
               <h3 className="font-heading text-2xl font-bold text-foreground mb-4">
                 Full <span className="text-primary">Live</span> <span className="text-secondary">Portfolio</span>
@@ -208,7 +208,7 @@ const Showcase = () => {
                     <ExternalLink className="h-4 w-4" />
                   </a>
                 </Button>
-                <Button asChild variant="glow-pink" size="lg">
+                <Button asChild variant="glow-secondary" size="lg">
                   <Link to="/companies">View Company Work</Link>
                 </Button>
               </div>
@@ -219,13 +219,13 @@ const Showcase = () => {
 
       {/* Event Portfolio Section */}
       <section className="relative py-16 px-4 bg-muted/20 overflow-hidden">
-        <ParallaxElements variant="pink" />
+        <ParallaxElements variant="secondary" />
         <div className="container max-w-6xl mx-auto">
           <MotionReveal>
             <div className="text-center mb-12">
-              <Badge variant="glow-cyan" className="mb-4">Event Portfolio</Badge>
+              <Badge variant="glow-primary" className="mb-4">Event Portfolio</Badge>
               <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-4">
-                High-Profile <span className="text-secondary glow-text-pink">Eve</span><span className="text-primary glow-text-cyan">nts</span>
+                High-Profile <span className="text-secondary glow-text-secondary">Eve</span><span className="text-primary glow-text-primary">nts</span>
               </h2>
               <p className="text-muted-foreground max-w-2xl mx-auto">
                 Trusted by <span className="text-primary">industry leaders</span> for their most <span className="text-secondary">important occasions</span>.
@@ -234,19 +234,19 @@ const Showcase = () => {
           </MotionReveal>
 
           {/* Divider */}
-          <div className="divider-cyan mb-8" />
+          <div className="divider-primary mb-8" />
 
           <MotionStagger className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {eventPortfolio.map((event, index) => (
               <MotionItem key={index}>
-                <Card interactive glow={event.variant === 'cyan' ? 'cyan' : 'pink'} className={`${event.variant === 'cyan' ? 'glass-cyan border-t-2 border-t-primary' : 'glass-pink border-t-2 border-t-secondary'} p-6 h-full`}>
+                <Card interactive glow={event.variant === 'primary' ? 'primary' : 'secondary'} className={`${event.variant === 'primary' ? 'glass-primary border-t-2 border-t-pink' : 'glass-secondary border-t-2 border-t-cyan'} p-6 h-full`}>
                   <div className="flex items-start gap-4 mb-4">
-                    <div className={`p-3 rounded-lg ${event.variant === 'cyan' ? 'bg-primary/20' : 'bg-secondary/20'}`}>
-                      <event.icon className={`h-6 w-6 ${event.variant === 'cyan' ? 'text-primary' : 'text-secondary'}`} />
+                    <div className={`p-3 rounded-lg ${event.variant === 'primary' ? 'bg-primary/20' : 'bg-secondary/20'}`}>
+                      <event.icon className={`h-6 w-6 ${event.variant === 'primary' ? 'text-primary' : 'text-secondary'}`} />
                     </div>
                     <div>
                       <h3 className="font-heading text-lg font-bold text-foreground">{event.name}</h3>
-                      <Badge variant={event.variant === 'cyan' ? 'glow-cyan' : 'glow-pink'} className="mt-1">
+                      <Badge variant={event.variant === 'primary' ? 'glow-primary' : 'glow-secondary'} className="mt-1">
                         {event.type}
                       </Badge>
                     </div>
@@ -283,9 +283,9 @@ const Showcase = () => {
         <div className="container max-w-6xl mx-auto">
           <MotionReveal>
             <div className="text-center mb-12">
-              <Badge variant="glow-pink" className="mb-4">Case Studies</Badge>
+              <Badge variant="glow-secondary" className="mb-4">Case Studies</Badge>
               <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-4">
-                Business <span className="text-primary glow-text-cyan">Trans</span><span className="text-secondary glow-text-pink">formations</span>
+                Business <span className="text-primary glow-text-primary">Trans</span><span className="text-secondary glow-text-secondary">formations</span>
               </h2>
               <p className="text-muted-foreground max-w-2xl mx-auto">
                 Real results from <span className="text-primary">building</span> and <span className="text-secondary">scaling companies</span> across multiple sectors.
@@ -294,15 +294,15 @@ const Showcase = () => {
           </MotionReveal>
 
           {/* Divider */}
-          <div className="divider-pink mb-8" />
+          <div className="divider-secondary mb-8" />
 
           <MotionStagger className="grid md:grid-cols-2 gap-8">
             {caseStudies.map((study, index) => (
               <MotionItem key={index}>
-                <Card interactive glow={index % 2 === 0 ? "cyan" : "pink"} className={`${index % 2 === 0 ? "glass-cyan border-l-4 border-l-primary" : "glass-pink border-l-4 border-l-secondary"} p-8 h-full`}>
+                <Card interactive glow={index % 2 === 0 ? "primary" : "secondary"} className={`${index % 2 === 0 ? "glass-primary border-l-4 border-l-pink" : "glass-secondary border-l-4 border-l-cyan"} p-8 h-full`}>
                   <div className="flex items-center justify-between mb-4">
                     <h3 className="font-heading text-xl font-bold text-foreground">{study.title}</h3>
-                    <Badge variant={index % 2 === 0 ? "glow-cyan" : "glow-pink"}>{study.sector}</Badge>
+                    <Badge variant={index % 2 === 0 ? "glow-primary" : "glow-secondary"}>{study.sector}</Badge>
                   </div>
                   
                   <div className="flex items-center gap-2 text-sm text-muted-foreground mb-6">
@@ -344,18 +344,18 @@ const Showcase = () => {
       <section className="py-16 px-4 bg-muted/20">
         <div className="container max-w-4xl mx-auto">
           {/* Divider */}
-          <div className="divider-cyan mb-12" />
+          <div className="divider-primary mb-12" />
 
           <MotionReveal>
-            <Card className="glass-pink p-8 md:p-12 text-center border-b-4 border-b-secondary">
+            <Card className="glass-secondary p-8 md:p-12 text-center border-b-4 border-b-cyan">
               <h2 className="font-heading text-2xl md:text-3xl font-bold text-foreground mb-4">
-                Ready to Create Something <span className="text-primary glow-text-cyan">Spec</span><span className="text-secondary glow-text-pink">tacular</span>?
+                Ready to Create Something <span className="text-primary glow-text-primary">Spec</span><span className="text-secondary glow-text-secondary">tacular</span>?
               </h2>
               <p className="text-muted-foreground mb-8 max-w-xl mx-auto">
                 Let's discuss how we can bring your vision to life with <span className="text-primary">proven expertise</span> and <span className="text-secondary">flawless execution</span>.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Button asChild size="lg" variant="glow-pink">
+                <Button asChild size="lg" variant="glow-secondary">
                   <Link to="/contact">Get in Touch</Link>
                 </Button>
                 <Button asChild variant="glow" size="lg">

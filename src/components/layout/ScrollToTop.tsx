@@ -41,7 +41,7 @@ export const ScrollToTop = () => {
         <Button
           onClick={scrollToTop}
           size="icon"
-          className={`fixed bottom-6 right-6 z-50 rounded-full bg-primary hover:bg-primary/90 text-primary-foreground shadow-lg transition-all duration-300 hover:scale-110 hover:drop-shadow-[0_0_12px_hsl(var(--primary))] ${
+          className={`fixed bottom-6 right-6 z-50 rounded-full bg-primary hover:bg-primary/90 text-primary-foreground shadow-lg transition-all duration-300 hover:scale-110 hover:drop-shadow-[0_0_12px_hsl(var(--pink-hsl))] ${
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4 pointer-events-none"
           }`}
           aria-label="Scroll to top"

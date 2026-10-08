@@ -1,12 +1,13 @@
 import { Github, Linkedin, Mail, Phone } from "lucide-react";
 import { Link } from "react-router-dom";
-import logo from "@/assets/logo.svg";
+// The wordmark comes from the AN3S design system (src/design-system/assets).
+import logo from "@/design-system/assets/an3s-wordmark.png";
 
 export const Footer = () => {
   return (
-    <footer className="border-t border-secondary/30 bg-muted/30">
+    <footer className="border-t border-cyan/30 bg-muted/30">
       {/* Pink accent divider at top */}
-      <div className="divider-pink" />
+      <div className="divider-secondary" />
       
       <div className="container py-12">
         <div className="grid gap-8 md:grid-cols-4">
@@ -15,11 +16,11 @@ export const Footer = () => {
               <img
                 src={logo}
                 alt="AN3S Logo"
-                width="200"
+                width="142"
                 height="48"
                 loading="lazy"
                 decoding="async"
-                className="h-12 mb-4 transition-all duration-300 hover:scale-110 hover:drop-shadow-[0_0_12px_hsl(var(--primary))]"
+                className="h-12 mb-4 transition-all duration-300 hover:scale-110 hover:drop-shadow-[0_0_12px_hsl(var(--pink-hsl))]"
               />
             </Link>
             <p className="text-sm text-muted-foreground">
@@ -122,7 +123,7 @@ export const Footer = () => {
         </div>
 
         {/* Pink/cyan mixed divider */}
-        <div className="mt-8 pt-8 border-t border-secondary/20 text-center text-sm text-muted-foreground">
+        <div className="mt-8 pt-8 border-t border-cyan/20 text-center text-sm text-muted-foreground">
           <p>© {new Date().getFullYear()} <span className="text-primary">AN3S</span>. All rights reserved.</p>
           <p className="mt-2 text-xs">
             By using this site, you consent to the collection and processing of your data in accordance with <span className="text-secondary">POPIA</span>.

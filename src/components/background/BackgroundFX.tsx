@@ -1,240 +1,104 @@
 import { useEffect, useRef } from "react";
 import { setBackgroundFXMounted } from "@/lib/backgroundStatus";
+import { color } from "@/design-system/tokens";
 
-// Optimized particle interface - color is now an enum/type key, not a full string
-interface Particle {
-  x: number;
-  y: number;
-  vx: number;
-  vy: number;
-  size: number;
-  opacity: number;
-  colorType: "cyan" | "pink";
+// The site-wide backdrop, from the AN3S design system's Starfield: circuit traces entering from
+// the upper left and light streaks falling from the upper right, drawn once per resize (no
+// animation loop), with pink smoke low on the left and blue smoke on the right. The stars
+// themselves come from ParallaxStarfield.
+
+const TAU = Math.PI * 2;
+const SEED = 2003;
+
+function seeded(seed: number) {
+  let a = seed >>> 0;
+  return () => {
+    a = (a + 0x6d2b79f5) >>> 0;
+    let t = a;
+    t = Math.imul(t ^ (t >>> 15), t | 1);
+    t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
+function drawSky(canvas: HTMLCanvasElement) {
+  const w = window.innerWidth;
+  const h = window.innerHeight;
+  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+  canvas.width = Math.round(w * dpr);
+  canvas.height = Math.round(h * dpr);
+  const ctx = canvas.getContext("2d");
+  if (!ctx) return;
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  ctx.clearRect(0, 0, w, h);
+  const rnd = seeded(SEED);
+
+  // Light streaks falling from the upper right toward the lower left.
+  ctx.lineCap = "round";
+  ctx.lineWidth = 1.2;
+  for (let i = 0; i < 7; i++) {
+    const sx = w * (0.62 + rnd() * 0.4);
+    const sy = h * rnd() * 0.45;
+    const len = 60 + rnd() * 160;
+    const ex = sx - len;
+    const ey = sy + len * 0.35;
+    const trail = ctx.createLinearGradient(sx, sy, ex, ey);
+    trail.addColorStop(0, i % 2 ? color.cyan : color.pink);
+    trail.addColorStop(1, "transparent");
+    ctx.globalAlpha = 0.55;
+    ctx.strokeStyle = trail;
+    ctx.beginPath();
+    ctx.moveTo(sx, sy);
+    ctx.lineTo(ex, ey);
+    ctx.stroke();
+    ctx.globalAlpha = 0.95;
+    ctx.fillStyle = color.ink;
+    ctx.beginPath();
+    ctx.arc(sx, sy, 1.3, 0, TAU);
+    ctx.fill();
+  }
+
+  // Circuit traces entering from the upper left: run, bend 45 degrees, end in a node.
+  ctx.lineWidth = 1;
+  ctx.lineJoin = "round";
+  ctx.strokeStyle = color.blue;
+  for (let i = 0; i < 6; i++) {
+    const y0 = h * (0.05 + i * 0.05);
+    const x1 = w * (0.04 + rnd() * 0.1);
+    const run = 14 + rnd() * 34;
+    const tail = 8 + rnd() * 24;
+    ctx.globalAlpha = 0.3 + rnd() * 0.3;
+    ctx.beginPath();
+    ctx.moveTo(0, y0);
+    ctx.lineTo(x1, y0);
+    ctx.lineTo(x1 + run, y0 + run);
+    ctx.lineTo(x1 + run + tail, y0 + run);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.arc(x1 + run + tail + 2.4, y0 + run, 2.4, 0, TAU);
+    ctx.stroke();
+  }
+  ctx.globalAlpha = 1;
 }
 
 export function BackgroundFX() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const animationRef = useRef<number>();
-  // Group particles by color for batch rendering
-  const particlesRef = useRef<{ cyan: Particle[]; pink: Particle[] }>({
-    cyan: [],
-    pink: [],
-  });
 
   useEffect(() => {
     setBackgroundFXMounted(true);
-    
     const canvas = canvasRef.current;
-    if (!canvas) return;
-
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
-
-    // Create noise pattern once
-    let noisePattern: CanvasPattern | null = null;
-    try {
-      const noiseCanvas = document.createElement('canvas');
-      noiseCanvas.width = 256;
-      noiseCanvas.height = 256;
-      const nCtx = noiseCanvas.getContext('2d');
-      if (nCtx) {
-        const imageData = nCtx.createImageData(256, 256);
-        const data = imageData.data;
-        for (let i = 0; i < data.length; i += 4) {
-          const r = Math.random();
-          if (r < 0.25) {
-            // White, low opacity
-            data[i] = 255;
-            data[i + 1] = 255;
-            data[i + 2] = 255;
-            data[i + 3] = 4; // ~1.5%
-          } else if (r < 0.5) {
-            // Black, low opacity
-            data[i] = 0;
-            data[i + 1] = 0;
-            data[i + 2] = 0;
-            data[i + 3] = 8; // ~3%
-          } else {
-            data[i + 3] = 0; // Transparent
-          }
-        }
-        nCtx.putImageData(imageData, 0, 0);
-        noisePattern = ctx.createPattern(noiseCanvas, 'repeat');
-      }
-    } catch (e) {
-      console.error("Failed to create noise pattern", e);
-    }
-
-    // Colors from design system
-    const cyanColor = "rgb(13, 229, 255)";
-    const pinkColor = "rgb(255, 26, 140)";
-
-    let horizonGradient: CanvasGradient | null = null;
-    let bottomGradient: CanvasGradient | null = null;
-
-    const resizeCanvas = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-
-      const horizonY = canvas.height * 0.65;
-      horizonGradient = ctx.createLinearGradient(0, horizonY - 60, 0, horizonY + 60);
-      horizonGradient.addColorStop(0, "rgba(13, 229, 255, 0)");
-      horizonGradient.addColorStop(0.5, "rgba(13, 229, 255, 0.08)");
-      horizonGradient.addColorStop(1, "rgba(13, 229, 255, 0)");
-
-      bottomGradient = ctx.createLinearGradient(0, canvas.height - 150, 0, canvas.height);
-      bottomGradient.addColorStop(0, "rgba(255, 26, 140, 0)");
-      bottomGradient.addColorStop(0.5, "rgba(255, 26, 140, 0.04)");
-      bottomGradient.addColorStop(1, "rgba(255, 26, 140, 0.02)");
-    };
-
-    const initParticles = () => {
-      const particleCount = Math.floor((canvas.width * canvas.height) / 20000);
-      particlesRef.current = { cyan: [], pink: [] };
-
-      for (let i = 0; i < particleCount; i++) {
-        const colorType = Math.random() > 0.4 ? "cyan" : "pink";
-        particlesRef.current[colorType].push({
-          x: Math.random() * canvas.width,
-          y: Math.random() * canvas.height,
-          vx: (Math.random() - 0.5) * 0.4,
-          vy: (Math.random() - 0.5) * 0.4,
-          size: Math.random() * 2.5 + 0.5,
-          opacity: Math.random() * 0.6 + 0.15,
-          colorType,
-        });
-      }
-
-      // Sort particles by color to enable batched rendering in the draw loop
-      particlesRef.current.sort((a, b) => a.color.localeCompare(b.color));
-    };
-
-    const drawGrid = () => {
-      const horizonY = canvas.height * 0.65;
-      const gridLines = 25;
-      const vanishingPointX = canvas.width / 2;
-
-      ctx.strokeStyle = "rgba(13, 229, 255, 0.06)";
-      ctx.lineWidth = 1;
-
-      for (let i = 0; i <= gridLines; i++) {
-        const progress = i / gridLines;
-        const y = horizonY + (canvas.height - horizonY) * Math.pow(progress, 1.5);
-        const spread = 1 + progress * 2.5;
-
-        ctx.beginPath();
-        ctx.moveTo(vanishingPointX - (canvas.width * spread) / 2, y);
-        ctx.lineTo(vanishingPointX + (canvas.width * spread) / 2, y);
-        ctx.stroke();
-      }
-
-      const verticalLines = 35;
-      for (let i = -verticalLines / 2; i <= verticalLines / 2; i++) {
-        const baseX = vanishingPointX + i * (canvas.width / verticalLines) * 3;
-        ctx.beginPath();
-        ctx.moveTo(vanishingPointX, horizonY);
-        ctx.lineTo(baseX, canvas.height);
-        ctx.stroke();
-      }
-
-      if (horizonGradient) {
-        ctx.fillStyle = horizonGradient;
-        ctx.fillRect(0, horizonY - 60, canvas.width, 120);
-      }
-
-      if (bottomGradient) {
-        ctx.fillStyle = bottomGradient;
-        ctx.fillRect(0, canvas.height - 150, canvas.width, 150);
-      }
-    };
-
-    const drawParticles = () => {
-      let lastColor = "";
-      particlesRef.current.forEach((particle) => {
-        particle.x += particle.vx;
-        particle.y += particle.vy;
-
-        ctx.fillStyle = COLORS[colorType];
-
-        if (particle.color !== lastColor) {
-          ctx.fillStyle = particle.color;
-          lastColor = particle.color;
-        }
-
-        ctx.globalAlpha = particle.opacity;
-
-        if (particle.size < 1.5) {
-          ctx.fillRect(
-            particle.x - particle.size,
-            particle.y - particle.size,
-            particle.size * 2,
-            particle.size * 2
-          );
-        } else {
-          ctx.beginPath();
-          ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
-          ctx.fill();
-        }
-
-        ctx.globalAlpha = particle.opacity * 0.15;
-        ctx.beginPath();
-        ctx.arc(particle.x, particle.y, particle.size * 4, 0, Math.PI * 2);
-        ctx.fill();
-      });
-
-      // Reset globalAlpha to prevent side effects on subsequent rendering layers
-      ctx.globalAlpha = 1.0;
-    };
-
-    const drawNoise = () => {
-      if (!noisePattern) return;
-
-      // Use efficient pattern tiling instead of pixel manipulation
-      ctx.save();
-      // Random offset to simulate static
-      ctx.translate(Math.random() * 100, Math.random() * 100);
-      ctx.fillStyle = noisePattern;
-      // Draw slightly larger to cover random offset
-      ctx.fillRect(-100, -100, canvas.width + 100, canvas.height + 100);
-      ctx.restore();
-    };
-
-    const animate = () => {
-      // Clear canvas instead of filling with opaque color to reveal underlying layers
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-      drawGrid();
-      drawParticles();
-
-      // Maintain original 8% probability for the glitch/noise effect
-      if (Math.random() < 0.08) {
-        drawNoise();
-      }
-
-      animationRef.current = requestAnimationFrame(animate);
-    };
-
-    resizeCanvas();
-    initParticles();
-    animate();
-
-    let resizeTimeout: ReturnType<typeof setTimeout>;
+    let resizeTimeout: ReturnType<typeof setTimeout> | undefined;
     const handleResize = () => {
       clearTimeout(resizeTimeout);
-      // ⚡ Bolt Optimization: Debounce resize events to prevent layout thrashing and GC spikes
-      resizeTimeout = setTimeout(() => {
-        resizeCanvas();
-        initParticles();
-      }, 150);
+      // Debounced so a resize drag repaints once.
+      resizeTimeout = setTimeout(() => canvas && drawSky(canvas), 150);
     };
-
-    window.addEventListener("resize", handleResize);
-
+    if (canvas) {
+      drawSky(canvas);
+      window.addEventListener("resize", handleResize);
+    }
     return () => {
       setBackgroundFXMounted(false);
-      if (animationRef.current) {
-        cancelAnimationFrame(animationRef.current);
-      }
       clearTimeout(resizeTimeout);
       window.removeEventListener("resize", handleResize);
     };
@@ -245,18 +109,19 @@ export function BackgroundFX() {
       <canvas
         ref={canvasRef}
         aria-hidden="true"
-        className="fixed inset-0 -z-10 pointer-events-none"
-        style={{ background: "transparent" }}
+        className="fixed inset-0 -z-10 h-screen w-screen pointer-events-none"
       />
-      
-      {/* Cyan neon streak from left */}
-      <div 
-        className="fixed top-1/4 -left-32 w-96 h-[600px] bg-primary/15 blur-[150px] -rotate-12 pointer-events-none -z-10 animate-pulse-slow"
+
+      {/* Pink smoke low on the left */}
+      <div
+        aria-hidden="true"
+        className="fixed -bottom-48 -left-48 h-[640px] w-[560px] rounded-full bg-pink opacity-20 blur-[160px] pointer-events-none -z-10 animate-pulse-slow"
       />
-      
-      {/* Pink neon streak from right */}
-      <div 
-        className="fixed bottom-1/4 -right-32 w-80 h-[500px] bg-secondary/15 blur-[120px] rotate-12 pointer-events-none -z-10 animate-pulse-slow"
+
+      {/* Blue smoke on the right */}
+      <div
+        aria-hidden="true"
+        className="fixed top-1/4 -right-48 h-[560px] w-[480px] rounded-full bg-blue opacity-20 blur-[150px] pointer-events-none -z-10 animate-pulse-slow"
         style={{ animationDelay: "1s" }}
       />
     </>

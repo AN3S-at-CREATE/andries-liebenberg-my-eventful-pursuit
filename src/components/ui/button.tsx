@@ -10,20 +10,20 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default:
-          "bg-primary text-primary-foreground hover:bg-primary/90 hover:-translate-y-1 hover:scale-[1.02] hover:shadow-[0_8px_30px_-6px_hsl(var(--primary)/0.6)] active:translate-y-0 active:scale-100 active:shadow-none",
+          "bg-primary text-primary-foreground hover:bg-primary/90 hover:-translate-y-1 hover:scale-[1.02] hover:shadow-[0_8px_30px_-6px_hsl(var(--pink-hsl)/0.6)] active:translate-y-0 active:scale-100 active:shadow-none",
         destructive:
           "bg-destructive text-destructive-foreground hover:bg-destructive/90 hover:-translate-y-1 hover:scale-[1.02] hover:shadow-[0_8px_30px_-6px_hsl(var(--destructive)/0.6)] active:translate-y-0 active:scale-100",
         outline:
-          "border border-input bg-background hover:bg-accent/10 hover:text-accent-foreground hover:border-primary/50 hover:-translate-y-1 hover:scale-[1.02] hover:shadow-[0_8px_30px_-6px_hsl(var(--primary)/0.4)] active:translate-y-0 active:scale-100",
+          "border border-input bg-background hover:bg-accent/10 hover:text-accent-foreground hover:border-pink/50 hover:-translate-y-1 hover:scale-[1.02] hover:shadow-[0_8px_30px_-6px_hsl(var(--pink-hsl)/0.4)] active:translate-y-0 active:scale-100",
         secondary:
-          "bg-secondary/15 text-secondary border border-secondary/30 hover:bg-secondary/25 hover:border-secondary/50 hover:-translate-y-1 hover:scale-[1.02] hover:shadow-[0_0_25px_-4px_hsl(var(--secondary)/0.5),0_8px_30px_-6px_hsl(var(--secondary)/0.4)] active:translate-y-0 active:scale-100",
+          "bg-secondary/15 text-secondary border border-cyan/30 hover:bg-secondary/25 hover:border-cyan/50 hover:-translate-y-1 hover:scale-[1.02] hover:shadow-[0_0_25px_-4px_hsl(var(--cyan-hsl)/0.5),0_8px_30px_-6px_hsl(var(--cyan-hsl)/0.4)] active:translate-y-0 active:scale-100",
         ghost:
           "hover:bg-accent/10 hover:text-accent-foreground hover:-translate-y-1 hover:scale-[1.02] active:translate-y-0 active:scale-100",
         link: "text-primary underline-offset-4 hover:underline",
         glow: 
-          "bg-primary text-primary-foreground hover:-translate-y-1 hover:scale-[1.02] hover:shadow-[0_0_40px_-8px_hsl(var(--primary)/0.7),0_0_20px_-4px_hsl(var(--secondary)/0.5)] active:translate-y-0 active:scale-100 active:shadow-[0_0_20px_-5px_hsl(var(--primary)/0.5)]",
-        "glow-pink":
-          "bg-secondary/15 text-secondary border border-secondary/40 hover:bg-secondary/25 hover:-translate-y-1 hover:scale-[1.02] hover:shadow-[0_0_30px_-4px_hsl(var(--secondary)/0.6),0_0_15px_hsl(var(--secondary)/0.3)] active:translate-y-0 active:scale-100",
+          "bg-primary text-primary-foreground hover:-translate-y-1 hover:scale-[1.02] hover:shadow-[0_0_40px_-8px_hsl(var(--pink-hsl)/0.7),0_0_20px_-4px_hsl(var(--cyan-hsl)/0.5)] active:translate-y-0 active:scale-100 active:shadow-[0_0_20px_-5px_hsl(var(--pink-hsl)/0.5)]",
+        "glow-secondary":
+          "bg-secondary/15 text-secondary border border-cyan/40 hover:bg-secondary/25 hover:-translate-y-1 hover:scale-[1.02] hover:shadow-[0_0_30px_-4px_hsl(var(--cyan-hsl)/0.6),0_0_15px_hsl(var(--cyan-hsl)/0.3)] active:translate-y-0 active:scale-100",
       },
       size: {
         default: "h-10 px-4 py-2",

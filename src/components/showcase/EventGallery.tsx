@@ -87,7 +87,7 @@ export const EventGallery = () => {
         {galleryImages.map((image, index) => (
           <div
             key={index}
-            className="relative group cursor-pointer overflow-hidden rounded-xl aspect-video focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+            className="relative group cursor-pointer overflow-hidden rounded-xl aspect-video focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
             onClick={() => openLightbox(index)}
             onKeyDown={(e) => {
               if (e.key === "Enter" || e.key === " ") {
@@ -119,7 +119,7 @@ export const EventGallery = () => {
             {/* Glow border on hover */}
             <div className={`absolute inset-0 border-2 rounded-xl transition-all duration-300 ${
               hoveredIndex === index 
-                ? 'border-primary shadow-[0_0_20px_hsl(var(--primary)/0.5)]' 
+                ? 'border-pink shadow-[0_0_20px_hsl(var(--pink-hsl)/0.5)]' 
                 : 'border-transparent'
             }`} />
             
@@ -127,7 +127,7 @@ export const EventGallery = () => {
             <div className={`absolute inset-0 p-4 flex flex-col justify-end transition-all duration-300 ${
               hoveredIndex === index ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
             }`}>
-              <Badge variant="glow-cyan" className="w-fit mb-2">{image.category}</Badge>
+              <Badge variant="glow-primary" className="w-fit mb-2">{image.category}</Badge>
               <h3 className="font-heading text-lg font-bold text-foreground">{image.title}</h3>
               <p className="text-sm text-muted-foreground line-clamp-2">{image.description}</p>
             </div>
@@ -213,7 +213,7 @@ export const EventGallery = () => {
               {/* Info bar */}
               <div className="p-6 border-t border-border/50">
                 <div className="flex items-center gap-3 mb-2">
-                  <Badge variant="glow-cyan">{galleryImages[selectedIndex].category}</Badge>
+                  <Badge variant="glow-primary">{galleryImages[selectedIndex].category}</Badge>
                   <span className="text-sm text-muted-foreground">
                     {selectedIndex + 1} / {galleryImages.length}
                   </span>

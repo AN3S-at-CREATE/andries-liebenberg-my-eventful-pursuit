@@ -11,6 +11,8 @@
     "build:dev": "vite build --mode development",
     "lint": "eslint .",
     "test": "vitest run",
+    "check:ds": "node scripts/check-design-system.mjs",
+    "ds:sync": "node scripts/sync-design-system.mjs",
     "preview": "vite preview",
     "analyze": "vite build --mode production && npx vite-bundle-visualizer"
   },

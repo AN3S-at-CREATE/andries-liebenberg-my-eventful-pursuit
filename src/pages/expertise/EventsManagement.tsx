@@ -25,13 +25,13 @@ const EventsManagement = () => {
       <Navbar />
       
       <section className="relative py-24 px-4 overflow-hidden">
-        <ParallaxElements variant="cyan" />
+        <ParallaxElements variant="primary" />
         <div className="container max-w-6xl mx-auto relative z-10">
           <MotionReveal>
             <div className="text-center mb-16">
-              <Badge variant="glow-pink" className="mb-4">Expertise</Badge>
+              <Badge variant="glow-secondary" className="mb-4">Expertise</Badge>
               <h1 className="font-heading text-4xl md:text-6xl font-bold text-foreground mb-6">
-                Events <span className="text-primary glow-text-cyan">Manage</span><span className="text-secondary glow-text-pink">ment</span>
+                Events <span className="text-primary glow-text-primary">Manage</span><span className="text-secondary glow-text-secondary">ment</span>
               </h1>
               <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto">
                 With over <span className="text-primary font-semibold">20 years</span> in the industry, I've orchestrated more than <span className="text-secondary font-semibold">2,246 successful events</span>, from conceptualization to flawless execution.
@@ -40,11 +40,11 @@ const EventsManagement = () => {
           </MotionReveal>
 
           {/* Divider */}
-          <div className="divider-cyan mb-12" />
+          <div className="divider-primary mb-12" />
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             <MotionReveal delay={0.1}>
-              <Card interactive glow="cyan" className="glass-cyan p-8 border-t-2 border-t-primary">
+              <Card interactive glow="primary" className="glass-primary p-8 border-t-2 border-t-pink">
                 <Calendar className="h-10 w-10 text-primary mb-4" />
                 <h3 className="font-heading text-xl font-bold text-foreground mb-3">Extensive <span className="text-primary">Experience</span></h3>
                 <p className="text-muted-foreground">
@@ -54,7 +54,7 @@ const EventsManagement = () => {
             </MotionReveal>
 
             <MotionReveal delay={0.2}>
-              <Card interactive glow="pink" className="glass-pink p-8 border-t-2 border-t-secondary">
+              <Card interactive glow="secondary" className="glass-secondary p-8 border-t-2 border-t-cyan">
                 <DollarSign className="h-10 w-10 text-secondary mb-4" />
                 <h3 className="font-heading text-xl font-bold text-foreground mb-3">Budget <span className="text-secondary">Management</span></h3>
                 <p className="text-muted-foreground">
@@ -64,7 +64,7 @@ const EventsManagement = () => {
             </MotionReveal>
 
             <MotionReveal delay={0.3}>
-              <Card interactive glow="cyan" className="glass-cyan p-8 border-t-2 border-t-primary">
+              <Card interactive glow="primary" className="glass-primary p-8 border-t-2 border-t-pink">
                 <Lightbulb className="h-10 w-10 text-primary mb-4" />
                 <h3 className="font-heading text-xl font-bold text-foreground mb-3">Technical <span className="text-primary">Production</span></h3>
                 <p className="text-muted-foreground">
@@ -74,7 +74,7 @@ const EventsManagement = () => {
             </MotionReveal>
 
             <MotionReveal delay={0.4}>
-              <Card interactive glow="pink" className="glass-pink p-8 border-t-2 border-t-secondary">
+              <Card interactive glow="secondary" className="glass-secondary p-8 border-t-2 border-t-cyan">
                 <Users className="h-10 w-10 text-secondary mb-4" />
                 <h3 className="font-heading text-xl font-bold text-foreground mb-3">High-Profile <span className="text-secondary">Clients</span></h3>
                 <p className="text-muted-foreground">
@@ -84,7 +84,7 @@ const EventsManagement = () => {
             </MotionReveal>
 
             <MotionReveal delay={0.5}>
-              <Card interactive glow="cyan" className="glass-cyan p-8 border-t-2 border-t-primary">
+              <Card interactive glow="primary" className="glass-primary p-8 border-t-2 border-t-pink">
                 <Leaf className="h-10 w-10 text-primary mb-4" />
                 <h3 className="font-heading text-xl font-bold text-foreground mb-3">Sustainable <span className="text-primary">Practices</span></h3>
                 <p className="text-muted-foreground">
@@ -94,7 +94,7 @@ const EventsManagement = () => {
             </MotionReveal>
 
             <MotionReveal delay={0.6}>
-              <Card interactive glow="pink" className="glass-pink p-8 border-t-2 border-t-secondary">
+              <Card interactive glow="secondary" className="glass-secondary p-8 border-t-2 border-t-cyan">
                 <Globe className="h-10 w-10 text-secondary mb-4" />
                 <h3 className="font-heading text-xl font-bold text-foreground mb-3">VVIP <span className="text-secondary">Protocol</span></h3>
                 <p className="text-muted-foreground">
@@ -105,7 +105,7 @@ const EventsManagement = () => {
           </div>
 
           {/* Divider */}
-          <div className="divider-pink mt-12" />
+          <div className="divider-secondary mt-12" />
         </div>
       </section>
 

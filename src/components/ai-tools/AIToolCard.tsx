@@ -28,10 +28,10 @@ export function AIToolCard({
       className={cn(
         "group relative flex flex-col h-full rounded-xl p-6 transition-all duration-300",
         "hover:-translate-y-1",
-        accentColor === "primary" ? "glass-cyan" : "glass-pink",
+        accentColor === "primary" ? "glass-primary" : "glass-secondary",
         accentColor === "primary"
-          ? "hover:shadow-[0_8px_30px_-10px_hsl(var(--primary)/0.5)]"
-          : "hover:shadow-[0_8px_30px_-10px_hsl(var(--secondary)/0.5)]",
+          ? "hover:shadow-[0_8px_30px_-10px_hsl(var(--pink-hsl)/0.5)]"
+          : "hover:shadow-[0_8px_30px_-10px_hsl(var(--cyan-hsl)/0.5)]",
         isClickable && "cursor-pointer"
       )}
       onClick={isClickable ? onClick : undefined}
@@ -65,7 +65,7 @@ export function AIToolCard({
       <div className="mt-auto flex flex-col gap-3">
         <div className="flex justify-end">
           <Badge
-            variant={status === "available" ? "glow-cyan" : "glow-pink"}
+            variant={status === "available" ? "glow-primary" : "glow-secondary"}
             className="text-xs shrink-0"
           >
             {status === "available" ? "Available" : "Coming Soon"}

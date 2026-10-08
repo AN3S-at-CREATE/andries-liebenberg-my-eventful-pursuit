@@ -50,8 +50,8 @@ const Index = () => {
           animate={{ opacity: 0.6, scaleY: 1 }}
           transition={{ duration: 1, delay: 0.5, ease: "easeOut" }}
           style={{
-            background: "linear-gradient(to bottom, transparent, hsl(var(--secondary) / 0.8), hsl(var(--secondary) / 0.4), transparent)",
-            boxShadow: "0 0 20px 2px hsl(var(--secondary) / 0.4), 0 0 40px 4px hsl(var(--secondary) / 0.2)",
+            background: "linear-gradient(to bottom, transparent, hsl(var(--cyan-hsl) / 0.8), hsl(var(--cyan-hsl) / 0.4), transparent)",
+            boxShadow: "0 0 20px 2px hsl(var(--cyan-hsl) / 0.4), 0 0 40px 4px hsl(var(--cyan-hsl) / 0.2)",
           }}
         />
         <m.div
@@ -60,8 +60,8 @@ const Index = () => {
           animate={{ opacity: 0.4, scaleY: 1 }}
           transition={{ duration: 0.8, delay: 0.7, ease: "easeOut" }}
           style={{
-            background: "linear-gradient(to bottom, transparent, hsl(var(--secondary) / 0.6), transparent)",
-            boxShadow: "0 0 15px 1px hsl(var(--secondary) / 0.3)",
+            background: "linear-gradient(to bottom, transparent, hsl(var(--cyan-hsl) / 0.6), transparent)",
+            boxShadow: "0 0 15px 1px hsl(var(--cyan-hsl) / 0.3)",
           }}
         />
         
@@ -79,7 +79,7 @@ const Index = () => {
           <MotionReveal delay={0}>
             <h1 className="font-heading text-4xl md:text-6xl font-bold text-foreground mb-6">
               I don't just talk growth —{" "}
-              <span className="text-primary glow-text-cyan">I've shipped it.</span>
+              <span className="text-primary glow-text-primary">I've shipped it.</span>
             </h1>
           </MotionReveal>
           <MotionReveal delay={0.15}>
@@ -89,14 +89,14 @@ const Index = () => {
           </MotionReveal>
           <MotionReveal delay={0.3}>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button asChild size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground transition-shadow duration-300 hover:shadow-[0_0_20px_hsl(var(--primary)/0.5)]">
+              <Button asChild size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground transition-shadow duration-300 hover:shadow-[0_0_20px_hsl(var(--pink-hsl)/0.5)]">
                 <Link to="/companies" className="inline-flex items-center gap-2">
                   <Building2 className="h-5 w-5" />
                   View Companies
                   <ArrowRight className="h-4 w-4" />
                 </Link>
               </Button>
-              <Button asChild variant="glow-pink" size="lg">
+              <Button asChild variant="glow-secondary" size="lg">
                 <a
                   href="https://wa.me/27729749703"
                   target="_blank"
@@ -111,23 +111,23 @@ const Index = () => {
       </section>
 
       {/* Pink Accent Divider */}
-      <div className="divider-pink h-px w-full" />
+      <div className="divider-secondary h-px w-full" />
 
       {/* Stats Section */}
       <section className="py-16 px-4 bg-muted/20">
         <div className="container max-w-4xl mx-auto">
           <MotionStagger className="grid grid-cols-2 md:grid-cols-4 gap-8">
             <MotionItem>
-              <div className="group text-center p-4 rounded-lg transition-all duration-300 hover:scale-105 hover:bg-primary/5 border-glow-hover cursor-default">
+              <div className="group text-center p-4 rounded-lg transition-all duration-300 hover:scale-105 hover:bg-primary/5 border-glow-primary-hover cursor-default">
                 <div className="flex items-center justify-center gap-2 text-primary mb-2">
-                  <Building2 className="h-6 w-6 transition-all duration-300 group-hover:drop-shadow-[0_0_8px_hsl(var(--primary))]" />
+                  <Building2 className="h-6 w-6 transition-all duration-300 group-hover:drop-shadow-[0_0_8px_hsl(var(--pink-hsl))]" />
                   <span className="font-heading text-3xl font-bold">10</span>
                 </div>
                 <p className="text-sm text-muted-foreground">Companies Built</p>
               </div>
             </MotionItem>
             <MotionItem>
-              <div className="group text-center p-4 rounded-lg transition-all duration-300 hover:scale-105 hover:bg-secondary/5 border-glow-pink-hover cursor-default">
+              <div className="group text-center p-4 rounded-lg transition-all duration-300 hover:scale-105 hover:bg-secondary/5 border-glow-secondary-hover cursor-default">
                 <div className="flex items-center justify-center gap-2 text-foreground mb-2">
                   <Users className="h-6 w-6 transition-all duration-300 group-hover:drop-shadow-[0_0_8px_hsl(var(--foreground))]" />
                   <span className="font-heading text-3xl font-bold">1,020+</span>
@@ -136,18 +136,18 @@ const Index = () => {
               </div>
             </MotionItem>
             <MotionItem>
-              <div className="group text-center p-4 rounded-lg transition-all duration-300 hover:scale-105 hover:bg-secondary/5 border-glow-pink-hover cursor-default">
+              <div className="group text-center p-4 rounded-lg transition-all duration-300 hover:scale-105 hover:bg-secondary/5 border-glow-secondary-hover cursor-default">
                 <div className="flex items-center justify-center gap-2 text-secondary mb-2">
-                  <TrendingUp className="h-6 w-6 transition-all duration-300 group-hover:drop-shadow-[0_0_8px_hsl(var(--secondary))]" />
-                  <span className="font-heading text-3xl font-bold glow-text-pink">47%</span>
+                  <TrendingUp className="h-6 w-6 transition-all duration-300 group-hover:drop-shadow-[0_0_8px_hsl(var(--cyan-hsl))]" />
+                  <span className="font-heading text-3xl font-bold glow-text-secondary">47%</span>
                 </div>
                 <p className="text-sm text-muted-foreground">Avg. Growth</p>
               </div>
             </MotionItem>
             <MotionItem>
-              <div className="group text-center p-4 rounded-lg transition-all duration-300 hover:scale-105 hover:bg-primary/5 border-glow-hover cursor-default">
+              <div className="group text-center p-4 rounded-lg transition-all duration-300 hover:scale-105 hover:bg-primary/5 border-glow-primary-hover cursor-default">
                 <div className="flex items-center justify-center gap-2 text-primary mb-2">
-                  <Star className="h-6 w-6 transition-all duration-300 group-hover:drop-shadow-[0_0_8px_hsl(var(--primary))]" />
+                  <Star className="h-6 w-6 transition-all duration-300 group-hover:drop-shadow-[0_0_8px_hsl(var(--pink-hsl))]" />
                   <span className="font-heading text-3xl font-bold">96%</span>
                 </div>
                 <p className="text-sm text-muted-foreground">Avg. Satisfaction</p>
@@ -158,7 +158,7 @@ const Index = () => {
       </section>
 
       {/* Cyan Divider */}
-      <div className="divider-cyan h-px w-full" />
+      <div className="divider-primary h-px w-full" />
 
       {/* AI Tools Section */}
       <Suspense fallback={<div className="h-[600px] flex items-center justify-center text-muted-foreground">Loading AI Tools...</div>}>
@@ -166,7 +166,7 @@ const Index = () => {
       </Suspense>
 
       {/* Pink Accent Divider */}
-      <div className="divider-pink h-px w-full" />
+      <div className="divider-secondary h-px w-full" />
 
       {/* Companies Preview */}
       <CompaniesPreview />

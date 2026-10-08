@@ -12,7 +12,7 @@ interface TruthBadgeProps {
 export const TruthBadge = ({ basis }: TruthBadgeProps) => {
   if (basis === "doc") {
     return (
-      <Badge variant="outline" className="border-primary/50 bg-primary/10 text-primary text-xs">
+      <Badge variant="outline" className="border-pink/50 bg-primary/10 text-primary text-xs">
         From records
       </Badge>
     );
@@ -22,7 +22,7 @@ export const TruthBadge = ({ basis }: TruthBadgeProps) => {
     <Tooltip>
       <TooltipTrigger asChild>
         <span className="inline-flex">
-          <Badge variant="outline" className="border-secondary/50 bg-secondary/10 text-secondary text-xs cursor-help">
+          <Badge variant="outline" className="border-cyan/50 bg-secondary/10 text-secondary text-xs cursor-help">
             Indicative (modelled)
           </Badge>
         </span>

@@ -1,5 +1,6 @@
 import { type Variants, type Transition, m } from "framer-motion";
 import { ReactNode } from "react";
+import { shadow } from "@/design-system/tokens";
 
 // Consistent motion timing across the site
 const MOTION_CONFIG = {
@@ -133,7 +134,7 @@ interface MotionHoverProps {
   className?: string;
   lift?: boolean;
   scale?: boolean;
-  glow?: "cyan" | "pink" | "both";
+  glow?: "primary" | "secondary" | "both";
 }
 
 export function MotionHover({ 
@@ -143,10 +144,11 @@ export function MotionHover({
   scale = true,
   glow
 }: MotionHoverProps) {
+  // Concrete design-system values (not CSS variables) so framer-motion can animate them.
   const glowShadow = {
-    cyan: "0 0 30px -5px hsl(var(--primary) / 0.5)",
-    pink: "0 0 30px -5px hsl(var(--secondary) / 0.5)",
-    both: "0 0 30px -5px hsl(var(--primary) / 0.4), 0 0 30px -5px hsl(var(--secondary) / 0.3)",
+    primary: shadow["glow-pink"],
+    secondary: shadow["glow-cyan"],
+    both: `${shadow["glow-pink"]}, ${shadow["glow-cyan"]}`,
   };
 
   return (

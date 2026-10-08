@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
 import { Calculator, TrendingUp, Clock, Target, Phone, Link, Download, Check } from "lucide-react";
 import { formatZAR, formatPercentage } from "@/lib/formatters";
+import { color as ds } from "@/design-system/tokens";
 import { toast } from "sonner";
 import {
   AreaChart,
@@ -132,7 +133,7 @@ export function ROICalculatorModal({ trigger, initialValues, autoOpen, onAutoOpe
 
       // Capture the results section
       const canvas = await html2canvas(resultsRef.current, {
-        backgroundColor: "#0d0f14",
+        backgroundColor: ds["deep-space"],
         scale: 2,
       });
 
@@ -143,26 +144,26 @@ export function ROICalculatorModal({ trigger, initialValues, autoOpen, onAutoOpe
         format: "a4",
       });
 
-      // Add header
-      pdf.setFillColor(13, 15, 20);
+      // Add header. Colours come from the design-system tokens (jsPDF takes hex strings).
+      pdf.setFillColor(ds["deep-space"]);
       pdf.rect(0, 0, 210, 297, "F");
       
-      pdf.setTextColor(255, 255, 255);
+      pdf.setTextColor(ds.ink);
       pdf.setFontSize(24);
       pdf.text("ROI Calculation Report", 20, 25);
       
       pdf.setFontSize(12);
-      pdf.setTextColor(150, 150, 150);
+      pdf.setTextColor(ds["ink-muted"]);
       pdf.text(`Generated: ${new Date().toLocaleDateString()}`, 20, 35);
       pdf.text("AN3S Growth Tools", 20, 42);
 
       // Add inputs section
       pdf.setFontSize(14);
-      pdf.setTextColor(0, 255, 255);
+      pdf.setTextColor(ds["pink-glow"]);
       pdf.text("Inputs", 20, 58);
       
       pdf.setFontSize(11);
-      pdf.setTextColor(255, 255, 255);
+      pdf.setTextColor(ds.ink);
       pdf.text(`Current Monthly Revenue: ${formatZAR(currentRevenue)}`, 20, 68);
       pdf.text(`Growth Investment: ${formatZAR(investmentAmount)}`, 20, 76);
       pdf.text(`Expected Monthly Growth: ${formatPercentage(expectedGrowth)}`, 20, 84);
@@ -170,11 +171,11 @@ export function ROICalculatorModal({ trigger, initialValues, autoOpen, onAutoOpe
 
       // Add results section
       pdf.setFontSize(14);
-      pdf.setTextColor(0, 255, 255);
+      pdf.setTextColor(ds["pink-glow"]);
       pdf.text("Results", 20, 108);
       
       pdf.setFontSize(11);
-      pdf.setTextColor(255, 255, 255);
+      pdf.setTextColor(ds.ink);
       pdf.text(`Projected ROI: ${calculations.roi >= 0 ? "+" : ""}${formatPercentage(calculations.roi)}`, 20, 118);
       pdf.text(`Final Monthly Revenue: ${formatZAR(calculations.finalRevenue)}`, 20, 126);
       pdf.text(`Revenue Increase: +${formatZAR(calculations.revenueIncrease)}`, 20, 134);
@@ -187,7 +188,7 @@ export function ROICalculatorModal({ trigger, initialValues, autoOpen, onAutoOpe
 
       // Add footer
       pdf.setFontSize(9);
-      pdf.setTextColor(100, 100, 100);
+      pdf.setTextColor(ds["ink-muted"]);
       pdf.text("*Projections are estimates based on compound growth. Actual results may vary.", 20, 280);
       pdf.text("Book a growth call: wa.me/27729749703 | an3s.info", 20, 287);
 
@@ -207,7 +208,7 @@ export function ROICalculatorModal({ trigger, initialValues, autoOpen, onAutoOpe
         {trigger || (
           <Button
             variant="outline"
-            className="gap-2 border-primary/50 text-primary hover:bg-primary/10 hover:border-primary"
+            className="gap-2 border-pink/50 text-primary hover:bg-primary/10 hover:border-pink"
           >
             <Calculator className="w-4 h-4" />
             ROI Calculator
@@ -429,8 +430,8 @@ export function ROICalculatorModal({ trigger, initialValues, autoOpen, onAutoOpe
                   <AreaChart data={calculations.projections}>
                     <defs>
                       <linearGradient id="revenueGradient" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor="hsl(186, 100%, 53%)" stopOpacity={0.3} />
-                        <stop offset="95%" stopColor="hsl(186, 100%, 53%)" stopOpacity={0} />
+                        <stop offset="5%" stopColor={ds.pink} stopOpacity={0.3} />
+                        <stop offset="95%" stopColor={ds.pink} stopOpacity={0} />
                       </linearGradient>
                     </defs>
                     <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" opacity={0.3} />
@@ -449,7 +450,7 @@ export function ROICalculatorModal({ trigger, initialValues, autoOpen, onAutoOpe
                       contentStyle={{
                         backgroundColor: 'hsl(var(--card))',
                         border: '1px solid hsl(var(--border))',
-                        borderRadius: '8px',
+                        borderRadius: 'var(--radius-md)',
                       }}
                       labelStyle={{ color: 'hsl(var(--foreground))' }}
                       formatter={(value: number) => [formatZAR(value), 'Revenue']}
@@ -458,7 +459,7 @@ export function ROICalculatorModal({ trigger, initialValues, autoOpen, onAutoOpe
                     <Area
                       type="monotone"
                       dataKey="revenue"
-                      stroke="hsl(186, 100%, 53%)"
+                      stroke={ds.pink}
                       strokeWidth={2}
                       fill="url(#revenueGradient)"
                     />
@@ -469,7 +470,7 @@ export function ROICalculatorModal({ trigger, initialValues, autoOpen, onAutoOpe
           </div>
 
           {/* CTA */}
-          <div className="bg-secondary/10 border border-secondary/30 rounded-lg p-4 text-center">
+          <div className="bg-secondary/10 border border-cyan/30 rounded-lg p-4 text-center">
             <p className="text-sm text-muted-foreground mb-3">
               Want help achieving these growth targets?
             </p>

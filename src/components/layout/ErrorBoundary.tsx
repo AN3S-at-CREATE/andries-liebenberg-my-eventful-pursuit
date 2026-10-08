@@ -42,7 +42,7 @@ export class ErrorBoundary extends Component<Props, State> {
           <p className="text-sm text-muted-foreground text-center mb-6 max-w-sm">
             We encountered an error loading this component. Please try again.
           </p>
-          <Button variant="outline" onClick={this.handleRetry} className="gap-2 border-primary/50 hover:bg-primary/10 hover:text-primary">
+          <Button variant="outline" onClick={this.handleRetry} className="gap-2 border-pink/50 hover:bg-primary/10 hover:text-primary">
             <RefreshCw className="w-4 h-4" />
             Retry
           </Button>
