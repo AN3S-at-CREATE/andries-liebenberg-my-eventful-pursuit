@@ -144,26 +144,26 @@ export function ROICalculatorModal({ trigger, initialValues, autoOpen, onAutoOpe
         format: "a4",
       });
 
-      // Add header
-      pdf.setFillColor(13, 15, 20);
+      // Add header. Colours come from the design-system tokens (jsPDF takes hex strings).
+      pdf.setFillColor(ds["deep-space"]);
       pdf.rect(0, 0, 210, 297, "F");
       
-      pdf.setTextColor(255, 255, 255);
+      pdf.setTextColor(ds.ink);
       pdf.setFontSize(24);
       pdf.text("ROI Calculation Report", 20, 25);
       
       pdf.setFontSize(12);
-      pdf.setTextColor(150, 150, 150);
+      pdf.setTextColor(ds["ink-muted"]);
       pdf.text(`Generated: ${new Date().toLocaleDateString()}`, 20, 35);
       pdf.text("AN3S Growth Tools", 20, 42);
 
       // Add inputs section
       pdf.setFontSize(14);
-      pdf.setTextColor(0, 255, 255);
+      pdf.setTextColor(ds["pink-glow"]);
       pdf.text("Inputs", 20, 58);
       
       pdf.setFontSize(11);
-      pdf.setTextColor(255, 255, 255);
+      pdf.setTextColor(ds.ink);
       pdf.text(`Current Monthly Revenue: ${formatZAR(currentRevenue)}`, 20, 68);
       pdf.text(`Growth Investment: ${formatZAR(investmentAmount)}`, 20, 76);
       pdf.text(`Expected Monthly Growth: ${formatPercentage(expectedGrowth)}`, 20, 84);
@@ -171,11 +171,11 @@ export function ROICalculatorModal({ trigger, initialValues, autoOpen, onAutoOpe
 
       // Add results section
       pdf.setFontSize(14);
-      pdf.setTextColor(0, 255, 255);
+      pdf.setTextColor(ds["pink-glow"]);
       pdf.text("Results", 20, 108);
       
       pdf.setFontSize(11);
-      pdf.setTextColor(255, 255, 255);
+      pdf.setTextColor(ds.ink);
       pdf.text(`Projected ROI: ${calculations.roi >= 0 ? "+" : ""}${formatPercentage(calculations.roi)}`, 20, 118);
       pdf.text(`Final Monthly Revenue: ${formatZAR(calculations.finalRevenue)}`, 20, 126);
       pdf.text(`Revenue Increase: +${formatZAR(calculations.revenueIncrease)}`, 20, 134);
@@ -188,7 +188,7 @@ export function ROICalculatorModal({ trigger, initialValues, autoOpen, onAutoOpe
 
       // Add footer
       pdf.setFontSize(9);
-      pdf.setTextColor(100, 100, 100);
+      pdf.setTextColor(ds["ink-muted"]);
       pdf.text("*Projections are estimates based on compound growth. Actual results may vary.", 20, 280);
       pdf.text("Book a growth call: wa.me/27729749703 | an3s.info", 20, 287);
 

@@ -17,7 +17,10 @@
 //   7. a scanned path is a symbolic link (or junction): index.html, tailwind.config.ts, anything
 //      under src/ or public/ (a linked src/ or public/ itself included, even dangling), or anything
 //      in src/design-system/. Links aren't followed, because they can leave the repo or loop, so
-//      commit real files instead.
+//      commit real files instead;
+//   8. a logo or icon isn't a byte-identical copy of a src/design-system/assets/ file: images
+//      named like a favicon, app icon, logo, wordmark or AN3S file under src/ or public/, and every
+//      icon index.html links to. Older files are listed in LEGACY_BRAND_ASSETS until replaced.
 // Comments are ignored. To keep a justified exception, put `ds-allow: <reason>` in a comment on
 // that line or the line above it. Run: node scripts/check-design-system.mjs
 import { createHash } from 'node:crypto';
@@ -171,12 +174,13 @@ if (!existsSync(manifestPath)) {
   if (manifest && !isMap(manifest.files)) problems.push('src/design-system/manifest.json has no `files` map: re-run the sync');
   else if (manifest) vendored = manifest.files;
 }
+// sha256 as the design-system export records it: text files with LF line endings.
+const TEXT = /\.(css|js|ts|json|md|svg)$/i;
+const hash = (file, buf) =>
+  createHash('sha256')
+    .update(TEXT.test(file) ? Buffer.from(buf.toString('utf8').replace(/\r\n/g, '\n')) : buf)
+    .digest('hex');
 if (vendored) {
-  const TEXT = /\.(css|js|ts|json|md|svg)$/;
-  const hash = (file, buf) =>
-    createHash('sha256')
-      .update(TEXT.test(file) ? Buffer.from(buf.toString('utf8').replace(/\r\n/g, '\n')) : buf)
-      .digest('hex');
   for (const [file, sum] of Object.entries(vendored)) {
     const path = join(DS, file);
     if (typeof sum !== 'string') problems.push(`src/design-system/manifest.json lists ${file} without a sha256: re-run the sync`);
@@ -192,6 +196,54 @@ if (vendored) {
   }
 }
 
+// --- 1b. Logos and icons come from the design system's assets -----------------------------------
+// A logo or icon outside src/design-system/ must be a byte-identical copy of one of its assets.
+const dsAssetHashes = new Set(
+  Object.entries(vendored ?? {})
+    .filter(([file, sum]) => file.startsWith('assets/') && typeof sum === 'string')
+    .map(([, sum]) => sum),
+);
+const IMAGE = /\.(?:svg|png|ico|gif|jpe?g|webp|avif)$/i;
+// Named like the brand's own logo or an app icon, favicon and PWA generator names included. Other
+// people's logos (`acme-logo.png`), `logout.svg` and `logos-…` collections aren't.
+const BRAND_NAME =
+  /^(?:favicon|apple-touch-icon|android-chrome|mstile|mask-icon|safari-pinned-tab|web-app-manifest|pwa-\d|maskable-icon|app-icon|icon(?:[-_]?\d+(?:x\d+)?)?\.|logo(?!ut|n\b|s[-_.])|wordmark)|^(?:site|brand|main|header|footer|nav(?:bar)?|primary|dark|light|white|black|mono|full)[-_]?logo|an3s/i;
+// Logos and icons from before the design system, each pinned to its content (sha256 as hash()
+// computes it) and tracked in .index/dead-code.md until the design system exports a replacement.
+// A changed or deleted file fails the check, so an entry can't cover a new mark or outlive its file.
+const LEGACY_BRAND_ASSETS = {
+  'public/favicon.svg': {
+    sha256: 'f31edb1c56b188e0fe1b474ea7f0c9a5a4fe173248f173cb916320d28096047c',
+    why: 'legacy logo (the same file as src/assets/logo.svg); the design system has no favicon until it has a vector mark',
+  },
+  'src/assets/logo.svg': {
+    sha256: 'f31edb1c56b188e0fe1b474ea7f0c9a5a4fe173248f173cb916320d28096047c',
+    why: 'legacy logo, imported nowhere; delete once the owner confirms',
+  },
+  'src/assets/loading-screen.gif': {
+    sha256: '4dc354b3aa3e91fbcd6041a8fafa2d035c1ff681b7ed4cdad3fe5df677511df2',
+    why: 'legacy animated logo on the loading screen, whose fallback is the design-system wordmark',
+  },
+};
+// Images named like a logo or icon that aren't the brand's (a photo from an AN3S event, a client's
+// logo), each with the reason. An entry whose file is gone fails the check.
+const NOT_BRAND_ASSETS = {};
+const REGISTER = 'in scripts/check-design-system.mjs';
+for (const [file, { sha256 }] of Object.entries(LEGACY_BRAND_ASSETS)) {
+  const path = join(ROOT, file);
+  if (!lstatSync(path, { throwIfNoEntry: false })) problems.push(`LEGACY_BRAND_ASSETS ${REGISTER} lists ${file}, which no longer exists: remove the entry`);
+  else if (!isLink(path) && statSync(path).isFile() && hash(file, readFileSync(path)) !== sha256) {
+    problems.push(`${file} has changed since it was registered in LEGACY_BRAND_ASSETS: use a file from src/design-system/assets/ and remove the entry`);
+  }
+}
+for (const file of Object.keys(NOT_BRAND_ASSETS)) {
+  if (!lstatSync(join(ROOT, file), { throwIfNoEntry: false })) problems.push(`NOT_BRAND_ASSETS ${REGISTER} lists ${file}, which no longer exists: remove the entry`);
+}
+// Whether a repo file is a design-system asset, or a registered legacy one (pinned above).
+const fromDesignSystem = (file) => Object.hasOwn(LEGACY_BRAND_ASSETS, file) || (!isLink(join(ROOT, file)) && dsAssetHashes.has(hash(file, readFileSync(join(ROOT, file)))));
+const OUTSIDE_DS_ASSET =
+  "a logo or icon outside the design system: use a file from src/design-system/assets/ (if none fits, add it to the design system and re-sync; never add files under src/design-system/ by hand). If it isn't the brand's, list it in NOT_BRAND_ASSETS";
+
 // --- 2. Fonts come only from the design system -------------------------------------------------
 // Any URL on a web-font host. Bare origins (preconnect hints) are fine; a stylesheet or file on
 // one must be the design system's Google Fonts URL, which index.html must load.
@@ -206,6 +258,57 @@ if (htmlRaw !== null) {
   for (const link of fontLinks) {
     const bareOrigin = /^(?:https?:)?\/\/[^/]+\/?$/.test(link);
     if (fontsHref && !bareOrigin && link !== fontsHref) problems.push(`index.html loads fonts outside the design system: ${link}`);
+  }
+  // Every icon index.html links to, directly or through a web app manifest, is a design-system
+  // asset (or a registered legacy one).
+  const EXTERNAL = /^(?:[a-z][\w+.-]*:|\/\/)/i;
+  const served = (href) => {
+    const path = href.split(/[?#]/)[0].replace(/^\.?\//, '');
+    if (path.split('/').includes('..')) return null;
+    return [`public/${path}`, path].find((f) => statSync(join(ROOT, f), { throwIfNoEntry: false })?.isFile()) ?? null;
+  };
+  const checkIcon = (href, where) => {
+    if (EXTERNAL.test(href)) return problems.push(`${where} loads an icon from outside the repo (${href.slice(0, 80)}): serve a file from src/design-system/assets/`);
+    const file = served(href);
+    if (!file) problems.push(`${where} links an icon that isn't a file in public/: ${href}`);
+    else if (!fromDesignSystem(file)) problems.push(`${where} links ${file}, ${OUTSIDE_DS_ASSET}`);
+  };
+  for (const tag of blankComments(htmlRaw, '.html').matchAll(/<link\b[^>]*>/gi)) {
+    const rel = /\brel\s*=\s*["']([^"']*)["']/i.exec(tag[0])?.[1] ?? '';
+    const href = /\bhref\s*=\s*["']([^"']*)["']/i.exec(tag[0])?.[1] ?? '';
+    if (/(?:^|\s)manifest(?:\s|$)/i.test(rel)) {
+      const file = EXTERNAL.test(href) ? null : served(href);
+      if (!file) {
+        problems.push(`index.html links a web app manifest that isn't a file in public/: ${href.slice(0, 80)}`);
+        continue;
+      }
+      let manifestJson;
+      try {
+        manifestJson = JSON.parse(readFileSync(join(ROOT, file), 'utf8'));
+      } catch (error) {
+        problems.push(`${file} is not valid JSON (${error.message})`);
+        continue;
+      }
+      const shortcuts = Array.isArray(manifestJson?.shortcuts) ? manifestJson.shortcuts : [];
+      const icons = [manifestJson?.icons, ...shortcuts.map((s) => s?.icons)].flatMap((list) => (Array.isArray(list) ? list : []));
+      // Icon paths are relative to the manifest's own URL.
+      const base = `https://site/${file.replace(/^public\//, '')}`;
+      for (const icon of icons) {
+        if (typeof icon?.src !== 'string') continue;
+        let src = icon.src;
+        if (!EXTERNAL.test(src)) {
+          src = new URL(src, base).pathname;
+          try {
+            src = decodeURIComponent(src);
+          } catch {
+            // Keep the encoded path; served() then reports it as missing.
+          }
+        }
+        checkIcon(src, file);
+      }
+    } else if (/(?:^|\s)(?:icon|apple-touch-icon(?:-precomposed)?|mask-icon)(?:\s|$)/i.test(rel)) {
+      checkIcon(href, 'index.html');
+    }
   }
 }
 
@@ -339,10 +442,17 @@ const COLOUR_PROPS =
 const COLOUR_ATTRS = 'fill|stroke|color|bgcolor|stop-color|stopColor|flood-color|floodColor|lighting-color|lightingColor';
 const HUES = 'slate|gray|grey|zinc|neutral|stone|red|orange|amber|yellow|lime|green|emerald|teal|sky|indigo|purple|fuchsia|rose|white|black';
 const UTILS = 'text|bg|border|border-[trblxy]|from|via|to|ring|ring-offset|outline|shadow|fill|stroke|divide|placeholder|decoration|accent|caret';
+// The design system's font variables (--font-sans, --font-mono…), as a regex alternation.
+const DS_FONT_VARS = [...ownedVars].filter((v) => v.startsWith('--font-')).join('|') || '--font-sans';
 const RULES = [
   // Not an HTML entity (&#123;), a URL fragment (/page#abc), or an id reference (url(#abc), href="#abc").
   [/(?<![&/\w]|url\(\s*["']?|href\s*=\s*["'])#(?:[0-9a-fA-F]{8}|[0-9a-fA-F]{6}|[0-9a-fA-F]{3,4})(?![\w-])/g, 'hex colour (use a design-system token)'],
-  [/(?<![A-Za-z-])(?:rgba?|hsla?)\(\s*[\d.]/g, 'colour literal (use a design-system token)'],
+  // Literal channels, also after an interpolated first one (`hsl(${hue}, 80%, 60%)`), but not a
+  // token's channels plus an alpha (`rgba(${tokenRgb}, 0.4)`).
+  [/(?<![A-Za-z-])(?:rgba?|hsla?)\(\s*(?:\$\{[^{}]*\}(?:\s*,\s*|\s+)[\d.]+%?(?:\s*,\s*|\s+))?[\d.]/g, 'colour literal (use a design-system token)'],
+  // jsPDF's colour setters take channels as numbers (`pdf.setTextColor(0, 255, 255)`); pass a token
+  // instead: `pdf.setTextColor(color.ink)` (jsPDF reads hex strings).
+  [/\.set(?:Text|Fill|Draw)Color\s*\(\s*[+-]?\.?\d/g, 'colour literal (use a design-system token)'],
   // Not a TypeScript union such as `color: "pink" | "cyan"`, where the strings name tokens.
   [new RegExp(`(?<![\\w-])(?:${COLOUR_PROPS})["'\`]?\\s*:\\s*["'\`]?[^;{}\\n"'\`]*?(?<![\\w#-])(?:${NAMED_COLOURS})(?![\\w-])(?!["'\`]?\\s*\\|)`, 'gi'), 'named colour (use a design-system token)'],
   // Colour attributes. Markup may space out the `=`; in scripts a spaced `=` is an assignment
@@ -352,9 +462,11 @@ const RULES = [
   [new RegExp(`(?<![\\w-])(?:${UTILS})-(?:${HUES})(?:-\\d{2,3})?(?![\\w-])`, 'g'), 'stock Tailwind colour (use a design-system token class)'],
   [new RegExp(`(?<![\\w-])(?:${UTILS})-(?:cyan|pink|blue|violet)-\\d{2,3}(?![\\w-])`, 'g'), 'stock Tailwind shade (use the design-system token)'],
   [new RegExp(`(?<![\\w-])(?:${UTILS})-\\[(?:#|rgb|hsl|color)`, 'g'), 'arbitrary colour value'],
-  // `font-family` can't be a JS identifier, so `font-family=` is always markup. `fontFamily` counts
-  // as a style key, a JSX prop or a property assignment, not a variable, comparison or arrow parameter.
-  [/\bfont-family\s*[:=]|\bfontFamily\s*:|(?<![\w$.-])fontFamily=["'{]|\.fontFamily\s*=(?![=>])|(?<![\w-])font-\[|(?<![\w-])["'`]?font["'`]?\s*:(?!:)|@font-face\b|\bnew\s+FontFace\s*\(/g, 'font outside the design system'],
+  // `font-family` can't be a JS identifier, so `font-family=` is always markup; a design-system font
+  // variable (`font-family: var(--font-sans)`) is fine. `fontFamily` values are read with the
+  // structural reader below, so `fontFamily: font.sans` passes.
+  [new RegExp(`\\bfont-family\\s*[:=](?!\\s*["'{]?\\s*var\\(\\s*(?:${DS_FONT_VARS})\\s*\\))`, 'g'), 'font outside the design system'],
+  [/(?<![\w-])font-\[|(?<![\w-])["'`]?font["'`]?\s*:(?!:)|@font-face\b|\bnew\s+FontFace\s*\(/g, 'font outside the design system'],
   // A font stack ending in a generic family names families wherever it's written, e.g. a constant
   // that's later interpolated into `ctx.font`.
   [/["'`][^"'`\n]*,\s*(?:sans-serif|serif|monospace|system-ui|cursive|fantasy|ui-sans-serif|ui-serif|ui-monospace|ui-rounded)\s*["'`]/g, 'font outside the design system'],
@@ -363,24 +475,50 @@ const RULES = [
   [/hsla?\(\s*var\(--(?:primary|secondary)\)/g, 'raw role colour (glows and edges use --pink-hsl / --cyan-hsl; fills use the role classes)'],
 ];
 
-// Values set from code. Canvas paint, element styles, colour attributes and gradient stops take a
-// colour; `.font` and the font properties take a font. Plain variables and object fields
-// (`star.color = "pink"`) often name tokens, so only these targets count. Each target's value is
-// read as one expression with the string-aware helpers, so only its literal text counts: not
-// identifiers (`color.pink`), `${…}` interpolations, comparison operands (`theme === "dark"`) or
-// bracket keys (`palette["white"]`).
+// Values set from code. Canvas paint, element styles, colour attributes and props, colour keys in
+// style objects, gradient stops and jsPDF's colour setters take a colour; `.font`, `fontFamily` and
+// the font properties take a font. Plain variables and other object fields (`star.color = "pink"`
+// as an assignment) often name tokens, so only these targets count. Each target's value is read
+// with the string-aware helpers, so only its literal text counts: not identifiers (`color.pink`),
+// `${…}` interpolations, comparison operands (`theme === "dark"`), TypeScript unions
+// (`"pink" | "cyan"`) or computed keys (`palette[on ? "white" : "ink"]`).
 const COLOUR_TARGET = new RegExp(
   `(?:\\.(?:fillStyle|strokeStyle|shadowColor)|\\bstyle\\.(?:${COLOUR_PROPS}))\\s*=(?![=>])` +
     `|\\b(?:setProperty|setAttribute)\\s*\\(\\s*(["'\`])(?:${COLOUR_PROPS}|${COLOUR_ATTRS})\\1\\s*,` +
-    `|\\baddColorStop\\s*\\([^,;()]*,`,
+    `|\\baddColorStop\\s*\\(|\\.set(?:Text|Fill|Draw)Color\\s*\\(`,
   'gi',
 );
-const FONT_TARGET = /\.font\s*=(?![=>])|\b(?:setProperty|setAttribute)\s*\(\s*(["'`])font(?:-family)?\1\s*,/g;
+// JSX colour props (`fill={…}`, `stroke="…"`) and colour keys in object literals (`{ color: … }`).
+// Case-sensitive, and a key only counts right after `{` or `,`.
+const COLOUR_VALUE = new RegExp(`(?<![\\w$.-])(?:${COLOUR_ATTRS})=(?=[{"'\`])|(?<=[{,]\\s*)(["'\`]?)(?:${COLOUR_PROPS})\\1\\s*:(?!:)`, 'g');
+const FONT_TARGET =
+  /\.font\s*=(?![=>])|\b(?:setProperty|setAttribute)\s*\(\s*(["'`])font(?:-family)?\1\s*,|\.fontFamily\s*=(?![=>])|(?<=[{,]\s*)(["'`]?)fontFamily\2\s*:(?!:)|(?<![\w$.-])fontFamily=(?=[{"'`])/g;
 const NAMED_COLOUR_WORD = new RegExp(`(?<![\\w#-])(?:${NAMED_COLOURS})(?![\\w-])`, 'i');
-// A literal family: after a size (a number, an interpolation, or the start of a concatenated piece),
-// a family name rather than an interpolation; or a generic family anywhere. \0 marks an interpolation.
+// Design-system font variables count as interpolations: `600 14px var(--font-sans)` names no family.
+const DS_FONT_VAR = new RegExp(`var\\(\\s*(?:${DS_FONT_VARS})\\s*\\)`, 'g');
+// A literal family in shorthand text: after a size (a number, an interpolation, or the start of a
+// concatenated piece), a family name rather than an interpolation; or a generic family anywhere.
+// \0 marks an interpolation.
 const LITERAL_FAMILY =
   /(?:^|[\d\0])(?:px|pt|pc|em|rem|ex|ch|vw|vh|%)(?:\s*\/\s*(?:[\d.]+[a-z%]*|\0))?\s+["'A-Za-z_-]|(?<![\w-])(?:sans-serif|serif|monospace|system-ui|cursive|fantasy)(?![\w-])/;
+const SIZE_UNIT = /\d(?:px|pt|pc|em|rem|ex|ch|vw|vh|%)|\0(?:px|pt|pc|em|rem|ex|ch|vw|vh|%)/;
+const FONT_WORDS =
+  /(?<![\w-])(?:normal|italic|oblique|bold|bolder|lighter|small-caps|(?:ultra|extra|semi)-(?:condensed|expanded)|condensed|expanded|xx-small|x-small|small|medium|large|x-large|xx-large|xxx-large|smaller|larger|inherit|initial|unset|revert|revert-layer|deg)(?![\w-])/gi;
+// Whether literal font text names a family: anything left once interpolations, design-system font
+// variables, sizes, line heights and CSS font keywords are taken out.
+const namesFamily = (text) =>
+  /[A-Za-z]/.test(
+    text
+      .replace(/\0/g, ' ')
+      .replace(DS_FONT_VAR, ' ')
+      .replace(/(?<![\w-])[+-]?(?:\d*\.)?\d+(?:px|pt|pc|em|rem|ex|ch|vw|vh|vmin|vmax|%|deg)?(?![\w-])/gi, ' ')
+      .replace(/(?<![\w-])(?:px|pt|pc|em|rem|ex|ch|vw|vh|vmin|vmax)(?![\w-])/gi, ' ')
+      .replace(FONT_WORDS, ' '),
+  );
+// A shorthand literal names a family when a literal family follows its size, or when it sits in an
+// interpolation inside a sized template (`600 ${size}px ${ready ? font.sans : "Arial"}`).
+const shorthandFamily = ({ text, parent }) =>
+  LITERAL_FAMILY.test(text.replace(DS_FONT_VAR, '\0')) || (parent !== null && SIZE_UNIT.test(parent) && namesFamily(text));
 const SCRIPT_EXTS = ['.ts', '.tsx', '.js', '.jsx', '.mjs'];
 
 // End of the expression starting at `start`: a top-level `;` or `,`, a bracket it didn't open, or a
@@ -414,42 +552,56 @@ function expressionEnd(code, start) {
   return limit;
 }
 
-// The literal text in code[start, end): every string, and every template's text with each `${…}`
-// replaced by \0 (the code inside is read the same way). Comparison operands and bracket keys are
-// left out: they test or look up values rather than set them.
+// The literal text in code[start, end) as { text, parent }: every string, and every template's text
+// with each `${…}` replaced by \0. The code inside an interpolation is read the same way, and its
+// literals get the template's text as `parent`. Left out, because they test, name or look up a
+// value rather than set one: comparison operands, TypeScript unions and computed keys.
 function literalTexts(code, start, end, out = []) {
   for (let i = start; i < end; i++) {
-    const quote = code[i];
-    if (quote !== '"' && quote !== "'" && quote !== '`') continue;
+    const c = code[i];
+    // A computed key right after a name, `)`, `]` or `?.` (`palette[i % 2 ? "cyan" : "pink"]`).
+    if (c === '[' && /[\w$)\]]$|\?\.$/.test(code.slice(Math.max(start, i - 2), i))) {
+      const stop = matchClose(code, i, end);
+      if (stop !== -1) i = stop;
+      continue;
+    }
+    if (c !== '"' && c !== "'" && c !== '`') continue;
     const close = Math.min(skipString(code, i), end);
     const before = code.slice(Math.max(start, i - 12), i);
     const after = code.slice(close, close + 12);
-    const skip = /[=!]==?\s*$/.test(before) || /^\s*[=!]==?/.test(after) || (/\[\s*$/.test(before) && /^\s*\]/.test(after));
+    const skip =
+      /[=!]==?\s*$/.test(before) || /^\s*[=!]==?/.test(after) || /(?<!\|)\|\s*$/.test(before) || /^\s*\|(?!\|)/.test(after);
+    const nested = [];
     let text = '';
     for (let j = i + 1; j < close - 1; j++) {
       if (code[j] === '\\') {
         text += code[j + 1] ?? '';
         j++;
-      } else if (quote === '`' && code[j] === '$' && code[j + 1] === '{') {
+      } else if (c === '`' && code[j] === '$' && code[j + 1] === '{') {
         const stop = matchClose(code, j + 1, close);
         if (stop === -1) break;
-        literalTexts(code, j + 2, stop, out);
+        literalTexts(code, j + 2, stop, nested);
         text += '\0';
         j = stop;
       } else {
         text += code[j];
       }
     }
-    if (!skip) out.push(text);
+    if (!skip) out.push({ text, parent: null });
+    for (const literal of nested) out.push({ text: literal.text, parent: literal.parent ?? text });
     i = close - 1;
   }
   return out;
 }
 
-// The first literal in the value after a target match that `test` accepts, or undefined.
-function literalIn(code, match, test) {
-  const start = match.index + match[0].length;
-  return literalTexts(code, start, expressionEnd(code, start)).find((text) => test(text));
+// The literals of the value that starts at `start`, after a target match. A JSX prop (`fill="…"`,
+// `fontFamily={…}`) is just its string or braces; anything else is one expression.
+function valueLiterals(code, matched, start) {
+  let end;
+  if (matched.endsWith('=') && code[start] === '{') end = matchClose(code, start, Math.min(code.length, start + 600)) + 1 || start;
+  else if (matched.endsWith('=') && /["'`]/.test(code[start] ?? '')) end = skipString(code, start);
+  else end = expressionEnd(code, start);
+  return literalTexts(code, start, end);
 }
 const snippet = (text) => JSON.stringify(text.replace(/\0/g, '${…}').slice(0, 60));
 
@@ -473,17 +625,33 @@ for (const file of scanTargets) {
     problems.push(`${file} is a symbolic link: the check doesn't follow links (they can leave the repo or loop), so commit the file or folder itself`);
     continue;
   }
+  if (IMAGE.test(file)) {
+    // An exact copy of a design-system asset is the design system's own file: its colours are the
+    // tokens' (an SVG served as an image can't read CSS variables), so the text rules skip it.
+    if (dsAssetHashes.has(hash(file, readFileSync(join(ROOT, file))))) continue;
+    const registered = Object.hasOwn(LEGACY_BRAND_ASSETS, file) || Object.hasOwn(NOT_BRAND_ASSETS, file);
+    if (BRAND_NAME.test(file.split('/').pop()) && !registered) problems.push(`${file} is ${OUTSIDE_DS_ASSET}`);
+  }
   if (!EXTS.includes(ext) || SKIP.some((re) => re.test(file))) continue;
   const raw = readFileSync(join(ROOT, file), 'utf8').replace(/\r\n/g, '\n');
   const code = blankComments(raw, ext);
   const { lineOf, allowed } = lineTools(raw);
-  const report = (index, message) => {
+  // Lines already reported per kind, so the structural reader doesn't repeat a regex rule's report.
+  const seen = { colour: new Set(), font: new Set() };
+  const report = (index, message, kind) => {
     const line = lineOf(index);
+    if (kind && seen[kind].has(line)) return;
+    if (kind) seen[kind].add(line);
     if (!allowed(line)) problems.push(`${file}:${line}  ${message}`);
   };
   for (const [re, why, appliesTo] of RULES) {
     if (appliesTo && !appliesTo(file)) continue;
-    for (const m of code.matchAll(re)) report(m.index, `${why}: ${m[0].trim()}`);
+    const kind = why.startsWith('named colour') ? 'colour' : why.startsWith('font outside') ? 'font' : undefined;
+    for (const m of code.matchAll(re)) {
+      // Record the line without blocking other hits on it: several regex hits on one line all count.
+      if (kind) seen[kind].add(lineOf(m.index));
+      report(m.index, `${why}: ${m[0].trim()}`);
+    }
   }
   for (const re of DECLARATIONS) {
     for (const m of code.matchAll(re)) {
@@ -491,16 +659,22 @@ for (const file of scanTargets) {
     }
   }
   if (!SCRIPT_EXTS.includes(ext)) continue;
-  for (const m of code.matchAll(COLOUR_TARGET)) {
-    const text = literalIn(code, m, (t) => NAMED_COLOUR_WORD.test(t));
-    if (text !== undefined) report(m.index, `named colour (use a design-system token): ${m[0].trim()} ${snippet(text)}`);
+  for (const m of [...code.matchAll(COLOUR_TARGET), ...code.matchAll(COLOUR_VALUE)]) {
+    let start = m.index + m[0].length;
+    if (/^addColorStop/i.test(m[0])) {
+      // The colour is the second argument; step over the offset, however it's written.
+      const offsetEnd = expressionEnd(code, start);
+      if (code[offsetEnd] !== ',') continue;
+      start = offsetEnd + 1;
+    }
+    const hit = valueLiterals(code, m[0], start).find((l) => NAMED_COLOUR_WORD.test(l.text));
+    if (hit) report(m.index, `named colour (use a design-system token): ${m[0].trim()} ${snippet(hit.text)}`, 'colour');
   }
   for (const m of code.matchAll(FONT_TARGET)) {
-    // A `font-family` value is all family, so any literal word counts there (CSS-wide keywords aside).
-    const familyOnly = /font-family/.test(m[0]);
-    const test = familyOnly ? (t) => /[A-Za-z]/.test(t) && !/^\s*(?:inherit|initial|unset|revert(?:-layer)?)\s*$/.test(t) : (t) => LITERAL_FAMILY.test(t);
-    const text = literalIn(code, m, test);
-    if (text !== undefined) report(m.index, `font outside the design system: ${m[0].trim()} ${snippet(text)}`);
+    // A font-family value is all family, so any literal word counts there (CSS-wide keywords aside).
+    const familyOnly = /family/i.test(m[0]);
+    const hit = valueLiterals(code, m[0], m.index + m[0].length).find((l) => (familyOnly ? namesFamily(l.text) : shorthandFamily(l)));
+    if (hit) report(m.index, `font outside the design system: ${m[0].trim()} ${snippet(hit.text)}`, 'font');
   }
 }
 
