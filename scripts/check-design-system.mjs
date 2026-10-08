@@ -49,6 +49,22 @@ const isLink = (path) => {
   }
 };
 
+// index.html or tailwind.config.ts; null (and a problem) when it's a link or can't be read, so a
+// dangling or looping link there is reported instead of crashing the check.
+function readRoot(name) {
+  const path = join(ROOT, name);
+  if (isLink(path)) {
+    problems.push(`${name} is a symbolic link: the check doesn't follow links (they can leave the repo or loop), so commit the file itself`);
+    return null;
+  }
+  try {
+    return readFileSync(path, 'utf8');
+  } catch (error) {
+    problems.push(`${name} can't be read (${error.code ?? error.message})`);
+    return null;
+  }
+}
+
 // --- Source scanning helpers -------------------------------------------------------------------
 
 // Index just past the string literal opening at `i` (a JS/TS string or template, or a CSS string).
@@ -68,10 +84,10 @@ function skipString(code, i) {
 }
 
 // Index of the bracket that closes the one at `open`, skipping strings; -1 when unbalanced.
-function matchClose(code, open) {
+function matchClose(code, open, limit = code.length) {
   const pairs = { '{': '}', '[': ']', '(': ')' };
   const stack = [];
-  for (let i = open; i < code.length; i++) {
+  for (let i = open; i < limit; i++) {
     const c = code[i];
     if (c === '"' || c === "'" || c === '`') {
       i = skipString(code, i) - 1;
@@ -181,15 +197,16 @@ if (vendored) {
 // one must be the design system's Google Fonts URL, which index.html must load.
 const FONT_HOSTS = 'fonts\\.googleapis\\.com|fonts\\.gstatic\\.com|use\\.typekit\\.net|p\\.typekit\\.net|fonts\\.bunny\\.net|fonts\\.cdnfonts\\.com|api\\.fontshare\\.com|cdn\\.fontshare\\.com';
 const FONT_URL = new RegExp(`(?:https?:)?//(?:${FONT_HOSTS})(?:/[^"'\\s>)]*)?`, 'g');
-const htmlRaw = readFileSync(join(ROOT, 'index.html'), 'utf8');
-const html = blankComments(htmlRaw, '.html');
-const fontLinks = [...html.matchAll(FONT_URL)].map((m) => m[0].replace(/&amp;/g, '&'));
+const htmlRaw = readRoot('index.html');
 const fontsHref = typeof manifest?.googleFontsHref === 'string' && manifest.googleFontsHref ? manifest.googleFontsHref : null;
 if (manifest && !fontsHref) problems.push('src/design-system/manifest.json has no googleFontsHref: re-run the sync');
-if (fontsHref && !fontLinks.includes(fontsHref)) problems.push(`index.html must load the design-system fonts: ${fontsHref}`);
-for (const link of fontLinks) {
-  const bareOrigin = /^(?:https?:)?\/\/[^/]+\/?$/.test(link);
-  if (fontsHref && !bareOrigin && link !== fontsHref) problems.push(`index.html loads fonts outside the design system: ${link}`);
+if (htmlRaw !== null) {
+  const fontLinks = [...blankComments(htmlRaw, '.html').matchAll(FONT_URL)].map((m) => m[0].replace(/&amp;/g, '&'));
+  if (fontsHref && !fontLinks.includes(fontsHref)) problems.push(`index.html must load the design-system fonts: ${fontsHref}`);
+  for (const link of fontLinks) {
+    const bareOrigin = /^(?:https?:)?\/\/[^/]+\/?$/.test(link);
+    if (fontsHref && !bareOrigin && link !== fontsHref) problems.push(`index.html loads fonts outside the design system: ${link}`);
+  }
 }
 
 // --- 3. Tailwind takes palette, fonts, radii, shadows, gradients and type sizes from the preset -
@@ -251,8 +268,8 @@ function properties(code, open) {
   return props;
 }
 
-const tailwindRaw = readFileSync(join(ROOT, 'tailwind.config.ts'), 'utf8');
-const tailwind = blankComments(tailwindRaw, '.ts');
+const tailwindRaw = readRoot('tailwind.config.ts');
+const tailwind = blankComments(tailwindRaw ?? '', '.ts');
 const presetImport = /import\s+([\w$]+)\s+from\s+["']\.\/src\/design-system\/tailwind-preset(?:\.js)?["']/.exec(tailwind);
 let configOpen = -1;
 const exported = /export\s+default\s+(\{|[\w$]+)/.exec(tailwind);
@@ -262,7 +279,9 @@ else if (exported) {
   if (decl) configOpen = decl.index + decl[0].length - 1;
 }
 const config = configOpen === -1 ? null : properties(tailwind, configOpen);
-if (!config) {
+if (tailwindRaw === null) {
+  // Already reported by readRoot.
+} else if (!config) {
   problems.push('tailwind.config.ts: could not find the exported config object literal to check');
 } else {
   const presets = config.find((p) => p.key === 'presets' && p.valueStart !== -1);
@@ -336,17 +355,111 @@ const RULES = [
   // `font-family` can't be a JS identifier, so `font-family=` is always markup. `fontFamily` counts
   // as a style key, a JSX prop or a property assignment, not a variable, comparison or arrow parameter.
   [/\bfont-family\s*[:=]|\bfontFamily\s*:|(?<![\w$.-])fontFamily=["'{]|\.fontFamily\s*=(?![=>])|(?<![\w-])font-\[|(?<![\w-])["'`]?font["'`]?\s*:(?!:)|@font-face\b|\bnew\s+FontFace\s*\(/g, 'font outside the design system'],
+  // A font stack ending in a generic family names families wherever it's written, e.g. a constant
+  // that's later interpolated into `ctx.font`.
+  [/["'`][^"'`\n]*,\s*(?:sans-serif|serif|monospace|system-ui|cursive|fantasy|ui-sans-serif|ui-serif|ui-monospace|ui-rounded)\s*["'`]/g, 'font outside the design system'],
   [FONT_URL, 'font host URL (fonts load once, from index.html)', (file) => file !== 'index.html'],
   [/(?<![\w-])(?:border(?:-[trblxy])?|ring(?:-offset)?|outline|divide|shadow|drop-shadow)-(?:primary|secondary)(?![\w-])/g, 'role tint on an edge or glow (edges and glows use pink and cyan; roles are for words and fills)'],
   [/hsla?\(\s*var\(--(?:primary|secondary)\)/g, 'raw role colour (glows and edges use --pink-hsl / --cyan-hsl; fills use the role classes)'],
 ];
 
+// Values set from code. Canvas paint, element styles, colour attributes and gradient stops take a
+// colour; `.font` and the font properties take a font. Plain variables and object fields
+// (`star.color = "pink"`) often name tokens, so only these targets count. Each target's value is
+// read as one expression with the string-aware helpers, so only its literal text counts: not
+// identifiers (`color.pink`), `${…}` interpolations, comparison operands (`theme === "dark"`) or
+// bracket keys (`palette["white"]`).
+const COLOUR_TARGET = new RegExp(
+  `(?:\\.(?:fillStyle|strokeStyle|shadowColor)|\\bstyle\\.(?:${COLOUR_PROPS}))\\s*=(?![=>])` +
+    `|\\b(?:setProperty|setAttribute)\\s*\\(\\s*(["'\`])(?:${COLOUR_PROPS}|${COLOUR_ATTRS})\\1\\s*,` +
+    `|\\baddColorStop\\s*\\([^,;()]*,`,
+  'gi',
+);
+const FONT_TARGET = /\.font\s*=(?![=>])|\b(?:setProperty|setAttribute)\s*\(\s*(["'`])font(?:-family)?\1\s*,/g;
+const NAMED_COLOUR_WORD = new RegExp(`(?<![\\w#-])(?:${NAMED_COLOURS})(?![\\w-])`, 'i');
+// A literal family: after a size (a number, an interpolation, or the start of a concatenated piece),
+// a family name rather than an interpolation; or a generic family anywhere. \0 marks an interpolation.
+const LITERAL_FAMILY =
+  /(?:^|[\d\0])(?:px|pt|pc|em|rem|ex|ch|vw|vh|%)(?:\s*\/\s*(?:[\d.]+[a-z%]*|\0))?\s+["'A-Za-z_-]|(?<![\w-])(?:sans-serif|serif|monospace|system-ui|cursive|fantasy)(?![\w-])/;
+const SCRIPT_EXTS = ['.ts', '.tsx', '.js', '.jsx', '.mjs'];
+
+// End of the expression starting at `start`: a top-level `;` or `,`, a bracket it didn't open, or a
+// line break that ends the statement. A break right after `=`, after an operator, or before a
+// continuation (`?`, `:`, `+`, `.`, `&&`, `||`, `??`…) doesn't, which is how Prettier wraps values.
+// Capped at 600 characters: a real value is far shorter, and the cap keeps long minified lines linear.
+function expressionEnd(code, start) {
+  const limit = Math.min(code.length, start + 600);
+  let depth = 0;
+  for (let i = start; i < limit; i++) {
+    const c = code[i];
+    if (c === '"' || c === "'" || c === '`') {
+      i = skipString(code, i) - 1;
+    } else if (c === '(' || c === '[' || c === '{') {
+      depth++;
+    } else if (c === ')' || c === ']' || c === '}') {
+      if (!depth) return i;
+      depth--;
+    } else if (!depth && (c === ';' || c === ',')) {
+      return i;
+    } else if (!depth && c === '\n') {
+      let p = i - 1;
+      while (p >= start && /\s/.test(code[p])) p--;
+      let n = i + 1;
+      while (n < code.length && /\s/.test(code[n])) n++;
+      const unfinished = p < start || /[=?:+\-*/%&|^<>!~]/.test(code[p]);
+      const continued = /[?:+*/%&|^.]/.test(code[n] ?? '');
+      if (!unfinished && !continued) return i;
+    }
+  }
+  return limit;
+}
+
+// The literal text in code[start, end): every string, and every template's text with each `${…}`
+// replaced by \0 (the code inside is read the same way). Comparison operands and bracket keys are
+// left out: they test or look up values rather than set them.
+function literalTexts(code, start, end, out = []) {
+  for (let i = start; i < end; i++) {
+    const quote = code[i];
+    if (quote !== '"' && quote !== "'" && quote !== '`') continue;
+    const close = Math.min(skipString(code, i), end);
+    const before = code.slice(Math.max(start, i - 12), i);
+    const after = code.slice(close, close + 12);
+    const skip = /[=!]==?\s*$/.test(before) || /^\s*[=!]==?/.test(after) || (/\[\s*$/.test(before) && /^\s*\]/.test(after));
+    let text = '';
+    for (let j = i + 1; j < close - 1; j++) {
+      if (code[j] === '\\') {
+        text += code[j + 1] ?? '';
+        j++;
+      } else if (quote === '`' && code[j] === '$' && code[j + 1] === '{') {
+        const stop = matchClose(code, j + 1, close);
+        if (stop === -1) break;
+        literalTexts(code, j + 2, stop, out);
+        text += '\0';
+        j = stop;
+      } else {
+        text += code[j];
+      }
+    }
+    if (!skip) out.push(text);
+    i = close - 1;
+  }
+  return out;
+}
+
+// The first literal in the value after a target match that `test` accepts, or undefined.
+function literalIn(code, match, test) {
+  const start = match.index + match[0].length;
+  return literalTexts(code, start, expressionEnd(code, start)).find((text) => test(text));
+}
+const snippet = (text) => JSON.stringify(text.replace(/\0/g, '${…}').slice(0, 60));
+
 const EXTS = ['.ts', '.tsx', '.js', '.jsx', '.mjs', '.css', '.html', '.svg'];
 const SKIP = [/^src\/design-system\//, /^src\/integrations\/supabase\/types\.ts$/];
 // Served assets count too: public/ ships as-is. A linked src/ or public/ is reported, not walked.
 const scanTargets = [
-  'index.html',
-  'tailwind.config.ts',
+  // Only when readRoot could read them; otherwise they're already reported.
+  ...(htmlRaw === null ? [] : ['index.html']),
+  ...(tailwindRaw === null ? [] : ['tailwind.config.ts']),
   ...['src', 'public']
     // lstat, not existsSync: a dangling or looping src/ or public/ link must still be reported.
     .filter((dir) => lstatSync(join(ROOT, dir), { throwIfNoEntry: false }))
@@ -376,6 +489,18 @@ for (const file of scanTargets) {
     for (const m of code.matchAll(re)) {
       if (ownedVars.has(m[2])) report(m.index, `redeclares design-system variable ${m[2]} (change the design system instead)`);
     }
+  }
+  if (!SCRIPT_EXTS.includes(ext)) continue;
+  for (const m of code.matchAll(COLOUR_TARGET)) {
+    const text = literalIn(code, m, (t) => NAMED_COLOUR_WORD.test(t));
+    if (text !== undefined) report(m.index, `named colour (use a design-system token): ${m[0].trim()} ${snippet(text)}`);
+  }
+  for (const m of code.matchAll(FONT_TARGET)) {
+    // A `font-family` value is all family, so any literal word counts there (CSS-wide keywords aside).
+    const familyOnly = /font-family/.test(m[0]);
+    const test = familyOnly ? (t) => /[A-Za-z]/.test(t) && !/^\s*(?:inherit|initial|unset|revert(?:-layer)?)\s*$/.test(t) : (t) => LITERAL_FAMILY.test(t);
+    const text = literalIn(code, m, test);
+    if (text !== undefined) report(m.index, `font outside the design system: ${m[0].trim()} ${snippet(text)}`);
   }
 }
 
