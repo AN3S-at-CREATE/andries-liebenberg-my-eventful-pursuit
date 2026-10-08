@@ -1,12 +1,14 @@
 #!/usr/bin/env node
 // Guards the rule that the AN3S design system is this site's only source of truth for colours,
 // fonts, radii, glows and gradients. Exits 1 when:
-//   1. src/design-system/ no longer matches its manifest (hand edits, partial syncs, extra files);
+//   1. src/design-system/ no longer matches its manifest (hand edits, partial syncs, extra files),
+//      or the manifest itself is missing or malformed;
 //   2. index.html loads fonts other than the design system's Google Fonts URL;
 //   3. tailwind.config.ts doesn't load the design-system preset, or its `theme` / `theme.extend`
 //      defines what the preset owns (colors, fontFamily, borderRadius, fontSize, boxShadow,
 //      backgroundImage), including through spreads or computed keys;
-//   4. code (index.html, tailwind.config.ts, src/**) hard-codes a colour or a font: hex,
+//   4. code or an SVG (index.html, tailwind.config.ts, and .ts/.tsx/.js/.jsx/.mjs/.css/.html/.svg
+//      files under src/ and public/) hard-codes a colour or a font: hex,
 //      rgb()/hsl() literals, named CSS colours, stock Tailwind palette classes, arbitrary colour
 //      values, font families, `font:` shorthands, @font-face rules or font-host URLs;
 //   5. code puts a role tint on an edge or a glow (borders, rings, shadows take pink and cyan);
@@ -69,10 +71,10 @@ function matchClose(code, open) {
 }
 
 // The text with its comments blanked to spaces (line breaks kept), so offsets and line numbers
-// still match the file. JS/TS: // and /* */ outside strings. CSS: /* */. HTML: <!-- -->.
+// still match the file. JS/TS: // and /* */ outside strings. CSS: /* */. HTML and SVG: <!-- -->.
 function blankComments(text, ext) {
   const blank = (s) => s.replace(/[^\n]/g, ' ');
-  if (ext === '.html') return text.replace(/<!--[\s\S]*?-->/g, blank);
+  if (ext === '.html' || ext === '.svg') return text.replace(/<!--[\s\S]*?-->/g, blank);
   const js = ext !== '.css';
   let out = '';
   let i = 0;
@@ -121,24 +123,39 @@ function lineTools(text) {
 
 // --- 1. The vendored export matches its manifest -----------------------------------------------
 const manifestPath = join(DS, 'manifest.json');
+const isMap = (v) => v !== null && typeof v === 'object' && !Array.isArray(v);
 let manifest = null;
+let vendored = null; // manifest.files (vendored path → sha256), once the manifest checks out
 if (!existsSync(manifestPath)) {
   problems.push('src/design-system/manifest.json is missing: run node scripts/sync-design-system.mjs');
 } else {
-  manifest = JSON.parse(readFileSync(manifestPath, 'utf8'));
+  let parsed;
+  try {
+    parsed = JSON.parse(readFileSync(manifestPath, 'utf8'));
+  } catch (error) {
+    problems.push(`src/design-system/manifest.json is not valid JSON (${error.message}): re-run the sync`);
+  }
+  if (parsed !== undefined && !isMap(parsed)) problems.push('src/design-system/manifest.json is not an object: re-run the sync');
+  else if (parsed !== undefined) manifest = parsed;
+  if (manifest && !isMap(manifest.files)) problems.push('src/design-system/manifest.json has no `files` map: re-run the sync');
+  else if (manifest) vendored = manifest.files;
+}
+if (vendored) {
   const TEXT = /\.(css|js|ts|json|md|svg)$/;
   const hash = (file, buf) =>
     createHash('sha256')
       .update(TEXT.test(file) ? Buffer.from(buf.toString('utf8').replace(/\r\n/g, '\n')) : buf)
       .digest('hex');
-  for (const [file, sum] of Object.entries(manifest.files)) {
+  for (const [file, sum] of Object.entries(vendored)) {
     const path = join(DS, file);
-    if (!existsSync(path)) problems.push(`src/design-system/${file} is missing: re-run the sync`);
+    if (typeof sum !== 'string') problems.push(`src/design-system/manifest.json lists ${file} without a sha256: re-run the sync`);
+    else if (!existsSync(path)) problems.push(`src/design-system/${file} is missing: re-run the sync`);
+    else if (!statSync(path).isFile()) problems.push(`src/design-system/manifest.json lists ${file}, which is not a file: re-run the sync`);
     else if (hash(file, readFileSync(path)) !== sum) problems.push(`src/design-system/${file} differs from the design system: re-run the sync, never edit it here`);
   }
   for (const path of walk(DS)) {
     const file = toPosix(relative(DS, path));
-    if (file !== 'manifest.json' && !(file in manifest.files)) problems.push(`src/design-system/${file} is not part of the design-system export`);
+    if (file !== 'manifest.json' && !Object.hasOwn(vendored, file)) problems.push(`src/design-system/${file} is not part of the design-system export`);
   }
 }
 
@@ -150,10 +167,12 @@ const FONT_URL = new RegExp(`(?:https?:)?//(?:${FONT_HOSTS})(?:/[^"'\\s>)]*)?`, 
 const htmlRaw = readFileSync(join(ROOT, 'index.html'), 'utf8');
 const html = blankComments(htmlRaw, '.html');
 const fontLinks = [...html.matchAll(FONT_URL)].map((m) => m[0].replace(/&amp;/g, '&'));
-if (manifest && !fontLinks.includes(manifest.googleFontsHref)) problems.push(`index.html must load the design-system fonts: ${manifest.googleFontsHref}`);
+const fontsHref = typeof manifest?.googleFontsHref === 'string' && manifest.googleFontsHref ? manifest.googleFontsHref : null;
+if (manifest && !fontsHref) problems.push('src/design-system/manifest.json has no googleFontsHref: re-run the sync');
+if (fontsHref && !fontLinks.includes(fontsHref)) problems.push(`index.html must load the design-system fonts: ${fontsHref}`);
 for (const link of fontLinks) {
   const bareOrigin = /^(?:https?:)?\/\/[^/]+\/?$/.test(link);
-  if (manifest && !bareOrigin && link !== manifest.googleFontsHref) problems.push(`index.html loads fonts outside the design system: ${link}`);
+  if (fontsHref && !bareOrigin && link !== fontsHref) problems.push(`index.html loads fonts outside the design system: ${link}`);
 }
 
 // --- 3. Tailwind takes palette, fonts, radii, shadows, gradients and type sizes from the preset -
@@ -279,26 +298,42 @@ const DECLARATIONS = [
 const NAMED_COLOURS =
   'aliceblue|antiquewhite|aqua|aquamarine|azure|beige|bisque|black|blanchedalmond|blue|blueviolet|brown|burlywood|cadetblue|chartreuse|chocolate|coral|cornflowerblue|cornsilk|crimson|cyan|darkblue|darkcyan|darkgoldenrod|darkgray|darkgreen|darkgrey|darkkhaki|darkmagenta|darkolivegreen|darkorange|darkorchid|darkred|darksalmon|darkseagreen|darkslateblue|darkslategray|darkslategrey|darkturquoise|darkviolet|deeppink|deepskyblue|dimgray|dimgrey|dodgerblue|firebrick|floralwhite|forestgreen|fuchsia|gainsboro|ghostwhite|gold|goldenrod|gray|green|greenyellow|grey|honeydew|hotpink|indianred|indigo|ivory|khaki|lavender|lavenderblush|lawngreen|lemonchiffon|lightblue|lightcoral|lightcyan|lightgoldenrodyellow|lightgray|lightgreen|lightgrey|lightpink|lightsalmon|lightseagreen|lightskyblue|lightslategray|lightslategrey|lightsteelblue|lightyellow|lime|limegreen|linen|magenta|maroon|mediumaquamarine|mediumblue|mediumorchid|mediumpurple|mediumseagreen|mediumslateblue|mediumspringgreen|mediumturquoise|mediumvioletred|midnightblue|mintcream|mistyrose|moccasin|navajowhite|navy|oldlace|olive|olivedrab|orange|orangered|orchid|palegoldenrod|palegreen|paleturquoise|palevioletred|papayawhip|peachpuff|peru|pink|plum|powderblue|purple|rebeccapurple|red|rosybrown|royalblue|saddlebrown|salmon|sandybrown|seagreen|seashell|sienna|silver|skyblue|slateblue|slategray|slategrey|snow|springgreen|steelblue|tan|teal|thistle|tomato|turquoise|violet|wheat|white|whitesmoke|yellow|yellowgreen';
 const COLOUR_PROPS =
-  'color|background|background-color|backgroundColor|border|border-(?:top|right|bottom|left)|border(?:-(?:top|right|bottom|left))?-color|border(?:Top|Right|Bottom|Left)?Color|border(?:Top|Right|Bottom|Left)|outline|outline-color|outlineColor|fill|stroke|box-shadow|boxShadow|text-shadow|textShadow|caret-color|caretColor|accent-color|accentColor|text-decoration-color|textDecorationColor|text-decoration|textDecoration';
+  'color|background|background-color|backgroundColor|border|border-(?:top|right|bottom|left)|border(?:-(?:top|right|bottom|left))?-color|border(?:Top|Right|Bottom|Left)?Color|border(?:Top|Right|Bottom|Left)|outline|outline-color|outlineColor|fill|stroke|box-shadow|boxShadow|text-shadow|textShadow|caret-color|caretColor|accent-color|accentColor|text-decoration-color|textDecorationColor|text-decoration|textDecoration|stop-color|stopColor|flood-color|floodColor|lighting-color|lightingColor';
+// Attributes that take a colour (SVG markup, JSX props).
+const COLOUR_ATTRS = 'fill|stroke|color|bgcolor|stop-color|stopColor|flood-color|floodColor|lighting-color|lightingColor';
 const HUES = 'slate|gray|grey|zinc|neutral|stone|red|orange|amber|yellow|lime|green|emerald|teal|sky|indigo|purple|fuchsia|rose|white|black';
 const UTILS = 'text|bg|border|border-[trblxy]|from|via|to|ring|ring-offset|outline|shadow|fill|stroke|divide|placeholder|decoration|accent|caret';
 const RULES = [
-  [/(?<![&/\w])#(?:[0-9a-fA-F]{8}|[0-9a-fA-F]{6}|[0-9a-fA-F]{3,4})(?![\w-])/g, 'hex colour (use a design-system token)'],
+  // Not an HTML entity (&#123;), a URL fragment (/page#abc), or an id reference (url(#abc), href="#abc").
+  [/(?<![&/\w]|url\(\s*["']?|href\s*=\s*["'])#(?:[0-9a-fA-F]{8}|[0-9a-fA-F]{6}|[0-9a-fA-F]{3,4})(?![\w-])/g, 'hex colour (use a design-system token)'],
   [/(?<![A-Za-z-])(?:rgba?|hsla?)\(\s*[\d.]/g, 'colour literal (use a design-system token)'],
   // Not a TypeScript union such as `color: "pink" | "cyan"`, where the strings name tokens.
-  [new RegExp(`(?<![\\w-])(?:${COLOUR_PROPS})["'\`]?\\s*:\\s*["'\`]?[^;{}\\n"'\`]*?(?<![\\w-])(?:${NAMED_COLOURS})(?![\\w-])(?!["'\`]?\\s*\\|)`, 'gi'), 'named colour (use a design-system token)'],
+  [new RegExp(`(?<![\\w-])(?:${COLOUR_PROPS})["'\`]?\\s*:\\s*["'\`]?[^;{}\\n"'\`]*?(?<![\\w#-])(?:${NAMED_COLOURS})(?![\\w-])(?!["'\`]?\\s*\\|)`, 'gi'), 'named colour (use a design-system token)'],
+  // Colour attributes. Markup may space out the `=`; in scripts a spaced `=` is an assignment
+  // (`color = "pink"` naming a token), so only JSX's `fill="red"` form counts there.
+  [new RegExp(`(?<![\\w-])(?:${COLOUR_ATTRS})\\s*=\\s*["']\\s*(?:${NAMED_COLOURS})\\s*["']`, 'gi'), 'named colour (use a design-system token)', (file) => /\.(?:svg|html)$/.test(file)],
+  [new RegExp(`(?<![\\w$.-])(?:${COLOUR_ATTRS})=\\{?\\s*["'\`]\\s*(?:${NAMED_COLOURS})\\s*["'\`]`, 'gi'), 'named colour (use a design-system token)', (file) => !/\.(?:svg|html)$/.test(file)],
   [new RegExp(`(?<![\\w-])(?:${UTILS})-(?:${HUES})(?:-\\d{2,3})?(?![\\w-])`, 'g'), 'stock Tailwind colour (use a design-system token class)'],
   [new RegExp(`(?<![\\w-])(?:${UTILS})-(?:cyan|pink|blue|violet)-\\d{2,3}(?![\\w-])`, 'g'), 'stock Tailwind shade (use the design-system token)'],
   [new RegExp(`(?<![\\w-])(?:${UTILS})-\\[(?:#|rgb|hsl|color)`, 'g'), 'arbitrary colour value'],
-  [/\bfont-family\s*:|\bfontFamily\s*:|(?<![\w-])font-\[|(?<![\w-])["'`]?font["'`]?\s*:(?!:)|@font-face\b|\bnew\s+FontFace\s*\(/g, 'font outside the design system'],
+  // `font-family` can't be a JS identifier, so `font-family=` is always markup. `fontFamily` counts
+  // as a style key, a JSX prop or a property assignment, not a variable, comparison or arrow parameter.
+  [/\bfont-family\s*[:=]|\bfontFamily\s*:|(?<![\w$.-])fontFamily=["'{]|\.fontFamily\s*=(?![=>])|(?<![\w-])font-\[|(?<![\w-])["'`]?font["'`]?\s*:(?!:)|@font-face\b|\bnew\s+FontFace\s*\(/g, 'font outside the design system'],
   [FONT_URL, 'font host URL (fonts load once, from index.html)', (file) => file !== 'index.html'],
   [/(?<![\w-])(?:border(?:-[trblxy])?|ring(?:-offset)?|outline|divide|shadow|drop-shadow)-(?:primary|secondary)(?![\w-])/g, 'role tint on an edge or glow (edges and glows use pink and cyan; roles are for words and fills)'],
   [/hsla?\(\s*var\(--(?:primary|secondary)\)/g, 'raw role colour (glows and edges use --pink-hsl / --cyan-hsl; fills use the role classes)'],
 ];
 
-const EXTS = ['.ts', '.tsx', '.js', '.jsx', '.mjs', '.css', '.html'];
+const EXTS = ['.ts', '.tsx', '.js', '.jsx', '.mjs', '.css', '.html', '.svg'];
 const SKIP = [/^src\/design-system\//, /^src\/integrations\/supabase\/types\.ts$/];
-const scanTargets = ['index.html', 'tailwind.config.ts', ...[...walk(join(ROOT, 'src'))].map((p) => toPosix(relative(ROOT, p)))];
+// Served assets count too: public/ ships as-is.
+const scanTargets = [
+  'index.html',
+  'tailwind.config.ts',
+  ...['src', 'public']
+    .filter((dir) => existsSync(join(ROOT, dir)))
+    .flatMap((dir) => [...walk(join(ROOT, dir))].map((p) => toPosix(relative(ROOT, p)))),
+];
 for (const file of scanTargets) {
   const ext = extname(file);
   if (!EXTS.includes(ext) || SKIP.some((re) => re.test(file))) continue;
@@ -325,4 +360,4 @@ if (problems.length) {
   console.error('\nThe AN3S design system is the only source of truth. See AGENTS.md, "Design system".');
   process.exit(1);
 }
-console.log(`Design-system check passed: ${Object.keys(manifest.files).length} vendored files intact, fonts and Tailwind preset wired, no hard-coded colours or fonts, no role-tinted edges or glows.`);
+console.log(`Design-system check passed: ${Object.keys(vendored).length} vendored files intact, fonts and Tailwind preset wired, no hard-coded colours or fonts, no role-tinted edges or glows.`);
