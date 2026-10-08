@@ -273,9 +273,15 @@ if (htmlRaw !== null) {
     if (!file) problems.push(`${where} links an icon that isn't a file in public/: ${href}`);
     else if (!fromDesignSystem(file)) problems.push(`${where} links ${file}, ${OUTSIDE_DS_ASSET}`);
   };
-  for (const tag of blankComments(htmlRaw, '.html').matchAll(/<link\b[^>]*>/gi)) {
-    const rel = /\brel\s*=\s*["']([^"']*)["']/i.exec(tag[0])?.[1] ?? '';
-    const href = /\bhref\s*=\s*["']([^"']*)["']/i.exec(tag[0])?.[1] ?? '';
+  // An attribute's value, quoted or not (`<link rel=icon href=/x.png>` is valid HTML); not `data-rel`.
+  const attr = (tag, name) => {
+    const m = new RegExp(`(?<![\\w-])${name}\\s*=\\s*(?:"([^"]*)"|'([^']*)'|([^\\s"'=<>\`]+))`, 'i').exec(tag);
+    return m ? (m[1] ?? m[2] ?? m[3]) : '';
+  };
+  // A `>` inside a quoted value (a data: URI, a media query) doesn't end the tag.
+  for (const tag of blankComments(htmlRaw, '.html').matchAll(/<link\b(?:"[^"]*"|'[^']*'|[^>"'])*>/gi)) {
+    const rel = attr(tag[0], 'rel');
+    const href = attr(tag[0], 'href');
     if (/(?:^|\s)manifest(?:\s|$)/i.test(rel)) {
       const file = EXTERNAL.test(href) ? null : served(href);
       if (!file) {
@@ -438,10 +444,22 @@ const NAMED_COLOURS =
   'aliceblue|antiquewhite|aqua|aquamarine|azure|beige|bisque|black|blanchedalmond|blue|blueviolet|brown|burlywood|cadetblue|chartreuse|chocolate|coral|cornflowerblue|cornsilk|crimson|cyan|darkblue|darkcyan|darkgoldenrod|darkgray|darkgreen|darkgrey|darkkhaki|darkmagenta|darkolivegreen|darkorange|darkorchid|darkred|darksalmon|darkseagreen|darkslateblue|darkslategray|darkslategrey|darkturquoise|darkviolet|deeppink|deepskyblue|dimgray|dimgrey|dodgerblue|firebrick|floralwhite|forestgreen|fuchsia|gainsboro|ghostwhite|gold|goldenrod|gray|green|greenyellow|grey|honeydew|hotpink|indianred|indigo|ivory|khaki|lavender|lavenderblush|lawngreen|lemonchiffon|lightblue|lightcoral|lightcyan|lightgoldenrodyellow|lightgray|lightgreen|lightgrey|lightpink|lightsalmon|lightseagreen|lightskyblue|lightslategray|lightslategrey|lightsteelblue|lightyellow|lime|limegreen|linen|magenta|maroon|mediumaquamarine|mediumblue|mediumorchid|mediumpurple|mediumseagreen|mediumslateblue|mediumspringgreen|mediumturquoise|mediumvioletred|midnightblue|mintcream|mistyrose|moccasin|navajowhite|navy|oldlace|olive|olivedrab|orange|orangered|orchid|palegoldenrod|palegreen|paleturquoise|palevioletred|papayawhip|peachpuff|peru|pink|plum|powderblue|purple|rebeccapurple|red|rosybrown|royalblue|saddlebrown|salmon|sandybrown|seagreen|seashell|sienna|silver|skyblue|slateblue|slategray|slategrey|snow|springgreen|steelblue|tan|teal|thistle|tomato|turquoise|violet|wheat|white|whitesmoke|yellow|yellowgreen';
 const COLOUR_PROPS =
   'color|background|background-color|backgroundColor|border|border-(?:top|right|bottom|left)|border(?:-(?:top|right|bottom|left))?-color|border(?:Top|Right|Bottom|Left)?Color|border(?:Top|Right|Bottom|Left)|outline|outline-color|outlineColor|fill|stroke|box-shadow|boxShadow|text-shadow|textShadow|caret-color|caretColor|accent-color|accentColor|text-decoration-color|textDecorationColor|text-decoration|textDecoration|stop-color|stopColor|flood-color|floodColor|lighting-color|lightingColor';
+// Keys whose value is a colour: the colour properties, `@property`'s initial-value, and any custom
+// property, since a colour stored in `--name` is reused through var().
+const COLOUR_KEYS = `${COLOUR_PROPS}|initial-value|--[\\w-]+`;
 // Attributes that take a colour (SVG markup, JSX props).
 const COLOUR_ATTRS = 'fill|stroke|color|bgcolor|stop-color|stopColor|flood-color|floodColor|lighting-color|lightingColor';
 const HUES = 'slate|gray|grey|zinc|neutral|stone|red|orange|amber|yellow|lime|green|emerald|teal|sky|indigo|purple|fuchsia|rose|white|black';
 const UTILS = 'text|bg|border|border-[trblxy]|from|via|to|ring|ring-offset|outline|shadow|fill|stroke|divide|placeholder|decoration|accent|caret';
+// A colour key's value up to a named colour. It never runs past `;`, `{`, `}` or a quote, nor past
+// `stop` (a line break outside CSS, where the next line is another statement). The value window and
+// the url() look-back are bounded so a long single-line file (a minified or embedded-image SVG)
+// stays linear.
+const namedColourValue = (stop) =>
+  new RegExp(
+    `(?<![\\w-])(?:${COLOUR_KEYS})["'\`]?\\s*:\\s*["'\`]?[^;{}${stop}"'\`]{0,400}?(?<![\\w#.-])(?<!url\\([^)\\n]{0,200})(?:${NAMED_COLOURS})(?![\\w(-])(?!["'\`]?\\s*\\|)`,
+    'gi',
+  );
 // The design system's font variables (--font-sans, --font-mono…), as a regex alternation.
 const DS_FONT_VARS = [...ownedVars].filter((v) => v.startsWith('--font-')).join('|') || '--font-sans';
 const RULES = [
@@ -453,11 +471,20 @@ const RULES = [
   // jsPDF's colour setters take channels as numbers (`pdf.setTextColor(0, 255, 255)`); pass a token
   // instead: `pdf.setTextColor(color.ink)` (jsPDF reads hex strings).
   [/\.set(?:Text|Fill|Draw)Color\s*\(\s*[+-]?\.?\d/g, 'colour literal (use a design-system token)'],
-  // Not a TypeScript union such as `color: "pink" | "cyan"`, where the strings name tokens.
-  [new RegExp(`(?<![\\w-])(?:${COLOUR_PROPS})["'\`]?\\s*:\\s*["'\`]?[^;{}\\n"'\`]*?(?<![\\w#-])(?:${NAMED_COLOURS})(?![\\w-])(?!["'\`]?\\s*\\|)`, 'gi'), 'named colour (use a design-system token)'],
-  // Colour attributes. Markup may space out the `=`; in scripts a spaced `=` is an assignment
-  // (`color = "pink"` naming a token), so only JSX's `fill="red"` form counts there.
-  [new RegExp(`(?<![\\w-])(?:${COLOUR_ATTRS})\\s*=\\s*["']\\s*(?:${NAMED_COLOURS})\\s*["']`, 'gi'), 'named colour (use a design-system token)', (file) => /\.(?:svg|html)$/.test(file)],
+  // Colour properties and custom properties (`--off-brand: red` would be reused through var()). Not a
+  // TypeScript union such as `color: "pink" | "cyan"`, where the strings name tokens, a name after a
+  // dot (`theme(colors.pink)`), inside url() (`url(/img/gold.png)`) or naming a function (`tan(…)`).
+  // In CSS a declaration runs to `;` or `}`, so a wrapped value (a gradient with a stop per line, as
+  // in src/index.css) is read whole; elsewhere the value ends at the line.
+  [namedColourValue('\\n'), 'named colour (use a design-system token)', (file) => !file.endsWith('.css')],
+  [namedColourValue(''), 'named colour (use a design-system token)', (file) => file.endsWith('.css')],
+  // A Tailwind arbitrary property writes spaces as `_` (`[--glow:0_0_12px_white]`).
+  [new RegExp(`\\[(?:${COLOUR_KEYS}):[^\\]\\s"'\`]*?_(?:${NAMED_COLOURS})(?=[_,)\\]])`, 'gi'), 'named colour (use a design-system token)'],
+  // Colour attributes. Markup may space out the `=` and leave the value unquoted (`fill=red`), and an
+  // attribute starts after a space or the previous value's quote (not `?color=white` in a URL); in
+  // scripts a spaced `=` is an assignment (`color = "pink"` naming a token), so only JSX's
+  // `fill="red"` form counts there.
+  [new RegExp(`(?<=[\\s"'])(?:${COLOUR_ATTRS})\\s*=\\s*(?:["']\\s*(?:${NAMED_COLOURS})\\s*["']|(?:${NAMED_COLOURS})(?![\\w-]))`, 'gi'), 'named colour (use a design-system token)', (file) => /\.(?:svg|html)$/.test(file)],
   [new RegExp(`(?<![\\w$.-])(?:${COLOUR_ATTRS})=\\{?\\s*["'\`]\\s*(?:${NAMED_COLOURS})\\s*["'\`]`, 'gi'), 'named colour (use a design-system token)', (file) => !/\.(?:svg|html)$/.test(file)],
   [new RegExp(`(?<![\\w-])(?:${UTILS})-(?:${HUES})(?:-\\d{2,3})?(?![\\w-])`, 'g'), 'stock Tailwind colour (use a design-system token class)'],
   [new RegExp(`(?<![\\w-])(?:${UTILS})-(?:cyan|pink|blue|violet)-\\d{2,3}(?![\\w-])`, 'g'), 'stock Tailwind shade (use the design-system token)'],
@@ -484,16 +511,21 @@ const RULES = [
 // (`"pink" | "cyan"`) or computed keys (`palette[on ? "white" : "ink"]`).
 const COLOUR_TARGET = new RegExp(
   `(?:\\.(?:fillStyle|strokeStyle|shadowColor)|\\bstyle\\.(?:${COLOUR_PROPS}))\\s*=(?![=>])` +
-    `|\\b(?:setProperty|setAttribute)\\s*\\(\\s*(["'\`])(?:${COLOUR_PROPS}|${COLOUR_ATTRS})\\1\\s*,` +
+    `|\\b(?:setProperty|setAttribute)\\s*\\(\\s*(["'\`])(?:${COLOUR_KEYS}|${COLOUR_ATTRS})\\1\\s*,` +
     `|\\baddColorStop\\s*\\(|\\.set(?:Text|Fill|Draw)Color\\s*\\(`,
   'gi',
 );
 // JSX colour props (`fill={…}`, `stroke="…"`) and colour keys in object literals (`{ color: … }`).
 // Case-sensitive, and a key only counts right after `{` or `,`.
-const COLOUR_VALUE = new RegExp(`(?<![\\w$.-])(?:${COLOUR_ATTRS})=(?=[{"'\`])|(?<=[{,]\\s*)(["'\`]?)(?:${COLOUR_PROPS})\\1\\s*:(?!:)`, 'g');
+// A custom property as a computed key (`["--x" as string]: …`) counts too.
+const COLOUR_VALUE = new RegExp(
+  `(?<![\\w$.-])(?:${COLOUR_ATTRS})=(?=[{"'\`])|(?<=[{,]\\s*)(["'\`]?)(?:${COLOUR_KEYS})\\1\\s*:(?!:)` +
+    `|(?<=[{,]\\s*)\\[\\s*(["'\`])--[\\w-]+\\2(?:\\s+as\\s+[^\\]]+?)?\\s*\\]\\s*:(?!:)`,
+  'g',
+);
 const FONT_TARGET =
   /\.font\s*=(?![=>])|\b(?:setProperty|setAttribute)\s*\(\s*(["'`])font(?:-family)?\1\s*,|\.fontFamily\s*=(?![=>])|(?<=[{,]\s*)(["'`]?)fontFamily\2\s*:(?!:)|(?<![\w$.-])fontFamily=(?=[{"'`])/g;
-const NAMED_COLOUR_WORD = new RegExp(`(?<![\\w#-])(?:${NAMED_COLOURS})(?![\\w-])`, 'i');
+const NAMED_COLOUR_WORD = new RegExp(`(?<![\\w#.-])(?:${NAMED_COLOURS})(?![\\w-])`, 'i');
 // Design-system font variables count as interpolations: `600 14px var(--font-sans)` names no family.
 const DS_FONT_VAR = new RegExp(`var\\(\\s*(?:${DS_FONT_VARS})\\s*\\)`, 'g');
 // A literal family in shorthand text: after a size (a number, an interpolation, or the start of a
