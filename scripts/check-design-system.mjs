@@ -13,11 +13,15 @@
 //      values, font families, `font:` shorthands, @font-face rules or font-host URLs;
 //   5. code puts a role tint on an edge or a glow (borders, rings, shadows take pink and cyan);
 //   6. code redeclares a variable the design system exports (`--primary: …`, `"--primary": …`,
-//      `["--primary"]: …`, `setProperty("--primary", …)`, `@property --primary`).
+//      `["--primary"]: …`, `setProperty("--primary", …)`, `@property --primary`);
+//   7. a scanned path is a symbolic link (or junction): index.html, tailwind.config.ts, anything
+//      under src/ or public/ (a linked src/ or public/ itself included, even dangling), or anything
+//      in src/design-system/. Links aren't followed, because they can leave the repo or loop, so
+//      commit real files instead.
 // Comments are ignored. To keep a justified exception, put `ds-allow: <reason>` in a comment on
 // that line or the line above it. Run: node scripts/check-design-system.mjs
 import { createHash } from 'node:crypto';
-import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs';
+import { existsSync, lstatSync, readFileSync, readdirSync, statSync } from 'node:fs';
 import { dirname, extname, join, relative, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -26,13 +30,24 @@ const DS = join(ROOT, 'src', 'design-system');
 const toPosix = (p) => p.split('\\').join('/');
 const problems = [];
 
+// Every entry under `dir`. Real folders are descended into; symbolic links (and Windows junctions)
+// are never followed, since a link can leave the repo or loop back on itself. Links come back as
+// entries so the checks below can report them.
 function* walk(dir) {
   for (const name of readdirSync(dir)) {
     const path = join(dir, name);
-    if (statSync(path).isDirectory()) yield* walk(path);
+    if (lstatSync(path).isDirectory()) yield* walk(path);
     else yield path;
   }
 }
+// Never throws: a path through a looping link (ELOOP) or a missing one just isn't a link itself.
+const isLink = (path) => {
+  try {
+    return lstatSync(path).isSymbolicLink();
+  } catch {
+    return false;
+  }
+};
 
 // --- Source scanning helpers -------------------------------------------------------------------
 
@@ -149,13 +164,15 @@ if (vendored) {
   for (const [file, sum] of Object.entries(vendored)) {
     const path = join(DS, file);
     if (typeof sum !== 'string') problems.push(`src/design-system/manifest.json lists ${file} without a sha256: re-run the sync`);
+    else if (isLink(path)) continue; // reported by the walk below, dangling or not
     else if (!existsSync(path)) problems.push(`src/design-system/${file} is missing: re-run the sync`);
     else if (!statSync(path).isFile()) problems.push(`src/design-system/manifest.json lists ${file}, which is not a file: re-run the sync`);
     else if (hash(file, readFileSync(path)) !== sum) problems.push(`src/design-system/${file} differs from the design system: re-run the sync, never edit it here`);
   }
   for (const path of walk(DS)) {
     const file = toPosix(relative(DS, path));
-    if (file !== 'manifest.json' && !Object.hasOwn(vendored, file)) problems.push(`src/design-system/${file} is not part of the design-system export`);
+    if (isLink(path)) problems.push(`src/design-system/${file} is a symbolic link: re-run the sync, which writes real files`);
+    else if (file !== 'manifest.json' && !Object.hasOwn(vendored, file)) problems.push(`src/design-system/${file} is not part of the design-system export`);
   }
 }
 
@@ -326,16 +343,23 @@ const RULES = [
 
 const EXTS = ['.ts', '.tsx', '.js', '.jsx', '.mjs', '.css', '.html', '.svg'];
 const SKIP = [/^src\/design-system\//, /^src\/integrations\/supabase\/types\.ts$/];
-// Served assets count too: public/ ships as-is.
+// Served assets count too: public/ ships as-is. A linked src/ or public/ is reported, not walked.
 const scanTargets = [
   'index.html',
   'tailwind.config.ts',
   ...['src', 'public']
-    .filter((dir) => existsSync(join(ROOT, dir)))
-    .flatMap((dir) => [...walk(join(ROOT, dir))].map((p) => toPosix(relative(ROOT, p)))),
+    // lstat, not existsSync: a dangling or looping src/ or public/ link must still be reported.
+    .filter((dir) => lstatSync(join(ROOT, dir), { throwIfNoEntry: false }))
+    .flatMap((dir) => (isLink(join(ROOT, dir)) ? [dir] : [...walk(join(ROOT, dir))].map((p) => toPosix(relative(ROOT, p))))),
 ];
 for (const file of scanTargets) {
   const ext = extname(file);
+  if (file.startsWith('src/design-system/')) continue; // the manifest check covers these, links included
+  // Before the extension and skip filters, so a linked folder or skipped file can't slip through.
+  if (isLink(join(ROOT, file))) {
+    problems.push(`${file} is a symbolic link: the check doesn't follow links (they can leave the repo or loop), so commit the file or folder itself`);
+    continue;
+  }
   if (!EXTS.includes(ext) || SKIP.some((re) => re.test(file))) continue;
   const raw = readFileSync(join(ROOT, file), 'utf8').replace(/\r\n/g, '\n');
   const code = blankComments(raw, ext);
