@@ -37,7 +37,7 @@ const aiTools = [
   },
   {
     title: "Custom AI Models",
-    description: "Specialized AI models like Custom model development for personalized marketing weighting and analysis.",
+    description: "Custom AI development for personalized marketing weighting and analysis.",
     icon: Settings,
     href: "/ai/custom-models",
     accent: "secondary" as const,

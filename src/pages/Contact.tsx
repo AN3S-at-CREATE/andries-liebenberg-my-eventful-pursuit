@@ -99,13 +99,6 @@ const Contact = () => {
                       <p className="text-foreground">{facts.serviceArea.value}</p>
                     </div>
                   </div>
-
-
-                    <div>
-                      <p className="text-sm text-muted-foreground">Business Hours</p>
-                      <p className="text-foreground">Mon - Fri: 08:00 - 17:00 SAST</p>
-                    </div>
-                  </div>
                 </div>
 
                 {/* Social Links */}

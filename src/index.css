@@ -49,14 +49,6 @@
     box-shadow: 0 0 30px hsl(var(--cyan-hsl) / 0.6), 0 0 60px hsl(var(--cyan-hsl) / 0.3);
   }
 
-  /* Highlighted words: a light core (the glow tint) with a saturated bloom. */
-  . {
-    text-shadow: 0 0 10px hsl(var(--pink-hsl) / 0.5), 0 0 20px hsl(var(--pink-hsl) / 0.3);
-  }
-  . {
-    text-shadow: 0 0 10px hsl(var(--cyan-hsl) / 0.5), 0 0 20px hsl(var(--cyan-hsl) / 0.3);
-  }
-
   .border-glow-primary-hover:hover {
     box-shadow: var(--glow-pink);
   }
@@ -122,6 +114,8 @@
 }
 
 @keyframes glow-breathe { 0%,100% { opacity: .65; } 50% { opacity: 1; } }
+/* Radix/shadcn travelling entrance effects are intentionally still under the brand rules. */
+*, *::before, *::after { animation: none !important; }
 .glow-breathe { animation: glow-breathe 4s ease-in-out infinite; }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
 h1, h2, h3, h4, h5, h6 { text-shadow: none; }
