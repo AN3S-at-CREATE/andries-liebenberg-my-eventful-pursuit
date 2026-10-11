@@ -43,9 +43,7 @@ const About = () => {
             <div className="text-center mb-16">
               <Badge variant="glow-secondary" className="mb-4">Architect of Experiences, Driver of Growth</Badge>
               <h1 className="font-heading text-4xl md:text-6xl font-bold text-foreground mb-6">
-                Andries Johannes{" "}
-                Lieben
-                berg
+                {facts.person.value}
               </h1>
               <p className="text-lg md:text-xl text-muted-foreground max-w-4xl mx-auto mb-6">My professional life explores the intersection of creativity, strategy and execution.</p>
               <p className="text-base text-muted-foreground/80 max-w-3xl mx-auto">I blend an understanding of event experiences with business strategy and technical skills.</p>
