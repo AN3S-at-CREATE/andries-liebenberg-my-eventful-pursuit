@@ -1,28 +1,21 @@
 # AN3S — Andries Liebenberg
 
-> AN3S is Andries Liebenberg's brand hub for business growth systems, experimental marketing, and AI automation — based in South Africa, built for global scale.
+> Fueling growth at the intersection of Strategy, Chaos, and Experimental Tech.
+
+Strategic Development & Growth Advisor for Intelligent Businesses. Est. 2003.
+Gauteng; remote across South Africa. Contact book@hello.an3s.info or WhatsApp +27 72 974 9703.
 
 ## Pages
+- [Services](/services): Graphic Design; Marketing & Workflow Automation; App Development; Website Design & Development. Prices on request.
+- [Home](/): AN3S services, concierge and ventures.
+- [About](/about): Andries's background and creative approach.
+- [Expertise](/expertise): AI Systems & Automation; Business Growth; Web & App Development; Experimental Marketing; Brand Strategy; 3D Virtualization & Events; Sales Leadership; Innovation & Mentorship.
+- [AI projects](/ai): EventPulse, Lynkie Sky, NeuroLogix and custom models.
+- [Ventures](/companies): Venture names, sectors, roles and periods.
+- [Showcase](/showcase): Creative work and venture portfolio.
+- [Contact](/contact): Discuss your project on WhatsApp.
 
-- [Home](/): Overview of Andries Liebenberg's work, metrics, and AI growth tools.
-- [About](/about): Andries Liebenberg's background, journey, and 20+ years of experience.
-- [Expertise](/expertise): Cross-industry expertise in events, marketing, sales, development, business growth, and mentorship.
-- [AI Tools & Projects](/ai): AI solutions including EventPulse, Lynkie Sky, NeuroLogix, and custom models.
-- [Companies](/companies): The 10+ companies Andries has built across multiple sectors.
-- [Showcase](/showcase): Featured projects and outcomes.
-- [Contact](/contact): Get in touch to discuss growth and AI work.
-
-## Expertise
-
-- [Events Management](/expertise/events-management): 20+ years orchestrating large-scale events.
-- [Marketing](/expertise/marketing): Data-driven marketing strategies.
-- [Sales](/expertise/sales): Revenue and sales-growth methodologies.
-- [Development](/expertise/development): Full-stack development with AI and cloud.
-- [Business Growth](/expertise/business-growth): Strategic planning and expansion.
-- [Mentorship](/expertise/mentorship): Nurturing next-generation professionals.
-
-## Optional
-
-- [Privacy Policy](/privacy): How data is handled (POPIA-aligned).
-- [Terms](/terms): Terms of use.
-- [Cookie Policy](/cookie-policy): Cookie usage details.
+## Legal
+- [Privacy](/privacy)
+- [Terms](/terms)
+- [Cookie policy](/cookie-policy)

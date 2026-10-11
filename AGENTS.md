@@ -31,3 +31,9 @@ The only service to run for development is the Vite dev server. Standard command
 - If the dev server shows stale/corrupt optimized deps, clear the Vite cache: `rm -rf node_modules/.vite` then restart `pnpm dev`.
 - The SPA is mostly client-rendered: `/`, `/companies`, `/showcase`, and the **ROI Calculator** (in the home page "AI-Powered Growth Tools" section) work fully offline with no backend.
 - Dynamic features (AN3S Concierge chat, Performance Brief generator, contact email) call **Supabase Edge Functions** on the hosted project configured in `.env` (`VITE_SUPABASE_*`, anon key only). Those functions need server-side secrets set in Supabase (`LOVABLE_API_KEY`, `RESEND_API_KEY`, service-role key) and are not required for general frontend dev. Local edge-function work needs the Supabase CLI + Deno (not installed by default).
+
+## Content architecture
+- Public claims and concierge knowledge share `src/data/facts.ts`, with source/year provenance; missing evidence is omitted rather than inferred, because site and assistant must agree.
+- Services and disciplines are shared data modules consumed by their page and navigation; brand parts compose exported tokens without changing the generated design-system files, preventing presentation drift.
+- Motion wrappers preserve static layout contracts; starfield renders only on resize, because the brand allows light breathing but no travelling content.
+- Retained metric tools have no portfolio metric dataset; briefs use only venture identity, sector, role and source-backed periods, preventing invented performance reports.

@@ -1,6 +1,6 @@
 # PROTECTED CONTENT REGISTRY
 
-> **RULE:** Nothing in this list may be removed. If restructuring is needed, duplicate/move content but do not delete. Only additive changes allowed.
+> **RULE:** Nothing in this list may be removed. If restructuring is needed, duplicate/move content but do not delete. Only additive changes allowed, except the specific Andries-authorised removals recorded in §11.
 
 ---
 
@@ -185,6 +185,24 @@ The AN3S design system ([AN3S-CREATE/an3s-design-system](https://github.com/AN3S
 | Logo | `src/design-system/assets/an3s-wordmark.png` | Used by Navbar, Footer and LoadingScreen (replaced `src/assets/logo.svg`, which is kept but unused) |
 
 ---
+
+## 11. Authorised review changes — Andries, 11 October 2026
+
+These explicit authorisations override the original registry only for the items below. Route files and reusable tools remain unless noted.
+
+- Home hero replaced with EST. 2003, static DS wordmark, two GradientText tagline lines, descriptor, supporting sentence, WhatsApp and Services links. Stats strip (10 / 1,020+ / 47% / 96%) removed.
+- Homepage Growth Diagnostic and ROI Calculator cards hidden; their reusable files retained. Concierge remains visible.
+- Company preview, listing and details renamed Ventures. Revenue ranges, growth, client/project counts, satisfaction and result/highlight blocks removed from visible venture views. Original company names and sector/period data retained; periods relocated to facts.ts; missing roles explicitly await confirmation. Metric sorting replaced by portfolio/name sorting. Performance brief now uses no metric data.
+- About careerHighlights and percentage achievements removed; unattributed Letter of Recommendation removed. Numeric heritage and sponsorship claims removed. Career timeline periods relocated to facts.ts; narrative and non-metric sections retained. Type-only award names added; no winner/nomination assertion or logos; BusinessDay excluded.
+- Showcase stats, budgets, attendance, satisfaction and numerical case-study results removed. Named event portfolio hidden until facts.ts contains clientPermission: true; no permissions fabricated. Gallery retained. Venture case-study order retained: 360 Vision, ODM Studio, Prisma, Adventure FreaksA, now displayed without unevidenced results.
+- Expertise/AI unsupported percentages, revenues, counts, certification assertions, model identifier and April 2025 launch claims removed. Existing subpage routes retained; eight disciplines replace six index cards.
+- Services added at /services and homepage; first navigation item; sitemap and llms.txt updated. Explicit user-requested price placeholder retained until supplied. No timings, guarantees or outcome claims added.
+- Travelling/parallax/scale/flicker/lift effects disabled; compatibility component files retained. Loading animation asset retained but no longer displayed; loader uses static DS wordmark. Navbar/Footer wordmarks no longer transform or drop-shadow.
+- Footer legacy business-results description replaced with exact tagline, descriptor and establishment marker.
+- Contact map removed. WhatsApp placed above form and always visible in Navbar. Unverified opening hours removed from visible contact information; service area and response promise read from facts.ts. Success copy changed as authorised.
+- Downloads removed from navigation and sitemap; route retained, dead download actions replaced by Request on WhatsApp. Downloads and NotFound use route-level noindex.
+- Facts and concierge share one evidence source in src/data/facts.ts; unsupported aggregate/company metric knowledge removed. Old metric dataset retained for compatibility but emptied; unsupported figures are not migrated into verified facts.
+- Static SEO title/description, Person job title and social references corrected; ProfessionalService offer catalogue added without prices. Existing OG URL encoded; new DS-built OG image awaits user supply. Site remains unpublished for review.
 
 ## Verification
 

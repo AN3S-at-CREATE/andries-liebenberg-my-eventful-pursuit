@@ -120,3 +120,75 @@ export const ventureFacts = {
     "year": 2018
   }
 } as const;
+
+export const careerPeriods = [
+  {
+    "value": "1999-2004",
+    "source": "Existing career timeline retained from portfolio; user authorised metric removal",
+    "year": 1999
+  },
+  {
+    "value": "2005-2009",
+    "source": "Existing career timeline retained from portfolio; user authorised metric removal",
+    "year": 2005
+  },
+  {
+    "value": "2010-2013",
+    "source": "Existing career timeline retained from portfolio; user authorised metric removal",
+    "year": 2010
+  },
+  {
+    "value": "2014-2022",
+    "source": "Existing career timeline retained from portfolio; user authorised metric removal",
+    "year": 2014
+  },
+  {
+    "value": "2023-Present",
+    "source": "Existing career timeline retained from portfolio; user authorised metric removal",
+    "year": 2023
+  }
+] as const;
+
+// Display names authorised by Andries; no claim of winning or nomination is implied.
+export const awardNames = [
+  {
+    "value": "Africa CEO Forum Awards",
+    "source": "Award wall names supplied by Andries, 11 October 2026",
+    "year": 2026
+  },
+  {
+    "value": "Young Entrepreneur of the Year (YE Awards 2019)",
+    "source": "Award wall names supplied by Andries, 11 October 2026",
+    "year": 2019
+  },
+  {
+    "value": "South African Small Business Awards",
+    "source": "Award wall names supplied by Andries, 11 October 2026",
+    "year": 2026
+  },
+  {
+    "value": "National Presidential Small & Cooperatives Awards 2016",
+    "source": "Award wall names supplied by Andries, 11 October 2026",
+    "year": 2016
+  },
+  {
+    "value": "EY Entrepreneur Of The Year",
+    "source": "Award wall names supplied by Andries, 11 October 2026",
+    "year": 2026
+  },
+  {
+    "value": "The South African Future Trust Awards 2025",
+    "source": "Award wall names supplied by Andries, 11 October 2026",
+    "year": 2025
+  },
+  {
+    "value": "Absa Supplier Development Award",
+    "source": "Award wall names supplied by Andries, 11 October 2026",
+    "year": 2026
+  },
+  {
+    "value": "BCX Digital Innovation Awards",
+    "source": "Award wall names supplied by Andries, 11 October 2026",
+    "year": 2026
+  }
+] as const;

@@ -1,3 +1,4 @@
+import { facts, whatsappUrl } from "@/data/facts";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -85,8 +86,8 @@ export const ContactForm = () => {
 
       setIsSubmitted(true);
       toast({
-        title: "Message Sent!",
-        description: "Thank you for reaching out. I'll get back to you soon.",
+        title: "Message sent.",
+        description: facts.responsePromise.value,
       });
     } catch (error: unknown) {
       console.error("Error submitting form:", error);
@@ -106,10 +107,10 @@ export const ContactForm = () => {
         <CardContent className="pt-8 pb-8 text-center">
           <CheckCircle className="h-16 w-16 text-primary mx-auto mb-4" />
           <h3 className="font-heading text-2xl font-bold text-foreground mb-2">
-            Message Sent Successfully!
+            Message sent
           </h3>
           <p className="text-muted-foreground mb-6">
-            I'll get back to you within 24-48 hours. Check your email for a confirmation.
+            {facts.responsePromise.value}
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button
@@ -130,7 +131,7 @@ export const ContactForm = () => {
               Send Another Message
             </Button>
             <Button asChild className="bg-primary hover:bg-primary/90 text-primary-foreground">
-              <a href="https://wa.me/27729749703" target="_blank" rel="noopener noreferrer">
+              <a href={whatsappUrl} target="_blank" rel="noopener noreferrer">
                 WhatsApp for Urgent Matters
               </a>
             </Button>
@@ -145,7 +146,7 @@ export const ContactForm = () => {
       <CardHeader>
         <CardTitle className="font-heading text-2xl text-foreground">Get in Touch</CardTitle>
         <CardDescription className="text-muted-foreground">
-          Fill out the form below and I'll respond within 24-48 hours.
+          {facts.responsePromise.value}
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -163,7 +164,7 @@ export const ContactForm = () => {
                 onChange={handleChange}
                 required
                 maxLength={100}
-                className="bg-muted/50 border-border/50"
+                className="bg-muted/50 border-input"
               />
             </div>
             <div className="space-y-2">
@@ -179,7 +180,7 @@ export const ContactForm = () => {
                 onChange={handleChange}
                 required
                 maxLength={100}
-                className="bg-muted/50 border-border/50"
+                className="bg-muted/50 border-input"
               />
             </div>
           </div>
@@ -196,7 +197,7 @@ export const ContactForm = () => {
                 value={formData.company}
                 onChange={handleChange}
                 maxLength={100}
-                className="bg-muted/50 border-border/50"
+                className="bg-muted/50 border-input"
               />
             </div>
             <div className="space-y-2">
@@ -210,7 +211,7 @@ export const ContactForm = () => {
                 value={formData.industry}
                 onChange={handleChange}
                 maxLength={100}
-                className="bg-muted/50 border-border/50"
+                className="bg-muted/50 border-input"
               />
             </div>
           </div>
@@ -226,7 +227,7 @@ export const ContactForm = () => {
               value={formData.goal}
               onChange={handleChange}
               maxLength={200}
-              className="bg-muted/50 border-border/50"
+              className="bg-muted/50 border-input"
             />
           </div>
 
@@ -253,7 +254,7 @@ export const ContactForm = () => {
               maxLength={2000}
               rows={4}
               aria-describedby="message-character-count"
-              className="bg-muted/50 border-border/50 resize-none"
+              className="bg-muted/50 border-input resize-none"
             />
           </div>
 

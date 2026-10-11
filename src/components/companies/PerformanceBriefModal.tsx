@@ -110,7 +110,7 @@ export const PerformanceBriefModal = () => {
         <DialogHeader>
           <DialogTitle className="font-heading text-xl">AI Performance Brief Generator</DialogTitle>
           <DialogDescription>
-            Generate a tailored executive brief based on real company metrics.
+            Generate a tailored executive brief based on the venture name, sector, role and period.
           </DialogDescription>
         </DialogHeader>
 

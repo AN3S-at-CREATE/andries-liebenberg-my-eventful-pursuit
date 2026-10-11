@@ -1,8 +1,11 @@
+import { companies } from "@/data/companies";
+import { permittedEvents } from "@/data/facts";
+import { CompanyCard } from "@/components/companies/CompanyCard";
+import { Seo } from "@/components/seo/Seo";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { ScrollToTop } from "@/components/layout/ScrollToTop";
 import { MotionReveal, MotionStagger, MotionItem } from "@/components/motion/MotionReveal";
-import { ParallaxElements } from "@/components/effects/ParallaxElements";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -25,123 +28,24 @@ import {
   TrendingUp
 } from "lucide-react";
 
-const eventPortfolio = [
-  {
-    name: "Africity 2060",
-    type: "International Summit",
-    description: "Large-scale continental summit bringing together African leaders and innovators for urban development dialogue.",
-    metrics: { attendees: "5,000+", budget: "R12M+", duration: "5 days" },
-    highlights: ["Multi-venue coordination", "VVIP protocol management", "International delegates"],
-    icon: Globe,
-    variant: "primary" as const
-  },
-  {
-    name: "Transnet Corporate Events",
-    type: "Corporate Excellence",
-    description: "Series of high-profile corporate events for South Africa's freight logistics company.",
-    metrics: { events: "15+", budget: "R8M+", satisfaction: "98%" },
-    highlights: ["Executive conferences", "Award ceremonies", "Team building experiences"],
-    icon: Building2,
-    variant: "secondary" as const
-  },
-  {
-    name: "ABSA Leadership Summit",
-    type: "Banking & Finance",
-    description: "Premier leadership gathering for one of Africa's largest financial services groups.",
-    metrics: { attendees: "800+", budget: "R5M+", duration: "3 days" },
-    highlights: ["Keynote productions", "Interactive workshops", "Gala dinner"],
-    icon: Briefcase,
-    variant: "primary" as const
-  },
-  {
-    name: "SASOL Innovation Expo",
-    type: "Industrial Showcase",
-    description: "Cutting-edge technology exhibition for the integrated energy and chemicals company.",
-    metrics: { exhibitors: "120+", visitors: "3,000+", budget: "R7M+" },
-    highlights: ["Technical staging", "Interactive displays", "VIP tours"],
-    icon: Zap,
-    variant: "secondary" as const
-  },
-  {
-    name: "Nedbank Stakeholder Conference",
-    type: "Financial Services",
-    description: "Annual stakeholder engagement event with live streaming and hybrid attendance.",
-    metrics: { attendees: "1,200+", hybrid: "2,500+", budget: "R4M+" },
-    highlights: ["Hybrid event technology", "Live broadcasting", "Q&A management"],
-    icon: TrendingUp,
-    variant: "primary" as const
-  },
-  {
-    name: "Liberty Life Gala Awards",
-    type: "Awards Ceremony",
-    description: "Prestigious awards ceremony celebrating top performers in the insurance industry.",
-    metrics: { guests: "600+", awards: "45+", budget: "R3M+" },
-    highlights: ["Red carpet production", "Live entertainment", "Stage design"],
-    icon: Award,
-    variant: "secondary" as const
-  }
-];
-
-const caseStudies = [
-  {
-    title: "360 Vision Events Group",
-    sector: "Events/Production",
-    challenge: "Build a full-service event production company from the ground up in a competitive market.",
-    solution: "Developed end-to-end capabilities including technical production, vendor management, and premium client services.",
-    results: ["200+ successful events", "98% client satisfaction", "R50M+ in managed budgets"],
-    period: "2019 – Present"
-  },
-  {
-    title: "ODM Studio",
-    sector: "Consulting/Strategy",
-    challenge: "Establish a strategic consulting firm that delivers measurable business transformation results.",
-    solution: "Created data-driven methodologies combining operational optimization with digital transformation expertise.",
-    results: ["47% average client growth", "80+ consulting engagements", "Multiple industry sectors served"],
-    period: "2018 – Present"
-  },
-  {
-    title: "Prisma Entertainment",
-    sector: "Entertainment Production",
-    challenge: "Create spectacular live entertainment experiences that stand out in the crowded events space.",
-    solution: "Built creative production capabilities with artist management and innovative show design.",
-    results: ["100+ live productions", "Festival-scale events", "International artist coordination"],
-    period: "2018 – Present"
-  },
-  {
-    title: "Adventure FreaksA",
-    sector: "Tourism/Experiences",
-    challenge: "Develop unique adventure tourism offerings that attract both local and international travelers.",
-    solution: "Curated outdoor experiences and group travel packages with safety-first approach.",
-    results: ["500+ adventure seekers served", "Unique destination packages", "High repeat customer rate"],
-    period: "2020 – Present"
-  }
-];
-
-const stats = [
-  { label: "Events Produced", value: "2,246+", icon: Calendar },
-  { label: "Budget Managed", value: "R423M+", icon: DollarSign },
-  { label: "Happy Clients", value: "1,020+", icon: Users },
-  { label: "Years Experience", value: "20+", icon: Star }
-];
-
 const Showcase = () => {
   return (
     <div className="min-h-screen bg-background">
+      <Seo title="Showcase | AN3S" description="Creative work, event production and the AN3S venture portfolio." path="/showcase"/>
       <Navbar />
       
       <main>
       {/* Hero Section */}
       <section className="relative py-24 px-4 overflow-hidden">
-        <ParallaxElements variant="primary" />
         <div className="container max-w-6xl mx-auto">
           <MotionReveal>
             <div className="text-center mb-16">
               <Badge variant="glow-secondary" className="mb-4">Portfolio</Badge>
               <h1 className="font-heading text-4xl md:text-6xl font-bold text-foreground mb-6">
-                Live <span className="text-primary ">Show</span><span className="text-secondary ">case</span>
+                Live Showcase
               </h1>
               <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto">
-                Selected highlights from <span className="text-primary">spectacular events</span> and <span className="text-secondary">transformative business projects</span> across South Africa and internationally.
+                Selected highlights from spectacular events and transformative business projects across South Africa and internationally.
               </p>
             </div>
           </MotionReveal>
@@ -149,18 +53,7 @@ const Showcase = () => {
           {/* Divider */}
           <div className="divider-primary mb-12" />
 
-          {/* Stats Bar */}
-          <MotionStagger className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-16">
-            {stats.map((stat, index) => (
-              <MotionItem key={index}>
-                <Card interactive glow={index % 2 === 0 ? "primary" : "secondary"} className={`${index % 2 === 0 ? "glass-primary border-t-2 border-t-pink" : "glass-secondary border-t-2 border-t-cyan"} p-6 text-center`}>
-                  <stat.icon className={`h-8 w-8 mx-auto mb-3 ${index % 2 === 0 ? "text-primary" : "text-secondary"}`} />
-                  <div className={`text-2xl md:text-3xl font-bold ${index % 2 === 0 ? "text-primary" : "text-secondary"}`}>{stat.value}</div>
-                  <div className="text-sm text-muted-foreground">{stat.label}</div>
-                </Card>
-              </MotionItem>
-            ))}
-          </MotionStagger>
+
         </div>
       </section>
 
@@ -171,10 +64,10 @@ const Showcase = () => {
             <div className="text-center mb-12">
               <Badge variant="glow-primary" className="mb-4">Photo Gallery</Badge>
               <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-4">
-                Event <span className="text-primary ">High</span><span className="text-secondary ">lights</span>
+                Event Highlights
               </h2>
               <p className="text-muted-foreground max-w-2xl mx-auto">
-                Visual showcase of our <span className="text-primary">spectacular event productions</span>. Click any image to explore.
+                Visual showcase of our spectacular event productions. Click any image to explore.
               </p>
             </div>
           </MotionReveal>
@@ -195,7 +88,7 @@ const Showcase = () => {
             <Card className="glass p-8 md:p-12 text-center border-l-4 border-l-pink border-r-4 border-r-cyan">
               <Image className="h-16 w-16 text-secondary mx-auto mb-6" />
               <h3 className="font-heading text-2xl font-bold text-foreground mb-4">
-                Full <span className="text-primary">Live</span> <span className="text-secondary">Portfolio</span>
+                Full Live Portfolio
               </h3>
               <p className="text-muted-foreground mb-8 max-w-xl mx-auto">
                 Dive into my daily updates and life portfolio featuring selected highlights from spectacular events across South Africa and internationally.
@@ -217,129 +110,7 @@ const Showcase = () => {
         </div>
       </section>
 
-      {/* Event Portfolio Section */}
-      <section className="relative py-16 px-4 bg-muted/20 overflow-hidden">
-        <ParallaxElements variant="secondary" />
-        <div className="container max-w-6xl mx-auto">
-          <MotionReveal>
-            <div className="text-center mb-12">
-              <Badge variant="glow-primary" className="mb-4">Event Portfolio</Badge>
-              <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-4">
-                High-Profile <span className="text-secondary ">Eve</span><span className="text-primary ">nts</span>
-              </h2>
-              <p className="text-muted-foreground max-w-2xl mx-auto">
-                Trusted by <span className="text-primary">industry leaders</span> for their most <span className="text-secondary">important occasions</span>.
-              </p>
-            </div>
-          </MotionReveal>
-
-          {/* Divider */}
-          <div className="divider-primary mb-8" />
-
-          <MotionStagger className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {eventPortfolio.map((event, index) => (
-              <MotionItem key={index}>
-                <Card interactive glow={event.variant === 'primary' ? 'primary' : 'secondary'} className={`${event.variant === 'primary' ? 'glass-primary border-t-2 border-t-pink' : 'glass-secondary border-t-2 border-t-cyan'} p-6 h-full`}>
-                  <div className="flex items-start gap-4 mb-4">
-                    <div className={`p-3 rounded-lg ${event.variant === 'primary' ? 'bg-primary/20' : 'bg-secondary/20'}`}>
-                      <event.icon className={`h-6 w-6 ${event.variant === 'primary' ? 'text-primary' : 'text-secondary'}`} />
-                    </div>
-                    <div>
-                      <h3 className="font-heading text-lg font-bold text-foreground">{event.name}</h3>
-                      <Badge variant={event.variant === 'primary' ? 'glow-primary' : 'glow-secondary'} className="mt-1">
-                        {event.type}
-                      </Badge>
-                    </div>
-                  </div>
-                  
-                  <p className="text-sm text-muted-foreground mb-4">{event.description}</p>
-                  
-                  <div className="grid grid-cols-3 gap-2 mb-4">
-                    {Object.entries(event.metrics).map(([key, value], i) => (
-                      <div key={key} className={`text-center p-2 rounded ${i % 2 === 0 ? 'bg-primary/10' : 'bg-secondary/10'}`}>
-                        <div className={`text-sm font-bold ${i % 2 === 0 ? 'text-primary' : 'text-secondary'}`}>{value}</div>
-                        <div className="text-xs text-muted-foreground capitalize">{key}</div>
-                      </div>
-                    ))}
-                  </div>
-
-                  <div className="space-y-1">
-                    {event.highlights.map((highlight, i) => (
-                      <div key={i} className="flex items-center gap-2 text-xs text-muted-foreground">
-                        <Star className={`h-3 w-3 ${i % 2 === 0 ? 'text-primary' : 'text-secondary'}`} />
-                        {highlight}
-                      </div>
-                    ))}
-                  </div>
-                </Card>
-              </MotionItem>
-            ))}
-          </MotionStagger>
-        </div>
-      </section>
-
-      {/* Case Studies Section */}
-      <section className="py-16 px-4">
-        <div className="container max-w-6xl mx-auto">
-          <MotionReveal>
-            <div className="text-center mb-12">
-              <Badge variant="glow-secondary" className="mb-4">Case Studies</Badge>
-              <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-4">
-                Business <span className="text-primary ">Trans</span><span className="text-secondary ">formations</span>
-              </h2>
-              <p className="text-muted-foreground max-w-2xl mx-auto">
-                Real results from <span className="text-primary">building</span> and <span className="text-secondary">scaling companies</span> across multiple sectors.
-              </p>
-            </div>
-          </MotionReveal>
-
-          {/* Divider */}
-          <div className="divider-secondary mb-8" />
-
-          <MotionStagger className="grid md:grid-cols-2 gap-8">
-            {caseStudies.map((study, index) => (
-              <MotionItem key={index}>
-                <Card interactive glow={index % 2 === 0 ? "primary" : "secondary"} className={`${index % 2 === 0 ? "glass-primary border-l-4 border-l-pink" : "glass-secondary border-l-4 border-l-cyan"} p-8 h-full`}>
-                  <div className="flex items-center justify-between mb-4">
-                    <h3 className="font-heading text-xl font-bold text-foreground">{study.title}</h3>
-                    <Badge variant={index % 2 === 0 ? "glow-primary" : "glow-secondary"}>{study.sector}</Badge>
-                  </div>
-                  
-                  <div className="flex items-center gap-2 text-sm text-muted-foreground mb-6">
-                    <MapPin className={`h-4 w-4 ${index % 2 === 0 ? "text-primary" : "text-secondary"}`} />
-                    South Africa · {study.period}
-                  </div>
-
-                  <div className="space-y-4">
-                    <div>
-                      <h4 className="text-sm font-semibold text-primary mb-2">Challenge</h4>
-                      <p className="text-sm text-muted-foreground">{study.challenge}</p>
-                    </div>
-                    
-                    <div>
-                      <h4 className="text-sm font-semibold text-secondary mb-2">Solution</h4>
-                      <p className="text-sm text-muted-foreground">{study.solution}</p>
-                    </div>
-                    
-                    <div>
-                      <h4 className="text-sm font-semibold text-primary mb-2">Results</h4>
-                      <ul className="space-y-1">
-                        {study.results.map((result, i) => (
-                          <li key={i} className="flex items-center gap-2 text-sm text-muted-foreground">
-                            <TrendingUp className={`h-3 w-3 ${i % 2 === 0 ? "text-primary" : "text-secondary"}`} />
-                            {result}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
-                </Card>
-              </MotionItem>
-            ))}
-          </MotionStagger>
-        </div>
-      </section>
-
+      <section className="container py-12"><h2 className="text-3xl font-bold text-foreground mb-8">Ventures</h2><div className="grid md:grid-cols-2 gap-6">{["360-vision-events-group","odm-studio","prisma-entertainment","adventure-freaksa"].map(slug=>{const company=companies.find(item=>item.slug===slug);return company?<CompanyCard key={slug} company={company}/>:null;})}</div>{permittedEvents.length>0&&<ul>{permittedEvents.filter(event=>event.clientPermission).map(event=><li key={event.value}>{event.value}</li>)}</ul>}</section>
       {/* CTA Section */}
       <section className="py-16 px-4 bg-muted/20">
         <div className="container max-w-4xl mx-auto">
@@ -349,10 +120,10 @@ const Showcase = () => {
           <MotionReveal>
             <Card className="glass-secondary p-8 md:p-12 text-center border-b-4 border-b-cyan">
               <h2 className="font-heading text-2xl md:text-3xl font-bold text-foreground mb-4">
-                Ready to Create Something <span className="text-primary ">Spec</span><span className="text-secondary ">tacular</span>?
+                Ready to Create Something Spectacular?
               </h2>
               <p className="text-muted-foreground mb-8 max-w-xl mx-auto">
-                Let's discuss how we can bring your vision to life with <span className="text-primary">proven expertise</span> and <span className="text-secondary">flawless execution</span>.
+                Let's discuss how we can bring your vision to life with proven expertise and flawless execution.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Button asChild size="lg" variant="glow-secondary">
