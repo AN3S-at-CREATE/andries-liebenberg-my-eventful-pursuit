@@ -15,11 +15,11 @@ import { ArrowRight, Award, Briefcase, GraduationCap, Heart, Building2, Calendar
 
 const About = () => {
   const timeline = [
-    { year: careerPeriods[0].value, title: "Early Beginnings", description: "Events, technical production and business development." },
-    { year: careerPeriods[1].value, title: "Technical Foundation", description: "Events, technical production and business development." },
-    { year: careerPeriods[2].value, title: "ShowGroup Era", description: "Events, technical production and business development." },
-    { year: careerPeriods[3].value, title: "360 Vision Events", description: "Events, technical production and business development." },
-    { year: careerPeriods[4].value, title: "Maono Moja Events", description: "Events, technical production and business development." },
+    { year: careerPeriods[0].value, title: "Early Beginnings", description: "Started at Royal Diner, managing entertainment and events before higher education." },
+    { year: careerPeriods[1].value, title: "Technical Foundation", description: "Technical Manager at SLS Productions, then Operations Manager at Coventry Productions." },
+    { year: careerPeriods[2].value, title: "ShowGroup Era", description: "Head of Lighting Department; lighting design for televised shows." },
+    { year: careerPeriods[3].value, title: "360 Vision Events", description: "Event production and development of virtual and hybrid experiences." },
+    { year: careerPeriods[4].value, title: "Maono Moja Events", description: "CMO working on East African expansion and AI-powered solutions." },
   ];
 
   return (
@@ -47,8 +47,8 @@ const About = () => {
                 Lieben
                 berg
               </h1>
-              <p className="text-lg md:text-xl text-muted-foreground max-w-4xl mx-auto mb-6">My background in hospitality and events informs a practical approach to creative work and business development.</p>
-              <p className="text-base text-muted-foreground/80 max-w-3xl mx-auto">My background in hospitality and events informs a practical approach to creative work and business development.</p>
+              <p className="text-lg md:text-xl text-muted-foreground max-w-4xl mx-auto mb-6">My professional life explores the intersection of creativity, strategy and execution.</p>
+              <p className="text-base text-muted-foreground/80 max-w-3xl mx-auto">I blend an understanding of event experiences with business strategy and technical skills.</p>
             </div>
           </MotionReveal>
 
@@ -57,7 +57,7 @@ const About = () => {
 
           {/* Current Roles */}
           <MotionReveal delay={0.2}>
-            <Card className="glass p-8 mb-12 border-l-4 border-l-pink">
+            <div className="py-8 mb-12 border-y border-pink/35">
               <h2 className="font-heading text-2xl font-bold text-foreground mb-6 flex items-center gap-3">
                 <Briefcase className="h-6 w-6 text-primary" />
                 Current Roles
@@ -74,27 +74,27 @@ const About = () => {
                   <div className="w-3 h-3 rounded-full bg-secondary mt-2 flex-shrink-0 group-hover:shadow-[0_0_10px_hsl(var(--cyan-hsl))] transition-shadow" />
                   <div>
                     <h3 className="font-semibold text-foreground group-hover:text-secondary transition-colors">Head of Marketing and Events</h3>
-                    <p className="text-muted-foreground">My background in hospitality and events informs a practical approach to creative work and business development.</p>
+                    <p className="text-muted-foreground">360 Vision Events Group — South Africa</p>
                   </div>
                 </div>
               </div>
-            </Card>
+            </div>
           </MotionReveal>
 
           {/* Heritage Section */}
           <MotionReveal delay={0.3}>
-            <Card className="glass-secondary p-8 mb-12 border-r-4 border-r-cyan">
+            <div className="py-8 mb-12 border-y border-cyan/35">
               <div className="flex flex-col md:flex-row items-center gap-6">
                 <Heart className="h-16 w-16 text-secondary flex-shrink-0 " />
                 <div>
                   <h3 className="font-heading text-2xl font-bold text-foreground mb-3">
                     My Unique Journey
                   </h3>
-                  <p className="text-muted-foreground mb-4">My background in hospitality and events informs a practical approach to creative work and business development.</p>
-                  <p className="text-muted-foreground">My background in hospitality and events informs a practical approach to creative work and business development.</p>
+                  <p className="text-muted-foreground mb-4">My career began in hospitality at my mother’s venue, the old Denel Sports Grounds, hosting weddings and corporate events.</p>
+                  <p className="text-muted-foreground">Working behind the scenes taught me to coordinate people, equipment and venues with a practical approach.</p>
                 </div>
               </div>
-            </Card>
+            </div>
           </MotionReveal>
 
           {/* Divider */}
@@ -161,18 +161,18 @@ const About = () => {
           <Panel label="AWARDS" tone="awards"><AwardWall/></Panel>
           {/* Mentorship Section */}
           <MotionReveal delay={0.8}>
-            <Card className="glass-primary mt-12 p-8 border-b-4 border-b-pink">
+            <div className="mt-12 py-8 border-y border-pink/35">
               <div className="flex flex-col md:flex-row items-center gap-6">
                 <Award className="h-16 w-16 text-primary flex-shrink-0" />
                 <div>
                   <h3 className="font-heading text-2xl font-bold text-foreground mb-3">
                     Mentorship & Giving Back
                   </h3>
-                  <p className="text-muted-foreground mb-4">My background in hospitality and events informs a practical approach to creative work and business development.</p>
-                  <p className="text-muted-foreground">My background in hospitality and events informs a practical approach to creative work and business development.</p>
+                  <p className="text-muted-foreground mb-4">I give back through guest lecturing, curriculum development, student projects and internship opportunities.</p>
+                  <p className="text-muted-foreground">I am developing “As an Events GURU,” an AI-powered platform intended to connect students with mentors and resources.</p>
                 </div>
               </div>
-            </Card>
+            </div>
           </MotionReveal>
 
           {/* Divider */}

@@ -30,8 +30,8 @@ export function AIToolCard({
         "",
         accentColor === "primary" ? "glass-primary" : "glass-secondary",
         accentColor === "primary"
-          ? "hover:shadow-[0_8px_30px_-10px_hsl(var(--pink-hsl)/0.5)]"
-          : "hover:shadow-[0_8px_30px_-10px_hsl(var(--cyan-hsl)/0.5)]",
+          ? "hover:shadow-glow-pink"
+          : "hover:shadow-glow-cyan",
         isClickable && "cursor-pointer"
       )}
       onClick={isClickable ? onClick : undefined}

@@ -13,7 +13,7 @@ const EventsManagement = () => {
     <div className="min-h-screen bg-background">
       <Seo
         title="Events Management | AN3S"
-        description="Over 20 years and 2,246+ successful events — end-to-end event management, technical production, and VVIP protocol expertise."
+        description="Event management, technical production, logistics and protocol coordination."
         path="/expertise/events-management"
         jsonLd={breadcrumb([
           { name: "Home", path: "/" },
