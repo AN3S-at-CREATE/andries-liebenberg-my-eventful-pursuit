@@ -27,7 +27,7 @@ export function AIToolCard({
     <div
       className={cn(
         "group relative flex flex-col h-full rounded-xl p-6 transition-all duration-300",
-        "hover:-translate-y-1",
+        "",
         accentColor === "primary" ? "glass-primary" : "glass-secondary",
         accentColor === "primary"
           ? "hover:shadow-[0_8px_30px_-10px_hsl(var(--pink-hsl)/0.5)]"
@@ -41,7 +41,7 @@ export function AIToolCard({
         {/* Icon */}
         <div
           className={cn(
-            "w-12 h-12 rounded-lg flex items-center justify-center mb-4 transition-transform group-hover:scale-110",
+            "w-12 h-12 rounded-lg flex items-center justify-center mb-4  ",
             accentColor === "primary"
               ? "bg-primary/10 text-primary"
               : "bg-secondary/10 text-secondary"

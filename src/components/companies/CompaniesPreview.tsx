@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import { companies } from "@/data/companies";
-import { getMetricsByCompanyId } from "@/data/companyMetrics";
 import { CompanyCard } from "./CompanyCard";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
@@ -15,21 +14,19 @@ export const CompaniesPreview = () => {
         <MotionReveal>
           <div className="text-center mb-12">
             <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-4">
-              Companies I Built
+              Ventures
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              10 companies. Real metrics. Proven execution across events, consulting, retail, and industrial sectors.
+              A venture portfolio across events, consulting, retail and industrial services.
             </p>
           </div>
         </MotionReveal>
 
         <MotionStagger className="grid gap-6 md:grid-cols-2 lg:grid-cols-4 mb-10">
           {topCompanies.map((company) => {
-            const metrics = getMetricsByCompanyId(company.id);
-            if (!metrics) return null;
             return (
               <MotionItem key={company.id} className="h-full">
-                <CompanyCard company={company} metrics={metrics} />
+                <CompanyCard company={company} />
               </MotionItem>
             );
           })}
@@ -39,7 +36,7 @@ export const CompaniesPreview = () => {
           <div className="text-center">
             <Button asChild variant="outline" size="lg" className="border-pink/50 hover:bg-primary/10 hover:text-primary border-glow-primary-hover">
               <Link to="/companies" className="inline-flex items-center gap-2">
-                See All Companies
+                See all ventures
                 <ArrowRight className="h-4 w-4" />
               </Link>
             </Button>

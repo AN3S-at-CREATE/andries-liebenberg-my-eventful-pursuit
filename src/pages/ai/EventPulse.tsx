@@ -2,7 +2,6 @@ import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { ScrollToTop } from "@/components/layout/ScrollToTop";
 import { MotionReveal } from "@/components/motion/MotionReveal";
-import { ParallaxElements } from "@/components/effects/ParallaxElements";
 import { Card } from "@/components/ui/card";
 import { Seo } from "@/components/seo/Seo";
 import { breadcrumb } from "@/lib/breadcrumb";
@@ -25,18 +24,18 @@ const EventPulse = () => {
         ])}
       />
       <Navbar />
+      <main>
       
       <section className="relative py-24 px-4 overflow-hidden">
-        <ParallaxElements variant="primary" />
         <div className="container max-w-6xl mx-auto relative z-10">
           <MotionReveal>
             <div className="text-center mb-16">
               <Badge variant="glow-primary" className="mb-4">AI Tool</Badge>
               <h1 className="font-heading text-4xl md:text-6xl font-bold text-foreground mb-6">
-                <span className="text-primary glow-text-primary">Event</span><span className="text-secondary glow-text-secondary">Pulse</span> AI
+                EventPulse AI
               </h1>
               <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto">
-                My proprietary platform streamlining <span className="text-primary">event planning</span> with <span className="text-secondary">intelligent scheduling</span> and predictive analytics.
+                My proprietary platform streamlining event planning with intelligent scheduling and predictive analytics.
               </p>
             </div>
           </MotionReveal>
@@ -44,21 +43,13 @@ const EventPulse = () => {
           {/* Divider */}
           <div className="divider-primary mb-12" />
 
-          {/* Key Metric */}
-          <MotionReveal delay={0.1}>
-            <Card className="glass-primary border-t-2 border-t-pink p-8 text-center max-w-md mx-auto mb-12" glow="primary">
-              <div className="text-5xl font-bold text-primary glow-text-primary mb-2">36%</div>
-              <p className="text-lg text-muted-foreground">Efficiency Improvement</p>
-            </Card>
-          </MotionReveal>
-
           {/* Divider */}
           <div className="divider-secondary mb-12" />
 
           <div className="grid md:grid-cols-3 gap-8 mb-12">
             <MotionReveal delay={0.2}>
               <Card className="glass-primary border-l-4 border-l-pink p-8 text-center group" interactive glow="primary">
-                <Calendar className="h-10 w-10 text-primary mx-auto mb-4 transition-transform duration-300 group-hover:scale-110" />
+                <Calendar className="h-10 w-10 text-primary mx-auto mb-4  duration-300 " />
                 <h3 className="font-heading text-lg font-bold text-foreground mb-2 group-hover:text-primary transition-colors">Intelligent Scheduling</h3>
                 <p className="text-sm text-muted-foreground">AI-powered calendar optimization for seamless event coordination.</p>
               </Card>
@@ -66,7 +57,7 @@ const EventPulse = () => {
 
             <MotionReveal delay={0.3}>
               <Card className="glass-secondary border-l-4 border-l-cyan p-8 text-center group" interactive glow="secondary">
-                <BarChart3 className="h-10 w-10 text-secondary mx-auto mb-4 transition-transform duration-300 group-hover:scale-110" />
+                <BarChart3 className="h-10 w-10 text-secondary mx-auto mb-4  duration-300 " />
                 <h3 className="font-heading text-lg font-bold text-foreground mb-2 group-hover:text-secondary transition-colors">Predictive Analytics</h3>
                 <p className="text-sm text-muted-foreground">Forecast attendance, budget needs, and resource allocation.</p>
               </Card>
@@ -74,7 +65,7 @@ const EventPulse = () => {
 
             <MotionReveal delay={0.4}>
               <Card className="glass-primary border-l-4 border-l-pink p-8 text-center group" interactive glow="primary">
-                <Clock className="h-10 w-10 text-primary mx-auto mb-4 transition-transform duration-300 group-hover:scale-110" />
+                <Clock className="h-10 w-10 text-primary mx-auto mb-4  duration-300 " />
                 <h3 className="font-heading text-lg font-bold text-foreground mb-2 group-hover:text-primary transition-colors">Real-time Insights</h3>
                 <p className="text-sm text-muted-foreground">Live dashboards for event performance monitoring.</p>
               </Card>
@@ -99,6 +90,7 @@ const EventPulse = () => {
         </div>
       </section>
 
+      </main>
       <Footer />
       <ScrollToTop />
     </div>

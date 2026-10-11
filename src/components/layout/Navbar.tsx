@@ -50,7 +50,7 @@ export const Navbar = () => {
           <img 
             src={logo} 
             alt="AN3S Brand Logo — Andries Liebenberg" 
-            className="h-10 w-auto transition-all duration-300 hover:scale-110 hover:drop-shadow-[0_0_12px_hsl(var(--cyan-hsl))]" 
+            className="h-10 w-auto transition-all duration-300  " 
             fetchPriority="high"
             decoding="sync"
             width="118"

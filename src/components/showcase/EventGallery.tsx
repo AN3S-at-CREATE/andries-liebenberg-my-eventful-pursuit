@@ -104,7 +104,7 @@ export const EventGallery = () => {
             <img
               src={image.src}
               alt={image.title}
-              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+              className="w-full h-full object-cover  duration-500 "
               loading="lazy"
               decoding="async"
               width="1024"

@@ -2,7 +2,6 @@ import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { ScrollToTop } from "@/components/layout/ScrollToTop";
 import { MotionReveal } from "@/components/motion/MotionReveal";
-import { ParallaxElements } from "@/components/effects/ParallaxElements";
 import { Card } from "@/components/ui/card";
 import { Seo } from "@/components/seo/Seo";
 import { breadcrumb } from "@/lib/breadcrumb";
@@ -25,18 +24,18 @@ const CustomModels = () => {
         ])}
       />
       <Navbar />
+      <main>
       
       <section className="relative py-24 px-4 overflow-hidden">
-        <ParallaxElements variant="secondary" />
         <div className="container max-w-6xl mx-auto relative z-10">
           <MotionReveal>
             <div className="text-center mb-16">
               <Badge variant="glow-secondary" className="mb-4">Enterprise</Badge>
               <h1 className="font-heading text-4xl md:text-6xl font-bold text-foreground mb-6">
-                <span className="text-primary glow-text-primary">Custom</span> <span className="text-secondary glow-text-secondary">AI Models</span>
+                Custom AI Models
               </h1>
               <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto">
-                Specialized AI models developed for <span className="text-primary">personalized marketing</span> weighting and <span className="text-secondary">deep analysis</span>.
+                Specialized AI models developed for personalized marketing weighting and deep analysis.
               </p>
             </div>
           </MotionReveal>
@@ -47,8 +46,8 @@ const CustomModels = () => {
           <div className="grid md:grid-cols-2 gap-8 mb-12">
             <MotionReveal delay={0.1}>
               <Card className="glass-secondary border-l-4 border-l-cyan p-8 group" interactive glow="secondary">
-                <Settings className="h-10 w-10 text-secondary mb-4 transition-transform duration-300 group-hover:scale-110" />
-                <h3 className="font-heading text-xl font-bold text-foreground mb-3 group-hover:text-secondary transition-colors">oh-dcft-v3.1-claude</h3>
+                <Settings className="h-10 w-10 text-secondary mb-4  duration-300 " />
+                <h3 className="font-heading text-xl font-bold text-foreground mb-3 group-hover:text-secondary transition-colors">Custom model development</h3>
                 <p className="text-muted-foreground">
                   Proprietary model for personalized marketing weighting and deep content analysis.
                 </p>
@@ -57,7 +56,7 @@ const CustomModels = () => {
 
             <MotionReveal delay={0.2}>
               <Card className="glass-primary border-l-4 border-l-pink p-8 group" interactive glow="primary">
-                <Target className="h-10 w-10 text-primary mb-4 transition-transform duration-300 group-hover:scale-110" />
+                <Target className="h-10 w-10 text-primary mb-4  duration-300 " />
                 <h3 className="font-heading text-xl font-bold text-foreground mb-3 group-hover:text-primary transition-colors">Precision Targeting</h3>
                 <p className="text-muted-foreground">
                   Models trained on industry-specific data for highly accurate predictions.
@@ -67,7 +66,7 @@ const CustomModels = () => {
 
             <MotionReveal delay={0.3}>
               <Card className="glass-primary border-l-4 border-l-pink p-8 group" interactive glow="primary">
-                <BarChart3 className="h-10 w-10 text-primary mb-4 transition-transform duration-300 group-hover:scale-110" />
+                <BarChart3 className="h-10 w-10 text-primary mb-4  duration-300 " />
                 <h3 className="font-heading text-xl font-bold text-foreground mb-3 group-hover:text-primary transition-colors">Marketing Optimization</h3>
                 <p className="text-muted-foreground">
                   AI-driven insights for campaign optimization and audience segmentation.
@@ -77,7 +76,7 @@ const CustomModels = () => {
 
             <MotionReveal delay={0.4}>
               <Card className="glass-secondary border-l-4 border-l-cyan p-8 group" interactive glow="secondary">
-                <Cpu className="h-10 w-10 text-secondary mb-4 transition-transform duration-300 group-hover:scale-110" />
+                <Cpu className="h-10 w-10 text-secondary mb-4  duration-300 " />
                 <h3 className="font-heading text-xl font-bold text-foreground mb-3 group-hover:text-secondary transition-colors">Custom Development</h3>
                 <p className="text-muted-foreground">
                   Tailored AI solutions built to your specific business requirements.
@@ -107,6 +106,7 @@ const CustomModels = () => {
         </div>
       </section>
 
+      </main>
       <Footer />
       <ScrollToTop />
     </div>

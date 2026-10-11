@@ -2,7 +2,6 @@ import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { ScrollToTop } from "@/components/layout/ScrollToTop";
 import { MotionReveal } from "@/components/motion/MotionReveal";
-import { ParallaxElements } from "@/components/effects/ParallaxElements";
 import { Card } from "@/components/ui/card";
 import { Seo } from "@/components/seo/Seo";
 import { breadcrumb } from "@/lib/breadcrumb";
@@ -23,18 +22,18 @@ const Development = () => {
         ])}
       />
       <Navbar />
+      <main>
       
       <section className="relative py-24 px-4 overflow-hidden">
-        <ParallaxElements variant="secondary" />
         <div className="container max-w-6xl mx-auto relative z-10">
           <MotionReveal>
             <div className="text-center mb-16">
               <Badge variant="glow-primary" className="mb-4">Expertise</Badge>
               <h1 className="font-heading text-4xl md:text-6xl font-bold text-foreground mb-6">
-                Technical <span className="text-secondary glow-text-secondary">Develop</span><span className="text-primary glow-text-primary">ment</span>
+                Technical Development
               </h1>
               <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto">
-                Bridging the gap between <span className="text-primary">marketing/event strategy</span> and <span className="text-secondary">technical execution</span>.
+                Bridging the gap between marketing/event strategy and technical execution.
               </p>
             </div>
           </MotionReveal>
@@ -46,9 +45,9 @@ const Development = () => {
             <MotionReveal delay={0.1}>
               <Card interactive glow="primary" className="glass-primary p-8 border-l-4 border-l-pink">
                 <Layers className="h-10 w-10 text-primary mb-4" />
-                <h3 className="font-heading text-xl font-bold text-foreground mb-3">Bridging the <span className="text-primary">Gap</span></h3>
+                <h3 className="font-heading text-xl font-bold text-foreground mb-3">Bridging the Gap</h3>
                 <p className="text-muted-foreground">
-                  Seamlessly connecting <span className="text-primary">marketing/event strategy</span> with <span className="text-secondary">technical execution</span> for cohesive solutions.
+                  Seamlessly connecting marketing/event strategy with technical execution for cohesive solutions.
                 </p>
               </Card>
             </MotionReveal>
@@ -56,9 +55,9 @@ const Development = () => {
             <MotionReveal delay={0.2}>
               <Card interactive glow="secondary" className="glass-secondary p-8 border-l-4 border-l-cyan">
                 <Code className="h-10 w-10 text-secondary mb-4" />
-                <h3 className="font-heading text-xl font-bold text-foreground mb-3">Coding <span className="text-secondary">Skills</span></h3>
+                <h3 className="font-heading text-xl font-bold text-foreground mb-3">Coding Skills</h3>
                 <p className="text-muted-foreground">
-                  Proficient in <span className="text-primary">HTML</span>, <span className="text-secondary">CSS</span>, <span className="text-primary">JavaScript</span>, <span className="text-secondary">Python</span>, <span className="text-primary">PHP</span> for custom solutions, landing pages, and automation.
+                  Proficient in HTML, CSS, JavaScript, Python, PHP for custom solutions, landing pages, and automation.
                 </p>
               </Card>
             </MotionReveal>
@@ -66,19 +65,17 @@ const Development = () => {
             <MotionReveal delay={0.3}>
               <Card interactive glow="secondary" className="glass-secondary p-8 border-l-4 border-l-cyan">
                 <Cloud className="h-10 w-10 text-secondary mb-4" />
-                <h3 className="font-heading text-xl font-bold text-foreground mb-3">Cloud <span className="text-secondary">Computing</span></h3>
-                <p className="text-muted-foreground">
-                  Expertise in Cloud Computing: <span className="text-primary">AWS Certified</span>, <span className="text-secondary">Azure Fundamentals</span>, <span className="text-primary">Google Cloud Certified</span>.
-                </p>
+                <h3 className="font-heading text-xl font-bold text-foreground mb-3">Cloud Computing</h3>
+                <p className="text-muted-foreground">Cloud infrastructure and connected systems support custom development and automation.</p>
               </Card>
             </MotionReveal>
 
             <MotionReveal delay={0.4}>
               <Card interactive glow="primary" className="glass-primary p-8 border-l-4 border-l-pink">
                 <Brain className="h-10 w-10 text-primary mb-4" />
-                <h3 className="font-heading text-xl font-bold text-foreground mb-3">AI <span className="text-primary">Integration</span></h3>
+                <h3 className="font-heading text-xl font-bold text-foreground mb-3">AI Integration</h3>
                 <p className="text-muted-foreground">
-                  Experienced in <span className="text-secondary">AI integration</span>, including developing <span className="text-primary">proprietary AI models</span> for marketing optimization.
+                  Experienced in AI integration, including developing proprietary AI models for marketing optimization.
                 </p>
               </Card>
             </MotionReveal>
@@ -89,6 +86,7 @@ const Development = () => {
         </div>
       </section>
 
+      </main>
       <Footer />
       <ScrollToTop />
     </div>

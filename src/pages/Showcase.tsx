@@ -138,7 +138,7 @@ const Showcase = () => {
             <div className="text-center mb-16">
               <Badge variant="glow-secondary" className="mb-4">Portfolio</Badge>
               <h1 className="font-heading text-4xl md:text-6xl font-bold text-foreground mb-6">
-                Live <span className="text-primary glow-text-primary">Show</span><span className="text-secondary glow-text-secondary">case</span>
+                Live <span className="text-primary ">Show</span><span className="text-secondary ">case</span>
               </h1>
               <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto">
                 Selected highlights from <span className="text-primary">spectacular events</span> and <span className="text-secondary">transformative business projects</span> across South Africa and internationally.
@@ -171,7 +171,7 @@ const Showcase = () => {
             <div className="text-center mb-12">
               <Badge variant="glow-primary" className="mb-4">Photo Gallery</Badge>
               <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-4">
-                Event <span className="text-primary glow-text-primary">High</span><span className="text-secondary glow-text-secondary">lights</span>
+                Event <span className="text-primary ">High</span><span className="text-secondary ">lights</span>
               </h2>
               <p className="text-muted-foreground max-w-2xl mx-auto">
                 Visual showcase of our <span className="text-primary">spectacular event productions</span>. Click any image to explore.
@@ -225,7 +225,7 @@ const Showcase = () => {
             <div className="text-center mb-12">
               <Badge variant="glow-primary" className="mb-4">Event Portfolio</Badge>
               <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-4">
-                High-Profile <span className="text-secondary glow-text-secondary">Eve</span><span className="text-primary glow-text-primary">nts</span>
+                High-Profile <span className="text-secondary ">Eve</span><span className="text-primary ">nts</span>
               </h2>
               <p className="text-muted-foreground max-w-2xl mx-auto">
                 Trusted by <span className="text-primary">industry leaders</span> for their most <span className="text-secondary">important occasions</span>.
@@ -285,7 +285,7 @@ const Showcase = () => {
             <div className="text-center mb-12">
               <Badge variant="glow-secondary" className="mb-4">Case Studies</Badge>
               <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-4">
-                Business <span className="text-primary glow-text-primary">Trans</span><span className="text-secondary glow-text-secondary">formations</span>
+                Business <span className="text-primary ">Trans</span><span className="text-secondary ">formations</span>
               </h2>
               <p className="text-muted-foreground max-w-2xl mx-auto">
                 Real results from <span className="text-primary">building</span> and <span className="text-secondary">scaling companies</span> across multiple sectors.
@@ -349,7 +349,7 @@ const Showcase = () => {
           <MotionReveal>
             <Card className="glass-secondary p-8 md:p-12 text-center border-b-4 border-b-cyan">
               <h2 className="font-heading text-2xl md:text-3xl font-bold text-foreground mb-4">
-                Ready to Create Something <span className="text-primary glow-text-primary">Spec</span><span className="text-secondary glow-text-secondary">tacular</span>?
+                Ready to Create Something <span className="text-primary ">Spec</span><span className="text-secondary ">tacular</span>?
               </h2>
               <p className="text-muted-foreground mb-8 max-w-xl mx-auto">
                 Let's discuss how we can bring your vision to life with <span className="text-primary">proven expertise</span> and <span className="text-secondary">flawless execution</span>.

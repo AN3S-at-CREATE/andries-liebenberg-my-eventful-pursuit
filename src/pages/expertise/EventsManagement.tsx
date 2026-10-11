@@ -2,7 +2,6 @@ import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { ScrollToTop } from "@/components/layout/ScrollToTop";
 import { MotionReveal } from "@/components/motion/MotionReveal";
-import { ParallaxElements } from "@/components/effects/ParallaxElements";
 import { Card } from "@/components/ui/card";
 import { Seo } from "@/components/seo/Seo";
 import { breadcrumb } from "@/lib/breadcrumb";
@@ -23,19 +22,17 @@ const EventsManagement = () => {
         ])}
       />
       <Navbar />
+      <main>
       
       <section className="relative py-24 px-4 overflow-hidden">
-        <ParallaxElements variant="primary" />
         <div className="container max-w-6xl mx-auto relative z-10">
           <MotionReveal>
             <div className="text-center mb-16">
               <Badge variant="glow-secondary" className="mb-4">Expertise</Badge>
               <h1 className="font-heading text-4xl md:text-6xl font-bold text-foreground mb-6">
-                Events <span className="text-primary glow-text-primary">Manage</span><span className="text-secondary glow-text-secondary">ment</span>
+                Events Management
               </h1>
-              <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto">
-                With over <span className="text-primary font-semibold">20 years</span> in the industry, I've orchestrated more than <span className="text-secondary font-semibold">2,246 successful events</span>, from conceptualization to flawless execution.
-              </p>
+              <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto">Event planning, technical production, logistics and protocol coordination.</p>
             </div>
           </MotionReveal>
 
@@ -46,29 +43,25 @@ const EventsManagement = () => {
             <MotionReveal delay={0.1}>
               <Card interactive glow="primary" className="glass-primary p-8 border-t-2 border-t-pink">
                 <Calendar className="h-10 w-10 text-primary mb-4" />
-                <h3 className="font-heading text-xl font-bold text-foreground mb-3">Extensive <span className="text-primary">Experience</span></h3>
-                <p className="text-muted-foreground">
-                  Over <span className="text-primary font-semibold">20 years</span> and <span className="text-secondary font-semibold">2,246+</span> successful events. End-to-end event management expertise with a track record of delighting clients.
-                </p>
+                <h3 className="font-heading text-xl font-bold text-foreground mb-3">Extensive Experience</h3>
+                <p className="text-muted-foreground">Event planning, technical production, logistics and protocol coordination.</p>
               </Card>
             </MotionReveal>
 
             <MotionReveal delay={0.2}>
               <Card interactive glow="secondary" className="glass-secondary p-8 border-t-2 border-t-cyan">
                 <DollarSign className="h-10 w-10 text-secondary mb-4" />
-                <h3 className="font-heading text-xl font-bold text-foreground mb-3">Budget <span className="text-secondary">Management</span></h3>
-                <p className="text-muted-foreground">
-                  Managed event costs exceeding <span className="text-secondary font-semibold">ZAR 423 million</span>. Navigating complex logistics and multimillion-rand budgets with precision.
-                </p>
+                <h3 className="font-heading text-xl font-bold text-foreground mb-3">Budget Management</h3>
+                <p className="text-muted-foreground">Event planning, technical production, logistics and protocol coordination.</p>
               </Card>
             </MotionReveal>
 
             <MotionReveal delay={0.3}>
               <Card interactive glow="primary" className="glass-primary p-8 border-t-2 border-t-pink">
                 <Lightbulb className="h-10 w-10 text-primary mb-4" />
-                <h3 className="font-heading text-xl font-bold text-foreground mb-3">Technical <span className="text-primary">Production</span></h3>
+                <h3 className="font-heading text-xl font-bold text-foreground mb-3">Technical Production</h3>
                 <p className="text-muted-foreground">
-                  Master of <span className="text-primary">lighting</span>, <span className="text-secondary">sound</span>, <span className="text-primary">AV</span>, and <span className="text-secondary">stage design</span>. Seamlessly integrating the latest innovations to wow audiences.
+                  Master of lighting, sound, AV, and stage design. Seamlessly integrating the latest innovations to wow audiences.
                 </p>
               </Card>
             </MotionReveal>
@@ -76,29 +69,25 @@ const EventsManagement = () => {
             <MotionReveal delay={0.4}>
               <Card interactive glow="secondary" className="glass-secondary p-8 border-t-2 border-t-cyan">
                 <Users className="h-10 w-10 text-secondary mb-4" />
-                <h3 className="font-heading text-xl font-bold text-foreground mb-3">High-Profile <span className="text-secondary">Clients</span></h3>
-                <p className="text-muted-foreground">
-                  Trusted by industry leaders: <span className="text-primary">Africity 2060</span>, <span className="text-secondary">Transnet</span>, <span className="text-primary">ABSA</span>, <span className="text-secondary">SASOL</span>, <span className="text-primary">Nedbank</span>, and <span className="text-secondary">Liberty Life</span>.
-                </p>
+                <h3 className="font-heading text-xl font-bold text-foreground mb-3">High-Profile Clients</h3>
+                <p className="text-muted-foreground">Event planning, technical production, logistics and protocol coordination.</p>
               </Card>
             </MotionReveal>
 
             <MotionReveal delay={0.5}>
               <Card interactive glow="primary" className="glass-primary p-8 border-t-2 border-t-pink">
                 <Leaf className="h-10 w-10 text-primary mb-4" />
-                <h3 className="font-heading text-xl font-bold text-foreground mb-3">Sustainable <span className="text-primary">Practices</span></h3>
-                <p className="text-muted-foreground">
-                  Visionary pioneer fusing cutting-edge technology with sustainable practices, achieving <span className="text-primary font-semibold">40% reduction</span> in event waste.
-                </p>
+                <h3 className="font-heading text-xl font-bold text-foreground mb-3">Sustainable Practices</h3>
+                <p className="text-muted-foreground">Event planning, technical production, logistics and protocol coordination.</p>
               </Card>
             </MotionReveal>
 
             <MotionReveal delay={0.6}>
               <Card interactive glow="secondary" className="glass-secondary p-8 border-t-2 border-t-cyan">
                 <Globe className="h-10 w-10 text-secondary mb-4" />
-                <h3 className="font-heading text-xl font-bold text-foreground mb-3">VVIP <span className="text-secondary">Protocol</span></h3>
+                <h3 className="font-heading text-xl font-bold text-foreground mb-3">VVIP Protocol</h3>
                 <p className="text-muted-foreground">
-                  Meticulous VVIP protocol management with high-profile international events in <span className="text-primary">Dubai</span> and <span className="text-secondary">India</span>.
+                  Meticulous VVIP protocol management with high-profile international events in Dubai and India.
                 </p>
               </Card>
             </MotionReveal>
@@ -109,6 +98,7 @@ const EventsManagement = () => {
         </div>
       </section>
 
+      </main>
       <Footer />
       <ScrollToTop />
     </div>

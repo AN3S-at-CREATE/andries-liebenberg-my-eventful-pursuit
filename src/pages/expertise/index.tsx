@@ -2,7 +2,6 @@ import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { ScrollToTop } from "@/components/layout/ScrollToTop";
 import { MotionReveal, MotionStagger, MotionItem } from "@/components/motion/MotionReveal";
-import { ParallaxElements } from "@/components/effects/ParallaxElements";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Link } from "react-router-dom";
@@ -70,17 +69,14 @@ const Expertise = () => {
       <Navbar />
       <main>
       <section className="relative py-24 px-4 overflow-hidden">
-        <ParallaxElements variant="primary" />
         <div className="container max-w-6xl mx-auto relative z-10">
           <MotionReveal>
             <div className="text-center mb-16">
               <Badge variant="glow-secondary" className="mb-4">Expertise</Badge>
               <h1 className="font-heading text-4xl md:text-6xl font-bold text-foreground mb-6">
-                Areas of <span className="text-primary glow-text-primary">Exper</span><span className="text-secondary glow-text-secondary">tise</span>
+                Areas of Expertise
               </h1>
-              <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto">
-                <span className="text-primary">20+ years</span> of cross-industry expertise spanning <span className="text-secondary">Marketing</span>, <span className="text-primary">Events</span>, <span className="text-secondary">Sales</span>, <span className="text-primary">Development</span>, and <span className="text-secondary">Business Growth</span>.
-              </p>
+              <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto">Strategy, technology and creative execution for South African businesses.</p>
             </div>
           </MotionReveal>
 
@@ -96,14 +92,14 @@ const Expertise = () => {
                     glow={area.accent === "primary" ? "primary" : "secondary"} 
                     className={`${area.accent === "primary" ? "glass-primary border-t-2 border-t-pink" : "glass-secondary border-t-2 border-t-cyan"} p-8 h-full group`}
                   >
-                    <area.icon className={`h-10 w-10 mb-4 ${area.accent === "primary" ? "text-primary" : "text-secondary"} group-hover:scale-110 transition-transform`} />
+                    <area.icon className={`h-10 w-10 mb-4 ${area.accent === "primary" ? "text-primary" : "text-secondary"}  `} />
                     <h3 className={`font-heading text-xl font-bold text-foreground mb-3 ${area.accent === "primary" ? "group-hover:text-primary" : "group-hover:text-secondary"} transition-colors`}>
                       {area.title}
                     </h3>
                     <p className="text-muted-foreground mb-4">{area.description}</p>
                     <div className={`inline-flex items-center gap-2 text-sm font-medium ${area.accent === "primary" ? "text-primary" : "text-secondary"}`}>
                       Learn more about {area.title}
-                      <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                      <ArrowRight className="h-4 w-4  " />
                     </div>
                   </Card>
                 </Link>

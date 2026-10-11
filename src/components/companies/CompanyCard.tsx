@@ -1,67 +1,8 @@
 import { memo } from "react";
 import { Link } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { TruthBadge } from "./TruthBadge";
 import { SectorBadge } from "./SectorBadge";
-import { formatZARRange, formatPercentage } from "@/lib/formatters";
 import type { Company } from "@/data/companies";
-import type { CompanyMetric } from "@/data/companyMetrics";
-import { ArrowUpRight, TrendingUp, Users, Star } from "lucide-react";
-
-interface CompanyCardProps {
-  company: Company;
-  metrics: CompanyMetric;
-}
-
-export const CompanyCard = memo(({ company, metrics }: CompanyCardProps) => {
-  return (
-    <Link to={`/companies/${company.slug}`} className="group block h-full">
-      <Card interactive glow="primary" className="bg-card/50 backdrop-blur-sm border-border/50 h-full">
-        <CardHeader className="pb-3">
-          <div className="flex items-start justify-between gap-2">
-            <div className="space-y-2">
-              <CardTitle className="font-heading text-lg text-foreground group-hover:text-primary transition-colors">
-                {company.name}
-              </CardTitle>
-              <SectorBadge sector={company.sector} />
-            </div>
-            <ArrowUpRight className="h-5 w-5 text-muted-foreground group-hover:text-primary transition-colors" />
-          </div>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="space-y-1">
-            <p className="text-sm text-muted-foreground">Revenue Range</p>
-            <p className="font-heading font-semibold text-foreground">
-              {formatZARRange(metrics.revenue.from, metrics.revenue.to)}
-            </p>
-            <TruthBadge basis={metrics.revenue.basis} />
-          </div>
-          
-          <div className="grid grid-cols-3 gap-3 pt-2 border-t border-border/50">
-            <div className="text-center">
-              <div className="flex items-center justify-center gap-1 text-primary">
-                <TrendingUp className="h-4 w-4" />
-                <span className="font-heading font-bold">{formatPercentage(metrics.revenueGrowthPct)}</span>
-              </div>
-              <p className="text-xs text-muted-foreground">Growth</p>
-            </div>
-            <div className="text-center">
-              <div className="flex items-center justify-center gap-1 text-foreground">
-                <Users className="h-4 w-4" />
-                <span className="font-heading font-bold">{metrics.clientsAcquired}</span>
-              </div>
-              <p className="text-xs text-muted-foreground">Clients</p>
-            </div>
-            <div className="text-center">
-              <div className="flex items-center justify-center gap-1 text-secondary">
-                <Star className="h-4 w-4 drop-shadow-[0_0_4px_hsl(var(--cyan-hsl)/0.6)]" />
-                <span className="font-heading font-bold glow-text-secondary">{formatPercentage(metrics.customerSatisfactionPct)}</span>
-              </div>
-              <p className="text-xs text-muted-foreground">Satisfaction</p>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-    </Link>
-  );
-});
+import { ArrowUpRight } from "lucide-react";
+export const CompanyCard = memo(({company}:{company:Company})=><Link to={`/companies/${company.slug}`} className="group block h-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-lg"><Card interactive glow="primary" variant="glass" className="h-full flex flex-col"><CardHeader className="flex-1"><div className="flex items-start justify-between gap-3"><CardTitle className="text-lg text-foreground leading-snug">{company.name}</CardTitle><ArrowUpRight className="h-5 w-5 text-primary shrink-0" aria-hidden="true"/></div><SectorBadge sector={company.sector}/></CardHeader><CardContent className="mt-auto space-y-3"><p className="text-sm text-muted-foreground">{company.role}</p><p className="text-caption text-muted-foreground border-t border-border pt-3">{company.period}</p></CardContent></Card></Link>);
+CompanyCard.displayName="CompanyCard";

@@ -24,7 +24,7 @@ const Privacy = () => {
             <div className="text-center mb-12">
               <Badge variant="glow-primary" className="mb-4">Legal</Badge>
               <h1 className="font-heading text-4xl md:text-5xl font-bold text-foreground mb-4">
-                <span className="text-primary glow-text-primary">Privacy</span> <span className="text-secondary glow-text-secondary">Policy</span>
+                <span className="text-primary ">Privacy</span> <span className="text-secondary ">Policy</span>
               </h1>
               <p className="text-muted-foreground">
                 Last updated: <span className="text-primary">January 2025</span>

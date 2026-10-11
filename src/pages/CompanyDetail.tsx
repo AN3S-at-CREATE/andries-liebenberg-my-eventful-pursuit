@@ -1,27 +1,21 @@
-import { useParams, Link, useNavigate } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
-import { MetricCard } from "@/components/companies/MetricCard";
 import { SectorBadge } from "@/components/companies/SectorBadge";
-import { TruthBadge } from "@/components/companies/TruthBadge";
-import { ParallaxElements } from "@/components/effects/ParallaxElements";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { facts, whatsappUrl } from "@/data/facts";
 import { companies, getCompanyBySlug } from "@/data/companies";
-import { getMetricsByCompanyId } from "@/data/companyMetrics";
-import { formatZARRange, formatPercentage, formatNumber } from "@/lib/formatters";
 import { ArrowLeft, ArrowRight, MessageCircle, Mail, MapPin, Calendar, CheckCircle } from "lucide-react";
 import { Seo } from "@/components/seo/Seo";
 import { breadcrumb } from "@/lib/breadcrumb";
 
 const CompanyDetail = () => {
   const { slug } = useParams<{ slug: string }>();
-  const navigate = useNavigate();
   
   const company = getCompanyBySlug(slug || "");
-  const metrics = company ? getMetricsByCompanyId(company.id) : null;
 
-  if (!company || !metrics) {
+  if (!company) {
     return (
       <div className="min-h-screen bg-background">
         <Navbar />
@@ -30,7 +24,7 @@ const CompanyDetail = () => {
             Company not found
           </h1>
           <Button asChild>
-            <Link to="/companies">Back to Companies</Link>
+            <Link to="/companies">Back to ventures</Link>
           </Button>
         </div>
         <Footer />
@@ -45,28 +39,28 @@ const CompanyDetail = () => {
   return (
     <div className="min-h-screen bg-background">
       <Seo
-        title={`${company.name} | AN3S Companies`}
-        description={company.description}
+        title={`${company.name} | AN3S Ventures`}
+        description={`${company.name}: ${company.sector}. ${company.role}. ${company.period}.`}
         path={`/companies/${company.slug}`}
         jsonLd={breadcrumb([
           { name: "Home", path: "/" },
-          { name: "Companies", path: "/companies" },
+          { name: "Ventures", path: "/companies" },
           { name: company.name, path: `/companies/${company.slug}` },
         ])}
       />
       <Navbar />
 
 
+      <main>
       {/* Header */}
       <section className="relative py-12 px-4 border-b border-border/50 overflow-hidden">
-        <ParallaxElements variant="primary" />
         <div className="container max-w-4xl mx-auto relative z-10">
           <Link
             to="/companies"
             className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors mb-6"
           >
             <ArrowLeft className="h-4 w-4" />
-            Back to Companies
+            Back to ventures
           </Link>
 
           <div className="space-y-4">
@@ -74,7 +68,7 @@ const CompanyDetail = () => {
             <h1 className="font-heading text-3xl md:text-4xl font-bold text-foreground">
               {company.name}
             </h1>
-            <p className="text-lg text-muted-foreground">{company.description}</p>
+            <p className="text-lg text-muted-foreground">{company.role}</p>
             
             <div className="flex flex-wrap gap-4 text-sm text-muted-foreground">
               <div className="flex items-center gap-1">
@@ -90,76 +84,13 @@ const CompanyDetail = () => {
         </div>
       </section>
 
-      {/* Metrics Grid */}
-      <section className="py-12 px-4">
-        <div className="container max-w-4xl mx-auto">
-          <h2 className="font-heading text-xl font-bold text-foreground mb-6">
-            Performance Metrics
-          </h2>
-          
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4 mb-8">
-            <div className="md:col-span-2 lg:col-span-2">
-              <Card className="bg-card/50 backdrop-blur-sm border-border/50 h-full">
-                <CardHeader className="pb-2">
-                  <p className="text-sm text-muted-foreground">Revenue Range</p>
-                </CardHeader>
-                <CardContent className="pt-0">
-                  <p className="text-2xl font-heading font-bold text-foreground mb-2">
-                    {formatZARRange(metrics.revenue.from, metrics.revenue.to)}
-                  </p>
-                  <TruthBadge basis={metrics.revenue.basis} />
-                </CardContent>
-              </Card>
-            </div>
-            <MetricCard
-              label="Revenue Growth"
-              value={formatPercentage(metrics.revenueGrowthPct)}
-            />
-            <MetricCard
-              label="Customer Satisfaction"
-              value={formatPercentage(metrics.customerSatisfactionPct)}
-            />
-            <MetricCard
-              label="Clients Acquired"
-              value={formatNumber(metrics.clientsAcquired)}
-            />
-            <MetricCard
-              label="Projects Completed"
-              value={formatNumber(metrics.projectsCompleted)}
-            />
-          </div>
-        </div>
-      </section>
-
-      {/* Highlights */}
-      <section className="py-12 px-4 bg-muted/20">
-        <div className="container max-w-4xl mx-auto">
-          <h2 className="font-heading text-xl font-bold text-foreground mb-6">
-            Key Highlights
-          </h2>
-          
-          <Card className="bg-card/50 backdrop-blur-sm border-border/50">
-            <CardContent className="pt-6">
-              <ul className="space-y-3">
-                {company.highlights.map((highlight, index) => (
-                  <li key={index} className="flex items-start gap-3">
-                    <CheckCircle className="h-5 w-5 text-primary mt-0.5 shrink-0" />
-                    <span className="text-foreground">{highlight}</span>
-                  </li>
-                ))}
-              </ul>
-            </CardContent>
-          </Card>
-        </div>
-      </section>
-
       {/* CTA Strip */}
       <section className="py-12 px-4 border-t border-border/50">
         <div className="container max-w-4xl mx-auto">
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button asChild size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground">
               <a
-                href="https://wa.me/27729749703"
+                href={whatsappUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2"
@@ -170,7 +101,7 @@ const CompanyDetail = () => {
             </Button>
             <Button asChild variant="outline" size="lg" className="border-border/50">
               <a
-                href="mailto:book@an3s.info"
+                href={`mailto:${facts.email.value}`}
                 className="inline-flex items-center gap-2"
               >
                 <Mail className="h-5 w-5" />
@@ -202,7 +133,7 @@ const CompanyDetail = () => {
               to="/companies"
               className="text-sm text-muted-foreground hover:text-foreground transition-colors"
             >
-              All Companies
+              All ventures
             </Link>
 
             {nextCompany ? (
@@ -221,6 +152,7 @@ const CompanyDetail = () => {
         </div>
       </section>
 
+      </main>
       <Footer />
     </div>
   );

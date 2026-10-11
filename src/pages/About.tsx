@@ -57,8 +57,8 @@ const About = () => {
               <Badge variant="glow-secondary" className="mb-4">Architect of Experiences, Driver of Growth</Badge>
               <h1 className="font-heading text-4xl md:text-6xl font-bold text-foreground mb-6">
                 Andries Johannes{" "}
-                <span className="text-primary glow-text-primary">Lieben</span>
-                <span className="text-secondary glow-text-secondary">berg</span>
+                <span className="text-primary ">Lieben</span>
+                <span className="text-secondary ">berg</span>
               </h1>
               <p className="text-lg md:text-xl text-muted-foreground max-w-4xl mx-auto mb-6">
                 For over two decades, my professional life has been a dynamic exploration at the intersection of <span className="text-primary">creativity</span>, <span className="text-secondary">strategy</span>, and <span className="text-primary">execution</span>. I've navigated the complex worlds of Marketing, Events Management, Sales, Technical Development, and Strategic Business Growth.
@@ -117,7 +117,7 @@ const About = () => {
           <MotionReveal delay={0.3}>
             <Card className="glass-secondary p-8 mb-12 border-r-4 border-r-cyan">
               <div className="flex flex-col md:flex-row items-center gap-6">
-                <Heart className="h-16 w-16 text-secondary flex-shrink-0 animate-pulse" />
+                <Heart className="h-16 w-16 text-secondary flex-shrink-0 " />
                 <div>
                   <h3 className="font-heading text-2xl font-bold text-foreground mb-3">
                     My <span className="text-secondary">Unique</span> Journey

@@ -23,7 +23,7 @@ const Contact = () => {
         <div className="text-center mb-12 relative z-10">
           <Badge variant="glow-secondary" className="mb-4">Connect</Badge>
           <h1 className="font-heading text-4xl md:text-5xl font-bold text-foreground mb-4">
-            Get in <span className="text-primary glow-text-primary">Touch</span>
+            Get in <span className="text-primary ">Touch</span>
           </h1>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
             Ready to discuss your next project or explore partnership opportunities? 

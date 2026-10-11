@@ -20,7 +20,7 @@ export const Footer = () => {
                 height="48"
                 loading="lazy"
                 decoding="async"
-                className="h-12 mb-4 transition-all duration-300 hover:scale-110 hover:drop-shadow-[0_0_12px_hsl(var(--pink-hsl))]"
+                className="h-12 mb-4 transition-all duration-300  "
               />
             </Link>
             <p className="text-sm text-muted-foreground">
