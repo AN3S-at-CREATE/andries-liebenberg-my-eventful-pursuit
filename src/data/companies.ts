@@ -1,3 +1,4 @@
+import { ventureFacts } from "./facts.ts";
 export type Company = {
   id: string;
   slug: string;
@@ -7,6 +8,7 @@ export type Company = {
   highlights: string[];
   location: string;
   period: string;
+  role: string;
 };
 
 export const companies: Company[] = [
@@ -22,7 +24,8 @@ export const companies: Company[] = [
       "Large-scale venue management"
     ],
     location: "South Africa",
-    period: "2019 – Present"
+    period: ventureFacts["360-vision-events-group"].period,
+    role: ventureFacts["360-vision-events-group"].role
   },
   {
     id: "360-vision-events-cleaning",
@@ -36,7 +39,8 @@ export const companies: Company[] = [
       "Contract cleaning services"
     ],
     location: "South Africa",
-    period: "2020 – Present"
+    period: ventureFacts["360-vision-events-cleaning"].period,
+    role: ventureFacts["360-vision-events-cleaning"].role
   },
   {
     id: "strydom-projects",
@@ -50,7 +54,8 @@ export const companies: Company[] = [
       "Development consulting"
     ],
     location: "South Africa",
-    period: "2018 – Present"
+    period: ventureFacts["strydom-projects"].period,
+    role: ventureFacts["strydom-projects"].role
   },
   {
     id: "maono-moja-events",
@@ -64,7 +69,8 @@ export const companies: Company[] = [
       "Festival production"
     ],
     location: "South Africa",
-    period: "2019 – Present"
+    period: ventureFacts["maono-moja-events"].period,
+    role: ventureFacts["maono-moja-events"].role
   },
   {
     id: "k-and-d-resources",
@@ -78,7 +84,8 @@ export const companies: Company[] = [
       "Supply chain management"
     ],
     location: "South Africa",
-    period: "2017 – Present"
+    period: ventureFacts["k-and-d-resources"].period,
+    role: ventureFacts["k-and-d-resources"].role
   },
   {
     id: "adventure-freaksa",
@@ -92,7 +99,8 @@ export const companies: Company[] = [
       "Group travel coordination"
     ],
     location: "South Africa",
-    period: "2020 – Present"
+    period: ventureFacts["adventure-freaksa"].period,
+    role: ventureFacts["adventure-freaksa"].role
   },
   {
     id: "odm-studio",
@@ -106,7 +114,8 @@ export const companies: Company[] = [
       "Digital transformation"
     ],
     location: "South Africa",
-    period: "2018 – Present"
+    period: ventureFacts["odm-studio"].period,
+    role: ventureFacts["odm-studio"].role
   },
   {
     id: "bobby-verd",
@@ -120,7 +129,8 @@ export const companies: Company[] = [
       "E-commerce operations"
     ],
     location: "South Africa",
-    period: "2021 – Present"
+    period: ventureFacts["bobby-verd"].period,
+    role: ventureFacts["bobby-verd"].role
   },
   {
     id: "rubies-and-pearls",
@@ -134,7 +144,8 @@ export const companies: Company[] = [
       "Premium event hosting"
     ],
     location: "South Africa",
-    period: "2019 – Present"
+    period: ventureFacts["rubies-and-pearls"].period,
+    role: ventureFacts["rubies-and-pearls"].role
   },
   {
     id: "prisma-entertainment",
@@ -148,7 +159,8 @@ export const companies: Company[] = [
       "Artist management"
     ],
     location: "South Africa",
-    period: "2018 – Present"
+    period: ventureFacts["prisma-entertainment"].period,
+    role: ventureFacts["prisma-entertainment"].role
   }
 ];
 
