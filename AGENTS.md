@@ -22,7 +22,7 @@ The only service to run for development is the Vite dev server. Standard command
 - Lint: `pnpm lint` (ESLint flat config; currently emits warnings only, 0 errors)
 - Build: `pnpm build`
 - Preview built output: `pnpm preview`
-- There is **no automated test suite** in this repo (no `test` script / framework). Verification is manual + lint + build.
+- The Vitest suite covers company-card stretch contracts; run the relevant test files plus preview checks for layout changes.
 
 ### Non-obvious caveats
 - **Use pnpm.** The repo contains multiple lockfiles (`pnpm-lock.yaml`, `package-lock.json`, `bun.lock(b)`); `plan.md` / `.jules/*` standardize on pnpm (`pnpm install --frozen-lockfile`). Mixing package managers will desync.
