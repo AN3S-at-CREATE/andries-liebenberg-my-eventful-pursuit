@@ -2,7 +2,7 @@ import { Helmet } from "react-helmet-async";
 
 const SITE_URL = "https://an3s.info";
 const DEFAULT_IMAGE =
-  "https://storage.googleapis.com/gpt-engineer-file-uploads/ctbaYOudDvNTfrKMncA18y3ZXDZ2/social-images/social-1767581646029-Share image.png";
+  "https://storage.googleapis.com/gpt-engineer-file-uploads/ctbaYOudDvNTfrKMncA18y3ZXDZ2/social-images/social-1767581646029-Share%20image.png";
 
 interface SeoProps {
   title: string;
@@ -10,6 +10,7 @@ interface SeoProps {
   /** Route path beginning with "/" (e.g. "/about"). */
   path: string;
   ogType?: "website" | "profile" | "article";
+  noindex?: boolean;
   jsonLd?: Record<string, unknown> | Record<string, unknown>[];
 }
 
@@ -17,13 +18,14 @@ interface SeoProps {
  * Per-route head tags: unique title, description, canonical, and Open Graph
  * data. Mutates document.head after hydration for JS-executing crawlers.
  */
-export const Seo = ({ title, description, path, ogType = "website", jsonLd }: SeoProps) => {
+export const Seo = ({ title, description, path, ogType = "website", jsonLd, noindex = false }: SeoProps) => {
   const url = `${SITE_URL}${path}`;
   const blocks = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
 
   return (
     <Helmet>
       <title>{title}</title>
+      {noindex && <meta name="robots" content="noindex"/>}
       <meta name="description" content={description} />
       <link rel="canonical" href={url} />
 

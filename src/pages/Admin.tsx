@@ -192,7 +192,7 @@ const Admin = () => {
   if (authLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <Loader2 className="h-8 w-8 animate-spin text-primary" />
+        <Loader2 className="h-8 w-8  text-primary" />
       </div>
     );
   }
@@ -306,7 +306,7 @@ const Admin = () => {
           <CardContent className="p-0">
             {isLoading ? (
               <div className="flex items-center justify-center py-16">
-                <Loader2 className="h-8 w-8 animate-spin text-primary" />
+                <Loader2 className="h-8 w-8  text-primary" />
               </div>
             ) : filteredSubmissions.length === 0 ? (
               <div className="flex flex-col items-center justify-center py-16 text-center">

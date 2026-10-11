@@ -1,3 +1,5 @@
+import { disciplines } from "@/data/disciplines";
+import { whatsappUrl } from "@/data/facts";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -21,15 +23,8 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 
-const expertiseItems = [
-  { title: "Events Management", url: "/expertise/events-management", icon: Calendar },
-  { title: "Marketing", url: "/expertise/marketing", icon: Megaphone },
-  { title: "Sales", url: "/expertise/sales", icon: TrendingUp },
-  { title: "Development", url: "/expertise/development", icon: Code },
-  { title: "Business Growth", url: "/expertise/business-growth", icon: Rocket },
-  { title: "Mentorship", url: "/expertise/mentorship", icon: Users },
-];
 
+const expertiseItems = disciplines.map(item=>({title:item.title,url:item.href,icon:item.icon}));
 const aiItems = [
   { title: "EventPulse", url: "/ai/eventpulse", icon: Zap },
   { title: "Lynkie Sky", url: "/ai/lynkie-sky", icon: Plane },
@@ -50,7 +45,7 @@ export const Navbar = () => {
           <img 
             src={logo} 
             alt="AN3S Brand Logo — Andries Liebenberg" 
-            className="h-10 w-auto transition-all duration-300 hover:scale-110 hover:drop-shadow-[0_0_12px_hsl(var(--cyan-hsl))]" 
+            className="h-10 w-auto transition-all duration-300  " 
             fetchPriority="high"
             decoding="sync"
             width="118"
@@ -59,7 +54,7 @@ export const Navbar = () => {
           />
         </Link>
 
-        <nav className="hidden lg:flex items-center gap-5">
+        <nav className="hidden xl:flex items-center gap-4" aria-label="Main navigation"><Link to="/services" className="text-sm text-muted-foreground hover:text-primary">Services</Link>
           <Link to="/" className="text-sm text-muted-foreground hover:text-primary transition-colors">
             Home
           </Link>
@@ -81,7 +76,7 @@ export const Navbar = () => {
               {expertiseItems.map((item, index) => (
                 <DropdownMenuItem key={item.url} asChild>
                   <Link to={item.url} className="flex items-center gap-2 cursor-pointer hover:text-primary">
-                    <item.icon className={`h-4 w-4 ${index % 2 === 0 ? 'text-primary' : 'text-secondary'}`} />
+                    <img src={item.icon} alt="" width="24" height="24" className="h-6 w-6"/>
                     {item.title}
                   </Link>
                 </DropdownMenuItem>
@@ -112,13 +107,10 @@ export const Navbar = () => {
           </DropdownMenu>
           <Link to="/companies" className="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center gap-1">
             <Building2 className="h-4 w-4 text-secondary" />
-            Companies
+            Ventures
           </Link>
           <Link to="/showcase" className="text-sm text-muted-foreground hover:text-secondary transition-colors">
             Showcase
-          </Link>
-          <Link to="/downloads" className="text-sm text-muted-foreground hover:text-primary transition-colors">
-            Downloads
           </Link>
           <Link to="/contact" className="text-sm text-muted-foreground hover:text-secondary transition-colors flex items-center gap-1">
             <Mail className="h-4 w-4 text-primary" />
@@ -159,9 +151,9 @@ export const Navbar = () => {
               <p>LinkedIn Profile</p>
             </TooltipContent>
           </Tooltip>
-          <Button asChild size="sm" className="hidden sm:inline-flex bg-primary hover:bg-primary/90 text-primary-foreground">
+          <Button asChild size="sm" className="inline-flex bg-primary hover:bg-primary/90 text-primary-foreground">
             <a
-              href="https://wa.me/27729749703"
+              href={whatsappUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2"
@@ -173,7 +165,7 @@ export const Navbar = () => {
 
           {/* Mobile Menu */}
           <Sheet open={isOpen} onOpenChange={setIsOpen}>
-            <SheetTrigger asChild className="lg:hidden">
+            <SheetTrigger asChild className="xl:hidden">
               <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-foreground">
                 <Menu className="h-5 w-5" />
                 <span className="sr-only">Open menu</span>
@@ -197,7 +189,7 @@ export const Navbar = () => {
                 </div>
 
                 {/* Navigation Links */}
-                <nav className="flex flex-col gap-1 py-6 flex-1 overflow-y-auto">
+                <nav className="flex flex-col gap-1 py-6 flex-1 overflow-y-auto" aria-label="Mobile navigation"><Link to="/services" onClick={closeMenu} className="px-3 py-3 text-muted-foreground hover:text-primary">Services</Link>
                   <Link
                     to="/"
                     onClick={closeMenu}
@@ -229,7 +221,7 @@ export const Navbar = () => {
                         onClick={closeMenu}
                         className="flex items-center gap-3 px-3 py-2 text-muted-foreground hover:text-primary hover:bg-primary/10 rounded-md transition-colors text-sm"
                       >
-                        <item.icon className={`h-4 w-4 ${index % 2 === 0 ? 'text-primary' : 'text-secondary'}`} />
+                        <img src={item.icon} alt="" width="24" height="24" className="h-6 w-6"/>
                         {item.title}
                       </Link>
                     ))}
@@ -262,7 +254,7 @@ export const Navbar = () => {
                     className="flex items-center gap-3 px-3 py-3 text-muted-foreground hover:text-primary hover:bg-primary/10 rounded-md transition-colors"
                   >
                     <Building2 className="h-4 w-4 text-secondary" />
-                    Companies
+                    Ventures
                   </Link>
                   <Link
                     to="/showcase"
@@ -270,13 +262,6 @@ export const Navbar = () => {
                     className="flex items-center gap-3 px-3 py-3 text-muted-foreground hover:text-secondary hover:bg-secondary/10 rounded-md transition-colors"
                   >
                     Showcase
-                  </Link>
-                  <Link
-                    to="/downloads"
-                    onClick={closeMenu}
-                    className="flex items-center gap-3 px-3 py-3 text-muted-foreground hover:text-primary hover:bg-primary/10 rounded-md transition-colors"
-                  >
-                    Downloads
                   </Link>
                   <Link
                     to="/contact"
@@ -331,7 +316,7 @@ export const Navbar = () => {
                 <div className="pt-4 border-t border-cyan/30">
                   <Button asChild variant="glow-secondary" className="w-full">
                     <a
-                      href="https://wa.me/27729749703"
+                      href={whatsappUrl}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="inline-flex items-center justify-center gap-2"

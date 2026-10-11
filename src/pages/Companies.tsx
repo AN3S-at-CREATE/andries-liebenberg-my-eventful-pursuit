@@ -3,7 +3,6 @@ import { Footer } from "@/components/layout/Footer";
 import { ScrollToTop } from "@/components/layout/ScrollToTop";
 import { CompanyGrid } from "@/components/companies/CompanyGrid";
 import { PerformanceBriefModal } from "@/components/companies/PerformanceBriefModal";
-import { ParallaxElements } from "@/components/effects/ParallaxElements";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { MessageCircle } from "lucide-react";
@@ -15,12 +14,12 @@ const Companies = () => {
   return (
     <div className="min-h-screen bg-background">
       <Seo
-        title="Companies Built | Andries Liebenberg (AN3S)"
-        description="Explore the 10+ companies Andries Liebenberg has built across events, consulting, retail, and industrial sectors in South Africa — with real metrics."
+        title="Ventures | AN3S"
+        description="Explore Andries Liebenberg’s venture portfolio across events, consulting, retail and industrial services."
         path="/companies"
         jsonLd={breadcrumb([
           { name: "Home", path: "/" },
-          { name: "Companies", path: "/companies" },
+          { name: "Ventures", path: "/companies" },
         ])}
       />
       <Navbar />
@@ -28,17 +27,14 @@ const Companies = () => {
 
       {/* Hero */}
       <section className="relative py-16 px-4 border-b border-cyan/30 overflow-hidden">
-        <ParallaxElements variant="primary" />
         <div className="container max-w-6xl mx-auto relative z-10">
           <MotionReveal>
             <div className="text-center mb-8">
               <Badge variant="glow-secondary" className="mb-4">Portfolio</Badge>
               <h1 className="font-heading text-4xl md:text-5xl font-bold text-foreground mb-4">
-                Companies <span className="text-primary glow-text-primary">I</span> <span className="text-secondary glow-text-secondary">Built</span>
+                Ventures
               </h1>
-              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-                I don't just talk growth — I've shipped it. <span className="text-primary font-semibold">10 companies</span> with real metrics and proven execution across <span className="text-secondary">events</span>, <span className="text-primary">consulting</span>, <span className="text-secondary">retail</span>, and <span className="text-primary">industrial</span> sectors.
-              </p>
+              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">A portfolio of ventures across events, consulting, retail and industrial services.</p>
             </div>
           </MotionReveal>
 

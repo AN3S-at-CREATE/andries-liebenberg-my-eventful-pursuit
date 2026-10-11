@@ -2,7 +2,6 @@ import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { ScrollToTop } from "@/components/layout/ScrollToTop";
 import { MotionReveal, MotionStagger, MotionItem } from "@/components/motion/MotionReveal";
-import { ParallaxElements } from "@/components/effects/ParallaxElements";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -14,7 +13,7 @@ import { breadcrumb } from "@/lib/breadcrumb";
 const aiTools = [
   {
     title: "EventPulse AI",
-    description: "Proprietary platform streamlining event planning with intelligent scheduling and predictive analytics. Improves efficiency by 36%.",
+    description: "Proprietary platform streamlining event planning with intelligent scheduling and predictive analytics.",
     icon: Zap,
     href: "/ai/eventpulse",
     accent: "primary" as const,
@@ -22,7 +21,7 @@ const aiTools = [
   },
   {
     title: "Lynkie Sky",
-    description: "Launching April 2025 - Innovative tool integrating cloud capabilities with advanced marketing analytics.",
+    description: "Innovative tool integrating cloud capabilities with advanced marketing analytics.",
     icon: Sparkles,
     href: "/ai/lynkie-sky",
     accent: "secondary" as const,
@@ -38,7 +37,7 @@ const aiTools = [
   },
   {
     title: "Custom AI Models",
-    description: "Specialized AI models like oh-dcft-v3.1-claude for personalized marketing weighting and analysis.",
+    description: "Custom AI development for personalized marketing weighting and analysis.",
     icon: Settings,
     href: "/ai/custom-models",
     accent: "secondary" as const,
@@ -61,16 +60,15 @@ const AI = () => {
       <Navbar />
       <main>
       <section className="relative py-24 px-4 overflow-hidden">
-        <ParallaxElements variant="secondary" />
         <div className="container max-w-6xl mx-auto relative z-10">
           <MotionReveal>
             <div className="text-center mb-16">
               <Badge variant="glow-primary" className="mb-4">AI Innovation</Badge>
               <h1 className="font-heading text-4xl md:text-6xl font-bold text-foreground mb-6">
-                <span className="text-primary glow-text-primary">AI</span> Tools & <span className="text-secondary glow-text-secondary">Projects</span>
+                AI Tools & Projects
               </h1>
               <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto">
-                I develop <span className="text-primary">cutting-edge AI solutions</span> that revolutionize <span className="text-secondary">events</span> and <span className="text-primary">marketing</span> operations.
+                I develop cutting-edge AI solutions that revolutionize events and marketing operations.
               </p>
             </div>
           </MotionReveal>
@@ -88,7 +86,7 @@ const AI = () => {
                     className={`${tool.accent === "primary" ? "glass-primary border-l-4 border-l-pink" : "glass-secondary border-l-4 border-l-cyan"} p-8 h-full group`}
                   >
                     <div className="flex items-start justify-between mb-4">
-                      <tool.icon className={`h-10 w-10 ${tool.accent === "primary" ? "text-primary" : "text-secondary"} group-hover:scale-110 transition-transform`} />
+                      <tool.icon className={`h-10 w-10 ${tool.accent === "primary" ? "text-primary" : "text-secondary"}  `} />
                       <Badge variant={tool.status === "Live" ? "glow-primary" : tool.status === "Coming Soon" ? "glow-secondary" : "secondary"}>
                         {tool.status}
                       </Badge>
@@ -99,7 +97,7 @@ const AI = () => {
                     <p className="text-muted-foreground mb-4">{tool.description}</p>
                     <div className={`inline-flex items-center gap-2 text-sm font-medium ${tool.accent === "primary" ? "text-primary" : "text-secondary"}`}>
                       Learn more about {tool.title}
-                      <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                      <ArrowRight className="h-4 w-4  " />
                     </div>
                   </Card>
                 </Link>

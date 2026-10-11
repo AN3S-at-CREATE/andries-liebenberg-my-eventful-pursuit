@@ -2,7 +2,6 @@ import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { ScrollToTop } from "@/components/layout/ScrollToTop";
 import { MotionReveal } from "@/components/motion/MotionReveal";
-import { ParallaxElements } from "@/components/effects/ParallaxElements";
 import { Card } from "@/components/ui/card";
 import { Seo } from "@/components/seo/Seo";
 import { breadcrumb } from "@/lib/breadcrumb";
@@ -25,18 +24,18 @@ const NeuroLogix = () => {
         ])}
       />
       <Navbar />
+      <main>
       
       <section className="relative py-24 px-4 overflow-hidden">
-        <ParallaxElements variant="primary" />
         <div className="container max-w-6xl mx-auto relative z-10">
           <MotionReveal>
             <div className="text-center mb-16">
               <Badge variant="glow-primary" className="mb-4">AI Network</Badge>
               <h1 className="font-heading text-4xl md:text-6xl font-bold text-foreground mb-6">
-                <span className="text-primary glow-text-primary">Neuro</span><span className="text-secondary glow-text-secondary">Logix</span> AI
+                NeuroLogix AI
               </h1>
               <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto">
-                AI-driven network offering <span className="text-primary">personalized guidance</span>, <span className="text-secondary">workflow automation</span>, and strategic growth support.
+                AI-driven network offering personalized guidance, workflow automation, and strategic growth support.
               </p>
             </div>
           </MotionReveal>
@@ -47,7 +46,7 @@ const NeuroLogix = () => {
           <div className="grid md:grid-cols-2 gap-8 mb-12">
             <MotionReveal delay={0.1}>
               <Card className="glass-primary border-l-4 border-l-pink p-8 group" interactive glow="primary">
-                <Brain className="h-10 w-10 text-primary mb-4 transition-transform duration-300 group-hover:scale-110" />
+                <Brain className="h-10 w-10 text-primary mb-4  duration-300 " />
                 <h3 className="font-heading text-xl font-bold text-foreground mb-3 group-hover:text-primary transition-colors">Personalized Guidance</h3>
                 <p className="text-muted-foreground">
                   AI-powered recommendations tailored to your specific business needs and goals.
@@ -57,7 +56,7 @@ const NeuroLogix = () => {
 
             <MotionReveal delay={0.2}>
               <Card className="glass-secondary border-l-4 border-l-cyan p-8 group" interactive glow="secondary">
-                <Workflow className="h-10 w-10 text-secondary mb-4 transition-transform duration-300 group-hover:scale-110" />
+                <Workflow className="h-10 w-10 text-secondary mb-4  duration-300 " />
                 <h3 className="font-heading text-xl font-bold text-foreground mb-3 group-hover:text-secondary transition-colors">Workflow Automation</h3>
                 <p className="text-muted-foreground">
                   Streamline repetitive tasks and processes with intelligent automation.
@@ -67,7 +66,7 @@ const NeuroLogix = () => {
 
             <MotionReveal delay={0.3}>
               <Card className="glass-secondary border-l-4 border-l-cyan p-8 group" interactive glow="secondary">
-                <Users className="h-10 w-10 text-secondary mb-4 transition-transform duration-300 group-hover:scale-110" />
+                <Users className="h-10 w-10 text-secondary mb-4  duration-300 " />
                 <h3 className="font-heading text-xl font-bold text-foreground mb-3 group-hover:text-secondary transition-colors">Business Integration</h3>
                 <p className="text-muted-foreground">
                   Integrates across business functions like employee assistance and client onboarding.
@@ -77,7 +76,7 @@ const NeuroLogix = () => {
 
             <MotionReveal delay={0.4}>
               <Card className="glass-primary border-l-4 border-l-pink p-8 group" interactive glow="primary">
-                <Shield className="h-10 w-10 text-primary mb-4 transition-transform duration-300 group-hover:scale-110" />
+                <Shield className="h-10 w-10 text-primary mb-4  duration-300 " />
                 <h3 className="font-heading text-xl font-bold text-foreground mb-3 group-hover:text-primary transition-colors">Privacy & Compliance</h3>
                 <p className="text-muted-foreground">
                   Built with privacy-first principles ensuring full regulatory compliance.
@@ -107,6 +106,7 @@ const NeuroLogix = () => {
         </div>
       </section>
 
+      </main>
       <Footer />
       <ScrollToTop />
     </div>

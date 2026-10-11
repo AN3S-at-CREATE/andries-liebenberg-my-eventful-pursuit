@@ -1,3 +1,4 @@
+import { facts, whatsappNumber } from "@/data/facts";
 import { Github, Linkedin, Mail, Phone } from "lucide-react";
 import { Link } from "react-router-dom";
 // The wordmark comes from the AN3S design system (src/design-system/assets).
@@ -20,11 +21,11 @@ export const Footer = () => {
                 height="48"
                 loading="lazy"
                 decoding="async"
-                className="h-12 mb-4 transition-all duration-300 hover:scale-110 hover:drop-shadow-[0_0_12px_hsl(var(--pink-hsl))]"
+                className="h-12 mb-4 transition-all duration-300  "
               />
             </Link>
             <p className="text-sm text-muted-foreground">
-              Building companies with real metrics and proven execution across South Africa.
+              {facts.tagline.value}</p><p className="text-sm text-muted-foreground mt-3">{facts.descriptor.value}</p><p className="text-caption text-muted-foreground mt-3">Est. {facts.established.value}.
             </p>
           </div>
 
@@ -39,14 +40,14 @@ export const Footer = () => {
               </li>
               <li className="flex items-center gap-2">
                 <Mail className="h-4 w-4 text-secondary" />
-                <a href="mailto:book@hello.an3s.info" className="hover:text-secondary transition-colors">
+                <a href={`mailto:${facts.email.value}`} className="hover:text-secondary transition-colors">
                   book@hello.an3s.info
                 </a>
               </li>
               <li className="flex items-center gap-2">
                 <Phone className="h-4 w-4 text-primary" />
-                <a href="tel:+27729749703" className="hover:text-primary transition-colors">
-                  +27 72 974 9703
+                <a href={`tel:+${whatsappNumber}`} className="hover:text-primary transition-colors">
+                  {facts.whatsapp.value}
                 </a>
               </li>
             </ul>

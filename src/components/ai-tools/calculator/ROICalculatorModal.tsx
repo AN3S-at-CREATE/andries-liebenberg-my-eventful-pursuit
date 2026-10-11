@@ -262,7 +262,7 @@ export function ROICalculatorModal({ trigger, initialValues, autoOpen, onAutoOpe
                     }`}
                     aria-label="Export as PDF"
                   >
-                    <Download className={`w-4 h-4 ${isExporting ? "animate-spin" : ""}`} />
+                    <Download className={`w-4 h-4 ${isExporting ? "" : ""}`} />
                   </Button>
                 </TooltipTrigger>
                 <TooltipContent>

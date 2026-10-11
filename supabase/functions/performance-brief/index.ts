@@ -10,44 +10,7 @@ const corsHeaders = {
 // Rate limit: 5 briefs per hour per IP
 const RATE_LIMIT_CONFIG = { maxRequests: 5, windowMs: 60 * 60 * 1000 };
 
-// Company data (mirrored from frontend)
-const companies = [
-  { id: "360-vision-events-group", name: "360 Vision Events (Group)", sector: "Events/Production", description: "Full-service event production and management group delivering premium experiences across South Africa.", highlights: ["End-to-end event production", "Premium corporate events", "Large-scale venue management"], location: "South Africa", period: "2019 – Present" },
-  { id: "360-vision-events-cleaning", name: "360 Vision Events Cleaning", sector: "Events/Production", description: "Specialized cleaning services for events and venues with rapid turnaround capabilities.", highlights: ["Event venue cleaning", "Post-event rapid turnaround", "Contract cleaning services"], location: "South Africa", period: "2020 – Present" },
-  { id: "strydom-projects", name: "Strydom Projects", sector: "Projects/Construction", description: "Construction and project management firm specializing in commercial and residential developments.", highlights: ["Commercial construction", "Project management", "Development consulting"], location: "South Africa", period: "2018 – Present" },
-  { id: "maono-moja-events", name: "Maono Moja Events", sector: "Events/Production", description: "Creative event production company focused on unique and memorable experiences.", highlights: ["Creative event design", "Brand activations", "Festival production"], location: "South Africa", period: "2019 – Present" },
-  { id: "k-and-d-resources", name: "K AND D RESOURCES", sector: "Industrial/B2B Services", description: "Industrial services and resource management company serving B2B clients across multiple sectors.", highlights: ["Industrial resource supply", "B2B service contracts", "Supply chain management"], location: "South Africa", period: "2017 – Present" },
-  { id: "adventure-freaksa", name: "Adventure FreaksA", sector: "Tourism/Experiences", description: "Adventure tourism operator offering unique outdoor experiences and travel packages.", highlights: ["Adventure tourism packages", "Outdoor experiences", "Group travel coordination"], location: "South Africa", period: "2020 – Present" },
-  { id: "odm-studio", name: "ODM Studio", sector: "Consulting/Strategy", description: "Strategic consulting firm providing business transformation and operational excellence services.", highlights: ["Business strategy consulting", "Operational optimization", "Digital transformation"], location: "South Africa", period: "2018 – Present" },
-  { id: "bobby-verd", name: "Bobby Verd", sector: "Retail/Apparel", description: "Fashion retail brand delivering contemporary apparel with a focus on quality and style.", highlights: ["Contemporary fashion retail", "Brand development", "E-commerce operations"], location: "South Africa", period: "2021 – Present" },
-  { id: "rubies-and-pearls", name: "Rubies and Pearls", sector: "Tourism/Experiences", description: "Luxury tourism and experience company specializing in curated travel and hospitality.", highlights: ["Luxury travel experiences", "Curated hospitality", "Premium event hosting"], location: "South Africa", period: "2019 – Present" },
-  { id: "prisma-entertainment", name: "Prisma Entertainment", sector: "Events/Production", description: "Entertainment production company creating spectacular shows and live experiences.", highlights: ["Live entertainment production", "Show design and execution", "Artist management"], location: "South Africa", period: "2018 – Present" },
-];
-
-const companyMetrics = [
-  { companyId: "360-vision-events-group", revenueGrowthPct: 48, clientsAcquired: 120, projectsCompleted: 85, customerSatisfactionPct: 97, revenue: { from: 11500000, to: 17300000, isMock: true, basis: "model" } },
-  { companyId: "360-vision-events-cleaning", revenueGrowthPct: 44, clientsAcquired: 90, projectsCompleted: 68, customerSatisfactionPct: 96, revenue: { from: 15000000, to: 21600000, isMock: false, basis: "doc" } },
-  { companyId: "strydom-projects", revenueGrowthPct: 52, clientsAcquired: 102, projectsCompleted: 76, customerSatisfactionPct: 94, revenue: { from: 16300000, to: 24500000, isMock: true, basis: "model" } },
-  { companyId: "maono-moja-events", revenueGrowthPct: 45, clientsAcquired: 95, projectsCompleted: 73, customerSatisfactionPct: 96, revenue: { from: 9100000, to: 13700000, isMock: true, basis: "model" } },
-  { companyId: "k-and-d-resources", revenueGrowthPct: 56, clientsAcquired: 130, projectsCompleted: 90, customerSatisfactionPct: 95, revenue: { from: 26000000, to: 39000000, isMock: true, basis: "model" } },
-  { companyId: "adventure-freaksa", revenueGrowthPct: 41, clientsAcquired: 88, projectsCompleted: 60, customerSatisfactionPct: 93, revenue: { from: 5600000, to: 8400000, isMock: true, basis: "model" } },
-  { companyId: "odm-studio", revenueGrowthPct: 50, clientsAcquired: 110, projectsCompleted: 80, customerSatisfactionPct: 98, revenue: { from: 15800000, to: 23800000, isMock: true, basis: "model" } },
-  { companyId: "bobby-verd", revenueGrowthPct: 38, clientsAcquired: 76, projectsCompleted: 55, customerSatisfactionPct: 92, revenue: { from: 3600000, to: 5500000, isMock: true, basis: "model" } },
-  { companyId: "rubies-and-pearls", revenueGrowthPct: 47, clientsAcquired: 84, projectsCompleted: 61, customerSatisfactionPct: 95, revenue: { from: 12800000, to: 18800000, isMock: false, basis: "doc" } },
-  { companyId: "prisma-entertainment", revenueGrowthPct: 53, clientsAcquired: 125, projectsCompleted: 89, customerSatisfactionPct: 99, revenue: { from: 12000000, to: 18000000, isMock: true, basis: "model" } },
-];
-
-const formatZAR = (amount: number): string =>
-  new Intl.NumberFormat("en-ZA", {
-    style: "currency",
-    currency: "ZAR",
-    maximumFractionDigits: 0,
-  }).format(amount);
-
-const formatZARRange = (from: number | null, to: number | null): string => {
-  if (from == null || to == null) return "Available on request";
-  return `${formatZAR(from)} – ${formatZAR(to)}`;
-};
+import { companies } from "../../../src/data/companies.ts";
 
 serve(async (req) => {
   // Handle CORS preflight
@@ -101,43 +64,19 @@ serve(async (req) => {
     }
 
     const company = companies.find((c) => c.id === companyId);
-    const metrics = companyMetrics.find((m) => m.companyId === companyId);
 
-    if (!company || !metrics) {
+    if (!company) {
       return new Response(
         JSON.stringify({ error: "Company not found" }),
         { status: 404, headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
     }
 
-    // Build context for AI
-    const revenueDisclaimer = metrics.revenue.isMock
-      ? "IMPORTANT: The revenue range shown is an indicative modelled estimate. Exact financials are available on request."
-      : "";
-
-    const companyContext = `
-Company: ${company.name}
-Sector: ${company.sector}
-Location: ${company.location}
-Period: ${company.period}
-Description: ${company.description}
-
-Key Highlights:
-${company.highlights.map((h) => `- ${h}`).join("\n")}
-
-Performance Metrics:
-- Revenue Range: ${formatZARRange(metrics.revenue.from, metrics.revenue.to)} ${metrics.revenue.isMock ? "(Indicative - modelled estimate)" : "(From records)"}
-- Revenue Growth: ${metrics.revenueGrowthPct}%
-- Clients Acquired: ${metrics.clientsAcquired}
-- Projects Completed: ${metrics.projectsCompleted}
-- Customer Satisfaction: ${metrics.customerSatisfactionPct}%
-
-${revenueDisclaimer}
-`;
+    const companyContext = JSON.stringify({name: company.name, sector: company.sector, role: company.role, period: company.period});
 
     const audienceInstructions: Record<string, string> = {
-      investor: "Focus on growth metrics, revenue potential, market position, and scalability. Highlight ROI and expansion opportunities.",
-      client: "Focus on service delivery, customer satisfaction, project success rates, and reliability. Emphasize the value proposition and track record.",
+      investor: "Discuss venture identity and possible scope questions. Do not claim growth or financial results.",
+      client: "Discuss the venture identity and sector. No satisfaction or performance claims.",
       partner: "Focus on collaboration opportunities, complementary capabilities, and mutual growth potential. Highlight synergies and shared values.",
     };
 
@@ -145,10 +84,10 @@ ${revenueDisclaimer}
 
 CRITICAL RULES:
 1. NEVER invent data, statistics, clients, contracts, or figures not provided
-2. If revenue data is marked as "Indicative - modelled estimate", you MUST include this disclaimer: "Indicative revenue range (modelled estimate). Exact financials available on request."
+2. No verified financials, growth, client counts, project counts or satisfaction data are available. Omit all numerical performance claims; never guess roles awaiting confirmation.
 3. Keep the brief under 800 tokens
 4. Use professional, confident language
-5. Format with clear sections: Overview, Key Metrics, Highlights, and Opportunity
+5. Format with clear sections: Overview, Role, Sector, and Discussion
 
 Target audience: ${audience}
 ${audienceInstructions[audience] || ""}

@@ -92,12 +92,12 @@ export const FloatingConciergeButton = forwardRef<HTMLDivElement>((_, ref) => {
       {/* Floating Button */}
       <div className="relative">
         {!hasInteracted && (
-          <div className="absolute -inset-1 rounded-full bg-secondary/50 animate-attention-pulse motion-reduce:animate-none" />
+          <div className="absolute -inset-1 rounded-full bg-secondary/50  motion-reduce:animate-none" />
         )}
         <Button
           size="lg"
           onClick={handleOpenChat}
-          className="relative h-14 w-14 rounded-full bg-secondary hover:bg-secondary/90 text-secondary-foreground shadow-lg shadow-cyan/25 transition-all duration-300 hover:scale-110 hover:drop-shadow-[0_0_15px_hsl(var(--cyan-hsl))]"
+          className="relative h-14 w-14 rounded-full bg-secondary hover:bg-secondary/90 text-secondary-foreground shadow-lg shadow-cyan/25 transition-all duration-300  "
         >
           <MessageSquareText className="h-6 w-6" />
           <span className="sr-only">Ask AN3S Concierge</span>
@@ -178,7 +178,7 @@ export const FloatingConciergeButton = forwardRef<HTMLDivElement>((_, ref) => {
                     </div>
                     <div className="bg-muted/50 border border-border/50 rounded-xl px-4 py-3">
                       <div className="flex items-center gap-2">
-                        <Loader2 className="w-4 h-4 animate-spin text-secondary" />
+                        <Loader2 className="w-4 h-4  text-secondary" />
                         <span className="text-sm text-muted-foreground">
                           Thinking...
                         </span>
@@ -221,7 +221,7 @@ export const FloatingConciergeButton = forwardRef<HTMLDivElement>((_, ref) => {
                     aria-label="Send message"
                   >
                     {isLoading ? (
-                      <Loader2 className="w-4 h-4 animate-spin" />
+                      <Loader2 className="w-4 h-4 " />
                     ) : (
                       <Send className="w-4 h-4" />
                     )}

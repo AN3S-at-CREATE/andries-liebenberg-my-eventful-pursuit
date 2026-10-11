@@ -2,7 +2,6 @@ import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { ScrollToTop } from "@/components/layout/ScrollToTop";
 import { MotionReveal } from "@/components/motion/MotionReveal";
-import { ParallaxElements } from "@/components/effects/ParallaxElements";
 import { Card } from "@/components/ui/card";
 import { Seo } from "@/components/seo/Seo";
 import { breadcrumb } from "@/lib/breadcrumb";
@@ -23,53 +22,24 @@ const Marketing = () => {
         ])}
       />
       <Navbar />
+      <main>
       
       <section className="relative py-24 px-4 overflow-hidden">
-        <ParallaxElements variant="secondary" />
         <div className="container max-w-6xl mx-auto relative z-10">
           <MotionReveal>
             <div className="text-center mb-16">
               <Badge variant="glow-primary" className="mb-4">Expertise</Badge>
               <h1 className="font-heading text-4xl md:text-6xl font-bold text-foreground mb-6">
-                Marketing <span className="text-secondary glow-text-secondary">Mas</span><span className="text-primary glow-text-primary">tery</span>
+                Marketing Mastery
               </h1>
               <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto">
-                Driving <span className="text-primary">comprehensive marketing strategies</span> across diverse industries with <span className="text-secondary">data-driven precision</span>.
+                Driving comprehensive marketing strategies across diverse industries with data-driven precision.
               </p>
             </div>
           </MotionReveal>
 
           {/* Divider */}
           <div className="divider-secondary mb-12" />
-
-          {/* Stats */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-16">
-            <MotionReveal delay={0.1}>
-              <Card interactive glow="primary" className="glass-primary p-6 text-center border-t-2 border-t-pink">
-                <div className="text-3xl font-bold text-primary mb-2">+30%</div>
-                <p className="text-sm text-muted-foreground">Event Attendance</p>
-              </Card>
-            </MotionReveal>
-            <MotionReveal delay={0.2}>
-              <Card interactive glow="secondary" className="glass-secondary p-6 text-center border-t-2 border-t-cyan">
-                <div className="text-3xl font-bold text-secondary mb-2">+45%</div>
-                <p className="text-sm text-muted-foreground">Social Engagement</p>
-              </Card>
-            </MotionReveal>
-            <MotionReveal delay={0.3}>
-              <Card interactive glow="primary" className="glass-primary p-6 text-center border-t-2 border-t-pink">
-                <div className="text-3xl font-bold text-primary mb-2">100+</div>
-                <p className="text-sm text-muted-foreground">Marketing Tools</p>
-              </Card>
-            </MotionReveal>
-            <MotionReveal delay={0.4}>
-              <Card interactive glow="secondary" className="glass-secondary p-6 text-center border-t-2 border-t-cyan">
-                <div className="text-3xl font-bold text-secondary mb-2">20+</div>
-                <p className="text-sm text-muted-foreground">Years Experience</p>
-              </Card>
-            </MotionReveal>
-          </div>
-
           {/* Divider */}
           <div className="divider-primary mb-8" />
 
@@ -77,9 +47,9 @@ const Marketing = () => {
             <MotionReveal delay={0.2}>
               <Card interactive glow="primary" className="glass-primary p-8 border-l-4 border-l-pink">
                 <TrendingUp className="h-10 w-10 text-primary mb-4" />
-                <h3 className="font-heading text-xl font-bold text-foreground mb-3">Executive <span className="text-primary">Leadership</span></h3>
+                <h3 className="font-heading text-xl font-bold text-foreground mb-3">Executive Leadership</h3>
                 <p className="text-muted-foreground">
-                  Driving comprehensive marketing strategies across diverse industries with proven <span className="text-primary">executive-level leadership</span>.
+                  Driving comprehensive marketing strategies across diverse industries with proven executive-level leadership.
                 </p>
               </Card>
             </MotionReveal>
@@ -87,19 +57,17 @@ const Marketing = () => {
             <MotionReveal delay={0.3}>
               <Card interactive glow="secondary" className="glass-secondary p-8 border-l-4 border-l-cyan">
                 <BarChart3 className="h-10 w-10 text-secondary mb-4" />
-                <h3 className="font-heading text-xl font-bold text-foreground mb-3">Proven <span className="text-secondary">Results</span></h3>
-                <p className="text-muted-foreground">
-                  Increasing event attendance (<span className="text-primary">+30%</span>), boosting social media engagement (<span className="text-secondary">+45%</span>) through data-driven campaigns.
-                </p>
+                <h3 className="font-heading text-xl font-bold text-foreground mb-3">Proven Results</h3>
+                <p className="text-muted-foreground">Campaign planning, audience research and performance measurement across marketing channels.</p>
               </Card>
             </MotionReveal>
 
             <MotionReveal delay={0.4}>
               <Card interactive glow="primary" className="glass-primary p-8 border-l-4 border-l-pink">
                 <Share2 className="h-10 w-10 text-primary mb-4" />
-                <h3 className="font-heading text-xl font-bold text-foreground mb-3">Digital <span className="text-primary">Expertise</span></h3>
+                <h3 className="font-heading text-xl font-bold text-foreground mb-3">Digital Expertise</h3>
                 <p className="text-muted-foreground">
-                  Expertise in integrated digital campaigns (<span className="text-primary">SEO/SEM</span>, <span className="text-secondary">Content</span>, <span className="text-primary">Social Media</span>, <span className="text-secondary">Email</span>, <span className="text-primary">PPC</span>) and traditional marketing.
+                  Expertise in integrated digital campaigns (SEO/SEM, Content, Social Media, Email, PPC) and traditional marketing.
                 </p>
               </Card>
             </MotionReveal>
@@ -107,10 +75,8 @@ const Marketing = () => {
             <MotionReveal delay={0.5}>
               <Card interactive glow="secondary" className="glass-secondary p-8 border-l-4 border-l-cyan">
                 <Users className="h-10 w-10 text-secondary mb-4" />
-                <h3 className="font-heading text-xl font-bold text-foreground mb-3">Brand <span className="text-secondary">Development</span></h3>
-                <p className="text-muted-foreground">
-                  Skilled in brand development, campaign management, market research, and public relations with <span className="text-primary font-semibold">100+ marketing software tools</span> proficiency.
-                </p>
+                <h3 className="font-heading text-xl font-bold text-foreground mb-3">Brand Development</h3>
+                <p className="text-muted-foreground">Campaign planning, audience research and performance measurement across marketing channels.</p>
               </Card>
             </MotionReveal>
           </div>
@@ -120,6 +86,7 @@ const Marketing = () => {
         </div>
       </section>
 
+      </main>
       <Footer />
       <ScrollToTop />
     </div>

@@ -6,7 +6,6 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { CompaniesPreview } from "@/components/companies/CompaniesPreview";
 import { CompanyCard } from "@/components/companies/CompanyCard";
 import { companies } from "@/data/companies";
-import { getMetricsByCompanyId } from "@/data/companyMetrics";
 
 /**
  * Visual regression guard for card grids.
@@ -53,9 +52,8 @@ describe("company card grid – equal height contract", () => {
 
   it("a standalone CompanyCard exposes h-full so grid rows equalize", () => {
     const company = companies[0];
-    const metrics = getMetricsByCompanyId(company.id)!;
     const { container } = renderWithProviders(
-      <CompanyCard company={company} metrics={metrics} />,
+      <CompanyCard company={company} />,
     );
 
     const card = container.querySelector("a.group.block > *");

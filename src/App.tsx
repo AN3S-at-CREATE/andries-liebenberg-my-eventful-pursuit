@@ -20,17 +20,14 @@ const FloatingConciergeButton = lazy(() =>
 // Sleek skeleton fallback to prevent CLS while the concierge chunk loads
 const ConciergeSkeleton = () => (
   <div className="fixed bottom-6 right-6 z-50">
-    <div className="h-14 w-14 rounded-full bg-secondary/20 animate-pulse border border-cyan/30 shadow-[0_0_15px_hsl(var(--cyan-hsl)/0.2)]" />
+    <div className="h-14 w-14 rounded-full bg-secondary/20  border border-cyan/30 shadow-[0_0_15px_hsl(var(--cyan-hsl)/0.2)]" />
   </div>
 );
-import { BackgroundFX } from "./components/background/BackgroundFX";
-import { ParallaxStarfield } from "./components/effects/ParallaxStarfield";
-import { NebulaClouds } from "./components/effects/NebulaClouds";
 import { LoadingScreen } from "./components/loading/LoadingScreen";
 import { PageLoader } from "./components/loading/PageLoader";
-import { GlobalCursorGlow } from "./components/effects/GlobalCursorGlow";
 
 const Index = lazy(() => import("./pages/Index"));
+const Services = lazy(() => import("./pages/Services"));
 const Companies = lazy(() => import("./pages/Companies"));
 const CompanyDetail = lazy(() => import("./pages/CompanyDetail"));
 const Contact = lazy(() => import("./pages/Contact"));
@@ -99,10 +96,6 @@ const App = () => {
       <TooltipProvider>
         <LazyMotion features={domAnimation}>
         <LoadingScreen isLoading={isLoading} />
-        <ParallaxStarfield />
-        <NebulaClouds />
-        <BackgroundFX />
-        <GlobalCursorGlow color="mixed" size={350} intensity={0.2} />
         <Toaster />
         <Sonner />
         <BrowserRouter>
@@ -110,6 +103,7 @@ const App = () => {
             <Suspense fallback={<PageLoader />}>
               <Routes>
                 <Route path="/" element={<Index />} />
+                <Route path="/services" element={<Services />} />
                 <Route path="/about" element={<About />} />
 
                 {/* Expertise routes */}
