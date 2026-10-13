@@ -1,3 +1,4 @@
+import { Section } from "@/components/shared/section";
 import { Link } from "react-router-dom";
 import { MessageCircle } from "lucide-react";
 import { Navbar } from "@/components/layout/Navbar";
@@ -131,7 +132,7 @@ export default function EventPlanningGuide() {
       <Seo title={TITLE} description={DESCRIPTION} path={PATH} ogType="article" jsonLd={jsonLd} />
       <Navbar />
       <main>
-        <article className="container max-w-3xl py-16">
+        <Section><article className="max-w-3xl">
           <nav aria-label="Breadcrumb" className="text-sm text-muted-foreground mb-6">
             <Link to="/" className="hover:text-foreground">Home</Link>
             <span aria-hidden="true"> / </span>
@@ -197,7 +198,7 @@ export default function EventPlanningGuide() {
               </Button>
             </div>
           </section>
-        </article>
+        </article></Section>
       </main>
       <Footer />
     </div>

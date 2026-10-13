@@ -1,3 +1,4 @@
+import { Section } from "@/components/shared/section";
 import { useEffect, useState } from "react";
 import { getBackgroundFXStatus } from "@/lib/backgroundStatus";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -39,7 +40,7 @@ const Status = () => {
 
   return (
     <div className="min-h-screen p-8">
-      <div className="container max-w-2xl mx-auto">
+      <Section>
         <h1 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-8">
           Visual System Status
         </h1>
@@ -177,7 +178,7 @@ const Status = () => {
             </CardContent>
           </Card>
         </div>
-      </div>
+      </Section>
     </div>
   );
 };

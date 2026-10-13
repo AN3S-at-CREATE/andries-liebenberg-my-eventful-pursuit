@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { render } from "@testing-library/react";
+import { fireEvent, render } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import { LazyMotion, domAnimation } from "framer-motion";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -83,15 +83,27 @@ describe("company card grid – equal height contract", () => {
 describe("authorised content update", () => {
   it("groups every listed offer in discipline order with exact WhatsApp messages", () => {
     const { container } = renderWithProviders(<ServiceGrid />);
-    expect(Array.from(container.querySelectorAll("h3"), heading => heading.textContent)).toEqual(disciplines.map(discipline => discipline.title));
+    expect(Array.from(container.querySelectorAll("[aria-pressed]"), heading => heading.textContent)).toEqual(disciplines.map(discipline => discipline.title));
     const links = container.querySelectorAll("a");
     expect(links).toHaveLength(serviceOffers.length);
     serviceOffers.forEach((offer, index) => {
       expect(offer.source).toBeTruthy();
       expect(new URL(links[index].href).searchParams.get("text")).toBe(`Hi Andries, I'm interested in ${offer.title}.`);
-      expect(links[index].parentElement?.textContent).toContain(`${offer.price} excl. VAT if applicable`);
+      expect(links[index].parentElement?.textContent).toContain(offer.price);
+      expect(links[index].parentElement?.textContent).toContain(offer.vat);
+      expect(offer.descriptionSource).toBeTruthy();
     });
     expect(container.textContent).not.toMatch(/Care Plan|one workflow|credited against|Simple web app|placeholder/i);
+  });
+
+  it("filters offers, keeps empty disciplines out of the price grid and resets", () => {
+    const { container, getByRole } = renderWithProviders(<ServiceGrid />);
+    fireEvent.click(getByRole("button", { name: "Business Growth" }));
+    expect(container.querySelectorAll("[data-service-card]")).toHaveLength(1);
+    fireEvent.click(getByRole("button", { name: "Experimental Marketing" }));
+    expect(container.querySelectorAll("[data-service-card]")).toHaveLength(0);
+    fireEvent.click(getByRole("button", { name: "Experimental Marketing" }));
+    expect(container.querySelectorAll("[data-service-card]")).toHaveLength(serviceOffers.length);
   });
 
   it("records only the supplied roles, sourced proof and undated awards", () => {

@@ -1,3 +1,4 @@
+import { Section } from "@/components/shared/section";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
@@ -92,8 +93,8 @@ const Auth = () => {
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
-      <main className="flex-1 flex items-center justify-center py-16 px-4">
-        <Card className="w-full max-w-md bg-card/50 backdrop-blur-sm border-border/50">
+      <main className="flex-1"><Section>
+        <Card className="mx-auto w-full max-w-md bg-card/50 backdrop-blur-sm border-border/50">
           <CardHeader className="text-center">
             <div className="mx-auto w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mb-4">
               <Lock className="h-6 w-6 text-primary" />
@@ -209,7 +210,7 @@ const Auth = () => {
             </div>
           </CardContent>
         </Card>
-      </main>
+      </Section></main>
       <Footer />
     </div>
   );

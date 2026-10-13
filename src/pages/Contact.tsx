@@ -1,3 +1,4 @@
+import { Section } from "@/components/shared/section";
 import { facts, whatsappUrl, whatsappNumber } from "@/data/facts";
 import { Button } from "@/components/ui/button";
 import { Seo } from "@/components/seo/Seo";
@@ -20,7 +21,7 @@ const Contact = () => {
       <Seo title="Contact | AN3S" description="Contact Andries on WhatsApp to discuss design, websites, apps and automation for your South African business." path="/contact"/>
       <Navbar />
       
-      <main className="container py-12 relative overflow-hidden">
+      <main><Section>
         {/* Hero Section */}
         <div className="text-center mb-12 relative z-10">
           <Badge variant="glow-secondary" className="mb-4">Connect</Badge>
@@ -46,7 +47,7 @@ const Contact = () => {
           {/* Contact Details & Map */}
           <div className="space-y-6">
             {/* Contact Information Cards */}
-            <Card className="glass-primary border-l-4 border-l-pink">
+            <Card className="glass-primary  ">
               <CardContent className="p-6">
                 <h3 className="font-heading text-xl font-semibold text-foreground mb-6">
                   Contact Information
@@ -144,7 +145,7 @@ const Contact = () => {
             </Card>
 
             {/* Quick Links */}
-            <Card className="glass border-t-2 border-t-pink border-b-2 border-b-cyan">
+            <Card className="glass    ">
               <CardContent className="p-6">
                 <h3 className="font-heading text-xl font-semibold text-foreground mb-4">
                   Quick Links
@@ -174,7 +175,7 @@ const Contact = () => {
 
         {/* Divider */}
         <div className="divider-secondary mt-12" />
-      </main>
+      </Section></main>
 
       <Footer />
       <ScrollToTop />
