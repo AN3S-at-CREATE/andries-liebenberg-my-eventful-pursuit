@@ -116,6 +116,8 @@
 @keyframes glow-breathe { 0%,100% { opacity: .65; } 50% { opacity: 1; } }
 /* Only explicitly approved motion classes run; Radix travelling animations stay disabled. */
 [data-state] { animation-name: none !important; }
+.animate-fade-in, .animate-skeleton-pulse, .animate-caret-blink, .animate-border-glow, .animate-border-glow-secondary { animation-name: none !important; }
+.text-center .section-lead { margin-inline: auto; }
 @media (prefers-reduced-motion: no-preference) { .animate-spin { animation: spin 1s linear infinite; } }
 .glow-breathe { animation: glow-breathe 4s ease-in-out infinite; }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }

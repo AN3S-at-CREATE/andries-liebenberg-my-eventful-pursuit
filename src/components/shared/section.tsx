@@ -16,7 +16,7 @@ export function Section({ eyebrow, title, lead, children, className, ...props }:
       {(eyebrow || title || lead) && <MotionReveal className="mb-12">
         {eyebrow && <p className="text-label text-secondary mb-4">{eyebrow}</p>}
         {title && <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-5">{title}</h2>}
-        {lead && <p className="text-body text-muted-foreground max-w-2xl">{lead}</p>}
+        {lead && <p className="section-lead text-body text-muted-foreground max-w-2xl">{lead}</p>}
       </MotionReveal>}
       {children}
     </div>

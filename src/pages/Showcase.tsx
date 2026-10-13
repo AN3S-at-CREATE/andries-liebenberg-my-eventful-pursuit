@@ -1,4 +1,5 @@
 import { Section } from "@/components/shared/section";
+import { CardGrid } from "@/components/shared/card-grid";
 import { companies } from "@/data/companies";
 import { permittedEvents } from "@/data/facts";
 import { CompanyCard } from "@/components/companies/CompanyCard";
@@ -111,7 +112,7 @@ const Showcase = () => {
         </div>
       </Section>
 
-      <Section className=" "><h2 className="text-3xl font-bold text-foreground mb-8">Ventures</h2><div className="grid md:grid-cols-2 gap-6">{["360-vision-events-group","odm-studio","prisma-entertainment","adventure-freaksa"].map(slug=>{const company=companies.find(item=>item.slug===slug);return company?<CompanyCard key={slug} company={company}/>:null;})}</div>{permittedEvents.length>0&&<ul>{permittedEvents.filter(event=>event.clientPermission).map(event=><li key={event.value}>{event.value}</li>)}</ul>}</Section>
+      <Section title="Ventures"><CardGrid>{["360-vision-events-group","odm-studio","prisma-entertainment","adventure-freaksa"].map(slug=>{const company=companies.find(item=>item.slug===slug);return company?<CompanyCard key={slug} company={company}/>:null;})}</CardGrid>{permittedEvents.length>0&&<ul>{permittedEvents.filter(event=>event.clientPermission).map(event=><li key={event.value}>{event.value}</li>)}</ul>}</Section>
       {/* CTA Section */}
       <Section className="  bg-muted/20">
         <div>

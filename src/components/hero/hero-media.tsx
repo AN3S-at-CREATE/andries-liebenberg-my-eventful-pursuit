@@ -11,7 +11,10 @@ export function HeroMedia({ background = false }: { background?: boolean }) {
     return () => query.removeEventListener("change", handleChange);
   }, []);
   return <div className={background ? "absolute inset-0 pointer-events-none" : "relative aspect-video overflow-hidden rounded-lg border border-pink/35"}>
-    {canPlay ? <video src="/media/hero/hero-loop.mp4" poster="/media/hero/hero-poster.jpg" muted autoPlay loop playsInline preload="metadata" aria-label={background ? undefined : "Event production by Andries, 360 Vision Events"} aria-hidden={background || undefined} className="w-full h-full object-cover" />
+    {canPlay ? <video poster="/media/hero/hero-poster.jpg" muted autoPlay loop playsInline preload="metadata" aria-label={background ? undefined : "Event production by Andries, 360 Vision Events"} aria-hidden={background || undefined} className="w-full h-full object-cover">
+      <source src="/media/hero/hero-loop.webm" type="video/webm" />
+      <source src="/media/hero/hero-loop.mp4" type="video/mp4" />
+    </video>
       : <img src="/media/hero/hero-poster.jpg" alt={background ? "" : "Event production by Andries, 360 Vision Events"} width="1485" height="768" className="w-full h-full object-cover" fetchPriority={background ? "low" : "high"} />}
     {background && <div className="absolute inset-0 bg-background/95" />}
   </div>;
