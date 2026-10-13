@@ -70,7 +70,7 @@ const CompanyDetail = () => {
             </h1>
             {company.role && <p className="text-lg text-muted-foreground">{company.role}</p>}
             
-            {company.role && <div className="flex flex-wrap gap-4 text-sm text-muted-foreground">
+            {company.role && company.location && <div className="flex flex-wrap gap-4 text-sm text-muted-foreground">
               <div className="flex items-center gap-1">
                 <MapPin className="h-4 w-4" />
                 {company.location}

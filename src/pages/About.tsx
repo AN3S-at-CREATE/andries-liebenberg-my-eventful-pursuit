@@ -1,4 +1,4 @@
-import { facts, careerPeriods, ventureFacts } from "@/data/facts";
+import { facts, careerPeriods, ventureFacts, proofOfWork } from "@/data/facts";
 import { Panel } from "@/components/brand/brand-parts";
 import { AwardWall } from "@/components/brand/award-wall";
 import { Navbar } from "@/components/layout/Navbar";
@@ -155,6 +155,14 @@ const About = () => {
 
           {/* Divider */}
           <div className="divider-secondary mt-16 mb-8" />
+
+          <div className="py-8 mb-12 border-y border-blue/35">
+            <h2 className="text-label text-foreground mb-4">Proof of work</h2>
+            <h3 className="font-heading text-2xl font-bold text-foreground mb-6">{proofOfWork.title}</h3>
+            <ul className="list-disc pl-5 space-y-4 text-muted-foreground">
+              {proofOfWork.items.map((item) => <li key={item.value}>{item.value}</li>)}
+            </ul>
+          </div>
 
           <Panel label="AWARDS" tone="awards"><AwardWall/></Panel>
           {/* Mentorship Section */}

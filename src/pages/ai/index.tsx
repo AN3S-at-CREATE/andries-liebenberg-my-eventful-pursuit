@@ -9,6 +9,7 @@ import { Link } from "react-router-dom";
 import { ArrowRight, Brain, Sparkles, Zap, Settings } from "lucide-react";
 import { Seo } from "@/components/seo/Seo";
 import { breadcrumb } from "@/lib/breadcrumb";
+import { lynkieSkyLaunch, proofOfWork } from "@/data/facts";
 
 const aiTools = [
   {
@@ -25,7 +26,7 @@ const aiTools = [
     icon: Sparkles,
     href: "/ai/lynkie-sky",
     accent: "secondary" as const,
-    status: "Coming Soon",
+    status: lynkieSkyLaunch.value,
   },
   {
     title: "NeuroLogix AI",
@@ -87,7 +88,7 @@ const AI = () => {
                   >
                     <div className="flex items-start justify-between mb-4">
                       <tool.icon className={`h-10 w-10 ${tool.accent === "primary" ? "text-primary" : "text-secondary"}  `} />
-                      <Badge variant={tool.status === "Live" ? "glow-primary" : tool.status === "Coming Soon" ? "glow-secondary" : "secondary"}>
+                      <Badge variant={tool.status === "Live" ? "glow-primary" : tool.status === lynkieSkyLaunch.value ? "glow-secondary" : "secondary"}>
                         {tool.status}
                       </Badge>
                     </div>
@@ -104,6 +105,14 @@ const AI = () => {
               </MotionItem>
             ))}
           </MotionStagger>
+
+          <div className="py-8 mb-12 border-y border-blue/35">
+            <h2 className="text-label text-foreground mb-4">Proof of work</h2>
+            <h3 className="font-heading text-2xl font-bold text-foreground mb-6">{proofOfWork.title}</h3>
+            <ul className="list-disc pl-5 space-y-4 text-muted-foreground">
+              {proofOfWork.items.map((item) => <li key={item.value}>{item.value}</li>)}
+            </ul>
+          </div>
 
           {/* Divider */}
           <div className="divider-primary mt-12 mb-8" />
