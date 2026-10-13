@@ -19,7 +19,7 @@ const FloatingConciergeButton = lazy(() =>
 
 // Sleek skeleton fallback to prevent CLS while the concierge chunk loads
 const ConciergeSkeleton = () => (
-  <div className="fixed bottom-6 right-6 z-50">
+  <div className="concierge-dock">
     <div className="h-14 w-14 rounded-full bg-secondary/20  border border-cyan/30 shadow-[0_0_15px_hsl(var(--cyan-hsl)/0.2)]" />
   </div>
 );
@@ -28,6 +28,7 @@ import { PageLoader } from "./components/loading/PageLoader";
 
 const Index = lazy(() => import("./pages/Index"));
 const Services = lazy(() => import("./pages/Services"));
+const Work = lazy(() => import("./pages/Work"));
 const EventPlanningGuide = lazy(() => import("./pages/ai/EventPlanningGuide"));
 const Companies = lazy(() => import("./pages/Companies"));
 const CompanyDetail = lazy(() => import("./pages/CompanyDetail"));
@@ -105,6 +106,7 @@ const App = () => {
               <Routes>
                 <Route path="/" element={<Index />} />
                 <Route path="/services" element={<Services />} />
+                <Route path="/work" element={<Work />} />
                 <Route path="/about" element={<About />} />
 
                 {/* Expertise routes */}

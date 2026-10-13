@@ -4,13 +4,14 @@ import { CompanyCard } from "./CompanyCard";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { MotionReveal, MotionStagger, MotionItem } from "@/components/motion/MotionReveal";
+import { Section } from "@/components/shared/section";
+import { CardGrid } from "@/components/shared/card-grid";
 
 export const CompaniesPreview = () => {
   const topCompanies = companies.slice(0, 4);
 
   return (
-    <section className="py-20 px-4">
-      <div className="container max-w-6xl mx-auto">
+    <Section>
         <MotionReveal>
           <div className="text-center mb-12">
             <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-4">
@@ -22,7 +23,7 @@ export const CompaniesPreview = () => {
           </div>
         </MotionReveal>
 
-        <MotionStagger className="grid gap-6 md:grid-cols-2 lg:grid-cols-4 mb-10">
+        <CardGrid className="mb-10">
           {topCompanies.map((company) => {
             return (
               <MotionItem key={company.id} className="h-full">
@@ -30,7 +31,7 @@ export const CompaniesPreview = () => {
               </MotionItem>
             );
           })}
-        </MotionStagger>
+        </CardGrid>
 
         <MotionReveal delay={0.4}>
           <div className="text-center">
@@ -42,7 +43,6 @@ export const CompaniesPreview = () => {
             </Button>
           </div>
         </MotionReveal>
-      </div>
-    </section>
+    </Section>
   );
 };

@@ -3,7 +3,7 @@ import { CardGrid } from "@/components/shared/card-grid";
 import { MotionItem } from "@/components/motion/MotionReveal";
 import { ventureFacts, proofOfWork } from "@/data/facts";
 import { CaseStudyCard } from "./case-study-card";
-import { ProofCards } from "./proof-card";
+import { ProofCard, ProofCards } from "./proof-card";
 
 /** Missing project evidence is omitted rather than attaching unrelated CV proof. */
 export function WorkSection({ includeProof = false }: { includeProof?: boolean }) {
@@ -14,6 +14,6 @@ export function WorkSection({ includeProof = false }: { includeProof?: boolean }
       <MotionItem className="h-full"><CaseStudyCard title={ventureFacts["eventpulse-ai"].name} role={ventureFacts["eventpulse-ai"].role} built="EventPulse AI" href="/ai/eventpulse" /></MotionItem>
     </CardGrid>
     {includeProof && <><p className="text-body text-secondary mt-16">{ventureFacts["veralogix-group"].role}</p><ProofCards /></>}
-    {!includeProof && <div className="mt-12"><p className="text-label text-secondary mb-4">{proofOfWork.title}</p><CardGrid><MotionItem className="h-full"><CaseStudyCard title="Veralogix Group" role={ventureFacts["veralogix-group"].role} built="Self-hosted group data lake and private AI chat platform" proof={proofOfWork.items[0].value} href="/work" /></MotionItem></CardGrid></div>}
+    {!includeProof && <div className="mt-12"><p className="text-label text-secondary mb-4">{proofOfWork.title}</p><ProofCard {...proofOfWork.items[0]} /></div>}
   </Section>;
 }
