@@ -195,7 +195,7 @@ const handler = async (req: Request): Promise<Response> => {
     `;
 
     await sendEmail(
-      ["book@hello.an3s.info"],
+      ["create@an3s.info"],
       `New Contact: ${safeName}${safeCompany ? ` from ${safeCompany}` : ""}`,
       notificationHtml,
       "AN3S Contact Form <email@hello.an3s.info>"
@@ -217,7 +217,7 @@ const handler = async (req: Request): Promise<Response> => {
         <p style="margin-top: 30px;">
           <strong>Andries Liebenberg</strong><br/>
           AN3S<br/>
-          <a href="mailto:book@hello.an3s.info" style="color: #00d4ff;">book@hello.an3s.info</a><br/>
+          <a href="mailto:create@an3s.info" style="color: #00d4ff;">create@an3s.info</a><br/>
           <a href="tel:+27729749703" style="color: #00d4ff;">+27 72 974 9703</a>
         </p>
         <hr style="border: none; border-top: 1px solid #ddd; margin: 30px 0;" />

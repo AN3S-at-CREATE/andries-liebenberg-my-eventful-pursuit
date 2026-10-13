@@ -84,7 +84,7 @@ const Auth = () => {
   if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <Loader2 className="h-8 w-8  text-primary" />
+        <Loader2 className="h-8 w-8  text-primary animate-spin" />
       </div>
     );
   }
@@ -183,7 +183,7 @@ const Auth = () => {
               >
                 {isSubmitting ? (
                   <>
-                    <Loader2 className="mr-2 h-4 w-4 " />
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                     {isSignUp ? "Creating account..." : "Signing in..."}
                   </>
                 ) : (

@@ -282,7 +282,7 @@ export const ContactForm = () => {
           >
             {isSubmitting ? (
               <>
-                <Loader2 className="h-5 w-5 mr-2 " />
+                <Loader2 className="h-5 w-5 mr-2 animate-spin" />
                 Sending...
               </>
             ) : (

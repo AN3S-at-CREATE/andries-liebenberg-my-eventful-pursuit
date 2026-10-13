@@ -1,4 +1,4 @@
-import { facts, careerPeriods } from "@/data/facts";
+import { facts, careerPeriods, ventureFacts } from "@/data/facts";
 import { Panel } from "@/components/brand/brand-parts";
 import { AwardWall } from "@/components/brand/award-wall";
 import { Navbar } from "@/components/layout/Navbar";
@@ -18,8 +18,8 @@ const About = () => {
     { year: careerPeriods[0].value, title: "Early Beginnings", description: "Started at Royal Diner, managing entertainment and events before higher education." },
     { year: careerPeriods[1].value, title: "Technical Foundation", description: "Technical Manager at SLS Productions, then Operations Manager at Coventry Productions." },
     { year: careerPeriods[2].value, title: "ShowGroup Era", description: "Head of Lighting Department; lighting design for televised shows." },
-    { year: careerPeriods[3].value, title: "360 Vision Events", description: "Event production and development of virtual and hybrid experiences." },
-    { year: careerPeriods[4].value, title: "Maono Moja Events", description: "CMO working on East African expansion and AI-powered solutions." },
+    { year: null, title: "360 Vision Events", description: ventureFacts["360-vision-events-group"].role },
+    { year: null, title: "Maono Moja Events", description: ventureFacts["maono-moja-events"].role },
   ];
 
   return (
@@ -64,14 +64,14 @@ const About = () => {
                 <div className="flex items-start gap-4 group">
                   <div className="w-3 h-3 rounded-full bg-primary mt-2 flex-shrink-0 group-hover:shadow-[0_0_10px_hsl(var(--pink-hsl))] transition-shadow" />
                   <div>
-                    <h3 className="font-semibold text-foreground group-hover:text-primary transition-colors">CMO and Events Manager</h3>
+                     <h3 className="font-semibold text-foreground group-hover:text-primary transition-colors">{ventureFacts["maono-moja-events"].role}</h3>
                     <p className="text-muted-foreground">Maono Moja Events — East African expansion</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-4 group">
                   <div className="w-3 h-3 rounded-full bg-secondary mt-2 flex-shrink-0 group-hover:shadow-[0_0_10px_hsl(var(--cyan-hsl))] transition-shadow" />
                   <div>
-                    <h3 className="font-semibold text-foreground group-hover:text-secondary transition-colors">Head of Marketing and Events</h3>
+                     <h3 className="font-semibold text-foreground group-hover:text-secondary transition-colors">{ventureFacts["360-vision-events-group"].role}</h3>
                     <p className="text-muted-foreground">360 Vision Events Group — South Africa</p>
                   </div>
                 </div>
@@ -107,10 +107,10 @@ const About = () => {
               <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-0.5 bg-gradient-to-b from-pink via-cyan to-pink hidden md:block" />
               <div className="space-y-8">
                 {timeline.map((item, index) => (
-                  <MotionReveal key={item.year} delay={0.1 * index}>
+                  <MotionReveal key={item.title} delay={0.1 * index}>
                     <div className={`flex flex-col md:flex-row items-center gap-4 ${index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"}`}>
                       <Card className={`glass p-6 md:w-5/12 ${index % 2 === 0 ? "md:text-right" : "md:text-left"}`}>
-                        <Badge variant={index % 2 === 0 ? "glow-primary" : "glow-secondary"} className="mb-2">{item.year}</Badge>
+                        {item.year && <Badge variant={index % 2 === 0 ? "glow-primary" : "glow-secondary"} className="mb-2">{item.year}</Badge>}
                         <h3 className="font-heading text-xl font-bold text-foreground mb-2">{item.title}</h3>
                         <p className="text-sm text-muted-foreground">{item.description}</p>
                       </Card>

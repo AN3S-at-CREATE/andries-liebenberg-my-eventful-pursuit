@@ -40,7 +40,7 @@ const CompanyDetail = () => {
     <div className="min-h-screen bg-background">
       <Seo
         title={`${company.name} | AN3S Ventures`}
-        description={`${company.name}: ${company.sector}. ${company.role}. ${company.period}.`}
+        description={company.role ? `${company.name}: ${company.sector}. ${company.role}.` : company.name}
         path={`/companies/${company.slug}`}
         jsonLd={breadcrumb([
           { name: "Home", path: "/" },
@@ -64,22 +64,18 @@ const CompanyDetail = () => {
           </Link>
 
           <div className="space-y-4">
-            <SectorBadge sector={company.sector} />
+            {company.role && <SectorBadge sector={company.sector} />}
             <h1 className="font-heading text-3xl md:text-4xl font-bold text-foreground">
               {company.name}
             </h1>
-            <p className="text-lg text-muted-foreground">{company.role}</p>
+            {company.role && <p className="text-lg text-muted-foreground">{company.role}</p>}
             
-            <div className="flex flex-wrap gap-4 text-sm text-muted-foreground">
+            {company.role && <div className="flex flex-wrap gap-4 text-sm text-muted-foreground">
               <div className="flex items-center gap-1">
                 <MapPin className="h-4 w-4" />
                 {company.location}
               </div>
-              <div className="flex items-center gap-1">
-                <Calendar className="h-4 w-4" />
-                {company.period}
-              </div>
-            </div>
+            </div>}
           </div>
         </div>
       </section>

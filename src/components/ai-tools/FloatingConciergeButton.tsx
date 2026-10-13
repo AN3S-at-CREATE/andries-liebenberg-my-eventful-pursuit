@@ -178,7 +178,7 @@ export const FloatingConciergeButton = forwardRef<HTMLDivElement>((_, ref) => {
                     </div>
                     <div className="bg-muted/50 border border-border/50 rounded-xl px-4 py-3">
                       <div className="flex items-center gap-2">
-                        <Loader2 className="w-4 h-4  text-secondary" />
+                        <Loader2 className="w-4 h-4  text-secondary animate-spin" />
                         <span className="text-sm text-muted-foreground">
                           Thinking...
                         </span>
@@ -221,7 +221,7 @@ export const FloatingConciergeButton = forwardRef<HTMLDivElement>((_, ref) => {
                     aria-label="Send message"
                   >
                     {isLoading ? (
-                      <Loader2 className="w-4 h-4 " />
+                      <Loader2 className="w-4 h-4 animate-spin" />
                     ) : (
                       <Send className="w-4 h-4" />
                     )}
