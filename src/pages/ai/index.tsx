@@ -80,14 +80,14 @@ const AI = () => {
           {/* Divider */}
           <div className="divider-secondary mb-12" />
 
-          <MotionStagger className="grid md:grid-cols-2 gap-8">
+          <CardGrid>
             {aiTools.map((tool) => (
-              <MotionItem key={tool.href}>
+              <MotionItem key={tool.href} className="h-full">
                 <Link to={tool.href} className="block h-full">
                   <Card 
                     interactive
                     glow={tool.accent === "primary" ? "primary" : "secondary"}
-                    className={`${tool.accent === "primary" ? "glass-primary  " : "glass-secondary  "} p-8 h-full group`}
+                    className={`${tool.accent === "primary" ? "glass-primary" : "glass-secondary"} p-8 h-full flex flex-col group`}
                   >
                     <div className="flex items-start justify-between mb-4">
                       <tool.icon className={`h-10 w-10 ${tool.accent === "primary" ? "text-primary" : "text-secondary"}  `} />
@@ -107,7 +107,7 @@ const AI = () => {
                 </Link>
               </MotionItem>
             ))}
-          </MotionStagger>
+          </CardGrid>
 
           <ProofCards />
 

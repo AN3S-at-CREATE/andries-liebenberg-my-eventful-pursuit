@@ -1,5 +1,6 @@
 import { Section } from "@/components/shared/section";
 import { ProofCards } from "@/components/work/proof-card";
+import { CardGrid } from "@/components/shared/card-grid";
 import { facts, careerPeriods, ventureFacts } from "@/data/facts";
 import { Panel } from "@/components/brand/brand-parts";
 import { AwardWall } from "@/components/brand/award-wall";
@@ -132,7 +133,7 @@ const About = () => {
           <div className="divider-primary mt-16 mb-8" />
 
           {/* Key Strengths */}
-          <MotionStagger className="grid md:grid-cols-3 gap-6">
+          <CardGrid>
             <MotionItem>
               <Card interactive glow="primary" className="glass-primary p-6 text-center h-full  ">
                 <Target className="h-10 w-10 text-primary mx-auto mb-4" />
@@ -154,7 +155,7 @@ const About = () => {
                 <p className="text-sm text-muted-foreground">Deep commitment to community engagement and developing future leaders.</p>
               </Card>
             </MotionItem>
-          </MotionStagger>
+          </CardGrid>
 
           {/* Divider */}
           <div className="divider-secondary mt-16 mb-8" />
@@ -189,7 +190,7 @@ const About = () => {
               </h2>
             </div>
           </MotionReveal>
-          <MotionStagger className="grid md:grid-cols-4 gap-4 mb-8">
+          <CardGrid className="mb-8">
             <MotionItem>
               <Card interactive glow="primary" className="glass p-4 text-center">
                 <Lightbulb className="h-6 w-6 text-primary mx-auto mb-2" />
@@ -214,7 +215,7 @@ const About = () => {
                 <p className="text-sm text-muted-foreground">Gamification</p>
               </Card>
             </MotionItem>
-          </MotionStagger>
+          </CardGrid>
           <MotionReveal>
             <p className="text-muted-foreground max-w-3xl mx-auto mb-8 text-center">
               My personal motto, inspired by Queen, "The Show Must Go On," reflects my calm, decisive approach under pressure and my unwavering focus on delivering results.

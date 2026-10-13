@@ -15,7 +15,7 @@ export function HomeHero() {
         <p className="text-label text-muted-foreground mb-8">EST. {facts.established.value}</p>
         <h1 className="relative isolate mb-8">
           <span aria-hidden="true" className="hero-halo absolute inset-0 -z-10" />
-          <img src={wordmark} alt={facts.brand.value} width="426" height="144" className="w-72 md:w-96 max-w-full h-auto" fetchPriority="high" />
+          <img src={wordmark} alt={facts.brand.value} width="426" height="144" className="w-56 md:w-96 max-w-full h-auto" fetchPriority="high" />
         </h1>
         <p className="text-sm font-semibold leading-7 lg:whitespace-nowrap mb-6"><GradientText>{facts.tagline.value}</GradientText></p>
         <p className="text-body text-foreground max-w-2xl mb-5">{facts.descriptor.value}</p>
