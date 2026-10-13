@@ -21,7 +21,7 @@ export function HomeHero() {
         <p className="text-body text-foreground max-w-2xl mb-5">{facts.descriptor.value}</p>
         <p className="text-body text-muted-foreground max-w-2xl mb-8">Design, websites, apps and automation for South African businesses that thought these tools were out of reach.</p>
         <div className="flex flex-col sm:flex-row gap-4">
-          <Button asChild size="lg" className="text-action"><a href={whatsappLink("Hi Andries, I found you on an3s.info and would like to discuss a project.")} target="_blank" rel="noopener noreferrer">WHATSAPP ANDRIES</a></Button>
+          <Button asChild size="lg" className="text-action text-on-glow"><a href={whatsappLink("Hi Andries, I found you on an3s.info and would like to discuss a project.")} target="_blank" rel="noopener noreferrer">WHATSAPP ANDRIES</a></Button>
           <Button asChild variant="glow-secondary" size="lg" className="text-action"><Link to="/services">SEE SERVICES</Link></Button>
         </div>
       </div>
