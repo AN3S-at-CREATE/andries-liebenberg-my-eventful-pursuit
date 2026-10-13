@@ -28,6 +28,7 @@ import { PageLoader } from "./components/loading/PageLoader";
 
 const Index = lazy(() => import("./pages/Index"));
 const Services = lazy(() => import("./pages/Services"));
+const EventPlanningGuide = lazy(() => import("./pages/ai/EventPlanningGuide"));
 const Companies = lazy(() => import("./pages/Companies"));
 const CompanyDetail = lazy(() => import("./pages/CompanyDetail"));
 const Contact = lazy(() => import("./pages/Contact"));
@@ -121,6 +122,7 @@ const App = () => {
                 <Route path="/ai/lynkie-sky" element={<LynkieSky />} />
                 <Route path="/ai/neurologix" element={<NeuroLogix />} />
                 <Route path="/ai/custom-models" element={<CustomModels />} />
+                <Route path="/ai/event-planning-guide" element={<EventPlanningGuide />} />
 
                 {/* Other routes */}
                 <Route path="/showcase" element={<Showcase />} />
