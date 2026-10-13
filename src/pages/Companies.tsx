@@ -1,3 +1,4 @@
+import { Section } from "@/components/shared/section";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { ScrollToTop } from "@/components/layout/ScrollToTop";
@@ -26,8 +27,8 @@ const Companies = () => {
       <main>
 
       {/* Hero */}
-      <section className="relative py-16 px-4 border-b border-cyan/30 overflow-hidden">
-        <div className="container max-w-6xl mx-auto relative z-10">
+      <Section className="relative   border-b border-cyan/30 overflow-hidden">
+        <div>
           <MotionReveal>
             <div className="text-center mb-8">
               <Badge variant="glow-secondary" className="mb-4">Portfolio</Badge>
@@ -38,7 +39,7 @@ const Companies = () => {
             </div>
           </MotionReveal>
 
-          <MotionReveal delay={0.2}>
+          <MotionReveal className="h-full" delay={0.2}>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <PerformanceBriefModal />
               <Button asChild variant="glow-secondary">
@@ -55,17 +56,17 @@ const Companies = () => {
             </div>
           </MotionReveal>
         </div>
-      </section>
+      </Section>
 
       {/* Divider */}
       <div className="divider-primary h-px w-full" />
 
       {/* Company Grid */}
-      <section className="py-12 px-4">
-        <div className="container max-w-6xl mx-auto">
+      <Section className=" ">
+        <div>
           <CompanyGrid />
         </div>
-      </section>
+      </Section>
 
       {/* Divider */}
       <div className="divider-secondary h-px w-full" />

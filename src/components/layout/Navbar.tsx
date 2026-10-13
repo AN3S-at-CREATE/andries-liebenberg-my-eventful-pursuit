@@ -54,7 +54,7 @@ export const Navbar = () => {
           />
         </Link>
 
-        <nav className="hidden xl:flex items-center gap-4" aria-label="Main navigation"><Link to="/services" className="text-sm text-muted-foreground hover:text-primary">Services</Link>
+        <nav className="hidden lg:flex items-center gap-3" aria-label="Main navigation"><Link to="/services" className="text-sm text-muted-foreground hover:text-primary">Services</Link><Link to="/work" className="text-sm text-muted-foreground hover:text-primary">Work</Link>
           <Link to="/" className="text-sm text-muted-foreground hover:text-primary transition-colors">
             Home
           </Link>
@@ -125,7 +125,7 @@ export const Navbar = () => {
                 href="https://github.com/AN3S-CREATE"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hidden sm:block text-muted-foreground hover:text-primary transition-colors"
+                className="hidden xl:block text-muted-foreground hover:text-primary transition-colors"
                 aria-label="GitHub Profile"
               >
                 <Github className="h-5 w-5" />
@@ -141,7 +141,7 @@ export const Navbar = () => {
                 href="https://www.linkedin.com/in/andriesliebenberg-an3s"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hidden sm:block text-muted-foreground hover:text-secondary transition-colors"
+                className="hidden xl:block text-muted-foreground hover:text-secondary transition-colors"
                 aria-label="LinkedIn Profile"
               >
                 <Linkedin className="h-5 w-5" />
@@ -165,7 +165,7 @@ export const Navbar = () => {
 
           {/* Mobile Menu */}
           <Sheet open={isOpen} onOpenChange={setIsOpen}>
-            <SheetTrigger asChild className="xl:hidden">
+            <SheetTrigger asChild className="lg:hidden">
               <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-foreground">
                 <Menu className="h-5 w-5" />
                 <span className="sr-only">Open menu</span>
@@ -189,7 +189,7 @@ export const Navbar = () => {
                 </div>
 
                 {/* Navigation Links */}
-                <nav className="flex flex-col gap-1 py-6 flex-1 overflow-y-auto" aria-label="Mobile navigation"><Link to="/services" onClick={closeMenu} className="px-3 py-3 text-muted-foreground hover:text-primary">Services</Link>
+                <nav className="flex flex-col gap-1 py-6 flex-1 overflow-y-auto" aria-label="Mobile navigation"><Link to="/services" onClick={closeMenu} className="px-3 py-3 text-muted-foreground hover:text-primary">Services</Link><Link to="/work" onClick={closeMenu} className="px-3 py-3 text-muted-foreground hover:text-primary">Work</Link>
                   <Link
                     to="/"
                     onClick={closeMenu}

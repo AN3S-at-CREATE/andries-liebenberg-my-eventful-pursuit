@@ -1,3 +1,4 @@
+import { Section } from "@/components/shared/section";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
@@ -205,8 +206,8 @@ const Admin = () => {
     return (
       <div className="min-h-screen flex flex-col">
         <Navbar />
-        <main className="flex-1 flex items-center justify-center py-16 px-4">
-          <Card className="w-full max-w-md bg-card/50 backdrop-blur-sm border-border/50">
+        <main className="flex-1"><Section>
+          <Card className="mx-auto w-full max-w-md bg-card/50 backdrop-blur-sm border-border/50">
             <CardHeader className="text-center">
               <div className="mx-auto w-12 h-12 rounded-full bg-destructive/10 flex items-center justify-center mb-4">
                 <ShieldAlert className="h-6 w-6 text-destructive" />
@@ -226,7 +227,7 @@ const Admin = () => {
               </Button>
             </CardContent>
           </Card>
-        </main>
+        </Section></main>
         <Footer />
       </div>
     );
@@ -235,7 +236,7 @@ const Admin = () => {
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
-      <main className="flex-1 container py-8">
+      <main className="flex-1"><Section>
         {/* Header */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
           <div>
@@ -483,7 +484,7 @@ const Admin = () => {
             )}
           </DialogContent>
         </Dialog>
-      </main>
+      </Section></main>
       <Footer />
     </div>
   );

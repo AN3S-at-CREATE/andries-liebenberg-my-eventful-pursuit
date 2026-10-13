@@ -1,3 +1,4 @@
+import { Section } from "@/components/shared/section";
 import { facts } from "@/data/facts";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
@@ -18,8 +19,8 @@ const Privacy = () => {
       <Navbar />
       <main>
       
-      <section className="relative py-24 px-4 overflow-hidden">
-        <div className="container max-w-4xl mx-auto relative z-10">
+      <Section className="relative   overflow-hidden">
+        <div>
           <MotionReveal>
             <div className="text-center mb-12">
               <Badge variant="glow-primary" className="mb-4">Legal</Badge>
@@ -35,8 +36,8 @@ const Privacy = () => {
           {/* Divider */}
           <div className="divider-primary mb-12" />
 
-          <MotionReveal delay={0.1}>
-            <Card className="glass border-l-4 border-l-pink p-8 mb-8" glow="primary">
+          <MotionReveal className="h-full" delay={0.1}>
+            <Card className="glass   p-8 mb-8" glow="primary">
               <h2 className="font-heading text-2xl font-bold text-foreground mb-4">
                 1. Information We Collect
               </h2>
@@ -48,8 +49,8 @@ const Privacy = () => {
             </Card>
           </MotionReveal>
 
-          <MotionReveal delay={0.2}>
-            <Card className="glass border-l-4 border-l-cyan p-8 mb-8" glow="secondary">
+          <MotionReveal className="h-full" delay={0.2}>
+            <Card className="glass   p-8 mb-8" glow="secondary">
               <h2 className="font-heading text-2xl font-bold text-foreground mb-4">
                 2. How We Use Your Information
               </h2>
@@ -63,8 +64,8 @@ const Privacy = () => {
           {/* Divider */}
           <div className="divider-secondary mb-8" />
 
-          <MotionReveal delay={0.3}>
-            <Card className="glass border-l-4 border-l-pink p-8 mb-8" glow="primary">
+          <MotionReveal className="h-full" delay={0.3}>
+            <Card className="glass   p-8 mb-8" glow="primary">
               <h2 className="font-heading text-2xl font-bold text-foreground mb-4">
                 3. POPIA Compliance
               </h2>
@@ -75,8 +76,8 @@ const Privacy = () => {
             </Card>
           </MotionReveal>
 
-          <MotionReveal delay={0.4}>
-            <Card className="glass border-l-4 border-l-cyan p-8" glow="secondary">
+          <MotionReveal className="h-full" delay={0.4}>
+            <Card className="glass   p-8" glow="secondary">
               <h2 className="font-heading text-2xl font-bold text-foreground mb-4">
                 4. Contact Us
               </h2>
@@ -86,7 +87,7 @@ const Privacy = () => {
             </Card>
           </MotionReveal>
         </div>
-      </section>
+      </Section>
 
       </main>
       <Footer />

@@ -1,234 +1,31 @@
 import { useState } from "react";
-import { Dialog, DialogContent } from "@/components/ui/dialog";
-import { Badge } from "@/components/ui/badge";
-import { X, ChevronLeft, ChevronRight, ZoomIn } from "lucide-react";
+import { Dialog, DialogContent, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+import { CardGrid } from "@/components/shared/card-grid";
 
-import eventCorporate from "@/assets/showcase/event-corporate.jpg";
-import eventGala from "@/assets/showcase/event-gala.jpg";
-import eventFestival from "@/assets/showcase/event-festival.jpg";
-import eventExpo from "@/assets/showcase/event-expo.jpg";
-import eventVip from "@/assets/showcase/event-vip.jpg";
-import eventSummit from "@/assets/showcase/event-summit.jpg";
+const photos = ["01", "02", "03", "04", "05", "08", "10"].map(id => ({
+  src: `/media/events/event-production-${id}.webp`,
+  title: id === "02" || id === "03" ? "Rig and technical build" : "Event production",
+}));
+const CAPTION = "Event production by Andries, 360 Vision Events";
 
-interface GalleryImage {
-  src: string;
-  title: string;
-  category: string;
-  description: string;
-}
-
-const galleryImages: GalleryImage[] = [
-  {
-    src: eventCorporate,
-    title: "Corporate Conference",
-    category: "Corporate Events",
-    description: "Large-scale corporate event with dramatic stage production and LED displays."
-  },
-  {
-    src: eventGala,
-    title: "Awards Gala Dinner",
-    category: "Gala & Awards",
-    description: "Elegant awards ceremony with premium dining and entertainment."
-  },
-  {
-    src: eventFestival,
-    title: "Festival Production",
-    category: "Festivals",
-    description: "Outdoor festival with massive stage, lighting rigs, and crowd engagement."
-  },
-  {
-    src: eventExpo,
-    title: "Technology Expo",
-    category: "Exhibitions",
-    description: "Interactive exhibition with cutting-edge booth designs and displays."
-  },
-  {
-    src: eventVip,
-    title: "VIP Networking",
-    category: "VIP Events",
-    description: "Exclusive networking reception with premium hospitality services."
-  },
-  {
-    src: eventSummit,
-    title: "International Summit",
-    category: "Conferences",
-    description: "World-class summit with keynote presentations and international delegates."
-  }
-];
-
-export const EventGallery = () => {
+export function EventGallery() {
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
-  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
-
-  const openLightbox = (index: number) => setSelectedIndex(index);
-  const closeLightbox = () => setSelectedIndex(null);
-
-  const goToPrevious = () => {
-    if (selectedIndex !== null) {
-      setSelectedIndex(selectedIndex === 0 ? galleryImages.length - 1 : selectedIndex - 1);
-    }
-  };
-
-  const goToNext = () => {
-    if (selectedIndex !== null) {
-      setSelectedIndex(selectedIndex === galleryImages.length - 1 ? 0 : selectedIndex + 1);
-    }
-  };
-
-  return (
-    <>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-        {galleryImages.map((image, index) => (
-          <div
-            key={index}
-            className="relative group cursor-pointer overflow-hidden rounded-xl aspect-video focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
-            onClick={() => openLightbox(index)}
-            onKeyDown={(e) => {
-              if (e.key === "Enter" || e.key === " ") {
-                e.preventDefault();
-                openLightbox(index);
-              }
-            }}
-            onMouseEnter={() => setHoveredIndex(index)}
-            onMouseLeave={() => setHoveredIndex(null)}
-            role="button"
-            tabIndex={0}
-            aria-label={`View ${image.title} gallery`}
-          >
-            <img
-              src={image.src}
-              alt={image.title}
-              className="w-full h-full object-cover  duration-500 "
-              loading="lazy"
-              decoding="async"
-              width="1024"
-              height="576"
-            />
-            
-            {/* Overlay */}
-            <div className={`absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent transition-opacity duration-300 ${
-              hoveredIndex === index ? 'opacity-90' : 'opacity-0'
-            }`} />
-            
-            {/* Glow border on hover */}
-            <div className={`absolute inset-0 border-2 rounded-xl transition-all duration-300 ${
-              hoveredIndex === index 
-                ? 'border-pink shadow-[0_0_20px_hsl(var(--pink-hsl)/0.5)]' 
-                : 'border-transparent'
-            }`} />
-            
-            {/* Content overlay */}
-            <div className={`absolute inset-0 p-4 flex flex-col justify-end transition-all duration-300 ${
-              hoveredIndex === index ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-            }`}>
-              <Badge variant="glow-primary" className="w-fit mb-2">{image.category}</Badge>
-              <h3 className="font-heading text-lg font-bold text-foreground">{image.title}</h3>
-              <p className="text-sm text-muted-foreground line-clamp-2">{image.description}</p>
-            </div>
-
-            {/* Zoom icon */}
-            <div className={`absolute top-4 right-4 p-2 rounded-full bg-primary/20 backdrop-blur-sm transition-all duration-300 ${
-              hoveredIndex === index ? 'opacity-100 scale-100' : 'opacity-0 scale-75'
-            }`}>
-              <ZoomIn className="h-5 w-5 text-primary" />
-            </div>
-          </div>
-        ))}
-      </div>
-
-      {/* Lightbox */}
-      <Dialog open={selectedIndex !== null} onOpenChange={closeLightbox}>
-        <DialogContent className="max-w-5xl w-full p-0 bg-background/95 backdrop-blur-xl border-border/50">
-          {selectedIndex !== null && (
-            <div className="relative">
-              {/* Close button */}
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    className="absolute top-4 right-4 z-10 bg-background/50 hover:bg-background/80"
-                    onClick={closeLightbox}
-                    aria-label="Close lightbox"
-                  >
-                    <X className="h-5 w-5" />
-                  </Button>
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>Close lightbox</p>
-                </TooltipContent>
-              </Tooltip>
-
-              {/* Navigation buttons */}
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    className="absolute left-4 top-1/2 -translate-y-1/2 z-10 bg-background/50 hover:bg-background/80"
-                    onClick={goToPrevious}
-                    aria-label="Previous image"
-                  >
-                    <ChevronLeft className="h-6 w-6" />
-                  </Button>
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>Previous image</p>
-                </TooltipContent>
-              </Tooltip>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    className="absolute right-4 top-1/2 -translate-y-1/2 z-10 bg-background/50 hover:bg-background/80"
-                    onClick={goToNext}
-                    aria-label="Next image"
-                  >
-                    <ChevronRight className="h-6 w-6" />
-                  </Button>
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>Next image</p>
-                </TooltipContent>
-              </Tooltip>
-
-              {/* Image */}
-              <img
-                src={galleryImages[selectedIndex].src}
-                alt={galleryImages[selectedIndex].title}
-                className="w-full h-auto rounded-t-lg"
-                loading="lazy"
-                decoding="async"
-                width="1024"
-                height="576"
-              />
-
-              {/* Info bar */}
-              <div className="p-6 border-t border-border/50">
-                <div className="flex items-center gap-3 mb-2">
-                  <Badge variant="glow-primary">{galleryImages[selectedIndex].category}</Badge>
-                  <span className="text-sm text-muted-foreground">
-                    {selectedIndex + 1} / {galleryImages.length}
-                  </span>
-                </div>
-                <h3 className="font-heading text-xl font-bold text-foreground mb-2">
-                  {galleryImages[selectedIndex].title}
-                </h3>
-                <p className="text-muted-foreground">
-                  {galleryImages[selectedIndex].description}
-                </p>
-              </div>
-            </div>
-          )}
-        </DialogContent>
-      </Dialog>
-    </>
-  );
-};
+  const selected = selectedIndex === null ? null : photos[selectedIndex];
+  return <>
+    <CardGrid>{photos.map((photo, index) => <figure key={photo.src} className="h-full flex flex-col">
+      <Button variant="ghost" onClick={() => setSelectedIndex(index)} className="unified-card h-auto p-0 overflow-hidden w-full rounded-lg" aria-label={`View ${photo.title} photo ${index + 1}`}>
+        <img src={photo.src} alt={photo.title} className="aspect-video w-full object-cover" width="1485" height="768" loading="lazy" />
+      </Button>
+      <figcaption className="py-4"><h3 className="font-semibold text-foreground mb-2">{photo.title}</h3><p className="text-caption text-muted-foreground">{CAPTION}</p></figcaption>
+    </figure>)}</CardGrid>
+    <Dialog open={selected !== null} onOpenChange={isOpen => { if (!isOpen) setSelectedIndex(null); }}>
+      <DialogContent className="max-w-5xl p-4 bg-background">
+        {selected && <><DialogTitle>{selected.title}</DialogTitle><DialogDescription>{CAPTION}</DialogDescription>
+          <img src={selected.src} alt={selected.title} width="1485" height="768" className="w-full max-h-[65vh] object-contain" />
+          <div className="flex justify-between gap-4"><Button variant="outline" onClick={() => setSelectedIndex(index => ((index ?? 0) + photos.length - 1) % photos.length)} aria-label="Previous image">←</Button><Button variant="outline" onClick={() => setSelectedIndex(index => ((index ?? 0) + 1) % photos.length)} aria-label="Next image">→</Button></div>
+        </>}
+      </DialogContent>
+    </Dialog>
+  </>;
+}

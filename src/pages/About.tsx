@@ -1,4 +1,7 @@
-import { facts, careerPeriods, ventureFacts, proofOfWork } from "@/data/facts";
+import { Section } from "@/components/shared/section";
+import { ProofCards } from "@/components/work/proof-card";
+import { CardGrid } from "@/components/shared/card-grid";
+import { facts, careerPeriods, ventureFacts } from "@/data/facts";
 import { Panel } from "@/components/brand/brand-parts";
 import { AwardWall } from "@/components/brand/award-wall";
 import { Navbar } from "@/components/layout/Navbar";
@@ -37,10 +40,11 @@ const About = () => {
       <Navbar />
       <main>
       {/* Hero Section */}
-      <section className="relative py-24 px-4 overflow-hidden">
-        <div className="container max-w-6xl mx-auto">
+      <Section className="relative   overflow-hidden">
+        <div>
           <MotionReveal>
             <div className="text-center mb-16">
+              <img src="/media/about/portrait-avatar.webp" alt="Andries Liebenberg" width="112" height="112" className="w-28 h-28 rounded-full object-cover mx-auto mb-6 border border-pink/35" />
               <Badge variant="glow-secondary" className="mb-4">Architect of Experiences, Driver of Growth</Badge>
               <h1 className="font-heading text-4xl md:text-6xl font-bold text-foreground mb-6">
                 {facts.person.value}
@@ -54,7 +58,7 @@ const About = () => {
           <div className="divider-primary mb-12" />
 
           {/* Current Roles */}
-          <MotionReveal delay={0.2}>
+          <MotionReveal className="h-full" delay={0.2}>
             <div className="py-8 mb-12 border-y border-pink/35">
               <h2 className="font-heading text-2xl font-bold text-foreground mb-6 flex items-center gap-3">
                 <Briefcase className="h-6 w-6 text-primary" />
@@ -80,7 +84,7 @@ const About = () => {
           </MotionReveal>
 
           {/* Heritage Section */}
-          <MotionReveal delay={0.3}>
+          <MotionReveal className="h-full" delay={0.3}>
             <div className="py-8 mb-12 border-y border-cyan/35">
               <div className="flex flex-col md:flex-row items-center gap-6">
                 <Heart className="h-16 w-16 text-secondary flex-shrink-0 " />
@@ -99,7 +103,7 @@ const About = () => {
           <div className="divider-secondary mb-12" />
 
           {/* Career Timeline */}
-          <MotionReveal delay={0.4}>
+          <MotionReveal className="h-full" delay={0.4}>
             <h2 className="font-heading text-3xl font-bold text-foreground mb-8 text-center">
               Career Timeline
             </h2>
@@ -129,44 +133,38 @@ const About = () => {
           <div className="divider-primary mt-16 mb-8" />
 
           {/* Key Strengths */}
-          <MotionStagger className="grid md:grid-cols-3 gap-6">
+          <CardGrid>
             <MotionItem>
-              <Card interactive glow="primary" className="glass-primary p-6 text-center h-full border-t-2 border-t-pink">
+              <Card interactive glow="primary" className="glass-primary p-6 text-center h-full  ">
                 <Target className="h-10 w-10 text-primary mx-auto mb-4" />
                 <h3 className="font-heading text-lg font-bold text-foreground mb-2">Leadership</h3>
                 <p className="text-sm text-muted-foreground">Strategic planning and creative problem-solving that drives results.</p>
               </Card>
             </MotionItem>
             <MotionItem>
-              <Card interactive glow="secondary" className="glass-secondary p-6 text-center h-full border-t-2 border-t-cyan">
+              <Card interactive glow="secondary" className="glass-secondary p-6 text-center h-full  ">
                 <Users className="h-10 w-10 text-secondary mx-auto mb-4" />
                 <h3 className="font-heading text-lg font-bold text-foreground mb-2">Client-Centric</h3>
                 <p className="text-sm text-muted-foreground">Ensuring every project exceeds expectations with personalized approaches.</p>
               </Card>
             </MotionItem>
             <MotionItem>
-              <Card interactive glow="primary" className="glass-primary p-6 text-center h-full border-t-2 border-t-pink">
+              <Card interactive glow="primary" className="glass-primary p-6 text-center h-full  ">
                 <GraduationCap className="h-10 w-10 text-primary mx-auto mb-4" />
                 <h3 className="font-heading text-lg font-bold text-foreground mb-2">Mentorship</h3>
                 <p className="text-sm text-muted-foreground">Deep commitment to community engagement and developing future leaders.</p>
               </Card>
             </MotionItem>
-          </MotionStagger>
+          </CardGrid>
 
           {/* Divider */}
           <div className="divider-secondary mt-16 mb-8" />
 
-          <div className="py-8 mb-12 border-y border-blue/35">
-            <h2 className="text-label text-foreground mb-4">Proof of work</h2>
-            <h3 className="font-heading text-2xl font-bold text-foreground mb-6">{proofOfWork.title}</h3>
-            <ul className="list-disc pl-5 space-y-4 text-muted-foreground">
-              {proofOfWork.items.map((item) => <li key={item.value}>{item.value}</li>)}
-            </ul>
-          </div>
+          <ProofCards />
 
           <Panel label="AWARDS" tone="awards"><AwardWall/></Panel>
           {/* Mentorship Section */}
-          <MotionReveal delay={0.8}>
+          <MotionReveal className="h-full" delay={0.8}>
             <div className="mt-12 py-8 border-y border-pink/35">
               <div className="flex flex-col md:flex-row items-center gap-6">
                 <Award className="h-16 w-16 text-primary flex-shrink-0" />
@@ -192,7 +190,7 @@ const About = () => {
               </h2>
             </div>
           </MotionReveal>
-          <MotionStagger className="grid md:grid-cols-4 gap-4 mb-8">
+          <CardGrid className="mb-8">
             <MotionItem>
               <Card interactive glow="primary" className="glass p-4 text-center">
                 <Lightbulb className="h-6 w-6 text-primary mx-auto mb-2" />
@@ -217,7 +215,7 @@ const About = () => {
                 <p className="text-sm text-muted-foreground">Gamification</p>
               </Card>
             </MotionItem>
-          </MotionStagger>
+          </CardGrid>
           <MotionReveal>
             <p className="text-muted-foreground max-w-3xl mx-auto mb-8 text-center">
               My personal motto, inspired by Queen, "The Show Must Go On," reflects my calm, decisive approach under pressure and my unwavering focus on delivering results.
@@ -225,7 +223,7 @@ const About = () => {
           </MotionReveal>
 
           {/* CTA */}
-          <MotionReveal delay={1.0}>
+          <MotionReveal className="h-full" delay={1.0}>
             <div className="text-center mt-12 flex flex-wrap justify-center gap-4">
               <Button asChild size="lg" variant="glow">
                 <Link to="/expertise" className="inline-flex items-center gap-2">
@@ -242,7 +240,7 @@ const About = () => {
             </div>
           </MotionReveal>
         </div>
-      </section>
+      </Section>
       </main>
 
       <Footer />

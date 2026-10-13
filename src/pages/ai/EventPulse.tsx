@@ -1,3 +1,5 @@
+import { CardGrid } from "@/components/shared/card-grid";
+import { Section } from "@/components/shared/section";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { ScrollToTop } from "@/components/layout/ScrollToTop";
@@ -26,8 +28,8 @@ const EventPulse = () => {
       <Navbar />
       <main>
       
-      <section className="relative py-24 px-4 overflow-hidden">
-        <div className="container max-w-6xl mx-auto relative z-10">
+      <Section className="relative   overflow-hidden">
+        <div>
           <MotionReveal>
             <div className="text-center mb-16">
               <Badge variant="glow-primary" className="mb-4">AI Tool</Badge>
@@ -46,33 +48,33 @@ const EventPulse = () => {
           {/* Divider */}
           <div className="divider-secondary mb-12" />
 
-          <div className="grid md:grid-cols-3 gap-8 mb-12">
-            <MotionReveal delay={0.2}>
-              <Card className="glass-primary border-l-4 border-l-pink p-8 text-center group" interactive glow="primary">
+          <CardGrid>
+            <MotionReveal className="h-full" delay={0.2}>
+              <Card className="h-full flex flex-col glass-primary   p-8 text-center group" interactive glow="primary">
                 <Calendar className="h-10 w-10 text-primary mx-auto mb-4  duration-300 " />
                 <h3 className="font-heading text-lg font-bold text-foreground mb-2 group-hover:text-primary transition-colors">Intelligent Scheduling</h3>
                 <p className="text-sm text-muted-foreground">AI-powered calendar optimization for seamless event coordination.</p>
               </Card>
             </MotionReveal>
 
-            <MotionReveal delay={0.3}>
-              <Card className="glass-secondary border-l-4 border-l-cyan p-8 text-center group" interactive glow="secondary">
+            <MotionReveal className="h-full" delay={0.3}>
+              <Card className="h-full flex flex-col glass-secondary   p-8 text-center group" interactive glow="secondary">
                 <BarChart3 className="h-10 w-10 text-secondary mx-auto mb-4  duration-300 " />
                 <h3 className="font-heading text-lg font-bold text-foreground mb-2 group-hover:text-secondary transition-colors">Predictive Analytics</h3>
                 <p className="text-sm text-muted-foreground">Forecast attendance, budget needs, and resource allocation.</p>
               </Card>
             </MotionReveal>
 
-            <MotionReveal delay={0.4}>
-              <Card className="glass-primary border-l-4 border-l-pink p-8 text-center group" interactive glow="primary">
+            <MotionReveal className="h-full" delay={0.4}>
+              <Card className="h-full flex flex-col glass-primary   p-8 text-center group" interactive glow="primary">
                 <Clock className="h-10 w-10 text-primary mx-auto mb-4  duration-300 " />
                 <h3 className="font-heading text-lg font-bold text-foreground mb-2 group-hover:text-primary transition-colors">Real-time Insights</h3>
                 <p className="text-sm text-muted-foreground">Live dashboards for event performance monitoring.</p>
               </Card>
             </MotionReveal>
-          </div>
+          </CardGrid>
 
-          <MotionReveal delay={0.5}>
+          <MotionReveal className="h-full" delay={0.5}>
             <div className="text-center flex flex-wrap gap-4 justify-center">
               <Button asChild size="lg" variant="glow">
                 <Link to="/contact" className="inline-flex items-center gap-2">
@@ -88,7 +90,7 @@ const EventPulse = () => {
             </div>
           </MotionReveal>
         </div>
-      </section>
+      </Section>
 
       </main>
       <Footer />
