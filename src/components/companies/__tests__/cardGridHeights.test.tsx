@@ -6,6 +6,9 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { CompaniesPreview } from "@/components/companies/CompaniesPreview";
 import { CompanyCard } from "@/components/companies/CompanyCard";
 import { companies } from "@/data/companies";
+import { ServiceGrid } from "@/components/services/service-grid";
+import { disciplines } from "@/data/disciplines";
+import { awardNames, proofOfWork, serviceOffers, ventureFacts } from "@/data/facts";
 
 /**
  * Visual regression guard for card grids.
@@ -74,5 +77,32 @@ describe("company card grid – equal height contract", () => {
       }
       unmount();
     }
+  });
+});
+
+describe("authorised content update", () => {
+  it("groups every listed offer in discipline order with exact WhatsApp messages", () => {
+    const { container } = renderWithProviders(<ServiceGrid />);
+    expect(Array.from(container.querySelectorAll("h3"), heading => heading.textContent)).toEqual(disciplines.map(discipline => discipline.title));
+    const links = container.querySelectorAll("a");
+    expect(links).toHaveLength(serviceOffers.length);
+    serviceOffers.forEach((offer, index) => {
+      expect(offer.source).toBeTruthy();
+      expect(new URL(links[index].href).searchParams.get("text")).toBe(`Hi Andries, I'm interested in ${offer.title}.`);
+      expect(links[index].parentElement?.textContent).toContain(`${offer.price} excl. VAT if applicable`);
+    });
+    expect(container.textContent).not.toMatch(/Care Plan|one workflow|credited against|Simple web app|placeholder/i);
+  });
+
+  it("records only the supplied roles, sourced proof and undated awards", () => {
+    expect(ventureFacts["eventpulse-ai"].role).toBe("Co-Founder & CTO");
+    expect(ventureFacts["lynkie-sky-ai"].role).toBe("Co-Founder & Chief Innovation Officer");
+    expect(ventureFacts["veralogix-group"].role).toBe("Group Lead Engineer, AI & Data Platforms");
+    expect(ventureFacts["maono-moja-events"].role).toBe("Managing Director (Maono Moja Events Group)");
+    expect(ventureFacts["rubies-and-pearls"].role).toBe("Head of Business Development");
+    expect(proofOfWork.items).toHaveLength(4);
+    proofOfWork.items.forEach(item => expect(item.source).toBe("CV p3"));
+    const names = ["Africa CEO Forum Awards", "South African Small Business Awards", "EY Entrepreneur Of The Year", "Absa Supplier Development Award", "BCX Digital Innovation Awards"];
+    awardNames.filter(award => names.includes(award.value)).forEach(award => expect(award).not.toHaveProperty("year"));
   });
 });

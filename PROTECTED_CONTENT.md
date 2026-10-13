@@ -59,7 +59,7 @@
 
 ### Footer (`src/components/layout/Footer.tsx`)
 - AN3S Brand + Description
-- Contact: email@hello.an3s.info, book@hello.an3s.info, +27 72 974 9703
+- Contact: email@hello.an3s.info, create@an3s.info, +27 72 974 9703
 - Links: an3s.info, Portfolio, GitHub, LinkedIn
 - Copyright + POPIA notice
 
@@ -161,7 +161,7 @@ Contains 10 South African companies:
 ## 9. Contact Information (DO NOT DELETE)
 
 - **Primary Email:** email@hello.an3s.info
-- **Booking Email:** book@hello.an3s.info
+- **Booking Email:** create@an3s.info
 - **WhatsApp/Phone:** +27 72 974 9703
 - **GitHub:** https://github.com/AN3S-CREATE
 - **LinkedIn:** https://www.linkedin.com/in/andriesliebenberg-an3s

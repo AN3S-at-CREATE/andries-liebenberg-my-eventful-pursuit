@@ -3,10 +3,10 @@ export type Company = {
   id: string;
   slug: string;
   name: string;
-  sector: "Events/Production" | "Projects/Construction" | "Consulting/Strategy" | "Retail/Apparel" | "Tourism/Experiences" | "Industrial/B2B Services";
-  description: string;
-  highlights: string[];
-  location: string;
+  sector: "Events/Production" | "Projects/Construction" | "Consulting/Strategy" | "Retail/Apparel" | "Tourism/Experiences" | "Industrial/B2B Services" | "AI/Software" | "AI & Data Platforms";
+  description?: string;
+  highlights?: string[];
+  location?: string;
   role: string | null;
 };
 
@@ -150,6 +150,27 @@ export const companies: Company[] = [
     ],
     location: "South Africa",
     role: ventureFacts["prisma-entertainment"].role
+  },
+  {
+    id: "eventpulse-ai",
+    slug: "eventpulse-ai",
+    name: ventureFacts["eventpulse-ai"].name,
+    sector: ventureFacts["eventpulse-ai"].sector,
+    role: ventureFacts["eventpulse-ai"].role
+  },
+  {
+    id: "lynkie-sky-ai",
+    slug: "lynkie-sky-ai",
+    name: ventureFacts["lynkie-sky-ai"].name,
+    sector: ventureFacts["lynkie-sky-ai"].sector,
+    role: ventureFacts["lynkie-sky-ai"].role
+  },
+  {
+    id: "veralogix-group",
+    slug: "veralogix-group",
+    name: ventureFacts["veralogix-group"].name,
+    sector: ventureFacts["veralogix-group"].sector,
+    role: ventureFacts["veralogix-group"].role
   }
 ];
 

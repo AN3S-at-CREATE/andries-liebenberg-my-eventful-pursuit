@@ -5,6 +5,7 @@ import { MotionReveal } from "@/components/motion/MotionReveal";
 import { Card } from "@/components/ui/card";
 import { Seo } from "@/components/seo/Seo";
 import { breadcrumb } from "@/lib/breadcrumb";
+import { lynkieSkyLaunch } from "@/data/facts";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
@@ -30,7 +31,7 @@ const LynkieSky = () => {
         <div className="container max-w-6xl mx-auto relative z-10">
           <MotionReveal>
             <div className="text-center mb-16">
-              <Badge variant="glow-secondary" className="mb-4">AI project</Badge>
+              <Badge variant="glow-secondary" className="mb-4">{lynkieSkyLaunch.value}</Badge>
               <h1 className="font-heading text-4xl md:text-6xl font-bold text-foreground mb-6">
                 Lynkie Sky
               </h1>
@@ -76,13 +77,13 @@ const LynkieSky = () => {
             <Card className="glass border-l-4 border-l-cyan border-r-4 border-r-pink p-8 text-center max-w-2xl mx-auto" glow="both">
               <Sparkles className="h-12 w-12 text-secondary mx-auto mb-4" />
               <h3 className="font-heading text-xl font-bold text-foreground mb-3">
-                Be the First to Know
+                {lynkieSkyLaunch.value}
               </h3>
               <p className="text-muted-foreground mb-6">Discuss the project and its current availability with Andries.</p>
               <div className="flex flex-wrap gap-4 justify-center">
                 <Button asChild size="lg" variant="glow-secondary">
                   <Link to="/contact" className="inline-flex items-center gap-2">
-                    Join Waitlist
+                    Discuss Lynkie Sky
                     <ArrowRight className="h-4 w-4" />
                   </Link>
                 </Button>

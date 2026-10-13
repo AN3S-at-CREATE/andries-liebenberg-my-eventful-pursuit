@@ -82,8 +82,8 @@ export const ventureFacts = {
     "year": 2026
   },
   "maono-moja-events": {
-    "role": "Head of Marketing and Events",
-    "source": "Andries confirmed roles; venture dates withheld, 13 October 2026",
+    "role": "Managing Director (Maono Moja Events Group)",
+    "source": "Andries content update, 13 October 2026",
     "year": 2026
   },
   "k-and-d-resources": {
@@ -107,13 +107,34 @@ export const ventureFacts = {
     "year": 2026
   },
   "rubies-and-pearls": {
-    "role": null,
-    "source": "Andries confirmed roles; venture dates withheld, 13 October 2026",
+    "role": "Head of Business Development",
+    "source": "Andries content update, 13 October 2026",
     "year": 2026
   },
   "prisma-entertainment": {
     "role": "Project Manager",
     "source": "Andries confirmed roles; venture dates withheld, 13 October 2026",
+    "year": 2026
+  },
+  "eventpulse-ai": {
+    "name": "EventPulse AI",
+    "sector": "AI/Software",
+    "role": "Co-Founder & CTO",
+    "source": "Andries content update, 13 October 2026",
+    "year": 2026
+  },
+  "lynkie-sky-ai": {
+    "name": "Lynkie Sky AI",
+    "sector": "AI/Software",
+    "role": "Co-Founder & Chief Innovation Officer",
+    "source": "Andries content update, 13 October 2026",
+    "year": 2026
+  },
+  "veralogix-group": {
+    "name": "Veralogix Group",
+    "sector": "AI & Data Platforms",
+    "role": "Group Lead Engineer, AI & Data Platforms",
+    "source": "Andries content update, 13 October 2026",
     "year": 2026
   }
 } as const;
@@ -150,8 +171,7 @@ export const careerPeriods = [
 export const awardNames = [
   {
     "value": "Africa CEO Forum Awards",
-    "source": "Award wall names supplied by Andries, 11 October 2026",
-    "year": 2026
+    "source": "Award wall names supplied by Andries, 11 October 2026"
   },
   {
     "value": "Young Entrepreneur of the Year (YE Awards 2019)",
@@ -160,8 +180,7 @@ export const awardNames = [
   },
   {
     "value": "South African Small Business Awards",
-    "source": "Award wall names supplied by Andries, 11 October 2026",
-    "year": 2026
+    "source": "Award wall names supplied by Andries, 11 October 2026"
   },
   {
     "value": "National Presidential Small & Cooperatives Awards 2016",
@@ -170,8 +189,7 @@ export const awardNames = [
   },
   {
     "value": "EY Entrepreneur Of The Year",
-    "source": "Award wall names supplied by Andries, 11 October 2026",
-    "year": 2026
+    "source": "Award wall names supplied by Andries, 11 October 2026"
   },
   {
     "value": "The South African Future Trust Awards 2025",
@@ -180,72 +198,141 @@ export const awardNames = [
   },
   {
     "value": "Absa Supplier Development Award",
-    "source": "Award wall names supplied by Andries, 11 October 2026",
-    "year": 2026
+    "source": "Award wall names supplied by Andries, 11 October 2026"
   },
   {
     "value": "BCX Digital Innovation Awards",
-    "source": "Award wall names supplied by Andries, 11 October 2026",
+    "source": "Award wall names supplied by Andries, 11 October 2026"
+  }
+] as const;
+
+/** Current offers and prices supplied by Andries; no inferred scope or results. */
+export const serviceOffers = [
+  {
+    "discipline": "AI Systems & Automation",
+    "title": "AI Chatbot / WhatsApp Assistant",
+    "price": "from R4,500",
+    "vat": "excl. VAT if applicable",
+    "source": "Andries content update, 13 October 2026",
+    "year": 2026
+  },
+  {
+    "discipline": "AI Systems & Automation",
+    "title": "Automation Starter",
+    "price": "from R3,500",
+    "vat": "excl. VAT if applicable",
+    "source": "Andries content update, 13 October 2026",
+    "year": 2026
+  },
+  {
+    "discipline": "AI Systems & Automation",
+    "title": "AI Workflow Build",
+    "price": "from R7,500",
+    "vat": "excl. VAT if applicable",
+    "source": "Andries content update, 13 October 2026",
+    "year": 2026
+  },
+  {
+    "discipline": "AI Systems & Automation",
+    "title": "Private AI Knowledge Assistant",
+    "price": "quote only after a R2,500 Discovery Sprint",
+    "vat": "excl. VAT if applicable",
+    "source": "Andries content update, 13 October 2026",
+    "year": 2026
+  },
+  {
+    "discipline": "Business Growth",
+    "title": "AI & Growth Audit",
+    "price": "from R1,500",
+    "vat": "excl. VAT if applicable",
+    "source": "Andries content update, 13 October 2026",
+    "year": 2026
+  },
+  {
+    "discipline": "Web & App Development",
+    "title": "Websites",
+    "price": "R2,999 one-page / R4,500 up to 5 pages",
+    "vat": "excl. VAT if applicable",
+    "source": "Andries content update, 13 October 2026",
+    "year": 2026
+  },
+  {
+    "discipline": "Web & App Development",
+    "title": "Custom Business System / CRM / Portal",
+    "price": "from R9,500",
+    "vat": "excl. VAT if applicable",
+    "source": "Andries content update, 13 October 2026",
+    "year": 2026
+  },
+  {
+    "discipline": "Web & App Development",
+    "title": "Integration & Custom Script",
+    "price": "from R7,500",
+    "vat": "excl. VAT if applicable",
+    "source": "Andries content update, 13 October 2026",
+    "year": 2026
+  },
+  {
+    "discipline": "Web & App Development",
+    "title": "UI/UX Design & Clickable Prototype",
+    "price": "from R3,500",
+    "vat": "excl. VAT if applicable",
+    "source": "Andries content update, 13 October 2026",
+    "year": 2026
+  },
+  {
+    "discipline": "Web & App Development",
+    "title": "Mobile App",
+    "price": "on request",
+    "vat": "excl. VAT if applicable",
+    "source": "Andries content update, 13 October 2026",
+    "year": 2026
+  },
+  {
+    "discipline": "Brand Strategy",
+    "title": "Logo / Brand Identity",
+    "price": "Logo from R1,500 / Brand Identity from R3,500",
+    "vat": "excl. VAT if applicable",
+    "source": "Andries content update, 13 October 2026",
+    "year": 2026
+  },
+  {
+    "discipline": "3D Virtualization & Events",
+    "title": "Event 3D Visualisation & Technical Plan",
+    "price": "quote only",
+    "vat": "excl. VAT if applicable",
+    "source": "Andries content update, 13 October 2026",
     "year": 2026
   }
 ] as const;
 
-/** Prices supplied by Andries; each offer carries its VAT qualification. */
-export const servicePrices = {
-  "Graphic Design": [
+/** Confirmed launch wording, separate from withheld venture periods. */
+export const lynkieSkyLaunch = {
+  "value": "Launched 2025",
+  "source": "Andries content update, 13 October 2026",
+  "year": 2025
+} as const;
+
+/** Exact CV evidence authorised for About and AI Systems. */
+export const proofOfWork = {
+  "title": "Andries's work while at Veralogix Group",
+  "source": "CV p3",
+  "items": [
     {
-      "value": "Logo Starter from R1,500",
-      "vat": "excl. VAT if applicable",
-      "source": "Andries supplied service prices, 13 October 2026",
-      "year": 2026
+      "value": "Built a self-hosted group data lake and a private AI chat platform, keeping sensitive data on group infrastructure in line with POPIA.",
+      "source": "CV p3"
     },
     {
-      "value": "Brand Identity Starter from R3,500",
-      "vat": "excl. VAT if applicable",
-      "source": "Andries supplied service prices, 13 October 2026",
-      "year": 2026
-    }
-  ],
-  "Website Design & Development": [
-    {
-      "value": "One-page site from R2,999",
-      "vat": "excl. VAT if applicable",
-      "source": "Andries supplied service prices, 13 October 2026",
-      "year": 2026
+      "value": "Built a document-search AI (RAG) pipeline: 83,838 chunks, all PII-scanned.",
+      "source": "CV p3"
     },
     {
-      "value": "Starter Website (up to 5 pages) R4,500",
-      "vat": "excl. VAT if applicable",
-      "source": "Andries supplied service prices, 13 October 2026",
-      "year": 2026
+      "value": "Took FlowLogix, an offline-first collaboration platform, from first commit to production readiness in 7 days.",
+      "source": "CV p3"
     },
     {
-      "value": "Care Plan R650 per month",
-      "vat": "excl. VAT if applicable",
-      "source": "Andries supplied service prices, 13 October 2026",
-      "year": 2026
-    }
-  ],
-  "Marketing & Workflow Automation": [
-    {
-      "value": "Automation Starter (one workflow) from R3,500",
-      "vat": "excl. VAT if applicable",
-      "source": "Andries supplied service prices, 13 October 2026",
-      "year": 2026
-    }
-  ],
-  "App Development": [
-    {
-      "value": "Simple web app or portal from R9,500",
-      "vat": "excl. VAT if applicable",
-      "source": "Andries supplied service prices, 13 October 2026",
-      "year": 2026
-    },
-    {
-      "value": "Discovery Sprint R2,500, credited against the build",
-      "vat": "excl. VAT if applicable",
-      "source": "Andries supplied service prices, 13 October 2026",
-      "year": 2026
+      "value": "68 repos and 617 commits in a 60-day window.",
+      "source": "CV p3"
     }
   ]
 } as const;
