@@ -61,4 +61,18 @@ describe("company card grid – equal height contract", () => {
     expect(link).toHaveClass("h-full");
     expect(card).toHaveClass("h-full");
   });
+
+  it("shows only confirmed roles and never venture dates", () => {
+    for (const company of companies) {
+      const { container, unmount } = renderWithProviders(<CompanyCard company={company} />);
+      expect(container).toHaveTextContent(company.name);
+      expect(container.textContent).not.toMatch(/\b(?:19|20)\d{2}\b|Present|awaiting confirmation/);
+      if (company.role) {
+        expect(container).toHaveTextContent(company.role);
+      } else {
+        expect(container.textContent?.trim()).toBe(company.name);
+      }
+      unmount();
+    }
+  });
 });
