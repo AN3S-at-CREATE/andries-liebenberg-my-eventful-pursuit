@@ -1,6 +1,7 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import { checkRateLimit, getClientIP, rateLimitResponse } from "../_shared/rateLimit.ts";
+import { facts } from "../../../src/data/facts.ts";
 
 const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY");
 const SUPABASE_URL = Deno.env.get("SUPABASE_URL");
@@ -207,7 +208,7 @@ const handler = async (req: Request): Promise<Response> => {
     const confirmationHtml = `
       <div style="font-family: Inter, sans-serif; max-width: 600px; margin: 0 auto;">
         <h1 style="color: #00d4ff;">Thank you!</h1>
-        <p>I've received your message and will get back to you within 24-48 hours.</p>
+        <p>I've received your message. ${facts.responsePromise.value}.</p>
         <p>In the meantime, feel free to:</p>
         <ul>
           <li><a href="https://wa.me/27729749703" style="color: #00d4ff;">WhatsApp me directly</a> for urgent matters</li>
