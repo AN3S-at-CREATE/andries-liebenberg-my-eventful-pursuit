@@ -41,6 +41,7 @@ const entries: SitemapEntry[] = [
   { path: "/ai/lynkie-sky", changefreq: "monthly", priority: "0.6" },
   { path: "/ai/neurologix", changefreq: "monthly", priority: "0.6" },
   { path: "/ai/custom-models", changefreq: "monthly", priority: "0.6" },
+  { path: "/ai/event-planning-guide", changefreq: "monthly", priority: "0.6" },
   { path: "/showcase", changefreq: "monthly", priority: "0.7" },
   { path: "/services", changefreq: "monthly", priority: "0.8" },
   { path: "/companies", changefreq: "weekly", priority: "0.8" },
