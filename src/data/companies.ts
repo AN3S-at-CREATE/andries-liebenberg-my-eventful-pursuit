@@ -7,8 +7,7 @@ export type Company = {
   description: string;
   highlights: string[];
   location: string;
-  period: string;
-  role: string;
+  role: string | null;
 };
 
 export const companies: Company[] = [
@@ -24,7 +23,6 @@ export const companies: Company[] = [
       "Large-scale venue management"
     ],
     location: "South Africa",
-    period: ventureFacts["360-vision-events-group"].period,
     role: ventureFacts["360-vision-events-group"].role
   },
   {
@@ -39,7 +37,6 @@ export const companies: Company[] = [
       "Contract cleaning services"
     ],
     location: "South Africa",
-    period: ventureFacts["360-vision-events-cleaning"].period,
     role: ventureFacts["360-vision-events-cleaning"].role
   },
   {
@@ -54,7 +51,6 @@ export const companies: Company[] = [
       "Development consulting"
     ],
     location: "South Africa",
-    period: ventureFacts["strydom-projects"].period,
     role: ventureFacts["strydom-projects"].role
   },
   {
@@ -69,7 +65,6 @@ export const companies: Company[] = [
       "Festival production"
     ],
     location: "South Africa",
-    period: ventureFacts["maono-moja-events"].period,
     role: ventureFacts["maono-moja-events"].role
   },
   {
@@ -84,7 +79,6 @@ export const companies: Company[] = [
       "Supply chain management"
     ],
     location: "South Africa",
-    period: ventureFacts["k-and-d-resources"].period,
     role: ventureFacts["k-and-d-resources"].role
   },
   {
@@ -99,7 +93,6 @@ export const companies: Company[] = [
       "Group travel coordination"
     ],
     location: "South Africa",
-    period: ventureFacts["adventure-freaksa"].period,
     role: ventureFacts["adventure-freaksa"].role
   },
   {
@@ -114,7 +107,6 @@ export const companies: Company[] = [
       "Digital transformation"
     ],
     location: "South Africa",
-    period: ventureFacts["odm-studio"].period,
     role: ventureFacts["odm-studio"].role
   },
   {
@@ -129,7 +121,6 @@ export const companies: Company[] = [
       "E-commerce operations"
     ],
     location: "South Africa",
-    period: ventureFacts["bobby-verd"].period,
     role: ventureFacts["bobby-verd"].role
   },
   {
@@ -144,7 +135,6 @@ export const companies: Company[] = [
       "Premium event hosting"
     ],
     location: "South Africa",
-    period: ventureFacts["rubies-and-pearls"].period,
     role: ventureFacts["rubies-and-pearls"].role
   },
   {
@@ -159,7 +149,6 @@ export const companies: Company[] = [
       "Artist management"
     ],
     location: "South Africa",
-    period: ventureFacts["prisma-entertainment"].period,
     role: ventureFacts["prisma-entertainment"].role
   }
 ];

@@ -116,6 +116,8 @@
 @keyframes glow-breathe { 0%,100% { opacity: .65; } 50% { opacity: 1; } }
 /* Radix/shadcn travelling entrance effects are intentionally still under the brand rules. */
 *, *::before, *::after { animation: none !important; }
+/* Functional loading spinners are the authorised exception; wordmarks remain still. */
+@media (prefers-reduced-motion: no-preference) { .animate-spin { animation: spin 1s linear infinite !important; } }
 .glow-breathe { animation: glow-breathe 4s ease-in-out infinite; }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
 h1, h2, h3, h4, h5, h6 { text-shadow: none; }

@@ -41,7 +41,7 @@ export const Footer = () => {
               <li className="flex items-center gap-2">
                 <Mail className="h-4 w-4 text-secondary" />
                 <a href={`mailto:${facts.email.value}`} className="hover:text-secondary transition-colors">
-                  book@hello.an3s.info
+                  create@an3s.info
                 </a>
               </li>
               <li className="flex items-center gap-2">

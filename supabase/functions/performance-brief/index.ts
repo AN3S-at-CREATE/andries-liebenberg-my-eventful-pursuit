@@ -72,7 +72,7 @@ serve(async (req) => {
       );
     }
 
-    const companyContext = JSON.stringify({name: company.name, sector: company.sector, role: company.role, period: company.period});
+    const companyContext = JSON.stringify({name: company.name, sector: company.sector, role: company.role});
 
     const audienceInstructions: Record<string, string> = {
       investor: "Discuss venture identity and possible scope questions. Do not claim growth or financial results.",
@@ -84,7 +84,7 @@ serve(async (req) => {
 
 CRITICAL RULES:
 1. NEVER invent data, statistics, clients, contracts, or figures not provided
-2. No verified financials, growth, client counts, project counts or satisfaction data are available. Omit all numerical performance claims; never guess roles awaiting confirmation.
+2. No verified financials, growth, client counts, project counts or satisfaction data are available. Omit all numerical performance claims; never guess unconfirmed roles or venture dates.
 3. Keep the brief under 800 tokens
 4. Use professional, confident language
 5. Format with clear sections: Overview, Role, Sector, and Discussion

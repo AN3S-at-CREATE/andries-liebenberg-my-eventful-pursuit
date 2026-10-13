@@ -70,7 +70,7 @@ const Contact = () => {
                         href={`mailto:${facts.email.value}`} 
                         className="text-foreground hover:text-secondary transition-colors"
                       >
-                        book@hello.an3s.info
+                        create@an3s.info
                       </a>
                     </div>
                   </div>

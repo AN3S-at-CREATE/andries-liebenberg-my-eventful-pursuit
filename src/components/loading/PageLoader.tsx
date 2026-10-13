@@ -7,7 +7,7 @@ export function PageLoader() {
       role="status"
       aria-label="Loading content"
     >
-      <Loader2 className="h-8 w-8  text-primary" aria-hidden="true" />
+      <Loader2 className="h-8 w-8  text-primary animate-spin" aria-hidden="true" />
     </div>
   );
 }
