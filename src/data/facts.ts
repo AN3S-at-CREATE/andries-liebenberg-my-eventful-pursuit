@@ -10,6 +10,12 @@ export const facts = {
     "source": "Andries authorised content brief, 11 October 2026",
     "year": 2026
   },
+  "careerStart": {
+    "value": 2000,
+    "label": "since 2000",
+    "source": "Andries cleanup brief, 13 October 2026",
+    "year": 2026
+  },
   "established": {
     "value": 2003,
     "source": "Andries authorised content brief, 11 October 2026",
@@ -21,7 +27,7 @@ export const facts = {
     "year": 2026
   },
   "email": {
-    "value": "book@hello.an3s.info",
+    "value": "create@an3s.info",
     "source": "Andries authorised content brief, 11 October 2026",
     "year": 2026
   },
@@ -47,8 +53,9 @@ export const facts = {
   }
 } as const;
 
-/** Derived tenure since the verified establishment year, not a separate career claim. */
-export const yearsExperience = new Date().getFullYear() - facts.established.value;
+/** Experience is calculated from the confirmed career start, separately from establishment. */
+export const careerStart = facts.careerStart.value;
+export const yearsExperience = new Date().getFullYear() - careerStart;
 export const whatsappNumber = facts.whatsapp.value.replace(/\D/g, "");
 export const whatsappUrl = `https://wa.me/${whatsappNumber}`;
 /** Build a service-specific contact link without duplicating contact facts. */
@@ -57,67 +64,57 @@ export function whatsappLink(message: string): string { return `${whatsappUrl}?t
 // No client event permissions have been supplied.
 export const permittedEvents: { value: string; source: string; year: number; clientPermission: true }[] = [];
 
-// Existing venture periods retained by explicit user instruction; not performance evidence.
+// Only confirmed roles; venture dates are withheld pending confirmation.
 export const ventureFacts = {
   "360-vision-events-group": {
-    "period": "2019 \u2013 Present",
     "role": "Head of Marketing and Events",
-    "source": "Existing portfolio; periods retained by Andries in the 11 October 2026 brief",
-    "year": 2019
+    "source": "Andries confirmed roles; venture dates withheld, 13 October 2026",
+    "year": 2026
   },
   "360-vision-events-cleaning": {
-    "period": "2020 \u2013 Present",
-    "role": "Role awaiting confirmation",
-    "source": "Existing portfolio; periods retained by Andries in the 11 October 2026 brief",
-    "year": 2020
+    "role": null,
+    "source": "Andries confirmed roles; venture dates withheld, 13 October 2026",
+    "year": 2026
   },
   "strydom-projects": {
-    "period": "2018 \u2013 Present",
-    "role": "Role awaiting confirmation",
-    "source": "Existing portfolio; periods retained by Andries in the 11 October 2026 brief",
-    "year": 2018
+    "role": null,
+    "source": "Andries confirmed roles; venture dates withheld, 13 October 2026",
+    "year": 2026
   },
   "maono-moja-events": {
-    "period": "2019 \u2013 Present",
-    "role": "CMO and Events Manager",
-    "source": "Existing portfolio; periods retained by Andries in the 11 October 2026 brief",
-    "year": 2019
+    "role": "Head of Marketing and Events",
+    "source": "Andries confirmed roles; venture dates withheld, 13 October 2026",
+    "year": 2026
   },
   "k-and-d-resources": {
-    "period": "2017 \u2013 Present",
-    "role": "Role awaiting confirmation",
-    "source": "Existing portfolio; periods retained by Andries in the 11 October 2026 brief",
-    "year": 2017
+    "role": null,
+    "source": "Andries confirmed roles; venture dates withheld, 13 October 2026",
+    "year": 2026
   },
   "adventure-freaksa": {
-    "period": "2020 \u2013 Present",
-    "role": "Role awaiting confirmation",
-    "source": "Existing portfolio; periods retained by Andries in the 11 October 2026 brief",
-    "year": 2020
+    "role": null,
+    "source": "Andries confirmed roles; venture dates withheld, 13 October 2026",
+    "year": 2026
   },
   "odm-studio": {
-    "period": "2018 \u2013 Present",
-    "role": "Role awaiting confirmation",
-    "source": "Existing portfolio; periods retained by Andries in the 11 October 2026 brief",
-    "year": 2018
+    "role": null,
+    "source": "Andries confirmed roles; venture dates withheld, 13 October 2026",
+    "year": 2026
   },
   "bobby-verd": {
-    "period": "2021 \u2013 Present",
-    "role": "Role awaiting confirmation",
-    "source": "Existing portfolio; periods retained by Andries in the 11 October 2026 brief",
-    "year": 2021
+    "role": null,
+    "source": "Andries confirmed roles; venture dates withheld, 13 October 2026",
+    "year": 2026
   },
   "rubies-and-pearls": {
-    "period": "2019 \u2013 Present",
-    "role": "Role awaiting confirmation",
-    "source": "Existing portfolio; periods retained by Andries in the 11 October 2026 brief",
-    "year": 2019
+    "role": null,
+    "source": "Andries confirmed roles; venture dates withheld, 13 October 2026",
+    "year": 2026
   },
   "prisma-entertainment": {
-    "period": "2018 \u2013 Present",
-    "role": "Role awaiting confirmation",
-    "source": "Existing portfolio; periods retained by Andries in the 11 October 2026 brief",
-    "year": 2018
+    "role": "Project Manager",
+    "source": "Andries confirmed roles; venture dates withheld, 13 October 2026",
+    "year": 2026
   }
 } as const;
 
@@ -192,3 +189,63 @@ export const awardNames = [
     "year": 2026
   }
 ] as const;
+
+/** Prices supplied by Andries; each offer carries its VAT qualification. */
+export const servicePrices = {
+  "Graphic Design": [
+    {
+      "value": "Logo Starter from R1,500",
+      "vat": "excl. VAT if applicable",
+      "source": "Andries supplied service prices, 13 October 2026",
+      "year": 2026
+    },
+    {
+      "value": "Brand Identity Starter from R3,500",
+      "vat": "excl. VAT if applicable",
+      "source": "Andries supplied service prices, 13 October 2026",
+      "year": 2026
+    }
+  ],
+  "Website Design & Development": [
+    {
+      "value": "One-page site from R2,999",
+      "vat": "excl. VAT if applicable",
+      "source": "Andries supplied service prices, 13 October 2026",
+      "year": 2026
+    },
+    {
+      "value": "Starter Website (up to 5 pages) R4,500",
+      "vat": "excl. VAT if applicable",
+      "source": "Andries supplied service prices, 13 October 2026",
+      "year": 2026
+    },
+    {
+      "value": "Care Plan R650 per month",
+      "vat": "excl. VAT if applicable",
+      "source": "Andries supplied service prices, 13 October 2026",
+      "year": 2026
+    }
+  ],
+  "Marketing & Workflow Automation": [
+    {
+      "value": "Automation Starter (one workflow) from R3,500",
+      "vat": "excl. VAT if applicable",
+      "source": "Andries supplied service prices, 13 October 2026",
+      "year": 2026
+    }
+  ],
+  "App Development": [
+    {
+      "value": "Simple web app or portal from R9,500",
+      "vat": "excl. VAT if applicable",
+      "source": "Andries supplied service prices, 13 October 2026",
+      "year": 2026
+    },
+    {
+      "value": "Discovery Sprint R2,500, credited against the build",
+      "vat": "excl. VAT if applicable",
+      "source": "Andries supplied service prices, 13 October 2026",
+      "year": 2026
+    }
+  ]
+} as const;
