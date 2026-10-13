@@ -1,3 +1,4 @@
+import { Section } from "@/components/shared/section";
 import { useParams, Link } from "react-router-dom";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
@@ -53,8 +54,8 @@ const CompanyDetail = () => {
 
       <main>
       {/* Header */}
-      <section className="relative py-12 px-4 border-b border-border/50 overflow-hidden">
-        <div className="container max-w-4xl mx-auto relative z-10">
+      <Section className="relative   border-b border-border/50 overflow-hidden">
+        <div>
           <Link
             to="/companies"
             className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors mb-6"
@@ -78,11 +79,11 @@ const CompanyDetail = () => {
             </div>}
           </div>
         </div>
-      </section>
+      </Section>
 
       {/* CTA Strip */}
-      <section className="py-12 px-4 border-t border-border/50">
-        <div className="container max-w-4xl mx-auto">
+      <Section className="  border-t border-border/50">
+        <div>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button asChild size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground">
               <a
@@ -106,11 +107,11 @@ const CompanyDetail = () => {
             </Button>
           </div>
         </div>
-      </section>
+      </Section>
 
       {/* Navigation */}
-      <section className="py-8 px-4 border-t border-border/50 bg-muted/20">
-        <div className="container max-w-4xl mx-auto">
+      <Section className="  border-t border-border/50 bg-muted/20">
+        <div>
           <div className="flex justify-between items-center">
             {prevCompany ? (
               <Link
@@ -146,7 +147,7 @@ const CompanyDetail = () => {
             )}
           </div>
         </div>
-      </section>
+      </Section>
 
       </main>
       <Footer />

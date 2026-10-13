@@ -1,3 +1,4 @@
+import { Section } from "@/components/shared/section";
 import { facts } from "@/data/facts";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
@@ -18,8 +19,8 @@ const Terms = () => {
       <Navbar />
       <main>
       
-      <section className="relative py-24 px-4 overflow-hidden">
-        <div className="container max-w-4xl mx-auto relative z-10">
+      <Section className="relative   overflow-hidden">
+        <div>
           <MotionReveal>
             <div className="text-center mb-12">
               <Badge variant="glow-secondary" className="mb-4">Legal</Badge>
@@ -35,8 +36,8 @@ const Terms = () => {
           {/* Divider */}
           <div className="divider-secondary mb-12" />
 
-          <MotionReveal delay={0.1}>
-            <Card className="glass border-l-4 border-l-cyan p-8 mb-8" glow="secondary">
+          <MotionReveal className="h-full" delay={0.1}>
+            <Card className="glass   p-8 mb-8" glow="secondary">
               <h2 className="font-heading text-2xl font-bold text-foreground mb-4">
                 1. Acceptance of Terms
               </h2>
@@ -47,8 +48,8 @@ const Terms = () => {
             </Card>
           </MotionReveal>
 
-          <MotionReveal delay={0.2}>
-            <Card className="glass border-l-4 border-l-pink p-8 mb-8" glow="primary">
+          <MotionReveal className="h-full" delay={0.2}>
+            <Card className="glass   p-8 mb-8" glow="primary">
               <h2 className="font-heading text-2xl font-bold text-foreground mb-4">
                 2. Services
               </h2>
@@ -62,8 +63,8 @@ const Terms = () => {
           {/* Divider */}
           <div className="divider-primary mb-8" />
 
-          <MotionReveal delay={0.3}>
-            <Card className="glass border-l-4 border-l-cyan p-8 mb-8" glow="secondary">
+          <MotionReveal className="h-full" delay={0.3}>
+            <Card className="glass   p-8 mb-8" glow="secondary">
               <h2 className="font-heading text-2xl font-bold text-foreground mb-4">
                 3. Intellectual Property
               </h2>
@@ -74,8 +75,8 @@ const Terms = () => {
             </Card>
           </MotionReveal>
 
-          <MotionReveal delay={0.4}>
-            <Card className="glass border-l-4 border-l-pink p-8 mb-8" glow="primary">
+          <MotionReveal className="h-full" delay={0.4}>
+            <Card className="glass   p-8 mb-8" glow="primary">
               <h2 className="font-heading text-2xl font-bold text-foreground mb-4">
                 4. Limitation of Liability
               </h2>
@@ -86,8 +87,8 @@ const Terms = () => {
             </Card>
           </MotionReveal>
 
-          <MotionReveal delay={0.5}>
-            <Card className="glass border-l-4 border-l-cyan p-8" glow="secondary">
+          <MotionReveal className="h-full" delay={0.5}>
+            <Card className="glass   p-8" glow="secondary">
               <h2 className="font-heading text-2xl font-bold text-foreground mb-4">
                 5. Contact
               </h2>
@@ -97,7 +98,7 @@ const Terms = () => {
             </Card>
           </MotionReveal>
         </div>
-      </section>
+      </Section>
 
       </main>
       <Footer />

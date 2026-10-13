@@ -1,3 +1,4 @@
+import { Section } from "@/components/shared/section";
 import { companies } from "@/data/companies";
 import { permittedEvents } from "@/data/facts";
 import { CompanyCard } from "@/components/companies/CompanyCard";
@@ -36,8 +37,8 @@ const Showcase = () => {
       
       <main>
       {/* Hero Section */}
-      <section className="relative py-24 px-4 overflow-hidden">
-        <div className="container max-w-6xl mx-auto">
+      <Section className="relative   overflow-hidden">
+        <div>
           <MotionReveal>
             <div className="text-center mb-16">
               <Badge variant="glow-secondary" className="mb-4">Portfolio</Badge>
@@ -55,11 +56,11 @@ const Showcase = () => {
 
 
         </div>
-      </section>
+      </Section>
 
       {/* Event Gallery Section */}
-      <section className="py-16 px-4 bg-muted/20">
-        <div className="container max-w-6xl mx-auto">
+      <Section className="  bg-muted/20">
+        <div>
           <MotionReveal>
             <div className="text-center mb-12">
               <Badge variant="glow-primary" className="mb-4">Photo Gallery</Badge>
@@ -75,17 +76,17 @@ const Showcase = () => {
           {/* Divider */}
           <div className="divider-secondary mb-8" />
 
-          <MotionReveal delay={0.2}>
+          <MotionReveal className="h-full" delay={0.2}>
             <EventGallery />
           </MotionReveal>
         </div>
-      </section>
+      </Section>
 
       {/* Live Portfolio CTA */}
-      <section className="py-16 px-4">
-        <div className="container max-w-6xl mx-auto">
-          <MotionReveal delay={0.2}>
-            <Card className="glass p-8 md:p-12 text-center border-l-4 border-l-pink border-r-4 border-r-cyan">
+      <Section className=" ">
+        <div>
+          <MotionReveal className="h-full" delay={0.2}>
+            <Card className="glass p-8 md:p-12 text-center    ">
               <Image className="h-16 w-16 text-secondary mx-auto mb-6" />
               <h3 className="font-heading text-2xl font-bold text-foreground mb-4">
                 Full Live Portfolio
@@ -108,17 +109,17 @@ const Showcase = () => {
             </Card>
           </MotionReveal>
         </div>
-      </section>
+      </Section>
 
-      <section className="container py-12"><h2 className="text-3xl font-bold text-foreground mb-8">Ventures</h2><div className="grid md:grid-cols-2 gap-6">{["360-vision-events-group","odm-studio","prisma-entertainment","adventure-freaksa"].map(slug=>{const company=companies.find(item=>item.slug===slug);return company?<CompanyCard key={slug} company={company}/>:null;})}</div>{permittedEvents.length>0&&<ul>{permittedEvents.filter(event=>event.clientPermission).map(event=><li key={event.value}>{event.value}</li>)}</ul>}</section>
+      <Section className=" "><h2 className="text-3xl font-bold text-foreground mb-8">Ventures</h2><div className="grid md:grid-cols-2 gap-6">{["360-vision-events-group","odm-studio","prisma-entertainment","adventure-freaksa"].map(slug=>{const company=companies.find(item=>item.slug===slug);return company?<CompanyCard key={slug} company={company}/>:null;})}</div>{permittedEvents.length>0&&<ul>{permittedEvents.filter(event=>event.clientPermission).map(event=><li key={event.value}>{event.value}</li>)}</ul>}</Section>
       {/* CTA Section */}
-      <section className="py-16 px-4 bg-muted/20">
-        <div className="container max-w-4xl mx-auto">
+      <Section className="  bg-muted/20">
+        <div>
           {/* Divider */}
           <div className="divider-primary mb-12" />
 
           <MotionReveal>
-            <Card className="glass-secondary p-8 md:p-12 text-center border-b-4 border-b-cyan">
+            <Card className="glass-secondary p-8 md:p-12 text-center  ">
               <h2 className="font-heading text-2xl md:text-3xl font-bold text-foreground mb-4">
                 Ready to Create Something Spectacular?
               </h2>
@@ -136,7 +137,7 @@ const Showcase = () => {
             </Card>
           </MotionReveal>
         </div>
-      </section>
+      </Section>
       </main>
 
       <Footer />

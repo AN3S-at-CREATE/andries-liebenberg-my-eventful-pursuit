@@ -1,3 +1,6 @@
+import { CardGrid } from "@/components/shared/card-grid";
+import { Section } from "@/components/shared/section";
+import { ProofCards } from "@/components/work/proof-card";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { ScrollToTop } from "@/components/layout/ScrollToTop";
@@ -9,7 +12,7 @@ import { Link } from "react-router-dom";
 import { ArrowRight, Brain, Sparkles, Zap, Settings } from "lucide-react";
 import { Seo } from "@/components/seo/Seo";
 import { breadcrumb } from "@/lib/breadcrumb";
-import { lynkieSkyLaunch, proofOfWork } from "@/data/facts";
+import { lynkieSkyLaunch } from "@/data/facts";
 
 const aiTools = [
   {
@@ -60,8 +63,8 @@ const AI = () => {
       />
       <Navbar />
       <main>
-      <section className="relative py-24 px-4 overflow-hidden">
-        <div className="container max-w-6xl mx-auto relative z-10">
+      <Section className="relative   overflow-hidden">
+        <div>
           <MotionReveal>
             <div className="text-center mb-16">
               <Badge variant="glow-primary" className="mb-4">AI Innovation</Badge>
@@ -80,11 +83,11 @@ const AI = () => {
           <MotionStagger className="grid md:grid-cols-2 gap-8">
             {aiTools.map((tool) => (
               <MotionItem key={tool.href}>
-                <Link to={tool.href}>
+                <Link to={tool.href} className="block h-full">
                   <Card 
                     interactive
                     glow={tool.accent === "primary" ? "primary" : "secondary"}
-                    className={`${tool.accent === "primary" ? "glass-primary border-l-4 border-l-pink" : "glass-secondary border-l-4 border-l-cyan"} p-8 h-full group`}
+                    className={`${tool.accent === "primary" ? "glass-primary  " : "glass-secondary  "} p-8 h-full group`}
                   >
                     <div className="flex items-start justify-between mb-4">
                       <tool.icon className={`h-10 w-10 ${tool.accent === "primary" ? "text-primary" : "text-secondary"}  `} />
@@ -96,7 +99,7 @@ const AI = () => {
                       {tool.title}
                     </h3>
                     <p className="text-muted-foreground mb-4">{tool.description}</p>
-                    <div className={`inline-flex items-center gap-2 text-sm font-medium ${tool.accent === "primary" ? "text-primary" : "text-secondary"}`}>
+                    <div className={`mt-auto inline-flex items-center gap-2 text-sm font-medium ${tool.accent === "primary" ? "text-primary" : "text-secondary"}`}>
                       Learn more about {tool.title}
                       <ArrowRight className="h-4 w-4  " />
                     </div>
@@ -106,18 +109,12 @@ const AI = () => {
             ))}
           </MotionStagger>
 
-          <div className="py-8 mb-12 border-y border-blue/35">
-            <h2 className="text-label text-foreground mb-4">Proof of work</h2>
-            <h3 className="font-heading text-2xl font-bold text-foreground mb-6">{proofOfWork.title}</h3>
-            <ul className="list-disc pl-5 space-y-4 text-muted-foreground">
-              {proofOfWork.items.map((item) => <li key={item.value}>{item.value}</li>)}
-            </ul>
-          </div>
+          <ProofCards />
 
           {/* Divider */}
           <div className="divider-primary mt-12 mb-8" />
 
-          <MotionReveal delay={0.4}>
+          <MotionReveal className="h-full" delay={0.4}>
             <div className="text-center flex flex-wrap justify-center gap-4">
               <Button asChild size="lg" variant="glow">
                 <Link to="/contact" className="inline-flex items-center gap-2">
@@ -134,7 +131,7 @@ const AI = () => {
             </div>
           </MotionReveal>
         </div>
-      </section>
+      </Section>
       </main>
 
       <Footer />

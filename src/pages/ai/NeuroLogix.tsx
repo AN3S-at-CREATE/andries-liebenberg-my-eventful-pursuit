@@ -1,3 +1,5 @@
+import { CardGrid } from "@/components/shared/card-grid";
+import { Section } from "@/components/shared/section";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { ScrollToTop } from "@/components/layout/ScrollToTop";
@@ -26,8 +28,8 @@ const NeuroLogix = () => {
       <Navbar />
       <main>
       
-      <section className="relative py-24 px-4 overflow-hidden">
-        <div className="container max-w-6xl mx-auto relative z-10">
+      <Section className="relative   overflow-hidden">
+        <div>
           <MotionReveal>
             <div className="text-center mb-16">
               <Badge variant="glow-primary" className="mb-4">AI Network</Badge>
@@ -43,9 +45,9 @@ const NeuroLogix = () => {
           {/* Divider */}
           <div className="divider-primary mb-12" />
 
-          <div className="grid md:grid-cols-2 gap-8 mb-12">
-            <MotionReveal delay={0.1}>
-              <Card className="glass-primary border-l-4 border-l-pink p-8 group" interactive glow="primary">
+          <CardGrid>
+            <MotionReveal className="h-full" delay={0.1}>
+              <Card className="h-full flex flex-col glass-primary   p-8 group" interactive glow="primary">
                 <Brain className="h-10 w-10 text-primary mb-4  duration-300 " />
                 <h3 className="font-heading text-xl font-bold text-foreground mb-3 group-hover:text-primary transition-colors">Personalized Guidance</h3>
                 <p className="text-muted-foreground">
@@ -54,8 +56,8 @@ const NeuroLogix = () => {
               </Card>
             </MotionReveal>
 
-            <MotionReveal delay={0.2}>
-              <Card className="glass-secondary border-l-4 border-l-cyan p-8 group" interactive glow="secondary">
+            <MotionReveal className="h-full" delay={0.2}>
+              <Card className="h-full flex flex-col glass-secondary   p-8 group" interactive glow="secondary">
                 <Workflow className="h-10 w-10 text-secondary mb-4  duration-300 " />
                 <h3 className="font-heading text-xl font-bold text-foreground mb-3 group-hover:text-secondary transition-colors">Workflow Automation</h3>
                 <p className="text-muted-foreground">
@@ -64,8 +66,8 @@ const NeuroLogix = () => {
               </Card>
             </MotionReveal>
 
-            <MotionReveal delay={0.3}>
-              <Card className="glass-secondary border-l-4 border-l-cyan p-8 group" interactive glow="secondary">
+            <MotionReveal className="h-full" delay={0.3}>
+              <Card className="h-full flex flex-col glass-secondary   p-8 group" interactive glow="secondary">
                 <Users className="h-10 w-10 text-secondary mb-4  duration-300 " />
                 <h3 className="font-heading text-xl font-bold text-foreground mb-3 group-hover:text-secondary transition-colors">Business Integration</h3>
                 <p className="text-muted-foreground">
@@ -74,8 +76,8 @@ const NeuroLogix = () => {
               </Card>
             </MotionReveal>
 
-            <MotionReveal delay={0.4}>
-              <Card className="glass-primary border-l-4 border-l-pink p-8 group" interactive glow="primary">
+            <MotionReveal className="h-full" delay={0.4}>
+              <Card className="h-full flex flex-col glass-primary   p-8 group" interactive glow="primary">
                 <Shield className="h-10 w-10 text-primary mb-4  duration-300 " />
                 <h3 className="font-heading text-xl font-bold text-foreground mb-3 group-hover:text-primary transition-colors">Privacy & Compliance</h3>
                 <p className="text-muted-foreground">
@@ -83,12 +85,12 @@ const NeuroLogix = () => {
                 </p>
               </Card>
             </MotionReveal>
-          </div>
+          </CardGrid>
 
           {/* Divider */}
           <div className="divider-secondary mb-12" />
 
-          <MotionReveal delay={0.5}>
+          <MotionReveal className="h-full" delay={0.5}>
             <div className="text-center flex flex-wrap gap-4 justify-center">
               <Button asChild size="lg" variant="glow">
                 <Link to="/contact" className="inline-flex items-center gap-2">
@@ -104,7 +106,7 @@ const NeuroLogix = () => {
             </div>
           </MotionReveal>
         </div>
-      </section>
+      </Section>
 
       </main>
       <Footer />

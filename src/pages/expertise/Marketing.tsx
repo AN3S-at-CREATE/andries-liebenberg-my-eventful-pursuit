@@ -1,3 +1,5 @@
+import { CardGrid } from "@/components/shared/card-grid";
+import { Section } from "@/components/shared/section";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { ScrollToTop } from "@/components/layout/ScrollToTop";
@@ -24,8 +26,8 @@ const Marketing = () => {
       <Navbar />
       <main>
       
-      <section className="relative py-24 px-4 overflow-hidden">
-        <div className="container max-w-6xl mx-auto relative z-10">
+      <Section className="relative   overflow-hidden">
+        <div>
           <MotionReveal>
             <div className="text-center mb-16">
               <Badge variant="glow-primary" className="mb-4">Expertise</Badge>
@@ -43,9 +45,9 @@ const Marketing = () => {
           {/* Divider */}
           <div className="divider-primary mb-8" />
 
-          <div className="grid md:grid-cols-2 gap-8">
-            <MotionReveal delay={0.2}>
-              <Card interactive glow="primary" className="glass-primary p-8 border-l-4 border-l-pink">
+          <CardGrid>
+            <MotionReveal className="h-full" delay={0.2}>
+              <Card interactive glow="primary" className="h-full flex flex-col glass-primary p-8  ">
                 <TrendingUp className="h-10 w-10 text-primary mb-4" />
                 <h3 className="font-heading text-xl font-bold text-foreground mb-3">Executive Leadership</h3>
                 <p className="text-muted-foreground">
@@ -54,16 +56,16 @@ const Marketing = () => {
               </Card>
             </MotionReveal>
 
-            <MotionReveal delay={0.3}>
-              <Card interactive glow="secondary" className="glass-secondary p-8 border-l-4 border-l-cyan">
+            <MotionReveal className="h-full" delay={0.3}>
+              <Card interactive glow="secondary" className="h-full flex flex-col glass-secondary p-8  ">
                 <BarChart3 className="h-10 w-10 text-secondary mb-4" />
                 <h3 className="font-heading text-xl font-bold text-foreground mb-3">Proven Results</h3>
                 <p className="text-muted-foreground">Campaign planning, audience research and performance measurement across marketing channels.</p>
               </Card>
             </MotionReveal>
 
-            <MotionReveal delay={0.4}>
-              <Card interactive glow="primary" className="glass-primary p-8 border-l-4 border-l-pink">
+            <MotionReveal className="h-full" delay={0.4}>
+              <Card interactive glow="primary" className="h-full flex flex-col glass-primary p-8  ">
                 <Share2 className="h-10 w-10 text-primary mb-4" />
                 <h3 className="font-heading text-xl font-bold text-foreground mb-3">Digital Expertise</h3>
                 <p className="text-muted-foreground">
@@ -72,19 +74,19 @@ const Marketing = () => {
               </Card>
             </MotionReveal>
 
-            <MotionReveal delay={0.5}>
-              <Card interactive glow="secondary" className="glass-secondary p-8 border-l-4 border-l-cyan">
+            <MotionReveal className="h-full" delay={0.5}>
+              <Card interactive glow="secondary" className="h-full flex flex-col glass-secondary p-8  ">
                 <Users className="h-10 w-10 text-secondary mb-4" />
                 <h3 className="font-heading text-xl font-bold text-foreground mb-3">Brand Development</h3>
                 <p className="text-muted-foreground">Campaign planning, audience research and performance measurement across marketing channels.</p>
               </Card>
             </MotionReveal>
-          </div>
+          </CardGrid>
 
           {/* Divider */}
           <div className="divider-secondary mt-12" />
         </div>
-      </section>
+      </Section>
 
       </main>
       <Footer />
