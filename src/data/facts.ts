@@ -211,6 +211,8 @@ export const serviceOffers = [
   {
     "discipline": "AI Systems & Automation",
     "title": "AI Chatbot / WhatsApp Assistant",
+    "description": "Chat assistance for business enquiries.",
+    "descriptionSource": "Andries approved neutral service descriptions, 13 October 2026",
     "price": "from R4,500",
     "vat": "excl. VAT if applicable",
     "source": "Andries content update, 13 October 2026",
@@ -219,6 +221,8 @@ export const serviceOffers = [
   {
     "discipline": "AI Systems & Automation",
     "title": "Automation Starter",
+    "description": "Automation for routine business tasks.",
+    "descriptionSource": "Andries approved neutral service descriptions, 13 October 2026",
     "price": "from R3,500",
     "vat": "excl. VAT if applicable",
     "source": "Andries content update, 13 October 2026",
@@ -227,6 +231,8 @@ export const serviceOffers = [
   {
     "discipline": "AI Systems & Automation",
     "title": "AI Workflow Build",
+    "description": "Connected workflows with AI steps.",
+    "descriptionSource": "Andries approved neutral service descriptions, 13 October 2026",
     "price": "from R7,500",
     "vat": "excl. VAT if applicable",
     "source": "Andries content update, 13 October 2026",
@@ -235,6 +241,8 @@ export const serviceOffers = [
   {
     "discipline": "AI Systems & Automation",
     "title": "Private AI Knowledge Assistant",
+    "description": "Private search and chat for business knowledge.",
+    "descriptionSource": "Andries approved neutral service descriptions, 13 October 2026",
     "price": "quote only after a R2,500 Discovery Sprint",
     "vat": "excl. VAT if applicable",
     "source": "Andries content update, 13 October 2026",
@@ -243,6 +251,8 @@ export const serviceOffers = [
   {
     "discipline": "Business Growth",
     "title": "AI & Growth Audit",
+    "description": "A review of AI use and business priorities.",
+    "descriptionSource": "Andries approved neutral service descriptions, 13 October 2026",
     "price": "from R1,500",
     "vat": "excl. VAT if applicable",
     "source": "Andries content update, 13 October 2026",
@@ -251,6 +261,8 @@ export const serviceOffers = [
   {
     "discipline": "Web & App Development",
     "title": "Websites",
+    "description": "Website design and development.",
+    "descriptionSource": "Andries approved neutral service descriptions, 13 October 2026",
     "price": "R2,999 one-page / R4,500 up to 5 pages",
     "vat": "excl. VAT if applicable",
     "source": "Andries content update, 13 October 2026",
@@ -259,6 +271,8 @@ export const serviceOffers = [
   {
     "discipline": "Web & App Development",
     "title": "Custom Business System / CRM / Portal",
+    "description": "Business systems, CRM tools and portals.",
+    "descriptionSource": "Andries approved neutral service descriptions, 13 October 2026",
     "price": "from R9,500",
     "vat": "excl. VAT if applicable",
     "source": "Andries content update, 13 October 2026",
@@ -267,6 +281,8 @@ export const serviceOffers = [
   {
     "discipline": "Web & App Development",
     "title": "Integration & Custom Script",
+    "description": "Connections and scripts for business tools.",
+    "descriptionSource": "Andries approved neutral service descriptions, 13 October 2026",
     "price": "from R7,500",
     "vat": "excl. VAT if applicable",
     "source": "Andries content update, 13 October 2026",
@@ -275,6 +291,8 @@ export const serviceOffers = [
   {
     "discipline": "Web & App Development",
     "title": "UI/UX Design & Clickable Prototype",
+    "description": "Interface design and interactive prototypes.",
+    "descriptionSource": "Andries approved neutral service descriptions, 13 October 2026",
     "price": "from R3,500",
     "vat": "excl. VAT if applicable",
     "source": "Andries content update, 13 October 2026",
@@ -283,6 +301,8 @@ export const serviceOffers = [
   {
     "discipline": "Web & App Development",
     "title": "Mobile App",
+    "description": "Mobile application development.",
+    "descriptionSource": "Andries approved neutral service descriptions, 13 October 2026",
     "price": "on request",
     "vat": "excl. VAT if applicable",
     "source": "Andries content update, 13 October 2026",
@@ -291,6 +311,8 @@ export const serviceOffers = [
   {
     "discipline": "Brand Strategy",
     "title": "Logo / Brand Identity",
+    "description": "Logo design and brand identity.",
+    "descriptionSource": "Andries approved neutral service descriptions, 13 October 2026",
     "price": "Logo from R1,500 / Brand Identity from R3,500",
     "vat": "excl. VAT if applicable",
     "source": "Andries content update, 13 October 2026",
@@ -299,6 +321,8 @@ export const serviceOffers = [
   {
     "discipline": "3D Virtualization & Events",
     "title": "Event 3D Visualisation & Technical Plan",
+    "description": "Event layouts and technical planning in 3D.",
+    "descriptionSource": "Andries approved neutral service descriptions, 13 October 2026",
     "price": "quote only",
     "vat": "excl. VAT if applicable",
     "source": "Andries content update, 13 October 2026",
