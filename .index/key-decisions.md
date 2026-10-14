@@ -17,3 +17,6 @@ The previous version (perspective grid, particles, noise) called `.sort()`/`.for
 
 ## 2026-10-07 — Motion kept for now
 Parallax, cursor glow, hover lift and scroll reveals stay in this update even though the brand book asks for still light; changing them is a separate, visible step.
+
+## 2026-10-14 — Public brand files are synced copies
+The favicon, touch icon, share image and JSON-LD logo must sit at fixed URLs, so they live in `public/` as byte-identical copies of design-system assets, written by `npm run ds:sync` (`PUBLIC_COPIES`) rather than by hand. The guard verifies every icon link, `og:image`, `twitter:image` and JSON-LD `logo` in `index.html` against the design-system hashes. No `favicon.ico`: the design system ships none (its asset store refuses .ico) and current browsers read the SVG.
