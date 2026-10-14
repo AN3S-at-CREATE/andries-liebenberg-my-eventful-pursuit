@@ -8,7 +8,7 @@ Copy this folder into a website as-is and record it with its `manifest.json`. A 
 - loads its Tailwind config through `tailwind-preset.js`, so the palette, fonts, radii and shadows are only these tokens (the stock Tailwind colours and drop shadows are gone);
 - loads the fonts from https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap;
 - imports `tokens.ts` where code needs raw values (charts, canvas);
-- takes the wordmark and icons from `assets/`;
+- takes its brand graphics from `assets/` (built by `tools/brand/build.mjs`): `an3s-wordmark.svg` as the logo (`an3s-wordmark-flat.svg` below 120px wide; the PNGs only where SVG can't go), `an3s-mark.svg` as the favicon with `an3s-mark-180.png` as the apple-touch-icon, `an3s-mark-512.png` for app manifests and structured-data logos, `an3s-loader.svg` for loading screens, `an3s-share.png` as the og:image, and the service icons from `assets/icons/`;
 - verifies its copy against the hashes in `manifest.json` (CRLF normalised to LF for text files).
 
 Rules for using the tokens (which colour leads, when to glow, type casing) live in the design system's brand book, `project/README.md`.

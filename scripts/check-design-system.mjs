@@ -19,8 +19,10 @@
 //      in src/design-system/. Links aren't followed, because they can leave the repo or loop, so
 //      commit real files instead;
 //   8. a logo or icon isn't a byte-identical copy of a src/design-system/assets/ file: images
-//      named like a favicon, app icon, logo, wordmark or AN3S file under src/ or public/, and every
-//      icon index.html links to. Older files are listed in LEGACY_BRAND_ASSETS until replaced.
+//      named like a favicon, app icon, logo, wordmark or AN3S file under src/ or public/, every
+//      icon index.html links to, and index.html's share images (og:image, twitter:image) and
+//      JSON-LD logos, which must also be served from this site. Older files are listed in
+//      LEGACY_BRAND_ASSETS until replaced.
 // Comments are ignored. To keep a justified exception, put `ds-allow: <reason>` in a comment on
 // that line or the line above it. Run: node scripts/check-design-system.mjs
 import { createHash } from 'node:crypto';
@@ -212,17 +214,13 @@ const BRAND_NAME =
 // computes it) and tracked in .index/dead-code.md until the design system exports a replacement.
 // A changed or deleted file fails the check, so an entry can't cover a new mark or outlive its file.
 const LEGACY_BRAND_ASSETS = {
-  'public/favicon.svg': {
-    sha256: 'f31edb1c56b188e0fe1b474ea7f0c9a5a4fe173248f173cb916320d28096047c',
-    why: 'legacy logo (the same file as src/assets/logo.svg); the design system has no favicon until it has a vector mark',
-  },
   'src/assets/logo.svg': {
     sha256: 'f31edb1c56b188e0fe1b474ea7f0c9a5a4fe173248f173cb916320d28096047c',
-    why: 'legacy logo, imported nowhere; delete once the owner confirms',
+    why: 'legacy logo, imported nowhere (replaced by an3s-wordmark.svg); retained per PROTECTED_CONTENT.md until the owner confirms deletion',
   },
   'src/assets/loading-screen.gif': {
     sha256: '4dc354b3aa3e91fbcd6041a8fafa2d035c1ff681b7ed4cdad3fe5df677511df2',
-    why: 'legacy animated logo on the loading screen, whose fallback is the design-system wordmark',
+    why: 'legacy animated logo, no longer displayed (replaced by an3s-loader.svg); retained per PROTECTED_CONTENT.md §11',
   },
 };
 // Images named like a logo or icon that aren't the brand's (a photo from an AN3S event, a client's
@@ -315,6 +313,51 @@ if (htmlRaw !== null) {
     } else if (/(?:^|\s)(?:icon|apple-touch-icon(?:-precomposed)?|mask-icon)(?:\s|$)/i.test(rel)) {
       checkIcon(href, 'index.html');
     }
+  }
+  // Share images (og:image, twitter:image) and JSON-LD logos are design-system assets served from
+  // public/, linked as a root path or on the site's own origin. (A JSON-LD `image` may be a portrait,
+  // so it isn't checked.)
+  const SITE_ORIGIN = 'https://an3s.info';
+  const checkShared = (url, where) => {
+    const local = url.startsWith(`${SITE_ORIGIN}/`) ? url.slice(SITE_ORIGIN.length) : url;
+    if (EXTERNAL.test(local) || !local.startsWith('/')) {
+      return problems.push(`${where} points outside the site (${url.slice(0, 80)}): serve a copy of a src/design-system/assets/ file from public/`);
+    }
+    let path = local;
+    try {
+      path = decodeURIComponent(local);
+    } catch {
+      // Keep the encoded path; served() then reports it as missing.
+    }
+    const file = served(path);
+    if (!file) problems.push(`${where} isn't a file in public/: ${url}`);
+    else if (!fromDesignSystem(file)) problems.push(`${where} uses ${file}, ${OUTSIDE_DS_ASSET}`);
+  };
+  const html = blankComments(htmlRaw, '.html');
+  for (const tag of html.matchAll(/<meta\b(?:"[^"]*"|'[^']*'|[^>"'])*>/gi)) {
+    const key = attr(tag[0], 'property') || attr(tag[0], 'name');
+    if (/^(?:og:image(?::url|:secure_url)?|twitter:image(?::src)?)$/i.test(key)) checkShared(attr(tag[0], 'content').replace(/&amp;/g, '&'), `index.html ${key}`);
+  }
+  for (const block of html.matchAll(/<script\b[^>]*\btype\s*=\s*["']?application\/ld\+json["']?[^>]*>([\s\S]*?)<\/script>/gi)) {
+    let data;
+    try {
+      data = JSON.parse(block[1]);
+    } catch (error) {
+      problems.push(`index.html has a JSON-LD block that isn't valid JSON (${error.message})`);
+      continue;
+    }
+    const visit = (value) => {
+      if (Array.isArray(value)) return value.forEach(visit);
+      if (!value || typeof value !== 'object') return;
+      for (const [key, inner] of Object.entries(value)) {
+        if (key !== 'logo') visit(inner);
+        else for (const logo of [inner].flat()) {
+          const url = typeof logo === 'string' ? logo : typeof logo?.url === 'string' ? logo.url : typeof logo?.contentUrl === 'string' ? logo.contentUrl : null;
+          if (url) checkShared(url, 'index.html JSON-LD logo');
+        }
+      }
+    };
+    visit(data);
   }
 }
 

@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Building2, Github, Linkedin, MessageCircle, Mail, Menu, ChevronDown, Calendar, Megaphone, TrendingUp, Code, Rocket, Users, Zap, Plane, Brain, Wrench } from "lucide-react";
 // The wordmark comes from the AN3S design system (src/design-system/assets).
-import logo from "@/design-system/assets/an3s-wordmark.png";
+import logo from "@/design-system/assets/an3s-wordmark.svg";
 import {
   Sheet,
   SheetContent,
@@ -48,7 +48,7 @@ export const Navbar = () => {
             className="h-10 w-auto transition-all duration-300  " 
             fetchPriority="high"
             decoding="sync"
-            width="118"
+            width="122"
             height="40"
             // Removed loading="lazy" and decoding="async" for faster LCP on above-the-fold logo
           />
@@ -182,7 +182,7 @@ export const Navbar = () => {
                     className="h-10 w-auto"
                     fetchPriority="high"
                     decoding="sync"
-                    width="118"
+                    width="122"
                     height="40"
                     // Removed loading="lazy" and decoding="async" for faster LCP
                   />

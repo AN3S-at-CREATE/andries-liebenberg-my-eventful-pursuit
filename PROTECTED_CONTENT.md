@@ -182,7 +182,9 @@ The AN3S design system ([AN3S-CREATE/an3s-design-system](https://github.com/AN3S
 | Sync script | `scripts/sync-design-system.mjs` | Copies the design system's `dist/web/` in (`npm run ds:sync`) |
 | Guard | `scripts/check-design-system.mjs` | Fails on drift, hard-coded colours/fonts, role-tinted edges and glows, or redeclared design-system variables (`npm run check:ds`) |
 | CI check | `.github/workflows/design-system.yml` | Runs the guard on every pull request |
-| Logo | `src/design-system/assets/an3s-wordmark.png` | Used by Navbar, Footer and LoadingScreen (replaced `src/assets/logo.svg`, which is kept but unused) |
+| Logo | `src/design-system/assets/an3s-wordmark.svg` | Used by Navbar, Footer and the home hero (replaced `an3s-wordmark.png` on 14 October 2026, which replaced `src/assets/logo.svg`, kept but unused) |
+| Loading mark | `src/design-system/assets/an3s-loader.svg` | Used by LoadingScreen: the wordmark whose glow breathes (the spinner was removed; `src/assets/loading-screen.gif` is retained, unused) |
+| Favicon, touch icon, share image, structured-data logo | `public/favicon.svg`, `public/apple-touch-icon.png`, `public/an3s-share.png`, `public/an3s-mark-512.png` | Copies of design-system assets refreshed by `npm run ds:sync`; linked from `index.html` (og:image, twitter:image, JSON-LD logo and Person image) and `Seo.tsx`. The share image is the design-system-built OG image that §11 awaited |
 
 ---
 

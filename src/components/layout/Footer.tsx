@@ -2,7 +2,7 @@ import { facts, whatsappNumber } from "@/data/facts";
 import { Github, Linkedin, Mail, Phone } from "lucide-react";
 import { Link } from "react-router-dom";
 // The wordmark comes from the AN3S design system (src/design-system/assets).
-import logo from "@/design-system/assets/an3s-wordmark.png";
+import logo from "@/design-system/assets/an3s-wordmark.svg";
 
 export const Footer = () => {
   return (
@@ -17,7 +17,7 @@ export const Footer = () => {
               <img
                 src={logo}
                 alt="AN3S Logo"
-                width="142"
+                width="147"
                 height="48"
                 loading="lazy"
                 decoding="async"

@@ -8,4 +8,5 @@ Preserve the `check-design-system.mjs` contract:
 - Fail on every symlink at `index.html`, `tailwind.config.ts`, or under `src/`/`public/`, dangling or not; never follow them.
 - Keep `.github/workflows/design-system.yml` using the same check on every PR. Honour justified `ds-allow: <reason>` comments on or above a line.
 - Legacy brand assets are pinned by content in `LEGACY_BRAND_ASSETS`; file changes fail, and entries must be removed when files go. Lookalike client/event assets require `NOT_BRAND_ASSETS` with a reason.
-- Share images (`og:image`, `twitter:image`), JSON-LD logos and code-drawn logos are not checked yet; do not represent them as validated.
+- `index.html`'s share images (`og:image`, `twitter:image`) and JSON-LD `logo` values must be design-system asset copies served from the site (root paths or `https://an3s.info/...`). `Seo.tsx`'s per-route image, JSON-LD `image` and code-drawn logos are not checked; do not represent them as validated.
+- `sync-design-system.mjs` refreshes the public brand copies listed in its `PUBLIC_COPIES`; keep that list and `index.html` in step.
