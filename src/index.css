@@ -98,6 +98,43 @@
     border: 1px solid hsl(var(--cyan-hsl) / 0.35);
   }
 
+  /* The design system's Panel, as on the key visual: a 2px neon-gradient edge, the panel fill and a
+     label tab notched into the top edge. `--services` is its blue Core Work edge. */
+  .brand-panel {
+    position: relative;
+    border: 2px solid transparent;
+    border-radius: var(--radius-lg);
+    padding: var(--space-6) var(--space-5) var(--space-5);
+    background:
+      linear-gradient(var(--panel), var(--panel)) padding-box,
+      var(--brand-panel-edge) border-box;
+  }
+  .brand-panel--services {
+    --brand-panel-edge: linear-gradient(45deg, var(--pink), var(--violet) 22%, var(--blue) 46%);
+    --brand-panel-tab-edge: var(--blue);
+    box-shadow: var(--glow-blue);
+  }
+  .brand-panel__tab {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin: 0;
+    padding: var(--space-1) var(--space-5);
+    border: 2px solid var(--brand-panel-tab-edge);
+    border-radius: var(--radius-md);
+    background: var(--deep-space);
+    color: var(--ink);
+    text-transform: uppercase;
+    text-indent: 0.22em; /* balances the label style's trailing tracking */
+    white-space: nowrap;
+  }
+  /* Hairlines between tiles, never boxes: each tile draws a line on its left and top, and the
+     grid's overflow: hidden clips the ones on its outer edge, whatever the column count. */
+  .brand-panel__grid > * {
+    box-shadow: -1px 0 0 var(--line), 0 -1px 0 var(--line);
+  }
+
   .badge-glow-primary {
     box-shadow: 0 0 8px hsl(var(--pink-hsl) / 0.4);
   }

@@ -4,11 +4,10 @@ import { GradientText } from "@/components/brand/brand-parts";
 import { ParallaxStarfield } from "@/components/effects/ParallaxStarfield";
 import { facts, whatsappLink } from "@/data/facts";
 import wordmark from "@/design-system/assets/an3s-wordmark.svg";
-import { HeroMedia } from "./hero-media";
+import { HeroFocus } from "./hero-focus";
 
 export function HomeHero() {
   return <section className="relative overflow-hidden px-4 py-20 md:py-28">
-    <HeroMedia background />
     <ParallaxStarfield />
     <div className="container max-w-6xl relative grid gap-10 lg:grid-cols-[1.1fr_1fr] items-center">
       <div className="min-w-0">
@@ -25,7 +24,7 @@ export function HomeHero() {
           <Button asChild variant="glow-secondary" size="lg" className="text-action"><Link to="/services">SEE SERVICES</Link></Button>
         </div>
       </div>
-      <div className="min-w-0"><HeroMedia /><p className="text-caption text-muted-foreground mt-3">Event production by Andries, 360 Vision Events</p></div>
+      <div className="min-w-0"><HeroFocus /></div>
     </div>
   </section>;
 }
