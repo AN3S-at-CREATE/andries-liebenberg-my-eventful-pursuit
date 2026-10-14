@@ -20,3 +20,6 @@ Parallax, cursor glow, hover lift and scroll reveals stay in this update even th
 
 ## 2026-10-14 — Public brand files are synced copies
 The favicon, touch icon, share image and JSON-LD logo must sit at fixed URLs, so they live in `public/` as byte-identical copies of design-system assets, written by `npm run ds:sync` (`PUBLIC_COPIES`) rather than by hand. The guard verifies every icon link, `og:image`, `twitter:image` and JSON-LD `logo` in `index.html` against the design-system hashes. No `favicon.ico`: the design system ships none (its asset store refuses .ico) and current browsers read the SVG.
+
+## 2026-10-14 — The hero shows the work, not the events
+Andries: the brand is business growth, marketing, development, AI and graphics, not events. The hero's visual is therefore the key visual's Core Work panel built from design-system parts (neon-edged panel, notched tab, the discipline icons), headlining six disciplines; 3D Virtualization & Events and Sales Leadership stay elsewhere on the site. No new imagery was needed.

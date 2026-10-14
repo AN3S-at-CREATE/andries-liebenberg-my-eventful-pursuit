@@ -8,6 +8,7 @@
 | `src/components/effects/CursorGlow.tsx`, `GlobalCursorGlow.tsx` | `bg-gradient-radial` is not defined in Tailwind or the preset, so the "mixed" glow renders without a background | No `gradient-radial` in config or preset | Mixed cursor glow invisible | Use the design system's gradients or retire the cursor glow in the motion update | Low |
 | `ParallaxStarfield`, `ParallaxElements`, `GlobalCursorGlow`, card hover lift | Motion conflicts with the brand book ("light breathes, nothing travels") | Design-system README, Motion | Off-brand feel | Second design-system update | Medium |
 | `AGENTS.md` | Says to use pnpm with `pnpm-lock.yaml`, but `main` only has `package-lock.json` | `ls *lock*` | Agents pick the wrong install command | Correct the Cursor Cloud section | Low |
+| `src/components/hero/hero-media.tsx`, `public/media/hero/` (poster + webm/mp4 loop) | Event footage no longer rendered: the hero shows the Core Work panel | `rg HeroMedia src` finds only its own file | Deployed but unused media weight in `public/` | Keep per PROTECTED_CONTENT.md §12; reuse on an events page or delete once the owner confirms | Low |
 
 ## Resolved
 

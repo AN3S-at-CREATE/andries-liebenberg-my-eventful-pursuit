@@ -206,6 +206,13 @@ These explicit authorisations override the original registry only for the items 
 - Facts and concierge share one evidence source in src/data/facts.ts; unsupported aggregate/company metric knowledge removed. Old metric dataset retained for compatibility but emptied; unsupported figures are not migrated into verified facts.
 - Static SEO title/description, Person job title and social references corrected; ProfessionalService offer catalogue added without prices. Existing OG URL encoded; new DS-built OG image awaits user supply. Site remains unpublished for review.
 
+## 12. Authorised change — Andries, 14 October 2026
+
+AN3S leads with business growth, marketing, development, AI and brand work, not events, so the event footage no longer fronts the home page.
+
+- Home hero: the event video (right column, its "Event production by Andries, 360 Vision Events" caption, and its dimmed copy behind the hero) replaced by a Core Work panel (`src/components/hero/hero-focus.tsx`) of six disciplines: AI Systems & Automation, Business Growth, Web & App Development, Experimental Marketing, Brand Strategy, Innovation & Mentorship, each linking to its page. Every other hero item from §11 is unchanged.
+- Retained, unused on the home page: `src/components/hero/hero-media.tsx` and `public/media/hero/*`. Events stay in the disciplines data, navigation, services filter, Work section and Showcase gallery.
+
 ## Verification
 
 Before any restructuring, verify all items above still exist. If moving content:
