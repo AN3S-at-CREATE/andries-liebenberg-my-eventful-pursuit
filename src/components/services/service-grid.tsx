@@ -29,7 +29,11 @@ export function ServiceGrid() {
         <Button asChild className="w-full mt-auto"><a href={whatsappLink(`Hi Andries, I'm interested in ${service.title}.`)} target="_blank" rel="noopener noreferrer" aria-label={`Discuss ${service.title} on WhatsApp`}>WhatsApp</a></Button>
       </Card></MotionItem>;
     })}</CardGrid>
-    {offers.length === 0 && <p className="text-body text-foreground py-8" role="status">{selected}</p>}
+    {offers.length === 0 && selected && <div className="py-8 text-center space-y-3" role="status">
+      <p className="text-lg font-semibold text-foreground">No listed offers in {selected}</p>
+      <p className="text-body text-muted-foreground max-w-xl mx-auto">Andries does not publish fixed prices in this discipline yet. Ask what is possible and he will suggest a starting point.</p>
+      <Button asChild><a href={whatsappLink(`Hi Andries, I'm interested in your ${selected} services.`)} target="_blank" rel="noopener noreferrer" aria-label={`Ask about ${selected} on WhatsApp`}>Ask on WhatsApp</a></Button>
+    </div>}
   </div>;
 }
 export function ServicesBlock() { return <Section eyebrow="SERVICES" className="border-y border-border bg-panel/70"><ServiceGrid /></Section>; }
