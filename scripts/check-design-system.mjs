@@ -227,7 +227,13 @@ const LEGACY_BRAND_ASSETS = {
 };
 // Images named like a logo or icon that aren't the brand's (a photo from an AN3S event, a client's
 // logo), each with the reason. An entry whose file is gone fails the check.
-const NOT_BRAND_ASSETS = {};
+const NOT_BRAND_ASSETS = {
+  // Andries's logo explorations shown as portfolio work on /work, not the official wordmark or site logo.
+  "public/media/brand/an3s-logo-01.webp": "logo exploration shown as work, not the official wordmark",
+  "public/media/brand/an3s-logo-02.webp": "logo exploration shown as work, not the official wordmark",
+  "public/media/brand/an3s-logo-03.webp": "logo exploration shown as work, not the official wordmark",
+  "public/media/brand/an3s-logo-04.webp": "logo exploration shown as work, not the official wordmark",
+};
 const REGISTER = 'in scripts/check-design-system.mjs';
 for (const [file, { sha256 }] of Object.entries(LEGACY_BRAND_ASSETS)) {
   const path = join(ROOT, file);

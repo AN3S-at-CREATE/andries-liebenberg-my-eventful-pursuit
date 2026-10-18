@@ -8,9 +8,22 @@ import { Card } from "@/components/ui/card";
 import { Seo } from "@/components/seo/Seo";
 import { breadcrumb } from "@/lib/breadcrumb";
 import { Badge } from "@/components/ui/badge";
-import { Calendar, DollarSign, Lightbulb, Users, Leaf, Globe } from "lucide-react";
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { useCallback, useState } from "react";
+import { Calendar, DollarSign, Lightbulb, Users, Leaf, Globe, ChevronLeft, ChevronRight } from "lucide-react";
+
+const RENDER_CAPTION = "3D stage render by Andries Liebenberg";
+const renders = Array.from({ length: 10 }, (_, i) => `/media/renders/render-stage-${String(i + 1).padStart(2, "0")}.webp`);
 
 const EventsManagement = () => {
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const showPrev = useCallback(() => setOpenIndex((i) => (i === null ? null : (i + renders.length - 1) % renders.length)), []);
+  const showNext = useCallback(() => setOpenIndex((i) => (i === null ? null : (i + 1) % renders.length)), []);
+  const handleKeyDown = useCallback((e: React.KeyboardEvent) => {
+    if (e.key === "ArrowLeft") showPrev();
+    if (e.key === "ArrowRight") showNext();
+  }, [showPrev, showNext]);
   return (
     <div className="min-h-screen bg-background">
       <Seo
@@ -27,7 +40,9 @@ const EventsManagement = () => {
       <main>
       
       <Section className="relative   overflow-hidden">
-        <div>
+        <img src="/media/renders/render-stage-04.webp" alt="" aria-hidden="true" className="absolute inset-0 h-full w-full object-cover" loading="lazy" />
+        <div className="absolute inset-0 bg-background/85" aria-hidden="true" />
+        <div className="relative">
           <MotionReveal>
             <div className="text-center mb-16">
               <Badge variant="glow-secondary" className="mb-4">Expertise</Badge>
@@ -98,6 +113,29 @@ const EventsManagement = () => {
           {/* Divider */}
           <div className="divider-secondary mt-12" />
         </div>
+      </Section>
+
+      <Section eyebrow="3D VISUALIZATION" title="3D stage and venue renders">
+        <CardGrid>
+          {renders.map((src, i) => (
+            <MotionReveal key={src} className="h-full">
+              <button type="button" onClick={() => setOpenIndex(i)} className="block w-full border border-border overflow-hidden interactive-edge" aria-label={`${RENDER_CAPTION} ${i + 1} of 10 — open larger view`}>
+                <img src={src} alt={RENDER_CAPTION} width="960" height="540" className="aspect-video w-full object-cover" loading="lazy" />
+              </button>
+            </MotionReveal>
+          ))}
+        </CardGrid>
+        <Dialog open={openIndex !== null} onOpenChange={(open) => !open && setOpenIndex(null)}>
+          <DialogContent className="max-w-4xl" onKeyDown={handleKeyDown}>
+            <DialogTitle className="sr-only">{RENDER_CAPTION}</DialogTitle>
+            {openIndex !== null && <img src={renders[openIndex]} alt={RENDER_CAPTION} className="w-full object-contain" />}
+            <p className="text-sm text-muted-foreground text-center">{RENDER_CAPTION}</p>
+            <div className="flex justify-between gap-4">
+              <Button type="button" variant="outline" onClick={showPrev} aria-label="Previous render"><ChevronLeft className="h-4 w-4" /> Previous</Button>
+              <Button type="button" variant="outline" onClick={showNext} aria-label="Next render">Next <ChevronRight className="h-4 w-4" /></Button>
+            </div>
+          </DialogContent>
+        </Dialog>
       </Section>
 
       </main>

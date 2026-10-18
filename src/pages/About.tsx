@@ -44,7 +44,8 @@ const About = () => {
         <div>
           <MotionReveal>
             <div className="text-center mb-16">
-              <img src="/media/about/portrait-avatar.webp" alt="Andries Liebenberg" width="112" height="112" className="w-28 h-28 rounded-full object-cover mx-auto mb-6 border border-pink/35" />
+<img src="/media/about/portrait-ai-circle.webp" alt="Stylised AI portrait of Andries Liebenberg" width="112" height="112" className="w-28 h-28 rounded-full object-cover mx-auto mb-2 border border-pink/35" />
+              <p className="text-sm text-muted-foreground mb-6">Stylised portrait</p>
               <Badge variant="glow-secondary" className="mb-4">Architect of Experiences, Driver of Growth</Badge>
               <h1 className="font-heading text-4xl md:text-6xl font-bold text-foreground mb-6">
                 {facts.person.value}

@@ -33,6 +33,7 @@ const LynkieSky = () => {
         <div>
           <MotionReveal>
             <div className="text-center mb-16">
+              <img src="/media/lynkie-sky/lynkie-logo-blue.webp" alt="Lynkie Sky logo" width="240" height="240" className="mx-auto mb-6 w-40 h-auto" />
               <Badge variant="glow-secondary" className="mb-4">{lynkieSkyLaunch.value}</Badge>
               <h1 className="font-heading text-4xl md:text-6xl font-bold text-foreground mb-6">
                 Lynkie Sky
@@ -95,6 +96,21 @@ const LynkieSky = () => {
                   </Link>
                 </Button>
               </div>
+            </Card>
+          </MotionReveal>
+        </div>
+      </Section>
+
+      <Section eyebrow="LYNKIE SKY" title="Meet Lynkie Sky">
+        <div className="grid gap-6 md:grid-cols-2 items-stretch">
+          <MotionReveal className="h-full">
+            <Card variant="glass" className="h-full p-6 flex items-center justify-center">
+              <img src="/media/lynkie-sky/lynkie-character-01.webp" alt="Lynkie Sky character" width="960" height="960" className="w-full h-auto object-contain" loading="lazy" />
+            </Card>
+          </MotionReveal>
+          <MotionReveal className="h-full">
+            <Card variant="glass" className="h-full p-6 flex items-center justify-center">
+              <img src="/media/lynkie-sky/lynkie-meet-slide.webp" alt="Meet Lynkie-Sky introduction slide" width="960" height="540" className="w-full h-auto object-contain" loading="lazy" />
             </Card>
           </MotionReveal>
         </div>

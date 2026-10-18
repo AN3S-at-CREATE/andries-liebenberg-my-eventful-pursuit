@@ -13,7 +13,7 @@ interface CaseStudyCardProps {
 
 export function CaseStudyCard({ title, role, built, proof, image, href }: CaseStudyCardProps) {
   return <Card variant="glass" interactive glow="primary" className="h-full flex flex-col overflow-hidden" data-work-card>
-    {image ? <img src={image} alt="Event production by Andries, 360 Vision Events" width="1485" height="768" className="aspect-video w-full object-cover" loading="lazy" />
+    {image ? <img src={image} alt={title === "Event production at 360 Vision Events" ? "Event production by Andries, 360 Vision Events" : title === "3D visualisation" ? "3D stage render by Andries Liebenberg" : "Lynkie Sky logo"} width="1485" height="768" className="aspect-video w-full object-cover" loading="lazy" />
       : <div className="aspect-video bg-gradient-space flex items-center p-6 border-b border-border"><p className="text-label text-secondary">{title}</p></div>}
     <div className="p-6 flex flex-col flex-1">
       <h3 className="text-lg font-semibold text-foreground line-clamp-2 min-h-14 mb-4">{title}</h3>
