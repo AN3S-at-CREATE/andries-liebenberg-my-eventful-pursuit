@@ -21,5 +21,17 @@ export default function Work() {
   return <div className="min-h-screen bg-background"><Seo title="Work | AN3S" description="Event production, AI projects and source-backed work by Andries Liebenberg." path="/work" jsonLd={breadcrumb([{ name: "Home", path: "/" }, { name: "Work", path: "/work" }])} /><Navbar /><main>
     <Section eyebrow="AN3S"><h1 className="text-4xl font-bold text-foreground">Work</h1></Section>
     <WorkSection includeProof />
+    <Section eyebrow="BRAND" title="Brand identity">
+      <CardGrid>
+        {brandLogos.map((logo) => (
+          <MotionItem key={logo.src} className="h-full">
+            <Card variant="glass" className="h-full p-6 flex flex-col items-center justify-center gap-4">
+              <img src={logo.src} alt={logo.caption} width="480" height="480" className="w-full h-auto object-contain" loading="lazy" />
+              <p className="text-sm text-muted-foreground">{logo.caption}</p>
+            </Card>
+          </MotionItem>
+        ))}
+      </CardGrid>
+    </Section>
   </main><Footer /></div>;
 }
