@@ -33,6 +33,7 @@ const LynkieSky = () => {
         <div>
           <MotionReveal>
             <div className="text-center mb-16">
+              <img src="/media/lynkie-sky/lynkie-logo-blue.webp" alt="Lynkie Sky logo" width="240" height="240" className="mx-auto mb-6 w-40 h-auto" />
               <Badge variant="glow-secondary" className="mb-4">{lynkieSkyLaunch.value}</Badge>
               <h1 className="font-heading text-4xl md:text-6xl font-bold text-foreground mb-6">
                 Lynkie Sky
