@@ -8,7 +8,13 @@ import { Card } from "@/components/ui/card";
 import { Seo } from "@/components/seo/Seo";
 import { breadcrumb } from "@/lib/breadcrumb";
 import { Badge } from "@/components/ui/badge";
-import { Calendar, DollarSign, Lightbulb, Users, Leaf, Globe } from "lucide-react";
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { useCallback, useEffect, useState } from "react";
+import { Calendar, DollarSign, Lightbulb, Users, Leaf, Globe, ChevronLeft, ChevronRight } from "lucide-react";
+
+const RENDER_CAPTION = "3D stage render by Andries Liebenberg";
+const renders = Array.from({ length: 10 }, (_, i) => `/media/renders/render-stage-${String(i + 1).padStart(2, "0")}.webp`);
 
 const EventsManagement = () => {
   return (
