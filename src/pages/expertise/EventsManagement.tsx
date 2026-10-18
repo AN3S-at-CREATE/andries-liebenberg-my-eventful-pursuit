@@ -10,7 +10,7 @@ import { breadcrumb } from "@/lib/breadcrumb";
 import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { Calendar, DollarSign, Lightbulb, Users, Leaf, Globe, ChevronLeft, ChevronRight } from "lucide-react";
 
 const RENDER_CAPTION = "3D stage render by Andries Liebenberg";
@@ -24,7 +24,6 @@ const EventsManagement = () => {
     if (e.key === "ArrowLeft") showPrev();
     if (e.key === "ArrowRight") showNext();
   }, [showPrev, showNext]);
-  useEffect(() => { if (openIndex === null) return; }, [openIndex]);
   return (
     <div className="min-h-screen bg-background">
       <Seo
