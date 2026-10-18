@@ -7,6 +7,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import { PageTransition } from "./components/layout/PageTransition";
+import { NebulaFilm } from "./components/hero/nebula-film";
 import { ErrorBoundary } from "./components/layout/ErrorBoundary";
 
 // 🚀 Optimizer: Lazy load heavy concierge widget to reduce initial bundle size
@@ -101,7 +102,9 @@ const App = () => {
         <Toaster />
         <Sonner />
         <BrowserRouter>
+          <NebulaFilm />
           <PageTransition>
+            <div className="relative z-10">
             <Suspense fallback={<PageLoader />}>
               <Routes>
                 <Route path="/" element={<Index />} />
