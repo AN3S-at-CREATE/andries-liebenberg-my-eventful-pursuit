@@ -3,6 +3,7 @@ import { serviceOffers, whatsappLink } from "@/data/facts";
 import { disciplines } from "@/data/disciplines";
 import { MotionItem, MotionStagger } from "@/components/motion/MotionReveal";
 import { Button } from "@/components/ui/button";
+import { motionTokens } from "@/lib/motion";
 import { disciplineEntryPrice, entryPriceLabel, EVENT_SERVICE_NOTE, numericServicePrice, priceBandPosition, type ServiceOffer } from "@/lib/service-pricing";
 
 function ScopedChip({ children }: { children: ReactNode }) {
@@ -52,14 +53,18 @@ function DisciplinePanel({ discipline, index }: { discipline: typeof disciplines
   const [isOpen, setIsOpen] = useState(index < 2);
   const [isExpanded, setIsExpanded] = useState(index < 2);
   const details = useRef<HTMLDetailsElement>(null);
+  const body = useRef<HTMLDivElement>(null);
   const timer = useRef<ReturnType<typeof setTimeout>>();
   useEffect(() => () => clearTimeout(timer.current), []);
+  useEffect(() => {
+    if (body.current) body.current.inert = !isExpanded;
+  }, [isExpanded]);
   const handleToggle = () => {
     clearTimeout(timer.current);
     if (isExpanded) {
       setIsExpanded(false);
       if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) setIsOpen(false);
-      else timer.current = setTimeout(() => setIsOpen(false), 420);
+      else timer.current = setTimeout(() => setIsOpen(false), motionTokens.slow * 1000);
     } else {
       setIsOpen(true);
       // Wait for the native details body to be measurable before expanding its grid.
@@ -80,7 +85,7 @@ function DisciplinePanel({ discipline, index }: { discipline: typeof disciplines
           <p className="mt-2 text-caption text-ink-muted">excl. VAT if applicable · {offers.length} offers</p>
           <PriceBand offers={offers} />
         </summary>
-        <div id={`discipline-body-${index}`} className={`ledger-body ${isExpanded ? "is-open" : ""}`} aria-hidden={!isExpanded}>
+        <div ref={body} id={`discipline-body-${index}`} className={`ledger-body ${isExpanded ? "is-open" : ""}`} aria-hidden={!isExpanded}>
           <div className="ledger-body-inner"><div className="px-5 pb-5 sm:px-6 sm:pb-6">
             <ul className="border-t border-line divide-y divide-line">{offers.map(offer => <OfferRow key={offer.title} offer={offer} />)}</ul>
             {discipline.title === "3D Virtualization & Events" && <p className="mt-4 border-l-2 border-blue pl-4 text-caption text-ink-muted">{EVENT_SERVICE_NOTE}</p>}
