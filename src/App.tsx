@@ -150,6 +150,7 @@ const App = () => {
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </Suspense>
+            </div>
           </PageTransition>
           <ErrorBoundary>
             <Suspense fallback={<ConciergeSkeleton />}>
