@@ -33,7 +33,9 @@ const EventsManagement = () => {
       <main>
       
       <Section className="relative   overflow-hidden">
-        <div>
+        <img src="/media/renders/render-stage-04.webp" alt="" aria-hidden="true" className="absolute inset-0 h-full w-full object-cover" loading="lazy" />
+        <div className="absolute inset-0 bg-background/85" aria-hidden="true" />
+        <div className="relative">
           <MotionReveal>
             <div className="text-center mb-16">
               <Badge variant="glow-secondary" className="mb-4">Expertise</Badge>
