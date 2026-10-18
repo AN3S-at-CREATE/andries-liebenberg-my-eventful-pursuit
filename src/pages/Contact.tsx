@@ -26,18 +26,17 @@ const Contact = () => {
         <div className="text-center mb-12 relative z-10">
           <Badge variant="glow-secondary" className="mb-4">Connect</Badge>
           <h1 className="font-heading text-4xl md:text-5xl font-bold text-foreground mb-4">
-            Get in Touch
+            Ready to grow your business?
           </h1>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            Ready to discuss your next project or explore partnership opportunities? 
-            Reach out and let's build something remarkable together.
+            {facts.responsePromise.value}. {facts.serviceArea.value}.
           </p>
         </div>
 
         {/* Divider */}
         <div className="divider-primary mb-12" />
 
-        <div className="mb-10 text-center"><Button asChild size="lg"><a href={whatsappUrl} target="_blank" rel="noopener noreferrer">WhatsApp Andries</a></Button><p className="text-sm text-muted-foreground mt-4">{facts.responsePromise.value}</p></div>
+        <div className="mb-10 text-center flex flex-wrap justify-center gap-4"><Button asChild size="lg"><a href={whatsappUrl} target="_blank" rel="noopener noreferrer">WhatsApp Andries</a></Button><Button asChild size="lg" variant="glow-secondary"><a href={`mailto:${facts.email.value}`}>{facts.email.value}</a></Button></div>
         <div className="grid lg:grid-cols-2 gap-12">
           {/* Contact Form */}
           <div>
@@ -60,14 +59,7 @@ const Contact = () => {
                     </div>
                     <div>
                       <p className="text-sm text-muted-foreground">Email</p>
-                      <a 
-                        href="mailto:email@hello.an3s.info" 
-                        className="text-foreground hover:text-primary transition-colors"
-                      >
-                        email@hello.an3s.info
-                      </a>
-                      <br />
-                      <a 
+                      <a
                         href={`mailto:${facts.email.value}`} 
                         className="text-foreground hover:text-secondary transition-colors"
                       >

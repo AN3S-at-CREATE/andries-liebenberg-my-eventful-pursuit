@@ -1,9 +1,8 @@
-import { disciplines } from "@/data/disciplines";
-import { whatsappUrl } from "@/data/facts";
+import { whatsappUrl, facts } from "@/data/facts";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Building2, Github, Linkedin, MessageCircle, Mail, Menu, ChevronDown, Calendar, Megaphone, TrendingUp, Code, Rocket, Users, Zap, Plane, Brain, Wrench } from "lucide-react";
+import { MessageCircle, Menu } from "lucide-react";
 // The wordmark comes from the AN3S design system (src/design-system/assets).
 import logo from "@/design-system/assets/an3s-wordmark.png";
 import {
@@ -11,25 +10,14 @@ import {
   SheetContent,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
 
-
-const expertiseItems = disciplines.map(item=>({title:item.title,url:item.href,icon:item.icon}));
-const aiItems = [
-  { title: "EventPulse", url: "/ai/eventpulse", icon: Zap },
-  { title: "Lynkie Sky", url: "/ai/lynkie-sky", icon: Plane },
-  { title: "NeuroLogix", url: "/ai/neurologix", icon: Brain },
-  { title: "Custom Models", url: "/ai/custom-models", icon: Wrench },
+const navLinks = [
+  { title: "AN3S", url: "/" },
+  { title: "Services", url: "/services" },
+  { title: "Work", url: "/work" },
+  { title: "AI", url: "/ai" },
+  { title: "Dreamforge", url: "/ai#dreamforge" },
+  { title: "Contact", url: "/contact" },
 ];
 
 export const Navbar = () => {
@@ -38,119 +26,31 @@ export const Navbar = () => {
   const closeMenu = () => setIsOpen(false);
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-cyan/30 bg-background/80 backdrop-blur-md">
-      <div className="container flex h-16 items-center justify-between">
-        <Link to="/" className="flex items-center gap-2">
-          {/* 🚀 Optimizer: Removed loading="lazy" and added fetchPriority="high" for critical above-the-fold logo to protect LCP */}
-          <img 
-            src={logo} 
-            alt="AN3S Brand Logo — Andries Liebenberg" 
-            className="h-10 w-auto transition-all duration-300  " 
+    <header className="sticky top-0 z-50 w-full">
+      <div className="container flex h-16 items-center justify-between gap-4">
+        <Link to="/" className="flex items-center gap-3">
+          <img
+            src={logo}
+            alt="AN3S Brand Logo — Andries Liebenberg"
+            className="h-10 w-auto"
             fetchPriority="high"
             decoding="sync"
             width="118"
             height="40"
-            // Removed loading="lazy" and decoding="async" for faster LCP on above-the-fold logo
           />
+          <span className="text-label text-muted-foreground">Est. {facts.established.value}</span>
         </Link>
 
-        <nav className="hidden lg:flex items-center gap-3" aria-label="Main navigation"><Link to="/services" className="text-sm text-muted-foreground hover:text-primary">Services</Link><Link to="/work" className="text-sm text-muted-foreground hover:text-primary">Work</Link>
-          <Link to="/" className="text-sm text-muted-foreground hover:text-primary transition-colors">
-            Home
-          </Link>
-          <Link to="/about" className="text-sm text-muted-foreground hover:text-secondary transition-colors">
-            About
-          </Link>
-          <DropdownMenu>
-            <DropdownMenuTrigger className="flex items-center gap-1 text-sm text-muted-foreground hover:text-primary transition-colors outline-none">
-              Expertise
-              <ChevronDown className="h-3 w-3" />
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="start" className="bg-background border-cyan/30">
-              <DropdownMenuItem asChild>
-                <Link to="/expertise" className="flex items-center gap-2 cursor-pointer hover:text-primary">
-                  <Rocket className="h-4 w-4 text-primary" />
-                  All Expertise
-                </Link>
-              </DropdownMenuItem>
-              {expertiseItems.map((item, index) => (
-                <DropdownMenuItem key={item.url} asChild>
-                  <Link to={item.url} className="flex items-center gap-2 cursor-pointer hover:text-primary">
-                    <img src={item.icon} alt="" width="24" height="24" className="h-6 w-6"/>
-                    {item.title}
-                  </Link>
-                </DropdownMenuItem>
-              ))}
-            </DropdownMenuContent>
-          </DropdownMenu>
-          <DropdownMenu>
-            <DropdownMenuTrigger className="flex items-center gap-1 text-sm text-muted-foreground hover:text-secondary transition-colors outline-none">
-              AI
-              <ChevronDown className="h-3 w-3" />
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="start" className="bg-background border-pink/30">
-              <DropdownMenuItem asChild>
-                <Link to="/ai" className="flex items-center gap-2 cursor-pointer hover:text-secondary">
-                  <Brain className="h-4 w-4 text-secondary" />
-                  All AI Tools
-                </Link>
-              </DropdownMenuItem>
-              {aiItems.map((item, index) => (
-                <DropdownMenuItem key={item.url} asChild>
-                  <Link to={item.url} className="flex items-center gap-2 cursor-pointer hover:text-secondary">
-                    <item.icon className={`h-4 w-4 ${index % 2 === 0 ? 'text-secondary' : 'text-primary'}`} />
-                    {item.title}
-                  </Link>
-                </DropdownMenuItem>
-              ))}
-            </DropdownMenuContent>
-          </DropdownMenu>
-          <Link to="/companies" className="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center gap-1">
-            <Building2 className="h-4 w-4 text-secondary" />
-            Ventures
-          </Link>
-          <Link to="/showcase" className="text-sm text-muted-foreground hover:text-secondary transition-colors">
-            Showcase
-          </Link>
-          <Link to="/contact" className="text-sm text-muted-foreground hover:text-secondary transition-colors flex items-center gap-1">
-            <Mail className="h-4 w-4 text-primary" />
-            Contact
-          </Link>
+        <nav className="hidden lg:flex items-center gap-5" aria-label="Main navigation">
+          {navLinks.map((item) => (
+            <Link key={item.url} to={item.url} className="text-sm text-muted-foreground hover:text-primary transition-colors">
+              {item.title}
+            </Link>
+          ))}
         </nav>
 
-        <div className="flex items-center gap-3">
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <a
-                href="https://github.com/AN3S-CREATE"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hidden xl:block text-muted-foreground hover:text-primary transition-colors"
-                aria-label="GitHub Profile"
-              >
-                <Github className="h-5 w-5" />
-              </a>
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>GitHub Profile</p>
-            </TooltipContent>
-          </Tooltip>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <a
-                href="https://www.linkedin.com/in/andriesliebenberg-an3s"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hidden xl:block text-muted-foreground hover:text-secondary transition-colors"
-                aria-label="LinkedIn Profile"
-              >
-                <Linkedin className="h-5 w-5" />
-              </a>
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>LinkedIn Profile</p>
-            </TooltipContent>
-          </Tooltip>
+        <div className="flex items-center gap-4">
+          <span className="hidden xl:block text-sm text-muted-foreground">Gauteng · South Africa</span>
           <Button asChild size="sm" className="inline-flex bg-primary hover:bg-primary/90 text-primary-foreground">
             <a
               href={whatsappUrl}
@@ -173,9 +73,7 @@ export const Navbar = () => {
             </SheetTrigger>
             <SheetContent side="right" className="w-80 bg-background border-cyan/30">
               <div className="flex flex-col h-full">
-                {/* Header */}
-                <div className="flex items-center justify-between pb-6 border-b border-cyan/30">
-                  {/* 🚀 Optimizer: Removed loading="lazy" and added fetchPriority="high" for critical above-the-fold logo to protect LCP */}
+                <div className="flex items-center gap-3 pb-6 border-b border-cyan/30">
                   <img
                     src={logo}
                     alt="AN3S"
@@ -184,136 +82,25 @@ export const Navbar = () => {
                     decoding="sync"
                     width="118"
                     height="40"
-                    // Removed loading="lazy" and decoding="async" for faster LCP
                   />
+                  <span className="text-label text-muted-foreground">Est. {facts.established.value}</span>
                 </div>
 
-                {/* Navigation Links */}
-                <nav className="flex flex-col gap-1 py-6 flex-1 overflow-y-auto" aria-label="Mobile navigation"><Link to="/services" onClick={closeMenu} className="px-3 py-3 text-muted-foreground hover:text-primary">Services</Link><Link to="/work" onClick={closeMenu} className="px-3 py-3 text-muted-foreground hover:text-primary">Work</Link>
-                  <Link
-                    to="/"
-                    onClick={closeMenu}
-                    className="flex items-center gap-3 px-3 py-3 text-muted-foreground hover:text-primary hover:bg-primary/10 rounded-md transition-colors"
-                  >
-                    Home
-                  </Link>
-                  <Link
-                    to="/about"
-                    onClick={closeMenu}
-                    className="flex items-center gap-3 px-3 py-3 text-muted-foreground hover:text-secondary hover:bg-secondary/10 rounded-md transition-colors"
-                  >
-                    About
-                  </Link>
-                  <div className="px-3 py-2">
-                    <p className="text-xs text-primary mb-2">Expertise</p>
+                <nav className="flex flex-col gap-1 py-6 flex-1 overflow-y-auto" aria-label="Mobile navigation">
+                  {navLinks.map((item) => (
                     <Link
-                      to="/expertise"
+                      key={item.url}
+                      to={item.url}
                       onClick={closeMenu}
-                      className="flex items-center gap-3 px-3 py-2 text-muted-foreground hover:text-primary hover:bg-primary/10 rounded-md transition-colors text-sm"
+                      className="px-3 py-3 text-muted-foreground hover:text-primary hover:bg-primary/10 rounded-md transition-colors"
                     >
-                      <Rocket className="h-4 w-4 text-primary" />
-                      All Expertise
+                      {item.title}
                     </Link>
-                    {expertiseItems.map((item, index) => (
-                      <Link
-                        key={item.url}
-                        to={item.url}
-                        onClick={closeMenu}
-                        className="flex items-center gap-3 px-3 py-2 text-muted-foreground hover:text-primary hover:bg-primary/10 rounded-md transition-colors text-sm"
-                      >
-                        <img src={item.icon} alt="" width="24" height="24" className="h-6 w-6"/>
-                        {item.title}
-                      </Link>
-                    ))}
-                  </div>
-                  <div className="px-3 py-2 border-t border-cyan/30">
-                    <p className="text-xs text-secondary mb-2">AI</p>
-                    <Link
-                      to="/ai"
-                      onClick={closeMenu}
-                      className="flex items-center gap-3 px-3 py-2 text-muted-foreground hover:text-secondary hover:bg-secondary/10 rounded-md transition-colors text-sm"
-                    >
-                      <Brain className="h-4 w-4 text-secondary" />
-                      All AI Tools
-                    </Link>
-                    {aiItems.map((item, index) => (
-                      <Link
-                        key={item.url}
-                        to={item.url}
-                        onClick={closeMenu}
-                        className="flex items-center gap-3 px-3 py-2 text-muted-foreground hover:text-secondary hover:bg-secondary/10 rounded-md transition-colors text-sm"
-                      >
-                        <item.icon className={`h-4 w-4 ${index % 2 === 0 ? 'text-secondary' : 'text-primary'}`} />
-                        {item.title}
-                      </Link>
-                    ))}
-                  </div>
-                  <Link
-                    to="/companies"
-                    onClick={closeMenu}
-                    className="flex items-center gap-3 px-3 py-3 text-muted-foreground hover:text-primary hover:bg-primary/10 rounded-md transition-colors"
-                  >
-                    <Building2 className="h-4 w-4 text-secondary" />
-                    Ventures
-                  </Link>
-                  <Link
-                    to="/showcase"
-                    onClick={closeMenu}
-                    className="flex items-center gap-3 px-3 py-3 text-muted-foreground hover:text-secondary hover:bg-secondary/10 rounded-md transition-colors"
-                  >
-                    Showcase
-                  </Link>
-                  <Link
-                    to="/contact"
-                    onClick={closeMenu}
-                    className="flex items-center gap-3 px-3 py-3 text-muted-foreground hover:text-secondary hover:bg-secondary/10 rounded-md transition-colors"
-                  >
-                    <Mail className="h-4 w-4 text-primary" />
-                    Contact
-                  </Link>
+                  ))}
                 </nav>
 
-                {/* Social Links */}
-                <div className="py-6 border-t border-pink/30">
-                  <p className="text-xs text-secondary mb-4 px-3">Connect</p>
-                  <div className="flex items-center gap-4 px-3">
-                    <Tooltip>
-                      <TooltipTrigger asChild>
-                        <a
-                          href="https://github.com/AN3S-CREATE"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-muted-foreground hover:text-primary transition-colors"
-                          aria-label="GitHub Profile"
-                        >
-                          <Github className="h-5 w-5" />
-                        </a>
-                      </TooltipTrigger>
-                      <TooltipContent>
-                        <p>GitHub Profile</p>
-                      </TooltipContent>
-                    </Tooltip>
-                    <Tooltip>
-                      <TooltipTrigger asChild>
-                        <a
-                          href="https://www.linkedin.com/in/andriesliebenberg-an3s"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-muted-foreground hover:text-secondary transition-colors"
-                          aria-label="LinkedIn Profile"
-                        >
-                          <Linkedin className="h-5 w-5" />
-                        </a>
-                      </TooltipTrigger>
-                      <TooltipContent>
-                        <p>LinkedIn Profile</p>
-                      </TooltipContent>
-                    </Tooltip>
-                  </div>
-                </div>
-
-                {/* WhatsApp CTA */}
                 <div className="pt-4 border-t border-cyan/30">
+                  <p className="text-sm text-muted-foreground px-3 pb-3">Gauteng · South Africa</p>
                   <Button asChild variant="glow-secondary" className="w-full">
                     <a
                       href={whatsappUrl}
