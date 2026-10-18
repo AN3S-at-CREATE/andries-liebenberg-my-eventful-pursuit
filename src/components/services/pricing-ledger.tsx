@@ -1,8 +1,9 @@
-import type { ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { serviceOffers, whatsappLink } from "@/data/facts";
 import { disciplines } from "@/data/disciplines";
-import { MotionItem } from "@/components/motion/MotionReveal";
+import { MotionItem, MotionStagger } from "@/components/motion/MotionReveal";
 import { Button } from "@/components/ui/button";
+import { motionTokens } from "@/lib/motion";
 import { disciplineEntryPrice, entryPriceLabel, EVENT_SERVICE_NOTE, numericServicePrice, priceBandPosition, type ServiceOffer } from "@/lib/service-pricing";
 
 function ScopedChip({ children }: { children: ReactNode }) {
@@ -46,33 +47,58 @@ function OfferRow({ offer }: { offer: ServiceOffer }) {
   </li>;
 }
 
+function DisciplinePanel({ discipline, index }: { discipline: typeof disciplines[number]; index: number }) {
+  const offers = serviceOffers.filter(offer => offer.discipline === discipline.title);
+  const entryPrice = disciplineEntryPrice(offers);
+  const [isOpen, setIsOpen] = useState(index < 2);
+  const [isExpanded, setIsExpanded] = useState(index < 2);
+  const details = useRef<HTMLDetailsElement>(null);
+  const body = useRef<HTMLDivElement>(null);
+  const timer = useRef<ReturnType<typeof setTimeout>>();
+  useEffect(() => () => clearTimeout(timer.current), []);
+  useEffect(() => {
+    if (body.current) body.current.inert = !isExpanded;
+  }, [isExpanded]);
+  const handleToggle = () => {
+    clearTimeout(timer.current);
+    if (isExpanded) {
+      setIsExpanded(false);
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) setIsOpen(false);
+      else timer.current = setTimeout(() => setIsOpen(false), motionTokens.slow * 1000);
+    } else {
+      setIsOpen(true);
+      // Wait for the native details body to be measurable before expanding its grid.
+      requestAnimationFrame(() => requestAnimationFrame(() => setIsExpanded(true)));
+    }
+  };
+  return <MotionItem>
+    <div className="ledger-panel rounded-lg bg-gradient-neon p-px">
+      <details ref={details} open={isOpen} className="group rounded-lg bg-panel text-ink" data-discipline-panel>
+        <summary aria-expanded={isExpanded} aria-controls={`discipline-body-${index}`} onClick={event => { event.preventDefault(); handleToggle(); }} className="relative min-h-control cursor-pointer list-none rounded-lg p-5 sm:p-6 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring [&::-webkit-details-marker]:hidden">
+          <div className="flex items-start gap-3 pr-7">
+            <span className="text-eyebrow text-ink-muted">{String(index + 1).padStart(2, "0")}</span>
+            <h2 className="text-label uppercase text-ink break-words">{discipline.title}</h2>
+          </div>
+          <svg aria-hidden="true" viewBox="0 0 24 24" className={`ledger-chevron absolute right-5 top-6 h-5 w-5 fill-none stroke-cyan ${isExpanded ? "is-open" : ""}`}><path d="m6 9 6 6 6-6" strokeWidth="2" /></svg>
+          <p className="mt-6 text-eyebrow text-pink-glow">STARTS AT</p>
+          <p data-entry-price className="ledger-entry mt-2 text-4xl sm:text-5xl font-extrabold text-ink">{entryPrice === null ? "Scoped with you" : entryPriceLabel(entryPrice)}</p>
+          <p className="mt-2 text-caption text-ink-muted">excl. VAT if applicable · {offers.length} offers</p>
+          <PriceBand offers={offers} />
+        </summary>
+        <div ref={body} id={`discipline-body-${index}`} className={`ledger-body ${isExpanded ? "is-open" : ""}`} aria-hidden={!isExpanded}>
+          <div className="ledger-body-inner"><div className="px-5 pb-5 sm:px-6 sm:pb-6">
+            <ul className="border-t border-line divide-y divide-line">{offers.map(offer => <OfferRow key={offer.title} offer={offer} />)}</ul>
+            {discipline.title === "3D Virtualization & Events" && <p className="mt-4 border-l-2 border-blue pl-4 text-caption text-ink-muted">{EVENT_SERVICE_NOTE}</p>}
+          </div></div>
+        </div>
+      </details>
+    </div>
+  </MotionItem>;
+}
+
 /** Services-only disclosure ledger; homepage cards retain their existing presentation. */
 export function PricingLedger() {
-  return <div className="grid items-start gap-6 min-[900px]:grid-cols-2" data-pricing-ledger>
-    {disciplines.map((discipline, index) => {
-      const offers = serviceOffers.filter(offer => offer.discipline === discipline.title);
-      const entryPrice = disciplineEntryPrice(offers);
-      return <MotionItem key={discipline.title}>
-        <div className="rounded-lg bg-gradient-neon p-px hover:shadow-glow-cyan transition-shadow motion-reduce:transition-none">
-          <details open={index < 2} className="group rounded-lg bg-panel text-ink" data-discipline-panel>
-            <summary className="relative min-h-control cursor-pointer list-none rounded-lg p-5 sm:p-6 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring [&::-webkit-details-marker]:hidden">
-              <div className="flex items-start gap-3 pr-7">
-                <span className="text-eyebrow text-ink-muted">{String(index + 1).padStart(2, "0")}</span>
-                <h2 className="text-label uppercase text-ink break-words">{discipline.title}</h2>
-              </div>
-              <svg aria-hidden="true" viewBox="0 0 24 24" className="absolute right-5 top-6 h-5 w-5 fill-none stroke-cyan group-open:rotate-180 motion-reduce:transform-none"><path d="m6 9 6 6 6-6" strokeWidth="2" /></svg>
-              <p className="mt-6 text-eyebrow text-pink-glow">STARTS AT</p>
-              <p data-entry-price className="mt-2 text-4xl sm:text-5xl font-extrabold text-ink">{entryPrice === null ? "Scoped with you" : entryPriceLabel(entryPrice)}</p>
-              <p className="mt-2 text-caption text-ink-muted">excl. VAT if applicable · {offers.length} offers</p>
-              <PriceBand offers={offers} />
-            </summary>
-            <div className="px-5 pb-5 sm:px-6 sm:pb-6">
-              <ul className="border-t border-line divide-y divide-line">{offers.map(offer => <OfferRow key={offer.title} offer={offer} />)}</ul>
-              {discipline.title === "3D Virtualization & Events" && <p className="mt-4 border-l-2 border-blue pl-4 text-caption text-ink-muted">{EVENT_SERVICE_NOTE}</p>}
-            </div>
-          </details>
-        </div>
-      </MotionItem>;
-    })}
-  </div>;
+  return <MotionStagger className="grid items-start gap-6 min-[900px]:grid-cols-2" data-pricing-ledger>
+    {disciplines.map((discipline, index) => <DisciplinePanel key={discipline.title} discipline={discipline} index={index} />)}
+  </MotionStagger>;
 }
