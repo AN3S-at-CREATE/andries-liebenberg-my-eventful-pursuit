@@ -108,6 +108,29 @@ const EventsManagement = () => {
         </div>
       </Section>
 
+      <Section eyebrow="3D VISUALIZATION" title="3D stage and venue renders">
+        <CardGrid>
+          {renders.map((src, i) => (
+            <MotionReveal key={src} className="h-full">
+              <button type="button" onClick={() => setOpenIndex(i)} className="block w-full border border-border overflow-hidden interactive-edge" aria-label={`${RENDER_CAPTION} ${i + 1} of 10 — open larger view`}>
+                <img src={src} alt={RENDER_CAPTION} width="960" height="540" className="aspect-video w-full object-cover" loading="lazy" />
+              </button>
+            </MotionReveal>
+          ))}
+        </CardGrid>
+        <Dialog open={openIndex !== null} onOpenChange={(open) => !open && setOpenIndex(null)}>
+          <DialogContent className="max-w-4xl" onKeyDown={handleKeyDown}>
+            <DialogTitle className="sr-only">{RENDER_CAPTION}</DialogTitle>
+            {openIndex !== null && <img src={renders[openIndex]} alt={RENDER_CAPTION} className="w-full object-contain" />}
+            <p className="text-sm text-muted-foreground text-center">{RENDER_CAPTION}</p>
+            <div className="flex justify-between gap-4">
+              <Button type="button" variant="outline" onClick={showPrev} aria-label="Previous render"><ChevronLeft className="h-4 w-4" /> Previous</Button>
+              <Button type="button" variant="outline" onClick={showNext} aria-label="Next render">Next <ChevronRight className="h-4 w-4" /></Button>
+            </div>
+          </DialogContent>
+        </Dialog>
+      </Section>
+
       </main>
       <Footer />
       <ScrollToTop />
