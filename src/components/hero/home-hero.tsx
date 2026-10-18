@@ -2,15 +2,16 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { GradientText } from "@/components/brand/brand-parts";
 import { facts, whatsappLink } from "@/data/facts";
-import wordmark from "@/design-system/assets/an3s-wordmark.png";
 import { HeroMedia } from "./hero-media";
+
+// Byte-identical copy of the design-system wordmark, served from public/media.
+const wordmark = "/media/wordmark.png";
 
 export function HomeHero() {
   return <section className="relative px-4 py-20 md:py-28">
     <HeroMedia src="/media/hero-intro.mp4" webmSrc="/media/hero-intro.webm" poster="/media/hero-poster.jpg" />
     <div className="container max-w-6xl relative z-10 flex flex-col items-center text-center">
       <div className="min-w-0 flex flex-col items-center">
-        <p className="text-label text-muted-foreground mb-8">EST. {facts.established.value}</p>
         <h1 className="relative isolate mb-8">
           <span aria-hidden="true" className="hero-halo absolute inset-0 -z-10" />
           <img src={wordmark} alt={facts.brand.value} width="426" height="144" className="w-56 md:w-96 max-w-full h-auto" fetchPriority="high" />
