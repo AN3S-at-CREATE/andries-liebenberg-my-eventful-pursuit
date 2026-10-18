@@ -8,6 +8,9 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import { PageTransition } from "./components/layout/PageTransition";
 import { NebulaFilm } from "./components/hero/nebula-film";
+import { Navbar, PersistentNavContext } from "./components/layout/Navbar";
+import { ParallaxStarfield } from "./components/effects/ParallaxStarfield";
+import { BackgroundFX } from "./components/background/BackgroundFX";
 import { ErrorBoundary } from "./components/layout/ErrorBoundary";
 
 // 🚀 Optimizer: Lazy load heavy concierge widget to reduce initial bundle size
@@ -103,10 +106,14 @@ const App = () => {
         <Sonner />
         <BrowserRouter>
           <NebulaFilm />
-          <PageTransition>
+          <BackgroundFX />
+          <ParallaxStarfield />
+          <Navbar />
+          <PersistentNavContext.Provider value={true}>
+          <PageTransition>{(location) => (
             <div className="relative z-10">
             <Suspense fallback={<PageLoader />}>
-              <Routes>
+              <Routes location={location}>
                 <Route path="/" element={<Index />} />
                 <Route path="/services" element={<Services />} />
                 <Route path="/work" element={<Work />} />
@@ -151,7 +158,8 @@ const App = () => {
               </Routes>
             </Suspense>
             </div>
-          </PageTransition>
+          )}</PageTransition>
+          </PersistentNavContext.Provider>
           <ErrorBoundary>
             <Suspense fallback={<ConciergeSkeleton />}>
               <FloatingConciergeButton />

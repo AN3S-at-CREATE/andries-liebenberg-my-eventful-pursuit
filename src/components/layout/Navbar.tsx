@@ -1,6 +1,8 @@
 import { whatsappUrl, facts } from "@/data/facts";
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { createContext, useContext, useEffect, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
+import { m, useReducedMotion } from "framer-motion";
+import { motionTokens } from "@/lib/motion";
 import { Button } from "@/components/ui/button";
 import { MessageCircle, Menu } from "lucide-react";
 // The wordmark comes from the AN3S design system (src/design-system/assets).
@@ -20,13 +22,32 @@ const navLinks = [
   { title: "Contact", url: "/contact" },
 ];
 
+// Route-owned compatibility instances are suppressed by the persistent app shell.
+export const PersistentNavContext = createContext(false);
+
 export const Navbar = () => {
+  const isPersistent = useContext(PersistentNavContext);
+  return isPersistent ? null : <SiteNavbar />;
+};
+
+function SiteNavbar() {
+  const location = useLocation();
+  const isReduced = useReducedMotion();
+  const [hasScrolled, setHasScrolled] = useState(false);
+  useEffect(() => {
+    const handleScroll = () => setHasScrolled(window.scrollY > 4);
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+  const isActive = (url: string) => !url.includes("#") && (url === "/" ? location.pathname === "/" : location.pathname === url || location.pathname.startsWith(`${url}/`));
   const [isOpen, setIsOpen] = useState(false);
 
   const closeMenu = () => setIsOpen(false);
 
   return (
-    <header className="sticky top-0 z-50 w-full">
+    <header className={`site-nav fixed top-0 inset-x-0 h-16 z-50 ${hasScrolled ? "has-scrolled" : ""}`}>
+      <a href="#page-content" className="skip-link">Skip to content</a>
       <div className="container flex h-16 items-center justify-between gap-4">
         <Link to="/" className="flex items-center gap-3">
           <img
@@ -43,7 +64,8 @@ export const Navbar = () => {
 
         <nav className="hidden lg:flex items-center gap-5" aria-label="Main navigation">
           {navLinks.map((item) => (
-            <Link key={item.url} to={item.url} className="text-sm text-muted-foreground hover:text-primary transition-colors">
+            <Link key={item.url} to={item.url} aria-current={isActive(item.url) ? "page" : undefined} className="relative py-3 text-sm text-muted-foreground hover:text-primary transition-colors">
+              {isActive(item.url) && <m.span aria-hidden="true" layoutId="nav-rail" className="nav-rail absolute inset-x-0 bottom-0 h-0.5" transition={{ duration: isReduced ? 0 : motionTokens.slow, ease: motionTokens.ease }} />}
               {item.title}
             </Link>
           ))}
@@ -92,7 +114,8 @@ export const Navbar = () => {
                       key={item.url}
                       to={item.url}
                       onClick={closeMenu}
-                      className="px-3 py-3 text-muted-foreground hover:text-primary hover:bg-primary/10 rounded-md transition-colors"
+                      aria-current={isActive(item.url) ? "page" : undefined}
+                      className={`px-3 py-3 border-l-2 hover:text-primary hover:bg-primary/10 rounded-md transition-colors ${isActive(item.url) ? "text-ink border-pink" : "text-muted-foreground border-transparent"}`}
                     >
                       {item.title}
                     </Link>
