@@ -14,7 +14,7 @@ The only source for colours, fonts, radii, glows, gradients, logos and icons is 
 - Only one-time scroll fade-and-rise (10px, approximately 500ms ease-out, no scale), slow drifting hero stars, a breathing halo behind the static wordmark, and interactive edge glow with at most 2px lift are permitted. No scroll-linked parallax, flicker, scroll hijacking or other motion. This is the complete approved exception, not permission for general animation.
 - Hero media may autoplay muted, loop and playsinline with its poster and a deep-space contrast overlay. Reduced-motion visitors see only the poster; reduced motion disables fades, drift, halo animation and lifts. Functional loading spinners remain enabled outside reduced motion.
 - Home media is owned by HomeHero and unmounts off home; HeroMedia accepts an explicit film source and never substitutes unrelated footage, preventing arrival and nebula films from being swapped. Non-home media must live outside route elements to preserve playback across navigation.
-- Shared Section and CardGrid components own page rhythm and equal-height card layout; this prevents layout drift between routes. Work and proof views read roles/evidence from facts.ts and never infer missing proof.
+- Section/CardGrid preserve page rhythm; Work/proof use facts.ts evidence. Services has its own ledger with shared price calculations, keeping homepage cards and hero independent.
 
 Single Vite + React + TypeScript SPA, hosted Supabase, no monorepo/local backend required. Commands are in `package.json`: dev on localhost:8080 (fixed by Vite config), lint, build, preview, test. Vitest covers company-card stretch; run relevant tests and preview checks for layout changes. Do not assume historical lint warnings describe current results.
 

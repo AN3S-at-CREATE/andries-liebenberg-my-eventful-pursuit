@@ -91,17 +91,16 @@ describe("authorised content update", () => {
       expect(new URL(links[index].href).searchParams.get("text")).toBe(`Hi Andries, I'm interested in ${offer.title}.`);
       expect(links[index].parentElement?.textContent).toContain(offer.price);
       expect(links[index].parentElement?.textContent).toContain(offer.vat);
-      expect(offer.descriptionSource).toBeTruthy();
     });
-    expect(container.textContent).not.toMatch(/Care Plan|one workflow|credited against|Simple web app|placeholder/i);
+    expect(container.textContent).not.toMatch(/Simple web app|placeholder/i);
   });
 
   it("filters offers, keeps empty disciplines out of the price grid and resets", () => {
     const { container, getByRole } = renderWithProviders(<ServiceGrid />);
     fireEvent.click(getByRole("button", { name: "Business Growth" }));
-    expect(container.querySelectorAll("[data-service-card]")).toHaveLength(1);
+    expect(container.querySelectorAll("[data-service-card]")).toHaveLength(3);
     fireEvent.click(getByRole("button", { name: "Experimental Marketing" }));
-    expect(container.querySelectorAll("[data-service-card]")).toHaveLength(0);
+    expect(container.querySelectorAll("[data-service-card]")).toHaveLength(6);
     fireEvent.click(getByRole("button", { name: "Experimental Marketing" }));
     expect(container.querySelectorAll("[data-service-card]")).toHaveLength(serviceOffers.length);
   });

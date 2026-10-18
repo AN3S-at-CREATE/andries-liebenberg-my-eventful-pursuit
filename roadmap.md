@@ -1,6 +1,8 @@
-# Hero film update
+# Service catalogue v2
 
-- [x] Center the existing home title over a fixed, edge-to-edge background and verify desktop/mobile (1280px: x=0, width=1280; 375px: no overflow; background unmounts off home).
-- [x] Connect the arrival film (public/media/hero-intro.mp4 + WebM twin) and its poster (public/media/hero-poster.jpg) on home.
-- [x] Connect the persistent non-home nebula film (public/media/hero-loop.mp4 + WebM twin) outside the route tree; it pauses on home and never restarts on navigation.
-- [x] Verify playback, edge-to-edge box, no-restart across navigation, reduced motion (poster only), and no mobile overflow in the browser.
+- [x] Replace the 38 sourced offers and make VAT conditional.
+- [x] Add the Services discipline ledger and preserve homepage cards.
+- [x] Review expertise pages: no hard-coded price/offer lists; add the approved event scope note without changing imagery or layout.
+- [x] Verify prices, 59 tests, keyboard focus, reduced motion, 390px layout and 30 protected-file hashes; leave unpublished.
+
+Full lint reports one existing error in the protected generated authentication file and nine warnings. Changed files have no lint errors; generated files were not edited.

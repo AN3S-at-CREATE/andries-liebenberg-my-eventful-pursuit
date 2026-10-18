@@ -8,6 +8,7 @@ import { Card } from "@/components/ui/card";
 import { Seo } from "@/components/seo/Seo";
 import { breadcrumb } from "@/lib/breadcrumb";
 import { Badge } from "@/components/ui/badge";
+import { EVENT_SERVICE_NOTE } from "@/lib/service-pricing";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { useCallback, useState } from "react";
@@ -109,6 +110,8 @@ const EventsManagement = () => {
               </Card>
             </MotionReveal>
           </CardGrid>
+
+          <p className="mt-6 text-caption text-muted-foreground">{EVENT_SERVICE_NOTE}</p>
 
           {/* Divider */}
           <div className="divider-secondary mt-12" />

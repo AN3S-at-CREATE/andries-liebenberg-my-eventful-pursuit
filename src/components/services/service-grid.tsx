@@ -25,7 +25,7 @@ export function ServiceGrid() {
         <h3 className="text-lg font-semibold text-foreground line-clamp-2 min-h-14 mb-3">{service.title}</h3>
         <p className="text-sm text-muted-foreground min-h-10 mb-6">{service.description}</p>
         <p className="text-2xl font-semibold text-foreground leading-snug min-h-28 mb-2">{service.price}</p>
-        <p className="text-caption text-muted-foreground mb-6">{service.vat}</p>
+        {service.vat && <p className="text-caption text-muted-foreground mb-6">{service.vat}</p>}
         <Button asChild className="w-full mt-auto"><a href={whatsappLink(`Hi Andries, I'm interested in ${service.title}.`)} target="_blank" rel="noopener noreferrer" aria-label={`Discuss ${service.title} on WhatsApp`}>WhatsApp</a></Button>
       </Card></MotionItem>;
     })}</CardGrid>
