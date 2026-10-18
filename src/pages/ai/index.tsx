@@ -109,6 +109,17 @@ const AI = () => {
             ))}
           </CardGrid>
 
+          <MotionReveal className="mt-6">
+            <Card id="dreamforge" className="glass-secondary p-8 scroll-mt-24">
+              <div className="flex items-start justify-between mb-4">
+                <Brain className="h-10 w-10 text-secondary" />
+                <Badge variant="glow-secondary">Dreamforge</Badge>
+              </div>
+              <h3 className="font-heading text-xl font-bold text-foreground mb-3">Dreamforge Orchestrator</h3>
+              <p className="text-muted-foreground">The room the arrival film opens into.</p>
+            </Card>
+          </MotionReveal>
+
           <ProofCards />
 
           {/* Divider */}
