@@ -26,7 +26,7 @@ export function HeroMedia({ src, webmSrc, poster = "/media/hero-poster.jpg", act
 
   const handlePlay = () => {
     const video = videoRef.current;
-    if (!video || !active || !canPlay) return;
+    if (!video || !active || !canPlay || document.visibilityState === "hidden") return;
     // Set the DOM property too: muted autoplay must be established before play().
     video.muted = true;
     video.play().catch(() => {
@@ -78,7 +78,13 @@ export function HeroMedia({ src, webmSrc, poster = "/media/hero-poster.jpg", act
     {canPlay && src && <video ref={videoRef} poster={poster} muted autoPlay loop playsInline preload="auto" aria-hidden="true"
       onCanPlay={handlePlay}
       onPlaying={() => { setIsPlaying(true); setIsBlocked(false); }}
-      onPause={() => { if (active && canPlay) setIsBlocked(true); }}
+      onPause={handlePlay}
+      onEnded={() => {
+        const video = videoRef.current;
+        if (!video || !active || !canPlay) return;
+        video.currentTime = 0;
+        handlePlay();
+      }}
       onError={() => { setIsPlaying(false); setIsBlocked(false); }}
       className={`fixed inset-0 h-full w-full object-cover object-center transition-opacity duration-500 motion-reduce:transition-none ${isPlaying ? "opacity-100" : "opacity-0"}`}>
       {webmSrc && <source src={webmSrc} type="video/webm" />}
