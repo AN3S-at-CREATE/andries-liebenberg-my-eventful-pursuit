@@ -1,8 +1,23 @@
 import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 
-/** Only mount an explicitly supplied film; never substitute another page's footage. */
-export function HeroMedia({ src, poster = "/media/hero/hero-poster.jpg" }: { src?: string; poster?: string }) {
+interface HeroMediaProps {
+  /** Explicit film source; never substitute another page's footage. */
+  src?: string;
+  /** Optional WebM twin, rendered as the first source for browsers without H.264. */
+  webmSrc?: string;
+  /** Poster shown until the first frame plays (and under reduced motion). */
+  poster?: string;
+  /** When false, the film pauses and hides but stays mounted (persistent non-home film on home). */
+  active?: boolean;
+}
+
+/**
+ * Full-bleed background film: fixed inset-0, edge to edge, no frame or side panel.
+ * Poster until the first frame plays, then a fade-in; one Play button only if
+ * autoplay is blocked. Reduced motion shows the poster and never autoplays.
+ */
+export function HeroMedia({ src, webmSrc, poster = "/media/hero-poster.jpg", active = true }: HeroMediaProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [canPlay, setCanPlay] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -22,26 +37,34 @@ export function HeroMedia({ src, poster = "/media/hero/hero-poster.jpg" }: { src
 
   useEffect(() => {
     const video = videoRef.current;
-    if (!canPlay || !video) return;
+    if (!video) return;
+    if (!active) {
+      video.pause();
+      return;
+    }
+    if (!canPlay) return;
     let isActive = true;
     video.play().catch((error: unknown) => {
       if (isActive && error instanceof DOMException && error.name === "NotAllowedError") setIsBlocked(true);
     });
     return () => { isActive = false; video.pause(); };
-  }, [canPlay, src]);
+  }, [canPlay, src, active]);
 
   const handlePlay = () => {
     videoRef.current?.play().catch(() => setIsBlocked(true));
   };
 
-  return <div data-home-film className="fixed inset-0 z-0 h-full w-full pointer-events-none">
+  return <div data-home-film className={`fixed inset-0 z-0 h-full w-full pointer-events-none transition-opacity duration-500 motion-reduce:transition-none ${active ? "opacity-100" : "opacity-0"}`}>
     <img src={poster} alt="" width="1485" height="768" className="fixed inset-0 h-full w-full object-cover" fetchPriority="high" />
-    {canPlay && src && <video ref={videoRef} src={src} poster={poster} muted autoPlay loop playsInline preload="auto" aria-hidden="true"
+    {canPlay && src && <video ref={videoRef} poster={poster} muted autoPlay loop playsInline preload="auto" aria-hidden="true"
       onPlaying={() => { setIsPlaying(true); setIsBlocked(false); }}
       onError={() => { setIsPlaying(false); setIsBlocked(false); }}
-      className={`fixed inset-0 h-full w-full object-cover transition-opacity duration-500 motion-reduce:transition-none ${isPlaying ? "opacity-100" : "opacity-0"}`} />}
+      className={`fixed inset-0 h-full w-full object-cover transition-opacity duration-500 motion-reduce:transition-none ${isPlaying ? "opacity-100" : "opacity-0"}`}>
+      {webmSrc && <source src={webmSrc} type="video/webm" />}
+      <source src={src} type="video/mp4" />
+    </video>}
     <div aria-hidden="true" className="fixed inset-0 bg-background/45" />
-    {isBlocked && <div className="absolute bottom-6 inset-x-0 flex justify-center pointer-events-auto">
+    {isBlocked && active && <div className="absolute bottom-6 inset-x-0 flex justify-center pointer-events-auto">
       <Button onClick={handlePlay} className="rounded-full text-on-glow">Play</Button>
     </div>}
   </div>;

@@ -7,7 +7,7 @@ import { HeroMedia } from "./hero-media";
 
 export function HomeHero() {
   return <section className="relative px-4 py-20 md:py-28">
-    <HeroMedia />
+    <HeroMedia src="/media/hero-intro.mp4" webmSrc="/media/hero-intro.webm" poster="/media/hero-poster.jpg" />
     <div className="container max-w-6xl relative z-10 flex flex-col items-center text-center">
       <div className="min-w-0 flex flex-col items-center">
         <p className="text-label text-muted-foreground mb-8">EST. {facts.established.value}</p>
