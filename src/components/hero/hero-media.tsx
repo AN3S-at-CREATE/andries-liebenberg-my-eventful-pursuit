@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { Button } from "@/components/ui/button";
 
 interface HeroMediaProps {
@@ -72,7 +73,7 @@ export function HeroMedia({ src, webmSrc, poster = "/media/hero-poster.jpg", act
     };
   }, [canPlay, src, active]);
 
-  return <div data-home-film className={`fixed inset-0 h-full w-full pointer-events-none transition-opacity duration-500 motion-reduce:transition-none ${isBlocked && active ? "z-50" : "z-0"} ${active ? "opacity-100" : "opacity-0"}`}>
+  return <div data-home-film className={`fixed inset-0 z-0 h-full w-full pointer-events-none transition-opacity duration-500 motion-reduce:transition-none ${active ? "opacity-100" : "opacity-0"}`}>
     <img src={poster} alt="" width="1485" height="768" className="fixed inset-0 h-full w-full object-cover object-center" fetchPriority="high" />
     {canPlay && src && <video ref={videoRef} poster={poster} muted autoPlay loop playsInline preload="auto" aria-hidden="true"
       onCanPlay={handlePlay}
@@ -84,8 +85,8 @@ export function HeroMedia({ src, webmSrc, poster = "/media/hero-poster.jpg", act
       <source src={src} type="video/mp4" />
     </video>}
     <div aria-hidden="true" className="fixed inset-0 bg-background/45" />
-    {isBlocked && active && <div className="absolute bottom-24 inset-x-0 flex justify-center pointer-events-none">
+    {isBlocked && active && createPortal(<div className="fixed z-50 bottom-24 inset-x-0 flex justify-center pointer-events-none">
       <Button onClick={handlePlay} className="pointer-events-auto rounded-full text-on-glow">Play</Button>
-    </div>}
+    </div>, document.body)}
   </div>;
 }
