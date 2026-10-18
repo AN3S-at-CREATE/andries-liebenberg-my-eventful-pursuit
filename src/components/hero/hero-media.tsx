@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { Button } from "@/components/ui/button";
 
 interface HeroMediaProps {
@@ -23,6 +24,16 @@ export function HeroMedia({ src, webmSrc, poster = "/media/hero-poster.jpg", act
   const [isPlaying, setIsPlaying] = useState(false);
   const [isBlocked, setIsBlocked] = useState(false);
 
+  const handlePlay = () => {
+    const video = videoRef.current;
+    if (!video || !active || !canPlay) return;
+    // Set the DOM property too: muted autoplay must be established before play().
+    video.muted = true;
+    video.play().catch(() => {
+      if (videoRef.current === video && video.paused) setIsBlocked(true);
+    });
+  };
+
   useEffect(() => {
     const query = window.matchMedia("(prefers-reduced-motion: no-preference)");
     const handleChange = () => {
@@ -44,28 +55,38 @@ export function HeroMedia({ src, webmSrc, poster = "/media/hero-poster.jpg", act
     }
     if (!canPlay) return;
     let isActive = true;
-    video.play().catch((error: unknown) => {
-      if (isActive && error instanceof DOMException && error.name === "NotAllowedError") setIsBlocked(true);
-    });
-    return () => { isActive = false; video.pause(); };
+    const resumePlayback = () => {
+      if (!isActive || document.visibilityState === "hidden") return;
+      video.muted = true;
+      video.play().catch(() => {
+        if (isActive && video.paused) setIsBlocked(true);
+      });
+    };
+    resumePlayback();
+    document.addEventListener("visibilitychange", resumePlayback);
+    window.addEventListener("pageshow", resumePlayback);
+    return () => {
+      isActive = false;
+      document.removeEventListener("visibilitychange", resumePlayback);
+      window.removeEventListener("pageshow", resumePlayback);
+      video.pause();
+    };
   }, [canPlay, src, active]);
-
-  const handlePlay = () => {
-    videoRef.current?.play().catch(() => setIsBlocked(true));
-  };
 
   return <div data-home-film className={`fixed inset-0 z-0 h-full w-full pointer-events-none transition-opacity duration-500 motion-reduce:transition-none ${active ? "opacity-100" : "opacity-0"}`}>
     <img src={poster} alt="" width="1485" height="768" className="fixed inset-0 h-full w-full object-cover object-center" fetchPriority="high" />
     {canPlay && src && <video ref={videoRef} poster={poster} muted autoPlay loop playsInline preload="auto" aria-hidden="true"
+      onCanPlay={handlePlay}
       onPlaying={() => { setIsPlaying(true); setIsBlocked(false); }}
+      onPause={() => { if (active && canPlay) setIsBlocked(true); }}
       onError={() => { setIsPlaying(false); setIsBlocked(false); }}
       className={`fixed inset-0 h-full w-full object-cover object-center transition-opacity duration-500 motion-reduce:transition-none ${isPlaying ? "opacity-100" : "opacity-0"}`}>
       {webmSrc && <source src={webmSrc} type="video/webm" />}
       <source src={src} type="video/mp4" />
     </video>}
     <div aria-hidden="true" className="fixed inset-0 bg-background/45" />
-    {isBlocked && active && <div className="absolute bottom-6 inset-x-0 flex justify-center pointer-events-auto">
-      <Button onClick={handlePlay} className="rounded-full text-on-glow">Play</Button>
-    </div>}
+    {isBlocked && active && createPortal(<div className="fixed z-50 bottom-24 inset-x-0 flex justify-center pointer-events-none">
+      <Button onClick={handlePlay} className="pointer-events-auto rounded-full text-on-glow">Play</Button>
+    </div>, document.body)}
   </div>;
 }
