@@ -18,7 +18,10 @@ export function PageTransition({ children }: { children: (location: Location) =>
       const transition = document.startViewTransition(() => {
         flushSync(() => setShownLocation(location));
       });
-      void transition.finished.catch(() => undefined);
+      void transition.finished.then(() => {
+        const heading = root.current?.querySelector("h1");
+        if (heading) { heading.tabIndex = -1; heading.focus({ preventScroll: true }); }
+      }).catch(() => undefined);
     } else {
       setShownLocation(location);
     }
@@ -28,7 +31,8 @@ export function PageTransition({ children }: { children: (location: Location) =>
     const element = root.current;
     if (!element) return;
     const handleReady = () => {
-      const heading = element.querySelector("h1");
+      const page = element.querySelector(`[data-page-path="${CSS.escape(shownLocation.pathname)}"]`);
+      const heading = page?.querySelector("h1");
       if (!heading) return false;
       heading.tabIndex = -1;
       const hash = shownLocation.hash.slice(1);
@@ -53,7 +57,7 @@ export function PageTransition({ children }: { children: (location: Location) =>
         if (heading) { heading.tabIndex = -1; heading.focus({ preventScroll: true }); }
       });
     }}>
-      <m.div key={shownLocation.pathname} className="page-transition-root"
+      <m.div key={shownLocation.pathname} data-page-path={shownLocation.pathname} className="page-transition-root"
         initial={isInstant ? false : { opacity: 0, scale: 1.01 }}
         animate={{ opacity: 1, scale: 1, transition: { duration: isInstant ? 0 : 0.32, delay: isInstant ? 0 : 0.06, ease: motionTokens.ease } }}
         exit={{ opacity: isInstant ? 1 : 0, scale: isInstant ? 1 : 0.99, transition: { duration: isInstant ? 0 : 0.18, ease: motionTokens.easeIo } }}>
