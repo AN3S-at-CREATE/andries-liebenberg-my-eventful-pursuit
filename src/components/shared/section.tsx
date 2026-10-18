@@ -1,6 +1,6 @@
 import type { ReactNode, HTMLAttributes } from "react";
 import { cn } from "@/lib/utils";
-import { MotionStagger } from "@/components/motion/MotionStagger";
+import { MotionStagger } from "@/components/motion/MotionReveal";
 
 interface SectionProps extends HTMLAttributes<HTMLElement> {
   eyebrow?: string;
