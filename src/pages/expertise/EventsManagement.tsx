@@ -17,6 +17,14 @@ const RENDER_CAPTION = "3D stage render by Andries Liebenberg";
 const renders = Array.from({ length: 10 }, (_, i) => `/media/renders/render-stage-${String(i + 1).padStart(2, "0")}.webp`);
 
 const EventsManagement = () => {
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const showPrev = useCallback(() => setOpenIndex((i) => (i === null ? null : (i + renders.length - 1) % renders.length)), []);
+  const showNext = useCallback(() => setOpenIndex((i) => (i === null ? null : (i + 1) % renders.length)), []);
+  const handleKeyDown = useCallback((e: React.KeyboardEvent) => {
+    if (e.key === "ArrowLeft") showPrev();
+    if (e.key === "ArrowRight") showNext();
+  }, [showPrev, showNext]);
+  useEffect(() => { if (openIndex === null) return; }, [openIndex]);
   return (
     <div className="min-h-screen bg-background">
       <Seo
