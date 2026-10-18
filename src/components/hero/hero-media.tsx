@@ -55,11 +55,11 @@ export function HeroMedia({ src, webmSrc, poster = "/media/hero-poster.jpg", act
   };
 
   return <div data-home-film className={`fixed inset-0 z-0 h-full w-full pointer-events-none transition-opacity duration-500 motion-reduce:transition-none ${active ? "opacity-100" : "opacity-0"}`}>
-    <img src={poster} alt="" width="1485" height="768" className="fixed inset-0 h-full w-full object-cover" fetchPriority="high" />
+    <img src={poster} alt="" width="1485" height="768" className="fixed inset-0 h-full w-full object-cover object-center" fetchPriority="high" />
     {canPlay && src && <video ref={videoRef} poster={poster} muted autoPlay loop playsInline preload="auto" aria-hidden="true"
       onPlaying={() => { setIsPlaying(true); setIsBlocked(false); }}
       onError={() => { setIsPlaying(false); setIsBlocked(false); }}
-      className={`fixed inset-0 h-full w-full object-cover transition-opacity duration-500 motion-reduce:transition-none ${isPlaying ? "opacity-100" : "opacity-0"}`}>
+      className={`fixed inset-0 h-full w-full object-cover object-center transition-opacity duration-500 motion-reduce:transition-none ${isPlaying ? "opacity-100" : "opacity-0"}`}>
       {webmSrc && <source src={webmSrc} type="video/webm" />}
       <source src={src} type="video/mp4" />
     </video>}

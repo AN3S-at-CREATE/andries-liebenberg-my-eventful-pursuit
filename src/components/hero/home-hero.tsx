@@ -8,7 +8,7 @@ import { HeroMedia } from "./hero-media";
 const wordmark = "/media/wordmark.png";
 
 export function HomeHero() {
-  return <section className="relative px-4 py-20 md:py-28">
+  return <section className="relative flex min-h-[calc(100svh-4rem)] items-center px-4 py-12 md:py-20">
     <HeroMedia src="/media/hero-intro.mp4" webmSrc="/media/hero-intro.webm" poster="/media/hero-poster.jpg" />
     <div className="container max-w-6xl relative z-10 flex flex-col items-center text-center">
       <div className="min-w-0 flex flex-col items-center">
