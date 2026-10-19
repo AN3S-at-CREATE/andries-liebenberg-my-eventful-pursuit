@@ -1,0 +1,24 @@
+.lab-room { background: var(--deep-space); min-height: calc(100dvh - 64px); padding: 28px 24px 100px; }
+.room-layout { display: grid; grid-template-columns: 250px minmax(0,1fr) 350px; gap: 24px; max-width: 1600px; margin: auto; }
+.room-panel { background: var(--panel); border: 1px solid var(--pink); border-radius: var(--radius-sm); padding: 20px; }
+.room-panel-blue { border-color: var(--blue); }
+.room-main { min-width: 0; }
+.room-title { font-size: 36px; line-height: 1.15; letter-spacing: 0; overflow-wrap: anywhere; }
+.room-tabs { display: flex; overflow-x: auto; gap: 4px; border-bottom: 1px solid var(--line); padding-bottom: 12px; margin-bottom: 20px; }
+.room-tabs > button { flex-shrink: 0; min-height: 44px; }
+.room-scroll { max-height: calc(100dvh - 440px); min-height: 180px; overflow-y: auto; padding: 2px 6px 8px 2px; }
+.lab-room button, .lab-room a { transition: opacity var(--motion-base,240ms); }
+.lab-room button:active { transform: scale(.98); }
+.lab-room a:focus-visible { outline: 2px solid var(--focus); outline-offset: 4px; }
+.room-bottom-bar { display: none; }
+@media(max-width:1099px) {
+ .room-layout { display: block; max-width: 760px; }
+ .room-layout > * { margin-bottom: 24px; }
+ .lab-room { padding: 24px 20px 120px; }
+ .room-scroll { max-height: 65dvh; }
+ .room-bottom-bar { position: fixed; z-index: 60; inset: auto 0 0; display: flex; align-items: center; gap: 12px; padding: 12px 20px; background: var(--deep-space); border-top: 1px solid var(--blue); }
+ .room-bottom-bar > div { min-width: 0; flex: 1; }
+ .room-title { font-size: 32px; }
+ .room-panel { padding: 16px; }
+}
+@media(prefers-reduced-motion:reduce) { .lab-room button,.lab-room a { transition: none; } .lab-room button:active { transform: none; } }
