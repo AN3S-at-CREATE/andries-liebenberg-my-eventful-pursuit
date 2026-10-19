@@ -3,7 +3,8 @@
 ## Nebula background correction
 - [x] Confirm the playing inner-page film is covered by an opaque route-root fill.
 - [x] Reveal it only beneath non-home route roots and defer loading until the first inner-page visit.
-- [ ] Verify visible playback, persistent navigation, home isolation and reduced motion; leave unpublished.
+- [x] Verify visible playback on Services, Work, About and Contact; same video survives navigation and loops, fresh home skips nebula download, phone has no overflow, reduced motion shows only the poster; leave unpublished.
+- Verification: six targeted tests and changed-file lint pass; preview build OK. Design-system check still flags only the two pre-existing email-signature asset exceptions, left untouched.
 
 - [x] Add shared motion timings, persistent navigation and route transitions.
 - [x] Add stagger reveals, reversible ledger disclosures and global-only starfield motion.
