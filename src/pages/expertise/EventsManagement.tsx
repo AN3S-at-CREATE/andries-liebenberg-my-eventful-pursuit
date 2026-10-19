@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+import { serviceOffers, whatsappLink } from "@/data/facts";
 import { CardGrid } from "@/components/shared/card-grid";
 import { Section } from "@/components/shared/section";
 import { Navbar } from "@/components/layout/Navbar";
@@ -28,8 +30,8 @@ const EventsManagement = () => {
   return (
     <div className="min-h-screen bg-background">
       <Seo
-        title="Events Management | AN3S"
-        description="Event management, technical production, logistics and protocol coordination."
+        title="Events Design And Technical Planning | AN3S"
+        description="Event layouts, stage concepts, lighting plots and hybrid-event technical plans. AN3S handles design and technical planning; full productions are delivered by 360 Vision Events."
         path="/expertise/events-management"
         jsonLd={breadcrumb([
           { name: "Home", path: "/" },
@@ -48,9 +50,9 @@ const EventsManagement = () => {
             <div className="text-center mb-16">
               <Badge variant="glow-secondary" className="mb-4">Expertise</Badge>
               <h1 className="font-heading text-4xl md:text-6xl font-bold text-foreground mb-6">
-                Events Management
+                Events design and technical planning
               </h1>
-              <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto">Event planning, technical production, logistics and protocol coordination.</p>
+              <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto">Event layouts, stage concepts, lighting plots and hybrid-event technical plans. AN3S handles design and technical planning; full productions are delivered by 360 Vision Events.</p>
             </div>
           </MotionReveal>
 
@@ -61,52 +63,48 @@ const EventsManagement = () => {
             <MotionReveal className="h-full" delay={0.1}>
               <Card interactive glow="primary" className="h-full flex flex-col glass-primary p-8  ">
                 <Calendar className="h-10 w-10 text-primary mb-4" />
-                <h3 className="font-heading text-xl font-bold text-foreground mb-3">Extensive Experience</h3>
-                <p className="text-muted-foreground">Event planning, technical production, logistics and protocol coordination.</p>
+                <h3 className="font-heading text-xl font-bold text-foreground mb-3">3D event layouts</h3>
+                <p className="text-muted-foreground">Event 3D Visualisation & Technical Plan covers event layouts and technical planning in 3D.</p>
               </Card>
             </MotionReveal>
 
             <MotionReveal className="h-full" delay={0.2}>
               <Card interactive glow="secondary" className="h-full flex flex-col glass-secondary p-8  ">
                 <DollarSign className="h-10 w-10 text-secondary mb-4" />
-                <h3 className="font-heading text-xl font-bold text-foreground mb-3">Budget Management</h3>
-                <p className="text-muted-foreground">Event planning, technical production, logistics and protocol coordination.</p>
+                <h3 className="font-heading text-xl font-bold text-foreground mb-3">Stage and venue concepts</h3>
+                <p className="text-muted-foreground">3D Concept Render provides a stage or venue concept, priced per view. The gallery below shows supplied stage renders by Andries.</p>
               </Card>
             </MotionReveal>
 
             <MotionReveal className="h-full" delay={0.3}>
               <Card interactive glow="primary" className="h-full flex flex-col glass-primary p-8  ">
                 <Lightbulb className="h-10 w-10 text-primary mb-4" />
-                <h3 className="font-heading text-xl font-bold text-foreground mb-3">Technical Production</h3>
-                <p className="text-muted-foreground">
-                  Master of lighting, sound, AV, and stage design. Seamlessly integrating the latest innovations to wow audiences.
-                </p>
+                <h3 className="font-heading text-xl font-bold text-foreground mb-3">Lighting plots</h3>
+                <p className="text-muted-foreground">Lighting Design / Lighting Plot is scoped by quote. It is a technical-design offer, separate from event graphics.</p>
               </Card>
             </MotionReveal>
 
             <MotionReveal className="h-full" delay={0.4}>
               <Card interactive glow="secondary" className="h-full flex flex-col glass-secondary p-8  ">
                 <Users className="h-10 w-10 text-secondary mb-4" />
-                <h3 className="font-heading text-xl font-bold text-foreground mb-3">High-Profile Clients</h3>
-                <p className="text-muted-foreground">Event planning, technical production, logistics and protocol coordination.</p>
+                <h3 className="font-heading text-xl font-bold text-foreground mb-3">Event graphics</h3>
+                <p className="text-muted-foreground">Event Graphics covers a flyer, banner or programme design, per design.</p>
               </Card>
             </MotionReveal>
 
             <MotionReveal className="h-full" delay={0.5}>
               <Card interactive glow="primary" className="h-full flex flex-col glass-primary p-8  ">
                 <Leaf className="h-10 w-10 text-primary mb-4" />
-                <h3 className="font-heading text-xl font-bold text-foreground mb-3">Sustainable Practices</h3>
-                <p className="text-muted-foreground">Event planning, technical production, logistics and protocol coordination.</p>
+                <h3 className="font-heading text-xl font-bold text-foreground mb-3">Hybrid and virtual planning</h3>
+                <p className="text-muted-foreground">Hybrid / Virtual Event Technical Plan focuses on technical planning for events with virtual components.</p>
               </Card>
             </MotionReveal>
 
             <MotionReveal className="h-full" delay={0.6}>
               <Card interactive glow="secondary" className="h-full flex flex-col glass-secondary p-8  ">
                 <Globe className="h-10 w-10 text-secondary mb-4" />
-                <h3 className="font-heading text-xl font-bold text-foreground mb-3">VVIP Protocol</h3>
-                <p className="text-muted-foreground">
-                  Meticulous VVIP protocol management with high-profile international events in Dubai and India.
-                </p>
+                <h3 className="font-heading text-xl font-bold text-foreground mb-3">Production responsibility</h3>
+                <p className="text-muted-foreground">AN3S provides event design and technical planning. Full event productions are delivered by 360 Vision Events.</p>
               </Card>
             </MotionReveal>
           </CardGrid>
@@ -139,6 +137,23 @@ const EventsManagement = () => {
             </div>
           </DialogContent>
         </Dialog>
+      </Section>
+
+
+      <Section title="Offers and next steps">
+        <ul className="space-y-6">
+          {serviceOffers.filter((offer) => offer.discipline === "3D Virtualization & Events").map((offer) => (
+            <li key={offer.title} className="border-b border-border pb-6">
+              <h3 className="text-lg font-semibold text-foreground mb-2">{offer.title}</h3>
+              <p className="text-body text-muted-foreground mb-3">{offer.description}</p>
+              <a className="text-secondary underline underline-offset-4" href={whatsappLink(`Hi Andries, I'm interested in ${offer.title}.`)} target="_blank" rel="noopener noreferrer">Ask about {offer.title}</a>
+            </li>
+          ))}
+        </ul>
+        <div className="flex flex-wrap gap-4 mt-8">
+          <Button asChild variant="outline"><Link to="/services">View prices and quote options</Link></Button>
+          <Link className="text-secondary underline underline-offset-4 self-center" to="/ai/event-planning-guide">Read the event-planning guide</Link>
+        </div>
       </Section>
 
       </main>
