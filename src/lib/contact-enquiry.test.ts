@@ -1,10 +1,14 @@
 import { describe, expect, it } from "vitest";
 import { contactSchema } from "./contact-enquiry";
 import { serviceOffers } from "@/data/facts";
+import { serviceOptions } from "../../supabase/functions/send-contact-email/service-options";
 
 const enquiry = { name: "Contact test", email: "contact-test@example.com", service: "Discovery Sprint", message: "Please discuss the chosen service with me.", popiaConsent: true };
 
 describe("contact enquiry rules", () => {
+  it("keeps deployed service validation aligned with the catalogue", () => {
+    expect(serviceOptions).toEqual(serviceOffers.map((offer) => offer.title));
+  });
   it("preserves the chosen service", () => {
     expect(contactSchema.parse(enquiry).service).toBe("Discovery Sprint");
   });
