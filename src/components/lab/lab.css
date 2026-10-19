@@ -7,7 +7,7 @@
 .lab-flag { white-space: normal; height: auto; text-align: left; justify-content: flex-start; min-height: 44px; }
 .lab-sky { height: 100%; min-height: 0; }
 .lab-star-label { transition: opacity var(--motion-base, 240ms) var(--ease, ease); }
-.lab-star-bloom { filter: drop-shadow(var(--glow-cyan)); }
+.lab-star-bloom { filter: blur(2px); }
 .lab-star-link:focus-visible > g > circle:first-child { stroke: var(--focus); stroke-width: 1; }
 .lab-main-sky { position: relative; min-width: 0; padding: 24px 18px 110px; }
 .lab-sky-footer { position: absolute; bottom: 26px; left: 24px; right: 90px; display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; }

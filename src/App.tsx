@@ -63,6 +63,8 @@ const EventPulse = lazy(() => import("./pages/ai/EventPulse"));
 const LynkieSky = lazy(() => import("./pages/ai/LynkieSky"));
 const NeuroLogix = lazy(() => import("./pages/ai/NeuroLogix"));
 const CustomModels = lazy(() => import("./pages/ai/CustomModels"));
+const LabGalaxy = lazy(() => import("./pages/lab/LabGalaxy").then(module => ({ default: module.LabGalaxy })));
+const LabStar = lazy(() => import("./pages/lab/LabStar").then(module => ({ default: module.LabStar })));
 
 const queryClient = new QueryClient();
 
@@ -153,6 +155,8 @@ const App = () => {
                 <Route path="/admin" element={<Admin />} />
 
                 <Route path="/__status" element={<Status />} />
+                <Route path="/lab" element={<LabGalaxy />} />
+                <Route path="/lab/:slug" element={<LabStar />} />
                 {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                 <Route path="*" element={<NotFound />} />
               </Routes>
