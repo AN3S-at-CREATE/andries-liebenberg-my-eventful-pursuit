@@ -11,7 +11,8 @@ export function roomTabs(star: LabStar): RoomTab[] { return star.demoId ? ["what
 /** Prefilled WhatsApp enquiry names the star, what it is, and its first priced offer. */
 export function labWhatsappEnquiry(star: LabStar): string {
   const offer = getOffer(star.offers[0]);
-  const base = `Hi Andries, I saw ${star.name} in the AN3S Lab — ${star.line}.`;
+  const line = star.line.replace(/\.$/, "");
+  const base = `Hi Andries, I saw ${star.name} in the AN3S Lab — ${line}.`;
   return offer ? `${base} I'd like to know more about ${offer.title}.` : base;
 }
 export function selectedRoomTab(star: LabStar, value: string | null): RoomTab {
