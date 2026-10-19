@@ -1,0 +1,12 @@
+import { useNavigate } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { workflowBrief } from "@/lib/lab-room";
+function text(value: unknown) { return typeof value === "string" ? value : ""; }
+function lines(value: unknown) { return Array.isArray(value) ? value.filter((item): item is string => typeof item === "string") : []; }
+export function DemoArtefact({ id, artefact }: { id: string; artefact: Record<string, unknown> }) {
+ const navigate = useNavigate();
+ if(id==="knowledge") return <div><p className="text-sm leading-relaxed">{text(artefact.answer)}</p>{lines(artefact.citations).map(line=><p key={line} className="text-caption text-pink-glow mt-3">{line}</p>)}</div>;
+ if(id==="voice") return <div className="grid sm:grid-cols-2 gap-5">{[["Generic model","generic"],["Tuned voice (simulated with a prompt)","tuned"]].map(([label,key])=><section key={key}><h3 className="text-sm font-semibold mb-3">{label}</h3><p className="text-sm text-ink-muted">{text(artefact[key])}</p></section>)}</div>;
+ if(id==="workflow") return <div><div className="flex flex-wrap gap-3">{[text(artefact.trigger),...lines(artefact.steps)].map((line,index)=><div key={`${index}-${line}`} className={`rounded-md border p-3 text-sm ${index===0?"border-pink":"border-blue"}`}>{line}</div>)}<div className="rounded-md border border-pink p-3 text-sm"><p className="text-pink-glow font-semibold">Human check</p>{text(artefact.human_check)}</div></div><p className="mt-4 text-sm text-ink-muted">{text(artefact.result)}</p></div>;
+ return <article className="space-y-5"><h3 className="font-semibold">{text(artefact.format)}</h3><section><h4 className="text-label mb-2">Book first</h4><ol className="list-decimal pl-5 text-sm space-y-2">{lines(artefact.book_first).map(line=><li key={line}>{line}</li>)}</ol></section><section><h4 className="text-label mb-2">Service categories</h4><div className="flex flex-wrap gap-2">{lines(artefact.service_categories).map(line=><span key={line} className="rounded-sm border border-input px-2 py-1 text-caption">{line}</span>)}</div></section><p className="text-sm"><span className="text-pink-glow">Risk: </span>{text(artefact.risk)}</p><p className="text-sm"><span className="text-cyan-glow">Next step: </span>{text(artefact.next_step)}</p><Button variant="ghost" className="h-auto min-h-11 whitespace-normal text-cyan-glow" onClick={()=>navigate('/lab/workflow-forge?tab=try',{state:{labBrief:workflowBrief(artefact)}})}>Send this brief to Workflow Forge</Button></article>;
+}
