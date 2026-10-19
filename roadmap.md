@@ -23,3 +23,10 @@
 - ParallaxElements has no imports or mounted usages; BackgroundFX has no scroll-linked movement.
 - 66 tests and design-system check passed; changed-file lint has no errors. Existing generated-auth lint error remains outside scope.
 - No publishing or deployment requested.
+
+## Page content detail
+- [x] Clarify Work examples and brand imagery using supplied material.
+- [x] Replace repetitive expertise claims with approved offers and relevant links.
+- [x] Add verified context for seven ventures; omit unsupported company capabilities.
+- [ ] Complete the six ventures without confirmed roles/descriptions: 360 Vision Events Cleaning, Strydom Projects, K AND D Resources, Adventure FreaksA, ODM Studio and Bobby Verd. Blocker: user-approved descriptions and Andries's involvement are missing; the composite SEO finding stays unresolved.
+- [x] Verify all 14 revised routes, work navigation and offer enquiry links; 58 tests and changed-file lint pass, build OK. Design-system check flags only the two existing email signature assets. Unpublished; hero, prices, facts and imagery untouched.

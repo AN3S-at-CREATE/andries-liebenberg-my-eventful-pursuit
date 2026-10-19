@@ -4,10 +4,9 @@ import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { SectorBadge } from "@/components/companies/SectorBadge";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { facts, whatsappUrl } from "@/data/facts";
+import { facts, whatsappUrl, lynkieSkyLaunch, proofOfWork } from "@/data/facts";
 import { companies, getCompanyBySlug } from "@/data/companies";
-import { ArrowLeft, ArrowRight, MessageCircle, Mail, MapPin, Calendar, CheckCircle } from "lucide-react";
+import { ArrowLeft, ArrowRight, MessageCircle, Mail, MapPin } from "lucide-react";
 import { Seo } from "@/components/seo/Seo";
 import { breadcrumb } from "@/lib/breadcrumb";
 
@@ -80,6 +79,20 @@ const CompanyDetail = () => {
           </div>
         </div>
       </Section>
+
+      {company.role && <Section title="Andries's role">
+        <p className="text-body text-muted-foreground max-w-3xl mb-6">
+          {company.slug === "360-vision-events-group" && "Andries's role at 360 Vision Events (Group) is Head of Marketing and Events. The Work gallery shows event production by Andries at 360 Vision Events; AN3S's own event offers focus on design and technical planning, while full productions are delivered by 360 Vision Events."}
+          {company.slug === "maono-moja-events" && "Andries is Managing Director (Maono Moja Events Group). This is a managing-director role, distinct from his Head of Marketing and Events role at 360 Vision Events and his Project Manager role at Prisma Entertainment."}
+          {company.slug === "rubies-and-pearls" && "Andries's role at Rubies and Pearls is Head of Business Development. This venture entry records that business-development responsibility, separate from his event-production and AI engineering roles elsewhere in the portfolio."}
+          {company.slug === "prisma-entertainment" && "Andries is Project Manager at Prisma Entertainment. This project-management role is distinct from his Managing Director role at Maono Moja Events Group and his marketing-and-events role at 360 Vision Events."}
+          {company.slug === "eventpulse-ai" && "EventPulse AI is an AI/Software venture where Andries is Co-Founder & CTO. It is a separate venture from Lynkie Sky AI, where his confirmed role is Chief Innovation Officer, and from the Veralogix Group engineering work documented on Work."}
+          {company.slug === "lynkie-sky-ai" && `Lynkie Sky AI is an AI/Software venture. ${lynkieSkyLaunch.value}. Andries is Co-Founder & Chief Innovation Officer; the Lynkie Sky page includes supplied logo, character and introduction imagery. This role is distinct from his Co-Founder & CTO role at EventPulse AI.`}
+          {company.slug === "veralogix-group" && "Andries's role at Veralogix Group is Group Lead Engineer, AI & Data Platforms. The source-backed work record covers self-hosted data and private AI chat, document-search AI and an offline-first collaboration platform. These are Veralogix work examples, not results attributed to other ventures."}
+        </p>
+        {company.slug === "veralogix-group" && <ul className="space-y-4 mb-6">{proofOfWork.items.map((item) => <li key={item.value} className="text-body text-muted-foreground">{item.value} <span className="text-caption text-secondary">({item.source})</span></li>)}</ul>}
+        <Link className="text-secondary underline underline-offset-4" to={company.slug === "lynkie-sky-ai" ? "/ai/lynkie-sky" : "/work"}>{company.slug === "lynkie-sky-ai" ? "Explore Lynkie Sky imagery" : "Explore work and role evidence"}</Link>
+      </Section>}
 
       {/* CTA Strip */}
       <Section className="  border-t border-border/50">
