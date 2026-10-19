@@ -8,6 +8,19 @@ export interface ReplayContext { demoId: LabDemoId; messages: LabMessage[]; opti
 export type LabReplay = (context: ReplayContext) => LabResult | Promise<LabResult>;
 export const LAB_SESSION_TURNS = 6;
 
+const allowedOptions: Record<LabDemoId, Record<string, readonly string[]>> = {
+  lynkie: { lesson: ["Numbers", "Shapes", "Feelings", "Move"], language: ["English", "Afrikaans"] },
+  eventpulse: { event: ["Conference", "Gala", "Launch", "Hybrid"], guests: ["Under 100", "100–500", "500+"] },
+  knowledge: {}, whatsapp: { business: ["Guesthouse", "Salon", "Bakery", "Tutor"] },
+  workflow: {}, voice: { voice: ["AN3S", "Friendly retail", "Formal legal"] },
+};
+export const labInputSchema = z.object({
+  demoId: z.enum(labDemoIds),
+  messages: z.array(z.object({ role: z.enum(["user", "assistant"]), content: z.string().trim().min(1).max(500) }).strict()).min(1).max(12),
+  options: z.record(z.string()),
+}).strict().refine(input => Object.entries(input.options).every(([key, value]) =>
+  Object.hasOwn(allowedOptions[input.demoId], key) && allowedOptions[input.demoId][key].includes(value)), "Invalid demo option");
+
 const resultSchema = z.union([
   z.object({ message: z.string().min(1) }).strict(),
   z.object({ artefact: z.record(z.unknown()) }).strict(),
@@ -20,8 +33,9 @@ export function parseLabResult(input: unknown): LabResult {
 
 /** Calls stay outside UI components; replay flags are preserved on error responses. */
 export async function requestLabDemo(input: ReplayContext): Promise<LabResult | { replay: true }> {
+  const validated = labInputSchema.parse(input);
   const { supabase } = await import("@/integrations/supabase/client");
-  const { data, error } = await supabase.functions.invoke("ai-lab-demo", { body: input });
+  const { data, error } = await supabase.functions.invoke("ai-lab-demo", { body: validated });
   if (error) {
     const context = "context" in error && error.context instanceof Response ? error.context : undefined;
     if (context?.status === 402 || context?.status === 429) return { replay: true };

@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { LAB_SESSION_TURNS, parseLabResult, requestLabDemo, type LabDemoId, type LabMessage, type LabReplay, type LabResult } from "@/lib/lab-demo";
+import { LAB_SESSION_TURNS, labInputSchema, parseLabResult, requestLabDemo, type LabDemoId, type LabMessage, type LabReplay, type LabResult } from "@/lib/lab-demo";
 import { LYNKIE_SAFETY_MESSAGE, needsLynkieSafetyResponse, scrubLabPii } from "../../supabase/functions/ai-lab-demo/privacy";
 
 const memoryTurns = new Map<LabDemoId, number>();
@@ -36,18 +36,21 @@ export function useLabDemo({ demoId, replay }: UseLabDemoOptions) {
   replayRef.current = replay;
 
   useEffect(() => {
-    generation.current++;
+    const epoch = ++generation.current;
     history.current = [];
     replayMode.current = false;
     busy.current = false;
     setMessages([]); setResult(null); setError(null); setIsReplay(false); setIsLoading(false); setTurns(readTurns(demoId));
-    return () => { generation.current++; };
+    return () => { generation.current = epoch + 1; };
   }, [demoId]);
 
   const sendMessage = useCallback(async (content: string, options: Record<string, string> = {}): Promise<LabResult | null> => {
     if (busy.current) return null;
     if (!content.trim() || content.trim().length > 500) {
       setError("Enter a message between 1 and 500 characters."); return null;
+    }
+    if (!labInputSchema.safeParse({ demoId, messages: [{ role: "user", content }], options }).success) {
+      setError("Choose a registered demo option."); return null;
     }
     const count = reserveTurn(demoId);
     if (count === null) { setError("This demo's six session turns are used."); return null; }
