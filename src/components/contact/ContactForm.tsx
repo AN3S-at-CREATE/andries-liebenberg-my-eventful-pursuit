@@ -14,9 +14,9 @@ import { useToast } from "@/hooks/use-toast";
 import { Send, Loader2, CheckCircle } from "lucide-react";
 import type { z } from "zod";
 
-type ContactFormData = z.input<typeof contactSchema>;
+type ContactFormData = Omit<z.input<typeof contactSchema>, "popiaConsent"> & { popiaConsent: boolean };
 const initialValues: ContactFormData = {
-  name: "", email: "", service: "", company: "", industry: "", goal: "", message: "", popiaConsent: false as unknown as true,
+  name: "", email: "", service: "", company: "", industry: "", goal: "", message: "", popiaConsent: false,
 };
 
 export const ContactForm = () => {
