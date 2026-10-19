@@ -15,6 +15,13 @@
       "when": 1792409578617,
       "tag": "0001_ai_lab_daily_usage",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1792409846840,
+      "tag": "0002_ai_lab_service_only_grants",
+      "breakpoints": true
     }
   ]
 }
