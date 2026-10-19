@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, type KeyboardEvent } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { m, useReducedMotion } from "framer-motion";
 import { labConstellations, labStatusLabels, type LabConstellation } from "@/data/lab";
 import { color } from "@/design-system/tokens";
@@ -12,6 +12,7 @@ import { Button } from "@/components/ui/button";
 const tint: Record<LabConstellation, string> = { ai: color.cyan, agents: color.blue, build: color.violet, ventures: color.pink };
 export function GalaxySky({ signal, isMobile }: { signal: LabSignal; isMobile: boolean }) {
   const navigate = useNavigate();
+  const location = useLocation();
   const isReduced = useReducedMotion();
   const svg = useRef<SVGSVGElement>(null);
   const [pointer, setPointer] = useState<{ x: number; y: number } | null>(null);
@@ -27,6 +28,16 @@ export function GalaxySky({ signal, isMobile }: { signal: LabSignal; isMobile: b
   const groups = labConstellations.filter(group => shown.some(star => star.constellation === group.id));
   const selected = points.find(point => point.star.slug === active);
   useEffect(() => { setMobilePage(0); setActive(null); setPointer(null); }, [signal]);
+  useEffect(() => {
+    const state: unknown = location.state;
+    if (!state || typeof state !== "object" || !("labFocus" in state) || typeof state.labFocus !== "string") return;
+    const slug = state.labFocus;
+    const timer = window.setTimeout(() => {
+      const link = svg.current?.querySelector<SVGAElement>(`[data-lab-star="${slug.replace(/[^a-z0-9-]/g, "")}"]`);
+      link?.focus();
+    }, 650);
+    return () => window.clearTimeout(timer);
+  }, [location.state]);
   const handleKeyboard = (event: KeyboardEvent, href: string) => {
     if (event.key === "Enter") { event.preventDefault(); navigate(href); }
     if (event.key === "Escape") { event.preventDefault(); setActive(null); setPointer(null); }
