@@ -25,6 +25,7 @@ export type Database = {
           ip_address: string | null
           message: string
           name: string
+          service: string | null
           status: string
           updated_at: string
           user_agent: string | null
@@ -39,6 +40,7 @@ export type Database = {
           ip_address?: string | null
           message: string
           name: string
+          service?: string | null
           status?: string
           updated_at?: string
           user_agent?: string | null
@@ -53,6 +55,7 @@ export type Database = {
           ip_address?: string | null
           message?: string
           name?: string
+          service?: string | null
           status?: string
           updated_at?: string
           user_agent?: string | null

@@ -1,4 +1,4 @@
-import { facts, whatsappUrl } from "@/data/facts";
+import { facts, whatsappUrl, serviceOffers } from "@/data/facts";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -6,91 +6,41 @@ import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { supabase } from "@/integrations/supabase/client";
+import { useForm, Controller } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { contactSchema, submitContactEnquiry } from "@/lib/contact-enquiry";
+import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
 import { Send, Loader2, CheckCircle } from "lucide-react";
-import { z } from "zod";
+import type { z } from "zod";
 
-const contactSchema = z.object({
-  name: z.string().min(2, "Name must be at least 2 characters").max(100, "Name is too long"),
-  email: z.string().regex(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, "Please enter a valid email address").max(100, "Email is too long"),
-  company: z.string().max(100, "Company name is too long").optional(),
-  industry: z.string().max(100, "Industry name is too long").optional(),
-  goal: z.string().max(200, "Goal description is too long").optional(),
-  message: z.string().min(10, "Message must be at least 10 characters").max(2000, "Message is too long"),
-  popiaConsent: z.literal(true, {
-    errorMap: () => ({ message: "You must accept the POPIA consent to proceed" }),
-  }),
-});
-
-interface ContactFormData {
-  name: string;
-  email: string;
-  company: string;
-  industry: string;
-  goal: string;
-  message: string;
-  popiaConsent: boolean;
-}
+type ContactFormData = Omit<z.input<typeof contactSchema>, "popiaConsent"> & { popiaConsent: boolean };
+const initialValues: ContactFormData = {
+  name: "", email: "", service: "", company: "", industry: "", goal: "", message: "", popiaConsent: false,
+};
 
 export const ContactForm = () => {
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [formData, setFormData] = useState<ContactFormData>({
-    name: "",
-    email: "",
-    company: "",
-    industry: "",
-    goal: "",
-    message: "",
-    popiaConsent: false,
+  const { register, control, handleSubmit, watch, reset, formState: { errors } } = useForm<ContactFormData>({
+    resolver: zodResolver(contactSchema),
+    defaultValues: initialValues,
   });
+  const message = watch("message");
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    const result = contactSchema.safeParse(formData);
-
-    if (!result.success) {
-      const error = result.error.errors[0];
-      toast({
-        variant: "destructive",
-        title: "Validation Error",
-        description: error.message,
-      });
-      return;
-    }
-
+  const handleEnquirySubmit = async (formData: ContactFormData) => {
     setIsSubmitting(true);
 
     try {
-      const validatedData = result.data;
-      const { data, error } = await supabase.functions.invoke("send-contact-email", {
-        body: {
-          name: validatedData.name,
-          email: validatedData.email,
-          company: validatedData.company || undefined,
-          industry: validatedData.industry || undefined,
-          goal: validatedData.goal || undefined,
-          message: validatedData.message,
-        },
-      });
-
-      if (error) throw error;
+      await submitContactEnquiry(contactSchema.parse(formData));
 
       setIsSubmitted(true);
       toast({
         title: "Message sent.",
         description: facts.responsePromise.value,
       });
-    } catch (error: unknown) {
-      console.error("Error submitting form:", error);
+    } catch {
       toast({
         variant: "destructive",
         title: "Error",
@@ -117,18 +67,10 @@ export const ContactForm = () => {
               variant="outline"
               onClick={() => {
                 setIsSubmitted(false);
-                setFormData({
-                  name: "",
-                  email: "",
-                  company: "",
-                  industry: "",
-                  goal: "",
-                  message: "",
-                  popiaConsent: false,
-                });
+                reset(initialValues);
               }}
             >
-              Send Another Message
+              Send another message
             </Button>
             <Button asChild className="bg-primary hover:bg-primary/90 text-primary-foreground">
               <a href={whatsappUrl} target="_blank" rel="noopener noreferrer">
@@ -144,13 +86,31 @@ export const ContactForm = () => {
   return (
     <Card variant="glass" className="border-pink/20">
       <CardHeader>
-        <CardTitle className="font-heading text-2xl text-foreground">Get in Touch</CardTitle>
+        <CardTitle className="font-heading text-2xl text-foreground">Send an enquiry</CardTitle>
         <CardDescription className="text-muted-foreground">
           {facts.responsePromise.value}
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit(handleEnquirySubmit)} className="space-y-4">
+          <div className="space-y-2">
+            <Label htmlFor="service">Chosen service <span className="text-secondary">*</span></Label>
+            <Controller name="service" control={control} render={({ field }) => (
+              <Select name="service" value={field.value} onValueChange={field.onChange} required disabled={isSubmitting}>
+                <SelectTrigger id="service" aria-invalid={!!errors.service} className="bg-muted/50 border-input"><SelectValue placeholder="Choose a service" /></SelectTrigger>
+                <SelectContent className="max-w-[calc(100vw-2rem)]">
+                  {[...new Set(serviceOffers.map((offer) => offer.discipline))].map((discipline) => (
+                    <SelectGroup key={discipline}>
+                      <SelectLabel className="whitespace-normal">{discipline}</SelectLabel>
+                      {serviceOffers.filter((offer) => offer.discipline === discipline).map((offer) => (
+                        <SelectItem key={offer.title} value={offer.title} className="whitespace-normal">{offer.title}</SelectItem>
+                      ))}
+                    </SelectGroup>
+                  ))}
+                </SelectContent>
+              </Select>
+            )} />
+          </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
               <Label htmlFor="name" className="text-foreground">
@@ -158,10 +118,8 @@ export const ContactForm = () => {
               </Label>
               <Input
                 id="name"
-                name="name"
+                {...register("name")}
                 placeholder="Your name"
-                value={formData.name}
-                onChange={handleChange}
                 required
                 maxLength={100}
                 className="bg-muted/50 border-input"
@@ -173,11 +131,9 @@ export const ContactForm = () => {
               </Label>
               <Input
                 id="email"
-                name="email"
+                {...register("email")}
                 type="email"
-                placeholder="you@example.com"
-                value={formData.email}
-                onChange={handleChange}
+                placeholder="Your email address"
                 required
                 maxLength={100}
                 className="bg-muted/50 border-input"
@@ -192,10 +148,8 @@ export const ContactForm = () => {
               </Label>
               <Input
                 id="company"
-                name="company"
+                {...register("company")}
                 placeholder="Your company name"
-                value={formData.company}
-                onChange={handleChange}
                 maxLength={100}
                 className="bg-muted/50 border-input"
               />
@@ -206,10 +160,8 @@ export const ContactForm = () => {
               </Label>
               <Input
                 id="industry"
-                name="industry"
+                {...register("industry")}
                 placeholder="e.g., Events, Retail, Tech"
-                value={formData.industry}
-                onChange={handleChange}
                 maxLength={100}
                 className="bg-muted/50 border-input"
               />
@@ -222,10 +174,8 @@ export const ContactForm = () => {
             </Label>
             <Input
               id="goal"
-              name="goal"
+              {...register("goal")}
               placeholder="e.g., Grow my business, Build a new product"
-              value={formData.goal}
-              onChange={handleChange}
               maxLength={200}
               className="bg-muted/50 border-input"
             />
@@ -241,15 +191,13 @@ export const ContactForm = () => {
                 className="text-xs text-muted-foreground"
                 aria-live="polite"
               >
-                {formData.message.length} / 2000
+                {message.length} / 2000
               </span>
             </div>
             <Textarea
               id="message"
-              name="message"
+              {...register("message")}
               placeholder="Tell me about your project or what you'd like to discuss..."
-              value={formData.message}
-              onChange={handleChange}
               required
               maxLength={2000}
               rows={4}
@@ -259,14 +207,9 @@ export const ContactForm = () => {
           </div>
 
           <div className="flex items-start space-x-3 pt-2">
-            <Checkbox
-              id="popiaConsent"
-              checked={formData.popiaConsent}
-              onCheckedChange={(checked) =>
-                setFormData((prev) => ({ ...prev, popiaConsent: checked === true }))
-              }
-              className="mt-0.5"
-            />
+            <Controller name="popiaConsent" control={control} render={({ field }) => (
+              <Checkbox id="popiaConsent" checked={field.value} onCheckedChange={(checked) => field.onChange(checked === true)} className="mt-0.5" aria-invalid={!!errors.popiaConsent} />
+            )} />
             <Label htmlFor="popiaConsent" className="text-sm text-muted-foreground leading-relaxed cursor-pointer">
               I consent to AN3S collecting and processing my personal information, including technical data (IP address, browser type) for security and fraud prevention, in accordance with the{" "}
               <span className="text-primary">Protection of Personal Information Act (POPIA)</span>. 
@@ -274,6 +217,11 @@ export const ContactForm = () => {
             </Label>
           </div>
 
+          {Object.values(errors).length > 0 && (
+            <div role="alert" className="text-sm text-destructive">
+              {Object.values(errors).map((error, index) => <p key={index}>{error.message}</p>)}
+            </div>
+          )}
           <Button
             type="submit"
             size="lg"
@@ -288,7 +236,7 @@ export const ContactForm = () => {
             ) : (
               <>
                 <Send className="h-5 w-5 mr-2" />
-                Send Message
+                Send message
               </>
             )}
           </Button>

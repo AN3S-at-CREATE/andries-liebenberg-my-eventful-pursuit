@@ -55,6 +55,7 @@ interface ContactSubmission {
   name: string;
   email: string;
   company: string | null;
+  service: string | null;
   industry: string | null;
   goal: string | null;
   message: string;
@@ -321,6 +322,7 @@ const Admin = () => {
                     <TableRow>
                       <TableHead>Name</TableHead>
                       <TableHead>Email</TableHead>
+                      <TableHead>Service</TableHead>
                       <TableHead className="hidden md:table-cell">Company</TableHead>
                       <TableHead>Status</TableHead>
                       <TableHead className="hidden sm:table-cell">Date</TableHead>
@@ -340,6 +342,7 @@ const Admin = () => {
                             {submission.email}
                           </a>
                         </TableCell>
+                        <TableCell className="max-w-64 whitespace-normal">{submission.service || "—"}</TableCell>
                         <TableCell className="hidden md:table-cell">
                           {submission.company || "-"}
                         </TableCell>
@@ -424,6 +427,12 @@ const Admin = () => {
                         {selectedSubmission.email}
                       </a>
                     </div>
+                    {selectedSubmission.service && (
+                      <div>
+                        <p className="text-sm text-muted-foreground">Chosen service</p>
+                        <p>{selectedSubmission.service}</p>
+                      </div>
+                    )}
                     {selectedSubmission.company && (
                       <div>
                         <p className="text-sm text-muted-foreground">Company</p>

@@ -1,5 +1,11 @@
 # Motion v1 and navigation
 
+## Contact enquiries
+- [x] Add a required approved-service selection and validate submissions on both sides.
+- [x] Store each enquiry reliably and show its service in the owner area.
+- [x] Verify a real form submission, saved row and targeted tests; remove only the test row.
+- [ ] Deliver owner emails to create@an3s.info. Blocker: no verified sending domain; complete email setup first.
+
 ## Nebula background correction
 - [x] Confirm the playing inner-page film is covered by an opaque route-root fill.
 - [x] Reveal it only beneath non-home route roots and defer loading until the first inner-page visit.
