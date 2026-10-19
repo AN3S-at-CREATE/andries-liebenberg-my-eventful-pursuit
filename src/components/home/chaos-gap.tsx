@@ -41,7 +41,7 @@ function Strata() {
       <svg viewBox="0 0 100 12" preserveAspectRatio="none" className="h-10 w-full" aria-hidden="true">
         {years.map(year => <line key={year} x1={x(year)} x2={x(year)} y1={year === currentYear || year === EST_YEAR ? 0 : 4} y2={12}
           vectorEffect="non-scaling-stroke" strokeWidth={year === currentYear || year === EST_YEAR ? 2 : 1}
-          className={year === currentYear ? "stroke-pink" : year === EST_YEAR ? "stroke-cyan" : "stroke-border"} />)}
+          stroke="currentColor" className={year === currentYear ? "text-pink" : year === EST_YEAR ? "text-cyan" : "text-border"} />)}
       </svg>
       <figcaption className="relative mt-2 h-4 text-xs text-muted-foreground">
         <span className="absolute left-0">{FIRST_YEAR}</span>
