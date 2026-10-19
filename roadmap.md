@@ -1,5 +1,10 @@
 # Motion v1 and navigation
 
+## Nebula background correction
+- [x] Confirm the playing inner-page film is covered by an opaque route-root fill.
+- [x] Reveal it only beneath non-home route roots and defer loading until the first inner-page visit.
+- [ ] Verify visible playback, persistent navigation, home isolation and reduced motion; leave unpublished.
+
 - [x] Add shared motion timings, persistent navigation and route transitions.
 - [x] Add stagger reveals, reversible ledger disclosures and global-only starfield motion.
 - [x] Verify headings, focus, anchors, prices, reduced motion, mobile CLS and protected hashes.
