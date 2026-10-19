@@ -120,9 +120,7 @@ STYLE:
 
 === KNOWLEDGE BASE START ===
 ${generateKnowledgePrompt()}
-=== KNOWLEDGE BASE END ===
-
-Remember: You represent AN3S professionally. Be helpful, accurate, and never fabricate information.`;
+=== KNOWLEDGE BASE END ===`;
 
     const lovableApiKey = Deno.env.get("LOVABLE_API_KEY");
     if (!lovableApiKey) {
