@@ -3,7 +3,6 @@
 import { writeFileSync } from "fs";
 import { resolve } from "path";
 import { labStars } from "../src/data/lab";
-import { labWorkshops } from "../src/data/lab-workshops";
 
 const BASE_URL = "https://an3s.info";
 
@@ -49,7 +48,6 @@ const entries: SitemapEntry[] = [
   { path: "/work", changefreq: "monthly", priority: "0.8" },
   { path: "/lab", changefreq: "monthly", priority: "0.8" },
   { path: "/lab/workshop", changefreq: "monthly", priority: "0.7" },
-  ...labWorkshops.filter(workshop => workshop.visibility === "show").map(workshop => ({ path: `/lab/workshop/${workshop.slug}`, changefreq: "monthly" as const, priority: "0.6" })),
   ...labStars.filter(star => star.visibility === "show").map(star => ({ path: `/lab/${star.slug}`, changefreq: "monthly" as const, priority: "0.6" })),
   { path: "/companies", changefreq: "weekly", priority: "0.8" },
   ...companySlugs.map((slug) => ({

@@ -43,4 +43,4 @@ export const labWorkshops: LabWorkshop[] = [
     reviewedCommit: "04586208217b18c4844df44cb07fc4e4279520b4", reviewedOn: "2026-10-19",
   },
 ];
-export const labWorkshopCount = labWorkshops.filter(workshop => workshop.visibility === "show").length;
+
