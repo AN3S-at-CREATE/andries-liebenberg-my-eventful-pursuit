@@ -1,5 +1,6 @@
 import { z } from "npm:zod@3.25.76";
-import { registry, type DemoDefinition, type DemoId } from "./registry.ts";
+import { registry, type DemoDefinition } from "./registry.ts";
+import type { LabRequest } from "./types.ts";
 
 export const labRequestSchema = z.object({
   demoId: z.enum(["lynkie", "eventpulse", "knowledge", "whatsapp", "workflow", "voice"]),
@@ -16,12 +17,6 @@ export const labRequestSchema = z.object({
     }
   }
 });
-
-export interface LabRequest {
-  demoId: DemoId;
-  messages: { role: "user" | "assistant"; content: string }[];
-  options?: Record<string, string>;
-}
 
 /** Keep runtime validation behind the server-only Zod boundary. */
 export function validateLabRequest(input: unknown): LabRequest | null {

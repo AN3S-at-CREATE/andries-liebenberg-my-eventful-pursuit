@@ -9,7 +9,15 @@ beforeEach(() => vi.stubGlobal("crypto", webcrypto));
 const input = (demoId: DemoId = "whatsapp", content = "Could you help with an enquiry?") => ({ demoId, messages: [{ role: "user" as const, content }], options: {} });
 function setup(calls = 1, status = 200, content = "A person can check that for you.") {
   const dependencies: LabDependencies = {
-    validate: raw => { const parsed = labInputSchema.safeParse(raw); return parsed.success ? parsed.data : null; },
+    validate: raw => {
+      const parsed = labInputSchema.safeParse(raw);
+      if (!parsed.success || !parsed.data.demoId || !parsed.data.messages) return null;
+      const messages = parsed.data.messages.map(message => {
+        if (!message.role || typeof message.content !== "string") throw new Error("Invalid message");
+        return { role: message.role, content: message.content };
+      });
+      return { demoId: parsed.data.demoId, messages, options: parsed.data.options };
+    },
     getClientIP: () => "192.0.2.123",
     checkRateLimit: vi.fn(() => ({ allowed: true, resetAt: Date.now() + 3600000 })),
     incrementUsage: vi.fn(async () => calls),

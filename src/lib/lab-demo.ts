@@ -19,7 +19,7 @@ export const labInputSchema = z.object({
   messages: z.array(z.object({ role: z.enum(["user", "assistant"]), content: z.string().trim().min(1).max(500) }).strict()).min(1).max(12),
   options: z.record(z.string()),
 }).strict().refine(input => Object.entries(input.options).every(([key, value]) =>
-  Object.hasOwn(allowedOptions[input.demoId], key) && allowedOptions[input.demoId][key].includes(value)), "Invalid demo option");
+  Object.prototype.hasOwnProperty.call(allowedOptions[input.demoId], key) && allowedOptions[input.demoId][key].includes(value)), "Invalid demo option");
 
 const resultSchema = z.union([
   z.object({ message: z.string().min(1) }).strict(),
@@ -28,7 +28,10 @@ const resultSchema = z.union([
 
 /** Validate live and scripted responses through the same public contract. */
 export function parseLabResult(input: unknown): LabResult {
-  return resultSchema.parse(input);
+  const parsed = resultSchema.parse(input);
+  if ("message" in parsed && typeof parsed.message === "string") return { message: parsed.message };
+  if ("artefact" in parsed && parsed.artefact) return { artefact: parsed.artefact };
+  throw new Error("Invalid demo response");
 }
 
 /** Calls stay outside UI components; replay flags are preserved on error responses. */

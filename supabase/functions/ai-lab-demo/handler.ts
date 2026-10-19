@@ -1,6 +1,6 @@
 import { demoSystemPrompt, registry, type DemoId } from "./registry.ts";
 import { needsLynkieSafetyResponse, LYNKIE_SAFETY_MESSAGE, scrubLabPii } from "./privacy.ts";
-import type { LabRequest } from "./validation.ts";
+import type { LabRequest } from "./types.ts";
 
 export const LAB_MODEL = "google/gemini-3.1-flash-lite";
 export const LAB_RATE_LIMIT = { maxRequests: 15, windowMs: 60 * 60 * 1000 };
