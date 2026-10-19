@@ -29,11 +29,13 @@ Deno.serve(async (req) => {
 
   // Rate limiting
   const clientIP = getClientIP(req);
-  const rateLimitKey = `an3s-concierge:${clientIP}`;
+  const ipDigest = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(clientIP));
+  const ipHash = Array.from(new Uint8Array(ipDigest), byte => byte.toString(16).padStart(2, "0")).join("");
+  const rateLimitKey = `an3s-concierge:${ipHash}`;
   const rateLimit = checkRateLimit(rateLimitKey, RATE_LIMIT_CONFIG);
 
   if (!rateLimit.allowed) {
-    console.log(`[AN3S Concierge] Rate limit exceeded for IP: ${clientIP}`);
+    console.log(`[AN3S Concierge] Rate limit exceeded, remaining: ${rateLimit.remaining}`);
     return rateLimitResponse(rateLimit.resetAt);
   }
 
@@ -98,7 +100,7 @@ Deno.serve(async (req) => {
       validMessages.push({ role, content });
     }
 
-    console.log(`[AN3S Concierge] Processing ${validMessages.length} messages, IP: ${clientIP}, remaining: ${rateLimit.remaining}`);
+    console.log(`[AN3S Concierge] Processing ${validMessages.length} messages, remaining: ${rateLimit.remaining}`);
 
     const systemPrompt = `You are the AN3S Concierge, a helpful AI assistant for Andries Liebenberg's portfolio website.
 
@@ -140,7 +142,7 @@ Remember: You represent AN3S professionally. Be helpful, accurate, and never fab
         "Authorization": `Bearer ${lovableApiKey}`,
       },
       body: JSON.stringify({
-        model: "google/gemini-2.5-flash",
+        model: "google/gemini-3.8-flash",
         messages: [
           { role: "system", content: systemPrompt },
           ...validMessages,
