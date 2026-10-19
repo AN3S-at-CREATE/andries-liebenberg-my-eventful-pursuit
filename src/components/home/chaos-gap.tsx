@@ -41,11 +41,11 @@ function Strata() {
       <svg viewBox="0 0 100 12" preserveAspectRatio="none" className="h-10 w-full" aria-hidden="true">
         {years.map(year => <line key={year} x1={x(year)} x2={x(year)} y1={year === currentYear || year === EST_YEAR ? 0 : 4} y2={12}
           vectorEffect="non-scaling-stroke" strokeWidth={year === currentYear || year === EST_YEAR ? 2 : 1}
-          stroke="currentColor" className={year === currentYear ? "text-pink" : year === EST_YEAR ? "text-cyan" : "text-border"} />)}
+          stroke="currentColor" className={year === currentYear ? "text-primary" : year === EST_YEAR ? "text-secondary" : "text-border"} />)}
       </svg>
-      <figcaption className="relative mt-2 h-4 text-xs text-muted-foreground">
+      <figcaption className="relative mt-2 h-8 text-xs text-muted-foreground">
         <span className="absolute left-0">{FIRST_YEAR}</span>
-        <span className="absolute -translate-x-1/2 text-secondary" style={{ left: `${x(EST_YEAR)}%` }}>Est. {EST_YEAR}</span>{/* ds-allow: computed SVG tick position */}
+        <span className="absolute top-4 -translate-x-1/2 whitespace-nowrap text-secondary" style={{ left: `${x(EST_YEAR)}%` }}>Est. {EST_YEAR}</span>{/* ds-allow: computed SVG tick position */}
         <span className="absolute right-0 text-primary">{currentYear}</span>
       </figcaption>
     </figure>
@@ -113,7 +113,7 @@ export function ChaosGap() {
 
       <div role="group" aria-label="Choose a question" className="mt-8 flex flex-wrap gap-2">
         {CHAOS_QUESTIONS.map((item, index) => <Button key={item.ask} type="button" size="sm" variant="outline" aria-pressed={index === selected}
-          onClick={() => setSelected(index)} className={index === selected ? "border-pink text-primary" : ""}>{item.ask}</Button>)}
+          onClick={() => setSelected(index)} className={`h-auto whitespace-normal text-left ${index === selected ? "border-pink text-primary" : ""}`}>{item.ask}</Button>)}
       </div>
 
       <Strata />
