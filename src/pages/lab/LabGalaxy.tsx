@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Seo } from "@/components/seo/Seo";
 import { GalaxySky } from "@/components/lab/galaxy-sky";
@@ -56,7 +56,8 @@ export function LabGalaxy() {
         <GalaxySky signal={signal} isMobile={isMobile} />
         <div className="lab-sky-footer">
           <p className="hidden md:block text-caption text-ink-muted">Tab through stars · Enter opens · Esc returns</p>
-          <div className="lab-workshop"><p className="text-caption text-ink-muted">In the workshop: {labWorkshopCount} more repositories, shown as they are documented</p>
+          <div className="lab-workshop"><p className="text-caption text-ink-muted">In the workshop: {labWorkshopCount} documented public repositories</p>
+            <Button asChild variant="ghost" className="min-h-11 text-cyan-glow"><Link to="/lab/workshop">Open the workshop</Link></Button>
             <Button variant="ghost" className="hidden md:inline-flex mt-3 text-cyan-glow" aria-expanded={isListVisible} aria-controls="lab-list" onClick={() => setIsListVisible(value => !value)}>List view</Button>
           </div>
         </div>
