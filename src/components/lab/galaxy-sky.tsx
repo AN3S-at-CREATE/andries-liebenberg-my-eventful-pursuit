@@ -26,7 +26,7 @@ export function GalaxySky({ signal, isMobile }: { signal: LabSignal; isMobile: b
   const groups = labConstellations.filter(group => shown.some(star => star.constellation === group.id));
   const selected = points.find(point => point.star.slug === active);
   useEffect(() => { setMobilePage(0); setActive(null); setPointer(null); }, [signal]);
-  const handleKeyboard = (event: KeyboardEvent<SVGAElement>, href: string) => {
+  const handleKeyboard = (event: KeyboardEvent, href: string) => {
     if (event.key === "Enter") { event.preventDefault(); navigate(href); }
     if (event.key === "Escape") { event.preventDefault(); setActive(null); setPointer(null); }
   };
