@@ -157,6 +157,8 @@ h1, h2, h3, h4, h5, h6 { text-shadow: none; }
 .site-nav.has-scrolled { border-bottom-color: var(--line); }
 .page-content { padding-top: var(--nav-h); }
 .page-transition-root { view-transition-name: page; transform-origin: center top; }
+/* Only route-root fills yield to the persistent nebula; home and framed tools keep their fills. */
+.page-transition-root:not([data-page-path="/"]) > .relative > .bg-background { background-color: transparent; }
 .nav-rail { background: linear-gradient(90deg, var(--pink), var(--violet), var(--blue)); }
 .skip-link { position: fixed; top: 8px; left: 16px; transform: translateY(-200%); padding: 12px 16px; background: var(--deep-space); color: var(--ink); z-index: 60; }
 .skip-link:focus { transform: none; }

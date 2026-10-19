@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { HeroMedia } from "./hero-media";
 
@@ -8,6 +9,12 @@ import { HeroMedia } from "./hero-media";
  */
 export function NebulaFilm() {
   const { pathname } = useLocation();
+  const [hasVisitedInnerPage, setHasVisitedInnerPage] = useState(pathname !== "/");
+  useEffect(() => {
+    if (pathname !== "/") setHasVisitedInnerPage(true);
+  }, [pathname]);
+  // Defer its first download on home, then keep the same film mounted across navigation.
+  if (!hasVisitedInnerPage) return null;
   return <HeroMedia
     src="/media/hero-loop.mp4"
     webmSrc="/media/hero-loop.webm"
