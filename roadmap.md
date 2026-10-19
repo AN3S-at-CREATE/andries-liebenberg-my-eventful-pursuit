@@ -1,9 +1,10 @@
 # Motion v1 and navigation
 
 ## AN3S Lab star rooms
-- [ ] Add isolated tabbed rooms, constellation navigation and catalogue-backed offers.
-- [ ] Connect six demos, replay, ephemeral brief handoff, Concierge and static bot flow.
-- [ ] Add visible Lab sitemap URLs and tests; verify desktop/mobile, keyboard and privacy; do not publish.
+- [x] Add isolated tabbed rooms, constellation navigation and catalogue-backed offers.
+- [x] Connect six demos, replay, ephemeral brief handoff, Concierge and static bot flow.
+- [x] Add visible Lab sitemap URLs and tests; verify desktop/mobile, keyboard and privacy; do not publish.
+- Verification: 122 tests and design-system check pass; live knowledge, EventPulse-to-Workflow handoff and Lynkie replies read back through the UI. All visible rooms and hidden 404 routes tested; tabs, galaxy focus, Concierge, mobile bar and reduced motion checked. Hero and existing non-Lab pages unchanged; no publishing. Named detail mockups were unavailable, so the supplied written layout governed the rooms.
 
 ## AN3S Lab galaxy
 - [x] Add exact star data, demo copy/replays and catalogue lookup tests.
