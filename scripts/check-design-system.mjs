@@ -212,6 +212,14 @@ const BRAND_NAME =
 // computes it) and tracked in .index/dead-code.md until the design system exports a replacement.
 // A changed or deleted file fails the check, so an entry can't cover a new mark or outlive its file.
 const LEGACY_BRAND_ASSETS = {
+  'public/email/an3s-signature-compact.png': {
+    sha256: '568962d30ea9693ba3a929bb6b633ff5f49890c3caf1afa3468aa1785c3d1386',
+    why: 'Andries-approved email signature banner, 19 October 2026; external Gmail use only, unchanged supplied artwork',
+  },
+  'public/email/an3s-signature-wide.png': {
+    sha256: '074d512861b5f8e4fe42037336d7980f1a780be0e70e2970538b29d7d7a440ae',
+    why: 'Andries-approved email signature banner, 19 October 2026; external Gmail use only, unchanged supplied artwork',
+  },
   'public/favicon.svg': {
     sha256: 'f31edb1c56b188e0fe1b474ea7f0c9a5a4fe173248f173cb916320d28096047c',
     why: 'legacy logo (the same file as src/assets/logo.svg); the design system has no favicon until it has a vector mark',

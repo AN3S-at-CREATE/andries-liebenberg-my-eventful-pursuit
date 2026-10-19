@@ -18,6 +18,7 @@ const navLinks = [
   { title: "Services", url: "/services" },
   { title: "Work", url: "/work" },
   { title: "AI", url: "/ai" },
+  { title: "Lab", url: "/lab" },
   { title: "Dreamforge", url: "/ai#dreamforge" },
   { title: "Contact", url: "/contact" },
 ];

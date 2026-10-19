@@ -1,5 +1,12 @@
 # Motion v1 and navigation
 
+## AN3S Lab galaxy
+- [x] Add exact star data, demo copy/replays and catalogue lookup tests.
+- [x] Add the isolated SVG galaxy and visibility-guarded placeholder routes.
+- [x] Add only the Lab nav link, homepage teaser and approved signature exceptions.
+- [x] Verify desktop/mobile, keyboard, filters, reduced motion, tests and protected files; do not publish.
+- Verification: 115 tests and design-system check pass; keyboard, URL filters, hidden/unknown 404, mobile list and reduced motion verified. Hero and existing page files unchanged except the authorised teaser/nav additions. Named mockups were unavailable; replay exchanges are labelled samples, not transcriptions. Star rooms intentionally remain placeholders for the next request.
+
 ## AN3S Lab backend
 - [x] Add the six validated demo personas, exact price corpus, PII scrubbing and Lynkie safety guard.
 - [x] Add hashed 15/hour limiting and atomic service-only 300/day usage cap.
