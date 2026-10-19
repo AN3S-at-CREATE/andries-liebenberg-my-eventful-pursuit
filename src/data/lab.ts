@@ -33,8 +33,8 @@ export const labStars: LabStar[] = [
   {"slug": "prisma-entertainment", "name": "Prisma Entertainment", "constellation": "ventures", "status": "venture", "visibility": "show", "line": "Project Manager.", "what": "Prisma Entertainment is one of the ventures on my growth portfolio. My role: Project Manager.", "goal": "Shown with role only. Dates and results appear once confirmed.", "how": ["Dates awaiting confirmation"], "stack": [], "offers": ["AI & Growth Audit", "Growth / Market-entry Strategy"], "links": [{"label": "Venture page", "href": "/companies/prisma-entertainment"}], "source": "Role confirmed by Andries, 13 Oct 2026", "note": "Dates awaiting confirmation"},
   {"slug": "rubies-and-pearls", "name": "Rubies and Pearls", "constellation": "ventures", "status": "venture", "visibility": "show", "line": "Head of Business Development.", "what": "Rubies and Pearls is one of the ventures on my growth portfolio. My role: Head of Business Development.", "goal": "Shown with role only. Dates and results appear once confirmed.", "how": ["Dates awaiting confirmation"], "stack": [], "offers": ["AI & Growth Audit", "Growth / Market-entry Strategy"], "links": [{"label": "Venture page", "href": "/companies/rubies-and-pearls"}], "source": "Role confirmed by Andries, 13 Oct 2026", "note": "Dates awaiting confirmation"},
 ];
-// Count shown as "In the workshop": repositories inventoried on 19 Oct 2026 that are not stars. Names are never shown.
-export const labWorkshopCount = 83;
+// Compatibility export: the count now comes only from documented workshop rooms.
+export { labWorkshopCount } from "./lab-workshops";
 
 export interface LabDemo {
   name: string; subtitle: string; title: string; description: string; banner: string;

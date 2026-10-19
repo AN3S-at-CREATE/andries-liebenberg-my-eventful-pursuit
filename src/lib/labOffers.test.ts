@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { labStars, labDemos, labWorkshopCount } from "@/data/lab";
+import { visibleLabWorkshops } from "./lab-workshops";
 import { getOffer } from "./labOffers";
 import { labSignal, positionLabStars, visibleConstellations, visibleLabStars } from "./lab-galaxy";
 
@@ -18,10 +19,10 @@ describe("Lab evidence and catalogue rules", () => {
     expect(visibleLabStars().some(star => star.slug === "truelogix")).toBe(false);
     expect(visibleConstellations().map(group => group.id)).toEqual(["ai", "agents", "ventures"]);
   });
-  it("keeps eight replay modules labelled and workshop names withheld", () => {
+  it("keeps eight replay modules labelled and counts documented workshops", () => {
     expect(Object.keys(labDemos)).toEqual(["lynkie", "eventpulse", "knowledge", "whatsapp", "workflow", "voice", "concierge", "bots"]);
     for (const demo of Object.values(labDemos)) expect(demo.replay.assistant.startsWith("Replay")).toBe(true);
-    expect(labWorkshopCount).toBe(83);
+    expect(labWorkshopCount).toBe(visibleLabWorkshops().length);
   });
   it("defaults to All on desktop and AI on mobile", () => {
     expect(labSignal(null, false)).toBe("all"); expect(labSignal(null, true)).toBe("ai");

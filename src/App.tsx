@@ -65,6 +65,7 @@ const NeuroLogix = lazy(() => import("./pages/ai/NeuroLogix"));
 const CustomModels = lazy(() => import("./pages/ai/CustomModels"));
 const LabGalaxy = lazy(() => import("./pages/lab/LabGalaxy").then(module => ({ default: module.LabGalaxy })));
 const LabStar = lazy(() => import("./pages/lab/LabStar").then(module => ({ default: module.LabStar })));
+const LabWorkshop = lazy(() => import("./pages/lab/LabWorkshop").then(module => ({ default: module.LabWorkshop })));
 
 const queryClient = new QueryClient();
 
@@ -156,6 +157,8 @@ const App = () => {
 
                 <Route path="/__status" element={<Status />} />
                 <Route path="/lab" element={<LabGalaxy />} />
+                <Route path="/lab/workshop" element={<LabWorkshop />} />
+                <Route path="/lab/workshop/:slug" element={<LabStar isWorkshop />} />
                 <Route path="/lab/:slug" element={<LabStar />} />
                 {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                 <Route path="*" element={<NotFound />} />
