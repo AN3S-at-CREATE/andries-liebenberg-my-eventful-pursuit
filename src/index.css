@@ -217,3 +217,16 @@ h1:focus { outline: none; }
   .motion-stagger > *, .scroll-reveal, [data-ledger-row], .ledger-entry { opacity: 1; transform: none; filter: none; }
   .ledger-panel:hover, .motion-button:active { transform: none; }
 }
+
+/* Chaos Gap: decision lives only in the gap; Light Cue 3 plays once on first reveal. */
+.chaos-gap-section { --chaos-gap: 148px; }
+.chaos-gap-triad { display: grid; grid-template-columns: 1fr; }
+.chaos-gap { min-height: calc(var(--chaos-gap) * 160 / 280); background: transparent; }
+.chaos-field { position: relative; overflow: hidden; border-radius: var(--radius); }
+.chaos-edge { position: absolute; left: 0; top: 0; bottom: 0; width: 2px; transform-origin: bottom; transform: scaleY(0); }
+.chaos-edge-ask { background: hsl(var(--pink-hsl)); }
+.chaos-edge-answer { background: hsl(var(--cyan-hsl)); }
+.chaos-gap-section.is-lit .chaos-edge-ask { transform: scaleY(1); transition: transform 240ms var(--ease); }
+.chaos-gap-section.is-lit .chaos-edge-answer { transform: scaleY(1); transition: transform 420ms var(--ease) 360ms; }
+@media (min-width: 900px) { .chaos-gap-triad { grid-template-columns: 1fr var(--chaos-gap) 1fr; } .chaos-gap { min-height: 0; } }
+@media (prefers-reduced-motion: reduce) { .chaos-edge { transform: scaleY(1); } }
