@@ -1,5 +1,12 @@
 # Motion v1 and navigation
 
+## AN3S Lab backend
+- [x] Add the six validated demo personas, exact price corpus, PII scrubbing and Lynkie safety guard.
+- [x] Add hashed 15/hour limiting and atomic service-only 300/day usage cap.
+- [x] Add a state-only hook with six session turns and caller-supplied scripted replay.
+- [x] Verify tests, actual gateway responses and unchanged protected files; do not publish.
+- Verification: 108 Vitest tests and seven Deno tests pass; all six live demos return the requested response shape; all 188 protected files unchanged. Design-system check reports only the two pre-existing email-signature exceptions. No Lab pages or replay scripts exist yet: the hook requires a caller-provided script when the future page connects it.
+
 ## Contact enquiries
 - [x] Add a required approved-service selection and validate submissions on both sides.
 - [x] Store each enquiry reliably and show its service in the owner area.

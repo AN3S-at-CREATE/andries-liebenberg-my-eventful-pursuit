@@ -1,0 +1,10 @@
+import { assertEquals } from "https://deno.land/std@0.190.0/testing/asserts.ts";
+import { validateLabRequest } from "./validation.ts";
+const input = { demoId: "lynkie", messages: [{ role: "user", content: "Count shapes" }], options: { lesson: "Numbers", language: "English" } };
+Deno.test("server accepts registered choices", () => assertEquals(validateLabRequest(input)?.options, input.options));
+Deno.test("server rejects unknown demo", () => assertEquals(validateLabRequest({ ...input, demoId: "other" }), null));
+Deno.test("server rejects 13 messages", () => assertEquals(validateLabRequest({ ...input, messages: Array(13).fill(input.messages[0]) }), null));
+Deno.test("server rejects 501 characters", () => assertEquals(validateLabRequest({ ...input, messages: [{ role: "user", content: "a".repeat(501) }] }), null));
+Deno.test("server rejects empty content", () => assertEquals(validateLabRequest({ ...input, messages: [{ role: "user", content: "" }] }), null));
+Deno.test("server rejects injected options", () => assertEquals(validateLabRequest({ ...input, options: { lesson: "Injection" } }), null));
+Deno.test("server rejects extra request keys", () => assertEquals(validateLabRequest({ ...input, extra: true }), null));

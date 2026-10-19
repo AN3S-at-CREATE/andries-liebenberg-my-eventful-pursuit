@@ -1,0 +1,2 @@
+- Keep model prompts and the public-price corpus server-only; clients share only privacy helpers. This prevents the full corpus entering the browser bundle.
+- Dependency-injected handler boundaries allow cap, privacy and safety tests without storing conversations or spending model credits.
