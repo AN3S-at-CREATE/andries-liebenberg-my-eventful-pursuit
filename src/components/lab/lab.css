@@ -1,0 +1,30 @@
+.lab-galaxy { min-height: calc(100dvh - 64px); margin-top: 64px; background: var(--deep-space); }
+.lab-galaxy::before { content: ''; position: fixed; inset: 0 0 auto; height: 64px; background: var(--deep-space); z-index: 49; pointer-events: none; }
+.lab-galaxy-layout { display: grid; grid-template-columns: 320px minmax(0, 1fr); height: calc(100dvh - 64px); min-height: 720px; }
+.lab-sidebar { padding: 40px 24px 24px 32px; border-right: 1px solid var(--line); overflow-y: auto; }
+.lab-heading { font-size: 44px; line-height: 1.15; letter-spacing: 0; }
+.lab-flags { display: flex; flex-wrap: wrap; gap: 8px; }
+.lab-flag { white-space: normal; height: auto; text-align: left; justify-content: flex-start; min-height: 44px; }
+.lab-sky { height: 100%; min-height: 0; }
+.lab-star-label { transition: opacity var(--motion-base, 240ms) var(--ease, ease); }
+.lab-star-bloom { filter: drop-shadow(var(--glow-cyan)); }
+.lab-star-link:focus-visible > g > circle:first-child { stroke: var(--focus); stroke-width: 1; }
+.lab-main-sky { position: relative; min-width: 0; padding: 24px 18px 110px; }
+.lab-sky-footer { position: absolute; bottom: 26px; left: 24px; right: 90px; display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; }
+.lab-workshop { max-width: 300px; text-align: right; }
+.lab-list-surface { padding: 24px 40px; border-top: 1px solid var(--line); background: var(--deep-space); }
+@media (max-width: 1100px) and (min-width: 768px) { .lab-galaxy-layout { grid-template-columns: 280px minmax(0,1fr); } .lab-sidebar { padding-left: 24px; } .lab-sky-footer { flex-direction: column; align-items: flex-start; gap: 10px; } .lab-workshop { text-align: left; } }
+@media (max-width: 767px) {
+  .lab-galaxy-layout { display: block; height: auto; min-height: 0; }
+  .lab-sidebar { padding: 28px 20px 0; border: none; overflow: visible; }
+  .lab-heading { font-size: 38px; }
+  .lab-intro { max-width: 42ch; }
+  .lab-flags { flex-wrap: nowrap; overflow-x: auto; padding-bottom: 12px; margin: 0 -20px; padding-left: 20px; padding-right: 20px; }
+  .lab-flag { white-space: nowrap; flex-shrink: 0; }
+  .lab-main-sky { padding: 0 12px; }
+  .lab-sky { height: 300px; }
+  .lab-sky-footer { position: static; display: block; padding: 16px 8px 24px; }
+  .lab-workshop { max-width: none; text-align: left; }
+  .lab-list-surface { padding: 0 20px 90px; }
+}
+@media (prefers-reduced-motion: reduce) { .lab-star-label { transition: none; } }
