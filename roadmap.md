@@ -23,3 +23,9 @@
 - ParallaxElements has no imports or mounted usages; BackgroundFX has no scroll-linked movement.
 - 66 tests and design-system check passed; changed-file lint has no errors. Existing generated-auth lint error remains outside scope.
 - No publishing or deployment requested.
+
+## Page content detail
+- [ ] Clarify Work examples and brand imagery using supplied material.
+- [ ] Replace repetitive expertise claims with approved offers and relevant links.
+- [ ] Add verified venture context; omit unsupported company capabilities.
+- [ ] Verify preview and checks; leave unpublished and report any missing source material.
