@@ -7,6 +7,7 @@ import wordmark from "@/design-system/assets/an3s-wordmark.png";
 import { motionTokens } from "@/lib/motion";
 import { positionLabStars, visibleLabStars, type LabSignal } from "@/lib/lab-galaxy";
 import { EvidenceGlyph } from "./evidence-glyph";
+import { Button } from "@/components/ui/button";
 
 const tint: Record<LabConstellation, string> = { ai: color.cyan, agents: color.blue, build: color.violet, ventures: color.pink };
 export function GalaxySky({ signal, isMobile }: { signal: LabSignal; isMobile: boolean }) {
@@ -97,7 +98,7 @@ export function GalaxySky({ signal, isMobile }: { signal: LabSignal; isMobile: b
       })()}
     </svg>
     {isMobile && pageCount > 1 && <div className="flex justify-center gap-3 pb-3">
-      {Array.from({ length: pageCount }, (_, index) => <a key={index} href={`#sky-${index + 1}`} onClick={event => { event.preventDefault(); setMobilePage(index); }} className="text-caption text-cyan-glow p-2 focus-visible:ring-2 focus-visible:ring-ring" aria-label={`Sky group ${index + 1}`} aria-current={mobilePage === index ? "page" : undefined}>{index + 1}</a>)}
+      {Array.from({ length: pageCount }, (_, index) => <Button key={index} variant="ghost" onClick={() => setMobilePage(index)} className="text-caption text-cyan-glow" aria-label={`Sky group ${index + 1}`} aria-current={mobilePage === index ? "page" : undefined}>{index + 1}</Button>)}
     </div>}
   </div>;
 }

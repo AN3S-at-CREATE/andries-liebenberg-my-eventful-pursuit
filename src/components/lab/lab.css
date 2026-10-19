@@ -1,4 +1,4 @@
-.lab-galaxy { min-height: calc(100dvh - 64px); margin-top: 64px; background: var(--deep-space); }
+.lab-galaxy { min-height: calc(100dvh - 64px); background: var(--deep-space); }
 .lab-galaxy::before { content: ''; position: fixed; inset: 0 0 auto; height: 64px; background: var(--deep-space); z-index: 49; pointer-events: none; }
 .lab-galaxy-layout { display: grid; grid-template-columns: 320px minmax(0, 1fr); height: calc(100dvh - 64px); min-height: 720px; }
 .lab-sidebar { padding: 40px 24px 24px 32px; border-right: 1px solid var(--line); overflow-y: auto; }
