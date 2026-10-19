@@ -1,5 +1,10 @@
 # Motion v1 and navigation
 
+## Documented Lab workshops
+- [ ] Create a source-backed public repository collection and separate workshop index/rooms under /lab.
+- [ ] Replace the fixed workshop count with the documented collection size; preserve galaxy stars and approval gates.
+- [ ] Add sitemap entries and tests; verify room navigation, mobile and design checks; do not publish.
+
 ## AN3S Lab star rooms
 - [x] Add isolated tabbed rooms, constellation navigation and catalogue-backed offers.
 - [x] Connect six demos, replay, ephemeral brief handoff, Concierge and static bot flow.
