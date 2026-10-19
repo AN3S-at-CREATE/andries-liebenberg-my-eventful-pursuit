@@ -83,7 +83,9 @@ export function GalaxySky({ signal, isMobile }: { signal: LabSignal; isMobile: b
             <EvidenceGlyph status={star.status} radius={isMobile ? 10 : 8} />
             {echo === star.constellation && !isReduced && !isMobile && <m.circle key={echoId} r="18" fill="none" className="stroke-cyan" initial={{ opacity: 0 }} animate={{ opacity: [0, 0.7, 0] }} transition={{ duration: motionTokens.slow }} />}
           </g>
-          <text x={x} y={labelY} textAnchor="middle" className={`fill-ink lab-star-label ${isMobile ? "text-xl" : "text-sm"}`} opacity={showLabel ? 1 : 0}>{star.name}</text>
+          <text x={x} y={labelY} textAnchor="middle" className="fill-ink lab-star-label" fontSize={isMobile ? 30 : 14} opacity={showLabel ? 1 : 0}>
+            {isMobile && star.name.includes(" ") ? <><tspan x={x}>{star.name.split(" ").slice(0, -1).join(" ")}</tspan><tspan x={x} dy="34">{star.name.split(" ").slice(-1)}</tspan></> : star.name}
+          </text>
         </m.a>;
       })}
       {selected && !isMobile && (() => {
