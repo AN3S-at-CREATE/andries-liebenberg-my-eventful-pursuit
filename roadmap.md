@@ -1,5 +1,10 @@
 # Motion v1 and navigation
 
+## AN3S Lab star rooms
+- [ ] Add isolated tabbed rooms, constellation navigation and catalogue-backed offers.
+- [ ] Connect six demos, replay, ephemeral brief handoff, Concierge and static bot flow.
+- [ ] Add visible Lab sitemap URLs and tests; verify desktop/mobile, keyboard and privacy; do not publish.
+
 ## AN3S Lab galaxy
 - [x] Add exact star data, demo copy/replays and catalogue lookup tests.
 - [x] Add the isolated SVG galaxy and visibility-guarded placeholder routes.
