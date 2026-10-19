@@ -1,9 +1,10 @@
 # Motion v1 and navigation
 
 ## Documented Lab workshops
-- [ ] Create a source-backed public repository collection and separate workshop index/rooms under /lab.
-- [ ] Replace the fixed workshop count with the documented collection size; preserve galaxy stars and approval gates.
-- [ ] Add sitemap entries and tests; verify room navigation, mobile and design checks; do not publish.
+- [x] Create a source-backed public repository collection and separate workshop index/rooms under /lab.
+- [x] Replace the fixed workshop count with the documented collection size; preserve galaxy stars and approval gates.
+- [x] Add sitemap entries and tests; verify room navigation, mobile and design checks; do not publish.
+- Public documentation review yielded two suitable non-client projects: Die Waarheid and Smart Lab Integration Monitor. Each has a revision-pinned source and room. Client-branded, approval-gated and minimally documented repos were excluded; the count is 2, not the prior unsupported 83. 130 tests, design check and desktop/mobile flow passed; hero and non-Lab pages unchanged; not published.
 
 ## AN3S Lab star rooms
 - [x] Add isolated tabbed rooms, constellation navigation and catalogue-backed offers.
