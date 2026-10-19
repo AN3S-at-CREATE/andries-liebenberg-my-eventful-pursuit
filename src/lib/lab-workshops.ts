@@ -1,16 +1,15 @@
-import { labWorkshops } from "@/data/lab-workshops";
-import type { LabWorkshop } from "@/data/lab-workshops";
+import { labStars, type LabStar } from "@/data/lab";
 
-/** The index, count and room resolver use the same public documentation gate. */
-export function visibleLabWorkshops(): LabWorkshop[] {
-  return labWorkshops.filter(workshop => workshop.visibility === "show");
+/** Workshop entries share the galaxy visibility gate and require public repository evidence. */
+export function visibleLabWorkshops(): LabStar[] {
+  return labStars.filter(star => star.visibility === "show" && star.status === "built" && star.sourceUrl?.startsWith("https://github.com/"));
 }
-/** Unknown and approval-gated workshop slugs never resolve to a room. */
+/** Unknown and approval-gated repository slugs never resolve. */
 export function findLabWorkshop(slug?: string) {
-  return visibleLabWorkshops().find(workshop => workshop.slug === slug);
+  return visibleLabWorkshops().find(star => star.slug === slug);
 }
-/** Workshop navigation wraps within its collection without altering galaxy navigation. */
-export function nextLabWorkshop(workshop: LabWorkshop) {
+/** Legacy workshop navigation wraps within the documented collection. */
+export function nextLabWorkshop(workshop: LabStar) {
   const rooms = visibleLabWorkshops();
   return rooms[(rooms.findIndex(room => room.slug === workshop.slug) + 1) % rooms.length];
 }

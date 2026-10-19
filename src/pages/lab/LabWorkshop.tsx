@@ -3,7 +3,7 @@ import { Seo } from "@/components/seo/Seo";
 import { Button } from "@/components/ui/button";
 import { EvidenceIcon } from "@/components/lab/evidence-glyph";
 import { labConstellations, labStatusLabels } from "@/data/lab";
-import { labWorkshopCount } from "@/data/lab-workshops";
+import { labWorkshopCount } from "@/data/lab";
 import { visibleLabWorkshops } from "@/lib/lab-workshops";
 
 export function LabWorkshop() {
@@ -17,8 +17,8 @@ export function LabWorkshop() {
       <p className="text-cyan-glow mb-3">{labWorkshopCount} documented public repositories</p>
       <p className="text-sm text-ink-muted leading-relaxed max-w-2xl mb-8">Each room links to the public documentation behind it. Repository code is not a claim that a project is live, production-ready or running on this site.</p>
       {workshops.length === 0 ? <p className="text-ink-muted py-8">No workshop repositories are documented here yet.</p> : <ul className="divide-y divide-line">
-        {workshops.map(workshop => <li key={workshop.slug}><Link to={`/lab/workshop/${workshop.slug}`} className="flex items-start gap-4 py-6 min-h-14 rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring hover:text-cyan-glow">
-          <EvidenceIcon status={workshop.status} /><div className="min-w-0"><h2 className="font-semibold text-ink">{workshop.name}</h2><p className="text-sm text-ink-muted mt-2 leading-relaxed">{workshop.line}</p><p className="text-caption text-cyan-glow mt-3">{labConstellations.find(group => group.id === workshop.constellation)?.name} · {labStatusLabels[workshop.status]}</p><p className="text-caption text-ink-muted mt-2 break-all">{workshop.repository}</p></div>
+        {workshops.map(workshop => <li key={workshop.slug}><Link to={`/lab/${workshop.slug}`} className="flex items-start gap-4 py-6 min-h-14 rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring hover:text-cyan-glow">
+          <EvidenceIcon status={workshop.status} /><div className="min-w-0"><h2 className="font-semibold text-ink">{workshop.name}</h2><p className="text-sm text-ink-muted mt-2 leading-relaxed">{workshop.line}</p><p className="text-caption text-cyan-glow mt-3">{labConstellations.find(group => group.id === workshop.constellation)?.name} · {labStatusLabels[workshop.status]}</p><p className="text-caption text-ink-muted mt-2 break-all">{workshop.sourceUrl?.replace("https://github.com/", "")}</p></div>
         </Link></li>)}
       </ul>}
       <Button asChild variant="outline" className="mt-8 min-h-11"><Link to="/lab">Back to the galaxy</Link></Button>

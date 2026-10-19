@@ -15,9 +15,9 @@ describe("Lab evidence and catalogue rules", () => {
     expect(labStars.filter(star => star.status === "live").map(star => star.slug)).toEqual(["concierge"]);
   });
   it("excludes unapproved stars from counts and routes", () => {
-    expect(visibleLabStars()).toHaveLength(17);
+    expect(visibleLabStars()).toHaveLength(19);
     expect(visibleLabStars().some(star => star.slug === "truelogix")).toBe(false);
-    expect(visibleConstellations().map(group => group.id)).toEqual(["ai", "agents", "ventures"]);
+    expect(visibleConstellations().map(group => group.id)).toEqual(["ai", "agents", "build", "ventures"]);
   });
   it("keeps eight replay modules labelled and counts documented workshops", () => {
     expect(Object.keys(labDemos)).toEqual(["lynkie", "eventpulse", "knowledge", "whatsapp", "workflow", "voice", "concierge", "bots"]);
@@ -26,7 +26,7 @@ describe("Lab evidence and catalogue rules", () => {
   });
   it("defaults to All on desktop and AI on mobile", () => {
     expect(labSignal(null, false)).toBe("all"); expect(labSignal(null, true)).toBe("ai");
-    expect(labSignal("build", false)).toBe("all"); expect(labSignal("agents", true)).toBe("agents");
+    expect(labSignal("unknown", false)).toBe("all"); expect(labSignal("agents", true)).toBe("agents");
   });
   it("positions appended stars from data rather than their slugs", () => {
     const star = visibleLabStars()[0];
