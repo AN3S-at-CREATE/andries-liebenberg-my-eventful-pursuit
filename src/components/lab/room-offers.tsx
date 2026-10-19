@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { getOffer } from "@/lib/labOffers";
+import { whatsappLink } from "@/data/facts";
 import { labWhatsappEnquiry } from "@/lib/lab-room";
 import type { LabStar } from "@/data/lab";
 import { Button } from "@/components/ui/button";

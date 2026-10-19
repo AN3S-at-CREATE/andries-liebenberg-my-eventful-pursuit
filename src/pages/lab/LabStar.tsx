@@ -8,7 +8,6 @@ import { RoomOffers } from "@/components/lab/room-offers";
 import { RoomDemo } from "@/components/lab/room-demo";
 import { labWorkshops } from "@/data/lab-workshops";
 import { labConstellations, labDemos, labStatusLabels } from "@/data/lab";
-import { whatsappLink } from "@/data/facts";
 import { findLabRoom,nextLabStar,roomTabs,roomTabLabels,selectedRoomTab,type RoomTab } from "@/lib/lab-room";
 import { visibleLabStars } from "@/lib/lab-galaxy";
 import { findLabWorkshop, nextLabWorkshop, visibleLabWorkshops } from "@/lib/lab-workshops";
