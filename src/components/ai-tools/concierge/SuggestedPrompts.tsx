@@ -7,38 +7,18 @@ interface SuggestedPromptsProps {
   onSelectPrompt: (prompt: string) => void;
 }
 
-const promptsByCategory: Record<CategoryKey, string[]> = {
-  growth: [
-    "What's your approach to business growth?",
-    "How many companies have you built?",
-    "What results have you achieved?",
-    "What industries do you work in?",
-  ],
-  aiSystems: [
-    "How do you implement AI in businesses?",
-    "What AI tools do you recommend?",
-    "Can you automate my processes?",
-    "What's practical AI automation?",
-  ],
-  marketing: [
-    "What marketing strategies do you use?",
-    "How do you measure marketing success?",
-    "What experiments should I run first?",
-    "How do you approach marketing budgets?",
-  ],
-  projects: [
-    "What types of projects do you manage?",
-    "How long do projects typically take?",
-    "What sectors have you worked in?",
-    "How do you handle project timelines?",
-  ],
-};
+const clientPrompts: string[] = [
+  "I need a website. What does it cost?",
+  "Can you automate my WhatsApp enquiries?",
+  "I need a logo and brand. Where do I start?",
+  "Book a call with Andries",
+];
 
 export function SuggestedPrompts({
   category,
   onSelectPrompt,
 }: SuggestedPromptsProps) {
-  const prompts = promptsByCategory[category];
+  const prompts = clientPrompts;
 
   return (
     <div

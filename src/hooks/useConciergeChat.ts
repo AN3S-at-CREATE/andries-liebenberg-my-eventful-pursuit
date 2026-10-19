@@ -44,7 +44,7 @@ export function useConciergeChat() {
       if (!content.trim()) return;
 
       if (getMessageCount() >= MAX_MESSAGES_PER_SESSION) {
-        toast.error("Message limit reached. Book a growth call to continue the conversation!");
+        toast.error("Message limit reached. Book a growth call to continue the conversation.");
         return;
       }
 

@@ -117,12 +117,9 @@ export function ConciergeModal({ trigger }: ConciergeModalProps) {
               </div>
               <div className="space-y-2">
                 <h3 className="font-medium text-foreground">
-                  Hi! I'm the AN3S Concierge
+                  I'm the AN3S Concierge. Tell me what your business needs, and
+                  I'll point you to the right service and price.
                 </h3>
-                <p className="text-sm text-muted-foreground max-w-[300px]">
-                  Ask me about Andries's experience, services, companies, or how
-                  he can help grow your business.
-                </p>
               </div>
               <SuggestedPrompts
                 category={activeCategory}
@@ -219,7 +216,7 @@ export function ConciergeModal({ trigger }: ConciergeModalProps) {
                 >
                   Book a growth call
                 </a>{" "}
-                to continue!
+                to continue.
               </>
             )}
           </p>
