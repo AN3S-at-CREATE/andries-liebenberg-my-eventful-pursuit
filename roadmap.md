@@ -1,7 +1,8 @@
 # Motion v1 and navigation
 
 ## Workshop stars and direct rooms
-- [ ] Join documented repositories to lab.ts stars, expose direct rooms and star links, and verify the count and navigation without publishing.
+- [x] Join documented repositories to lab.ts stars, expose direct rooms and star links, and verify the count and navigation without publishing.
+- Six approved public built repositories now share galaxy stars, direct /lab/:slug rooms and workshop index links. 130 tests, lint, design checks and browser navigation passed; not published.
 
 ## Documented Lab workshops
 - [x] Create a source-backed public repository collection and separate workshop index/rooms under /lab.
