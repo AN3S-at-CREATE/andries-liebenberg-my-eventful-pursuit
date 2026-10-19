@@ -16,7 +16,7 @@
  .room-layout > * { margin-bottom: 24px; }
  .lab-room { padding: 24px 20px 120px; }
  .room-scroll { max-height: 65dvh; }
- .room-bottom-bar { position: fixed; z-index: 50; inset: auto 0 0; display: flex; align-items: center; gap: 12px; padding: 12px 20px; background: var(--deep-space); border-top: 1px solid var(--blue); }
+ .room-bottom-bar { position: fixed; z-index: 60; inset: auto 0 0; display: flex; align-items: center; gap: 12px; padding: 12px 20px; background: var(--deep-space); border-top: 1px solid var(--blue); }
  .room-bottom-bar > div { min-width: 0; flex: 1; }
  .room-title { font-size: 32px; }
  .room-panel { padding: 16px; }
