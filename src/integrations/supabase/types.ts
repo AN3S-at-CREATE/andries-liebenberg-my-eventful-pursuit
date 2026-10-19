@@ -14,6 +14,21 @@ export type Database = {
   }
   public: {
     Tables: {
+      ai_lab_usage: {
+        Row: {
+          calls: number
+          day: string
+        }
+        Insert: {
+          calls?: number
+          day: string
+        }
+        Update: {
+          calls?: number
+          day?: string
+        }
+        Relationships: []
+      }
       contact_submissions: {
         Row: {
           company: string | null
@@ -88,7 +103,7 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      increment_ai_lab_usage: { Args: never; Returns: number }
     }
     Enums: {
       app_role: "admin" | "moderator" | "user"
