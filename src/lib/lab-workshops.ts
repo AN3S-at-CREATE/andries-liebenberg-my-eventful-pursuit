@@ -2,7 +2,7 @@ import { labStars, type LabStar } from "@/data/lab";
 
 /** Workshop entries share the galaxy visibility gate and require public repository evidence. */
 export function visibleLabWorkshops(): LabStar[] {
-  return labStars.filter(star => star.visibility === "show" && star.status === "built" && star.sourceUrl?.startsWith("https://github.com/"));
+  return labStars.filter(star => star.visibility === "show" && star.status === "built" && star.sourceUrl?.startsWith("https://github.com/") && /\bREADME\b/.test(star.source));
 }
 /** Unknown and approval-gated repository slugs never resolve. */
 export function findLabWorkshop(slug?: string) {
