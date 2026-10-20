@@ -12,4 +12,5 @@ function open(slug:string){render(<HelmetProvider><LazyMotion features={domAnima
 describe('Lab star routes',()=>{
  it('renders a room for every visible star and gates the Try it tab',()=>{for(const star of visibleLabStars()){open(star.slug);expect(screen.getByRole('heading',{name:star.name,level:1})).toBeDefined();expect(screen.queryByRole('tab',{name:'Try it'})!==null).toBe(Boolean(star.demoId));cleanup();}});
  it('renders existing NotFound for every unapproved star and unknown slugs',()=>{for(const slug of [...labStars.filter(star=>star.visibility!=='show').map(star=>star.slug),'unknown']){open(slug);expect(screen.getByRole('heading',{name:'Page not found'})).toBeDefined();cleanup();}});
+  it('renders NotFound for each removed direct room',()=>{for(const slug of [['die','waarheid'].join('-'),['smart','lab','integration'].join('-'),'truelogix','brand-systems',['an3s','design','system'].join('-'),['flow','logix'].join(''),['intern','us'].join('-')]){open(slug);expect(screen.getByRole('heading',{name:'Page not found'})).toBeDefined();cleanup();}});
 });

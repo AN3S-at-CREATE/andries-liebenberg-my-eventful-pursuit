@@ -101,16 +101,6 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://an3s.info/lab/die-waarheid</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://an3s.info/lab/smart-lab-integration</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
     <loc>https://an3s.info/lab/lynkie-sky</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>

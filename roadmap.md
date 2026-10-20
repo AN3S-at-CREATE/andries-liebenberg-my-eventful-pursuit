@@ -1,5 +1,9 @@
 # Motion v1 and navigation
 
+## Lab cleanup v9b
+- [x] Remove withdrawn and on-hold workshop entries and all non-show Lab data; retain four public README-backed rooms and regenerate the sitemap.
+- [x] Verify direct/legacy not-found routes, workshop navigation and protected-file hashes; do not publish or deploy.
+
 ## Workshop stars and direct rooms
 - [x] Join documented repositories to lab.ts stars, expose direct rooms and star links, and verify the count and navigation without publishing.
 - Six approved public built repositories now share galaxy stars, direct /lab/:slug rooms and workshop index links. 130 tests, lint, design checks and browser navigation passed; not published.
