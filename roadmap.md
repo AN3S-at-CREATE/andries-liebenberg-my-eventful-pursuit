@@ -2,7 +2,7 @@
 
 ## Lab cleanup v9b
 - [x] Remove withdrawn and on-hold workshop entries and all non-show Lab data; retain four public README-backed rooms and regenerate the sitemap.
-- [ ] Verify direct/legacy not-found routes, workshop navigation and protected-file hashes; do not publish or deploy.
+- [x] Verify direct/legacy not-found routes, workshop navigation and protected-file hashes; do not publish or deploy.
 
 ## Workshop stars and direct rooms
 - [x] Join documented repositories to lab.ts stars, expose direct rooms and star links, and verify the count and navigation without publishing.
